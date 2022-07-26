@@ -1,0 +1,7 @@
+##
+    Olá pessoal, segue alguns dados importantes
+##
+
+ID deste sistma é:
+
+id_sistema = 1

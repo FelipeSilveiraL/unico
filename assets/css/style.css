@@ -11,11 +11,62 @@
 :root {
   scroll-behavior: smooth;
 }
+select.dataTable-selector {
+  border-radius: 5px !important;
+}
+
+.table{
+  font-size: 12px;
+}
+
+.capitalize{
+  text-transform: capitalize;
+}
+.button-rigth-espelho {
+  margin-left: 94%;
+  margin-top: -8%;
+}
+
+.progress .progress-bar{
+  animation: progress-animation 170s infinite;
+}
+
+
+@keyframes progress-animation{
+   0% { width: 0%; }
+   
+   100% { width: 100%}
+   
+}
 
 body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;
   color: #444444;
+}
+
+.menuColors{
+  padding: 5px 50px 5px 50px;
+}
+.uppercase{
+  text-transform: uppercase;
+}
+#logo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    max-width: 280px;
+    max-height: 120px;
+}
+
+.button-rigth-card{
+  margin-left: 76%;
+
+}
+
+.button-rigth-card-active{
+  margin-left: 56%;
 }
 
 a {
@@ -52,6 +103,7 @@ h1, h2, h3, h4, h5, h6 {
 .pagetitle {
   margin-bottom: 10px;
 }
+
 .pagetitle h1 {
   font-size: 24px;
   margin-bottom: 0;
@@ -209,7 +261,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Card */
 .card {
-  margin-bottom: 30px;
+  margin-bottom: -2px;
   border: none;
   border-radius: 5px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
@@ -222,9 +274,25 @@ h1, h2, h3, h4, h5, h6 {
   padding: 15px;
 }
 
+.fabrica{
+  padding:-2.625rem .75rem;
+  display:block;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  appearance: none;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
 .card-title {
-  padding: 20px 0 15px 0;
-  font-size: 18px;
+  padding: 10px 0 1px 0px !important;
+  font-size: 12px;
   font-weight: 500;
   color: #012970;
   font-family: "Poppins", sans-serif;
@@ -235,7 +303,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
 }
 .card-body {
-  padding: 0 20px 20px 20px;
+  padding: 0 20px 5px 31px;
 }
 
 .card-img-overlay {
@@ -293,6 +361,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Nunito", sans-serif;
   color: #899bbd;
   font-weight: 600;
+  text-transform: capitalize;
 }
 .breadcrumb a {
   color: #899bbd;
@@ -341,6 +410,7 @@ h1, h2, h3, h4, h5, h6 {
 .logo img {
   max-height: 26px;
   margin-right: 6px;
+  margin-left: 10px;
 }
 .logo span {
   font-size: 26px;
@@ -612,7 +682,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .sidebar-nav .nav-link.collapsed {
   color: #012970;
-  background: #fff;
+  background: #ffffff00;
 }
 .sidebar-nav .nav-link.collapsed i {
   color: #899bbd;

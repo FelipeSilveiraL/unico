@@ -1,0 +1,3 @@
+tela responsavel por jogar os arquivos nesse diretório:
+
+> unico/sistemas/sisrev/front/politicamente_exposto.php

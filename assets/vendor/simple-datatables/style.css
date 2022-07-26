@@ -31,6 +31,7 @@
 
 .dataTable-input {
 	padding: 6px 12px;
+	border-radius: 5px;
 }
 
 .dataTable-info {
