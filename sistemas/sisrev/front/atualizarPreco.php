@@ -180,7 +180,7 @@ require_once('../inc/tabelaAtualizarPreco.php')
     </div>
   </section>
 
-  <section class="section" style="display: <?= $displayAtualizaTwo ?>;">;;
+  <section class="section" style="display: <?= $displayAtualizaTwo ?>;">
     <div class="row">
       <div class="col-lg-12">
 
@@ -198,7 +198,8 @@ require_once('../inc/tabelaAtualizarPreco.php')
               <!-- BOTÃO DO FORMULARIOS -->
               <div class="text-left  mb-3">
                 <hr>
-                <a href="../documentos/AP/relatorio.xlsx" class="btn btn-info" download>Exportar relatório</a>
+                <a href="atualizarPreco.php?pg=2" class="btn btn-secondary">Voltar</a>
+                <a href="../documentos/AP/relatorio.xlsx" class="btn btn-success" download>Exportar excel</a>
               </div>
             </form>
             <!-- End Table with stripped rows -->

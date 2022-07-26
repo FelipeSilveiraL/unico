@@ -3,10 +3,6 @@ if ($_GET['acao'] == 1) {
 
     $displayAtualizaOne = 'none';
     $displayAtualizaTwo = 'block';
-} else {
-
-    $displayAtualizaOne = 'block';
-    $displayAtualizaTwo = 'none';
 
     switch ($_GET['empresa']) {
         case '55':
@@ -64,7 +60,7 @@ if ($_GET['acao'] == 1) {
             $nomeEmpresa = 'Ducati';
             break;
         case '10':
-            $queryListaPreco = "SELECT * FROM 'sisrev_atualizacao_preco_honda'";
+            $queryListaPreco = "SELECT * FROM sisrev_atualizacao_preco_honda";
             $resultListaPreco = $conn->query($queryListaPreco);
 
             $tabela = '<thead>
@@ -82,14 +78,14 @@ if ($_GET['acao'] == 1) {
 
             while ($listaPreco = $resultListaPreco->fetch_assoc()) {
                 $tabela .= '<tr>
-                            <td>' . $listaPreco['item'] . '</td>
-                            <td>' . $listaPreco['descricao'] . '</td>
-                            <td>R$ ' . $listaPreco['preco_avista'] . '</td>
-                            <td>R$ ' . $listaPreco['preco_publico_atual'] . '</td>
-                            <td>R$ ' . $listaPreco['preco_publico'] . '</td>
-                            <td>R$ ' . $listaPreco['dta_preco'] . '</td>
-                            <td>' . $listaPreco['status_item'] . '</td>
-                        </tr>';
+                                <td>' . $listaPreco['item'] . '</td>
+                                <td>' . $listaPreco['descricao'] . '</td>
+                                <td>R$ ' . $listaPreco['preco_avista'] . '</td>
+                                <td>R$ ' . $listaPreco['preco_publico_atual'] . '</td>
+                                <td>R$ ' . $listaPreco['preco_publico'] . '</td>
+                                <td>' . $listaPreco['dta_preco'] . '</td>
+                                <td>' . $listaPreco['status_item'] . '</td>
+                            </tr>';
             }
 
             $tabela .= '</tbody>';
@@ -97,4 +93,7 @@ if ($_GET['acao'] == 1) {
             $nomeEmpresa = 'Honda';
             break;
     }
+} else {
+    $displayAtualizaOne = 'block';
+    $displayAtualizaTwo = 'none';
 }
