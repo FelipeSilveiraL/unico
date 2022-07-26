@@ -55,7 +55,7 @@ if (!empty($_GET['empresa'])) {
       $tabela = 'sisrev_atualizacao_preco_honda';
       $nomeEmpresa = 'Honda';
 
-      $data = [['Item', 'Descricao', 'Preco Avista', 'Preco Publico Atual', 'Preco Publico', 'Data Preco'], 'Status'];
+      $data = [['Item', 'Descricao', 'Preco Avista', 'Preco Publico Atual', 'Preco Publico', 'Data Preco', 'Status']];
 
       $queryListaPreco = "SELECT * FROM " . $tabela;
       $resultListaPreco = $conn->query($queryListaPreco);
