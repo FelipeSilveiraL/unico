@@ -54,15 +54,17 @@ $consorcio = ($edit["CONSORCIO"] == 'S') ? 'SIM' : 'NÃO';
 //query para chamar todos os usuário para cadastrar funções na tela de configurações
 $queryUsers = "SELECT * FROM usuarios";
 
-//query para chamar as funções que vão ser usadas para cadastrar nos usuários
-$queryFuncoes = "SELECT * FROM sisrev_funcao";
-
-$queryFuncaoModulos = "SELECT * FROM sisrev_funcao SF
-                        LEFT JOIN sisrev_modulos SM
-                        ON SF.id_modulos = SM.id";
+$queryFuncaoModulos = "SELECT 
+                            SF.id_funcao,
+                            SF.nome,
+                            SF.descricao,
+                            SF.id_modulos,
+                            SM.nome AS tela
+                        FROM
+                            sisrev_funcao SF
+                        LEFT JOIN
+                            sisrev_modulos SM ON SF.id_modulos = SM.id";
 
 $buscaCarga = "SELECT * FROM carga_vw_info";
 
 $tabelaEmpRev = "SELECT * FROM cad_emp_rev";
-
-?>

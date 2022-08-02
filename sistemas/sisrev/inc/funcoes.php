@@ -35,6 +35,7 @@
                                             <select id="tela" name="tela" class="form-select" required>
                                                 <option value =''>Escolha...</option>
                                                     <?php
+                                                        $queryAcessos .= " ORDER BY nome ASC";
                                                         $resultModulos = $conn->query($queryAcessos);
                                                         while ($rowModulos = $resultModulos->fetch_assoc()) {
                                                             echo'<option value='.$rowModulos['id'].'>'.$rowModulos['nome'].'</option>';
@@ -57,7 +58,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">ID &nbsp;&nbsp;</th>
-                                <th scope="col">Tela da Função</th>
+                                <th scope="col">Função</th>
+                                <th scope="col">Tela</th>
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Ação</th>
                             </tr>
@@ -70,6 +72,7 @@
                                     <tr>
                                         <th scope="row">' .$rowFuncoes['id_funcao']. '</th>
                                         <td>' .$rowFuncoes['nome']. '</td>
+                                        <td>' .$rowFuncoes['tela']. '</td>
                                         <td>' .$rowFuncoes['descricao']. '</td>
                                         <td> 
                                         <a href="#" title="Editar" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editarModal'.$rowFuncoes['id_funcao'].'">
