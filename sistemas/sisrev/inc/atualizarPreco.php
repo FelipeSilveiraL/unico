@@ -21,7 +21,17 @@ switch ($_POST['empresa']) {
 
             if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $uploadfile)) {
                 //log da carga
-                $insertLog = "INSERT INTO sisrev_arquivo_ap (caminho,nome_arquivo,data,id_usuario,id_empresa) VALUES ('" . $uploadfile . "', '" . $_FILES['arquivo']['name'] . "','" . date('Y-m-d H:i:s') . "','" . $_SESSION['id_usuario'] . "','" . $_POST['empresa'] . "')";
+                $insertLog = "INSERT INTO sisrev_arquivo_ap (caminho, nome_arquivo, data, id_usuario, id_empresa, forcado";
+                if($_POST['relatorio'] == 1){
+                    $insertLog .= ', relatorio';
+                }                
+                $insertLog .= ") VALUES ('" . $uploadfile . "', '" . $_FILES['arquivo']['name'] . "','" . date('Y-m-d H:i:s') . "','" . $_SESSION['id_usuario'] . "','" . $_POST['empresa'] . "', '" . $_POST['forcarPreco'] . "'";
+
+                if($_POST['relatorio'] == 1){
+                    $insertLog .= ', 1';
+                }                
+                $insertLog .= ")";
+
                 $result = $conn->query($insertLog);
 
                 //limpar banco para receber as informações
@@ -84,7 +94,18 @@ switch ($_POST['empresa']) {
 
             if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $uploadfile)) {
                 //log da carga
-                $insertLog = "INSERT INTO sisrev_arquivo_ap (caminho, nome_arquivo, data, id_usuario, id_empresa) VALUES ('" . $uploadfile . "', '" . $_FILES['arquivo']['name'] . "','" . date('Y-m-d H:i:s') . "','" . $_SESSION['id_usuario'] . "','" . $_POST['empresa'] . "')";
+                //log da carga
+                $insertLog = "INSERT INTO sisrev_arquivo_ap (caminho, nome_arquivo, data, id_usuario, id_empresa, forcado";
+                if($_POST['relatorio'] == 1){
+                    $insertLog .= ', relatorio';
+                }                
+                $insertLog .= ") VALUES ('" . $uploadfile . "', '" . $_FILES['arquivo']['name'] . "','" . date('Y-m-d H:i:s') . "','" . $_SESSION['id_usuario'] . "','" . $_POST['empresa'] . "', '" . $_POST['forcarPreco'] . "'";
+
+                if($_POST['relatorio'] == 1){
+                    $insertLog .= ', 1';
+                }                
+                $insertLog .= ")";
+
                 $result = $conn->query($insertLog);
 
                 //limpar banco para receber as informações
@@ -137,6 +158,23 @@ switch ($_POST['empresa']) {
         break;
 
     case '10':
+
+        //log da carga
+        $insertLog = "INSERT INTO sisrev_arquivo_ap (nome_arquivo, data, id_usuario,id_empresa";
+
+        if($_POST['relatorio'] == 1){
+            $insertLog .= ', relatorio';
+        }                
+        $insertLog .= ") VALUES ('Data usada: ".date('d/m/Y', strtotime($_POST['dataHistorico']))."','" . date('Y-m-d H:i:s') . "','" . $_SESSION['id_usuario'] . "','" . $_POST['empresa'] . "'";
+
+        if($_POST['relatorio'] == 1){
+            $insertLog .= ', 1';
+        }                
+
+        $insertLog .= ")";       
+        
+        $result = $conn->query($insertLog);
+
         if($_POST['relatorio'] == 1){
             echo '<script>window.location.href = "http://' . $_SESSION['servidorOracle'] . '/unico_api/sisrev/inc/atualizacaoPecas.php?pg=' . $_GET['pg'] . '&empresa=' . $_POST['empresa'] . '&relatorio=1&acao=1&data='.$_POST['dataHistorico'].'";</script>';
         }else{

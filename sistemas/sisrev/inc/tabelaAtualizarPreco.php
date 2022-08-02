@@ -23,7 +23,7 @@ if ($_GET['acao'] == 1) {
                 $tabela .= '<tr>
                             <td>' . $listaPreco['item'] . '</td>
                             <td>' . $listaPreco['descricao'] . '</td>
-                            <td>R$ ' . $listaPreco['valor'] . '</td>
+                            <td>R$ ' . number_format($listaPreco['valor'], 2, ',', '.')  . '</td>
                             <td>' . $listaPreco['status_item'] . '</td>
                         </tr>';
             }
@@ -33,7 +33,7 @@ if ($_GET['acao'] == 1) {
             $nomeEmpresa = 'Triumph';
             break;
         case '56':
-            $queryListaPreco = "SELECT item, descricao, rrp as valor, status_item FROM 'sisrev_atualizacao_preco_ducati'";
+            $queryListaPreco = "SELECT item, descricao, rrp as valor, status_item FROM sisrev_atualizacao_preco_ducati";
             $resultListaPreco = $conn->query($queryListaPreco);
 
             $tabela = '<thead>
@@ -48,17 +48,18 @@ if ($_GET['acao'] == 1) {
 
             while ($listaPreco = $resultListaPreco->fetch_assoc()) {
                 $tabela .= '<tr>
-                            <td>' . $listaPreco['item'] . '</td>
-                            <td>' . $listaPreco['descricao'] . '</td>
-                            <td>R$ ' . $listaPreco['valor'] . '</td>
-                            <td>' . $listaPreco['status_item'] . '</td>
-                        </tr>';
+                                <td>' . $listaPreco['item'] . '</td>
+                                <td>' . $listaPreco['descricao'] . '</td>
+                                <td>R$ ' . number_format($listaPreco['valor'], 2, ',', '.') . '</td>
+                                <td>' . $listaPreco['status_item'] . '</td>
+                            </tr>';
             }
 
             $tabela .= '</tbody>';
 
             $nomeEmpresa = 'Ducati';
             break;
+            
         case '10':
             $queryListaPreco = "SELECT * FROM sisrev_atualizacao_preco_honda";
             $resultListaPreco = $conn->query($queryListaPreco);
@@ -80,9 +81,9 @@ if ($_GET['acao'] == 1) {
                 $tabela .= '<tr>
                                 <td>' . $listaPreco['item'] . '</td>
                                 <td>' . $listaPreco['descricao'] . '</td>
-                                <td>R$ ' . $listaPreco['preco_avista'] . '</td>
-                                <td>R$ ' . $listaPreco['preco_publico_atual'] . '</td>
-                                <td>R$ ' . $listaPreco['preco_publico'] . '</td>
+                                <td>R$ ' . number_format($listaPreco['preco_avista'],2,',','.')  . '</td>
+                                <td>R$ ' . number_format($listaPreco['preco_publico_atual'],2,',','.')  . '</td>
+                                <td>R$ ' . number_format($listaPreco['preco_publico'],2,',','.')  . '</td>
                                 <td>' . $listaPreco['dta_preco'] . '</td>
                                 <td>' . $listaPreco['status_item'] . '</td>
                             </tr>';

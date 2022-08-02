@@ -3,7 +3,7 @@ require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 require_once('../inc/pdfTabelaPrecos.php');
-require_once('../inc/tabelaAtualizarPreco.php')
+require_once('../inc/tabelaAtualizarPreco.php');
 ?>
 
 <main id="main" class="main">
@@ -28,12 +28,6 @@ require_once('../inc/tabelaAtualizarPreco.php')
       <div class="col-lg-12 col-xxl-4 col-md-6">
         <div class="card info-card revenue-card">
 
-          <div class="filter" style="margin-top: 10px;margin-left: 96%;">
-            <a class="icon" href="logAtualizacaoPecas.php" title="Logs anteriores">
-              <i class="bi bi-file-earmark-bar-graph"></i>
-            </a>
-          </div>
-
           <div class="card-body">
             <h5 class="card-title">Escolha Empresa</h5>
 
@@ -54,6 +48,11 @@ require_once('../inc/tabelaAtualizarPreco.php')
                   <div class="col-lg-10">
                     <div class="card">
                       <div class="card-body">
+                        <div class="filter" style="margin-top: 10px;margin-left: 96%;">
+                          <a class="icon" href="logAtualizacaoPecas.php?empresa=1" title="Logs anteriores">
+                            <i class="bi bi-file-earmark-bar-graph"></i>
+                          </a>
+                        </div>
                         <form class="row g-3" id="formularioAtualizarPreco" action="../inc/atualizarPreco.php?pg=<?= $_GET['pg'] ?>" method="post" enctype="multipart/form-data">
                           <!--DADOS PARA O LANÇAMENTO -->
                           <h5 class="card-title">Atualizar preço peças</h5>
@@ -130,6 +129,12 @@ require_once('../inc/tabelaAtualizarPreco.php')
                     <div class="card">
                       <div class="card-body">
 
+                        <div class="filter" style="margin-top: 10px;margin-left: 96%;">
+                          <a class="icon" href="logAtualizacaoPecas.php?empresa=2" title="Logs anteriores">
+                            <i class="bi bi-file-earmark-bar-graph"></i>
+                          </a>
+                        </div>
+
                         <form class="row g-3" action="../inc/atualizarPreco.php?pg=<?= $_GET['pg'] ?>" method="post" enctype="multipart/form-data">
                           <!--DADOS PARA O LANÇAMENTO -->
                           <h5 class="card-title">Atualizar preço peças</h5>
@@ -190,8 +195,8 @@ require_once('../inc/tabelaAtualizarPreco.php')
 
             <!-- Table with stripped rows -->
             <form action="" method="post" class="row g-3">
-              <table class="table datatable">                               
-                  <?= $tabela ?>
+              <table class="table datatable">
+                <?= $tabela ?>
               </table>
 
 
@@ -217,7 +222,7 @@ require_once('../inc/tabelaAtualizarPreco.php')
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Atualizar preço peças - O QUE QUER DIZER ?</h5>
+        <h5 class="modal-title">Atualizar preço valor menor? - O QUE QUER DIZER ?</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
