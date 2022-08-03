@@ -47,7 +47,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1){ $ativar = 'collap
             <ul id="config-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="telas_funcoes.php?pg=<?= $_GET['pg'] ?>&tela=1" <?= $_GET['tela'] == 1 ? "class='active'" : "" ?>>
-                        <i class="bi bi-circle"></i><span>Cadastro telas e funções</span>
+                        <i class="bi bi-circle"></i><span>Cadastro modulos e funções</span>
                     </a>
                     <a href="usuarios.php?pg=<?= $_GET['pg'] ?>&tela=3" <?= $_GET['tela'] == 3 ? "class='active'" : "" ?>>
                         <i class="bi bi-circle"></i><span>Usuários</span>

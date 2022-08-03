@@ -32,7 +32,7 @@ require_once('menu.php'); //menu lateral da pagina
             <h6>
               <p> Nesta tela só é possivel tratar permissões dos usuários para o Sistema Sisrev.</p>
               <p>Caso seja necessario mudar outras informações como por exemplo; usuário, senha, etc... Basta clicar neste icone
-              <a href="../../../front/usuarios.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>" class="btn btn-success button-rigth-espelho" title="Editar usuários">
+              <a href="../../../front/usuarios.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>" class="btn btn-success button-rigth-espelho" title="Editar usuários" target="_blank">
                 <i class="bx bxs-user-detail"></i>
               </a></p>
             </h6>
@@ -60,7 +60,7 @@ require_once('menu.php'); //menu lateral da pagina
                       <td>' . $usuarios['nome'] . '</td>
                       <td>' . $usuarios['usuario'] . '</td>
                       <td>
-                        <a href="usuariosPermissoes.php?id_usuarios=' . $usuarios['id_usuario'] . '&pg=' . $_GET['pg'] . '&tela=' . $_GET['tela'] . '" title="Permissões" class="btn btn-warning btn-sm"">
+                        <a href="usuariosPermissoes.php?id_usuarios=' . $usuarios['id_usuario'] . '&pg=' . $_GET['pg'] . '" title="Permissões" class="btn btn-warning btn-sm"">
                           <i class="bx bxs-lock-open"></i>
                         </a>
                       </td>

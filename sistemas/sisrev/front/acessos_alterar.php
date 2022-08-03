@@ -7,7 +7,7 @@ require_once('menu.php'); //menu lateral da pagina
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Informações das telas</h1>
+    <h1>Informações dos modulos</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -17,9 +17,9 @@ require_once('menu.php'); //menu lateral da pagina
           <a href="configuracao.php?pg=<?= $_GET['pg'] ?>">Configurações</a>
         </li>
         <li class="breadcrumb-item">
-          <a href="telas_funcoes.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>">Telas</a>
+          <a href="telas_funcoes.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>">Modulos</a>
         </li>
-        <li class="breadcrumb-item">Adicionar nova tela</li>
+        <li class="breadcrumb-item">Adicionar novo modulo</li>
       </ol>
     </nav>
   </div><!-- End Navegação -->

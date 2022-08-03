@@ -6,12 +6,12 @@ require_once('menu.php'); //menu lateral da pagina
 
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Cadastro de telas e funções</h1>
+    <h1>Cadastro de modulos e funções</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
         <li class="breadcrumb-item"><a href="configuracao.php">Configurações</a></li>
-        <li class="breadcrumb-item">Telas e Funções</li>
+        <li class="breadcrumb-item">Modulos e Funções</li>
       </ol>
     </nav>
   </div><!-- End Navegação -->
@@ -26,7 +26,7 @@ require_once('menu.php'); //menu lateral da pagina
         <!-- Default Tabs -->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link <?php if($_GET['f'] == NULL) {echo 'active';} ?>" id="telas-tab" data-bs-toggle="tab" data-bs-target="#telas" type="button" role="tab" aria-controls="telas" aria-selected="true">Telas</button>
+            <button class="nav-link <?php if($_GET['f'] == NULL) {echo 'active';} ?>" id="telas-tab" data-bs-toggle="tab" data-bs-target="#telas" type="button" role="tab" aria-controls="telas" aria-selected="true">Modulos</button>
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link <?php if($_GET['f'] != NULL) {echo 'active';} ?>" id="funcoes-tab" data-bs-toggle="tab" data-bs-target="#funcoes" type="button" role="tab" aria-controls="funcoes" aria-selected="false">Funções</button>
