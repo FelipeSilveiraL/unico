@@ -59,7 +59,7 @@
                             <tr>
                                 <th scope="col">ID &nbsp;&nbsp;</th>
                                 <th scope="col">Função</th>
-                                <th scope="col">Tela</th>
+                                <th scope="col">Modulo</th>
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Ação</th>
                             </tr>
@@ -72,7 +72,7 @@
                                     <tr>
                                         <th scope="row">' .$rowFuncoes['id_funcao']. '</th>
                                         <td>' .$rowFuncoes['nome']. '</td>
-                                        <td>' .$rowFuncoes['tela']. '</td>
+                                        <td>' .$rowFuncoes['modulo']. '</td>
                                         <td>' .$rowFuncoes['descricao']. '</td>
                                         <td> 
                                         <a href="#" title="Editar" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editarModal'.$rowFuncoes['id_funcao'].'">
@@ -93,15 +93,15 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <form action="../inc/telas_funcoes.php?pg=' . $_GET['pg'] . '&tela=' . $_GET['tela'] . '&acao=2&id=' . $rowFuncoes['id_funcao'] . '" method="post">
-                                                    <div class="row mb-3" style="margin-top: 13px;">
-                                                        <label for="descricao" class="col-md-4 col-lg-3 col-form-label" style="margin-left: 12px;">Descrição:</label>
-                                                        <div class="col-md-7 col-lg-8">
-                                                            <input name="descricao" type="text" class="form-control" id="descricao" value="'.$rowFuncoes['descricao'].'">
-                                                        </div>                                      
+                                                
+                                                <div class="row mb-3" style="margin-top: 13px;">
+                                                    <label for="nome" class="col-md-4 col-lg-3 col-form-label" style="margin-left: 12px;">Função:</label>
+                                                    <div class="col-md-7 col-lg-8">
+                                                        <input name="nome" type="text" class="form-control" id="nome" value="'.$rowFuncoes['nome'].'">
+                                                    </div>                                      
                                                     </div>
-                                                    <input name="nome" type="text" class="form-control" id="nome" value="'.$rowFuncoes['nome'].'" style="display: none;">
                                                     <div class="row mb-3">
-                                                        <label for="tela" class="col-md-4 col-lg-3 col-form-label" style="margin-left: 12px;">Tela:</label>
+                                                        <label for="tela" class="col-md-4 col-lg-3 col-form-label" style="margin-left: 12px;">Modulo:</label>
                                                         <div class="col-md-7 col-lg-8">
                                                             <select id="tela" name="tela" class="form-select" required>';
                                                                 //trazendo as informações do editar do banco
@@ -121,7 +121,15 @@
                                                                 echo'
                                                             </select>                                        
                                                         </div>
-                                                    </div>                                    
+                                                    </div> 
+
+                                                    <div class="row mb-3" style="margin-top: 13px;">
+                                                        <label for="descricao" class="col-md-4 col-lg-3 col-form-label" style="margin-left: 12px;">Descrição:</label>
+                                                        <div class="col-md-7 col-lg-8">
+                                                            <input name="descricao" type="text" class="form-control" id="descricao" value="'.$rowFuncoes['descricao'].'">
+                                                        </div>                                      
+                                                    </div>     
+                                                                                  
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                                                         <button type="submit" class="btn btn-success">Salvar</a>

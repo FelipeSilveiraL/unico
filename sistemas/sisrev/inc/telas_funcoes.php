@@ -17,8 +17,11 @@ switch ($_GET['acao']) {
         
         break;    
     case '2': //Edição na tabela sisrev_funcao
-        $updateFuncao = "UPDATE sisrev_funcao set descricao = '".$_POST['descricao']."', 
-                                        id_modulos = '".$_POST['tela']."'
+        $updateFuncao = "UPDATE sisrev_funcao 
+                            SET 
+                                descricao = '".$_POST['descricao']."', 
+                                id_modulos = '".$_POST['tela']."',
+                                nome = '".$_POST['nome']."'
                             WHERE id_funcao = '".$_GET['id']."'";
 
         if (!$resultUpdateFuncao = $conn->query($updateFuncao)){
