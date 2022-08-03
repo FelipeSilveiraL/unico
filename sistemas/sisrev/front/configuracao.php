@@ -28,7 +28,7 @@ require_once('menu.php'); //menu lateral da pagina
             <a href="telas_funcoes.php?pg=<?=$_GET['pg']?>&tela=<?=$_GET['tela']?>" class="list-group-item list-group-item-action">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Telas e funções</h5>
+                  <h5 class="card-title">Modulos e funções</h5>
                 </div>
               </div>
             </a>

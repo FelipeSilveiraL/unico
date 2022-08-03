@@ -75,7 +75,10 @@ $tabelaEmpRev = "SELECT * FROM cad_emp_rev";
 $queryModulos = "SELECT * FROM sisrev_modulos";
 
 $queryModulosUser = "SELECT 
-SM.id_usuario, SM.id_modulo, U.nome
-FROM
-sisrev_usuario_modulo SM
-LEFT JOIN usuarios U ON (SM.id_usuario = U.id_usuario)";
+                        SUM.id_usuario, SUM.id_modulo, U.nome, SM.nome AS nome_modulo
+                    FROM
+                        sisrev_usuario_modulo SUM
+                    LEFT JOIN
+                        usuarios U ON (SUM.id_usuario = U.id_usuario)
+                    LEFT JOIN
+                        sisrev_modulos SM ON (SUM.id_modulo = SM.id)";
