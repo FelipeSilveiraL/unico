@@ -33,30 +33,30 @@ require_once('../config/query.php');
             <form action="../inc/empRev.php" method="POST" >
               <a href="../front/empRev.php?pg=<?= $_GET['pg'] ?>&id=4"><button class="btn btn-primary " style="float: right;margin-left: 10px;margin-bottom:10px;" type="button" title="Cadastrar filial"><i class="bi bi-person-plus"></i></button></a>
               <button type="submit" class="btn btn-primary " title="Salvar alterações" style="float: right;margin-left: 10px;margin-bottom:10px;display:<?= ($_GET['id'] == 2 or $_GET['id'] == 3 or $_GET['id'] == 4) ? '' : 'none;' ?>" type="button"><i class="ri-save-3-fill"></i></button>
-              <a href="../front/empRev.php?pg=<?= $_GET['pg'] ?>&id=1"><button class="btn btn-success " title="Editar Filial" style="float: right;margin-left: 10px;margin-bottom:10px;" type="button"><i class="ri-edit-2-line"></i></button></a>
+              <a href="../front/empRev.php?pg=<?= $_GET['pg'] ?>&id=1"><button class="btn btn-success " title="Editar Filial" style="float: right;margin-left: 10px;margin-bottom:10px;" type="button"><i class="ri-edit-2-line"></i></button></a><br><br>
 
               <?php
               switch ($_GET['id']) {
                 case 1:
-                  echo ' <table class="table table-bordered" >
+                  echo ' <table class="table datatable" >
                           <thead>
                             <tr>
-                              <th scope="col" class="capitalize">EMPR</th>
-                              <th scope="col" class="capitalize">NUM REV</th>
-                              <th scope="col" class="capitalize">NOME REV</th>
-                              <th scope="col" class="capitalize">NOME FILIAL</th>
-                              <th scope="col" class="capitalize">TIPO</th>
-                              <th scope="col" class="capitalize">REV</th>
-                              <th scope="col" class="capitalize">DN</th>
-                              <th scope="col" class="capitalize">ATIVO</th>
-                              <th scope="col" class="capitalize">VENDAS</th>
-                              <th scope="col" class="capitalize">BD</th>
-                              <th scope="col" class="capitalize">BANDEIRA</th>
-                              <th scope="col" class="capitalize">CNPJ</th>
+                              <th scope="col" class="capitalize">EMPR&ensp;</th>
+                              <th scope="col" class="capitalize">NUM REV&ensp;</th>
+                              <th scope="col" class="capitalize">NOME REV&ensp;</th>
+                              <th scope="col" class="capitalize">NOME FILIAL&ensp;</th>
+                              <th scope="col" class="capitalize">TIPO&ensp;</th>
+                              <th scope="col" class="capitalize">REV&ensp;</th>
+                              <th scope="col" class="capitalize">DN&ensp;</th>
+                              <th scope="col" class="capitalize">ATIVO&ensp;</th>
+                              <th scope="col" class="capitalize">VENDAS&ensp;</th>
+                              <th scope="col" class="capitalize">BD&ensp;</th>
+                              <th scope="col" class="capitalize">BANDEIRA&ensp;</th>
+                              <th scope="col" class="capitalize">CNPJ&ensp;</th>
                               <th scope="col" class="capitalize" style="display:';
                                     echo ($_GET['id'] == 1) ? '">' : 'none">';
 
-                                    echo 'AÇÃO</th>
+                                    echo 'AÇÃO&ensp;</th>
                             </tr>
                           </thead>
                           <tbody>';
@@ -114,21 +114,21 @@ require_once('../config/query.php');
                 ;
                 break;
                 case 2:
-                  echo '<table class="table table-bordered">
+                  echo '<table class="table datatable">
                       <thead>
                           <tr>
-                            <th scope="col" class="capitalize">EMPR</th>
-                            <th scope="col" class="capitalize">Num Rev</th>
-                            <th scope="col" class="capitalize">Nome Emp</th>
-                            <th scope="col" class="capitalize">NOME FILIAL</th>
-                            <th scope="col" class="capitalize">Tipo</th>
-                            <th scope="col" class="capitalize">Rev</th>
-                            <th scope="col" class="capitalize">DN</th>
-                            <th scope="col" class="capitalize">ATIVO</th>
-                            <th scope="col" class="capitalize">VENDAS</th>
-                            <th scope="col" class="capitalize">BD</th>
-                            <th scope="col" class="capitalize">BANDEIRA</th>
-                            <th scope="col" class="capitalize">CNPJ</th>
+                            <th scope="col" class="capitalize">EMPR&ensp;</th>
+                            <th scope="col" class="capitalize">Num Rev&ensp;</th>
+                            <th scope="col" class="capitalize">Nome Emp&ensp;</th>
+                            <th scope="col" class="capitalize">NOME FILIAL&ensp;</th>
+                            <th scope="col" class="capitalize">Tipo&ensp;</th>
+                            <th scope="col" class="capitalize">Rev&ensp;</th>
+                            <th scope="col" class="capitalize">DN&ensp;</th>
+                            <th scope="col" class="capitalize">ATIVO&ensp;</th>
+                            <th scope="col" class="capitalize">VENDAS&ensp;</th>
+                            <th scope="col" class="capitalize">BD&ensp;</th>
+                            <th scope="col" class="capitalize">BANDEIRA&ensp;</th>
+                            <th scope="col" class="capitalize">CNPJ&ensp;</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -157,22 +157,22 @@ require_once('../config/query.php');
                     
                     $tabelaEmpRev .= ' WHERE id='.$id2.'';
 
-                    echo '<table class="table table-bordered">
+                    echo '<table class="table datatable">
                     <thead>
                         <tr>
-                          <th scope="col" class="capitalize">EMPR</th>
-                          <th scope="col" class="capitalize">Num Rev</th>
-                          <th scope="col" class="capitalize">Nome Emp</th>
-                          <th scope="col" class="capitalize">NOME FILIAL</th>
-                          <th scope="col" class="capitalize">Tipo</th>
-                          <th scope="col" class="capitalize">Rev</th>
-                          <th scope="col" class="capitalize">DN</th>
-                          <th scope="col" class="capitalize">ATIVO</th>
-                          <th scope="col" class="capitalize">VENDAS</th>
-                          <th scope="col" class="capitalize">BD</th>
-                          <th scope="col" class="capitalize">BANDEIRA</th>
-                          <th scope="col" class="capitalize">REVMATRIZ</th>
-                          <th scope="col" class="capitalize">CNPJ</th>
+                          <th scope="col" class="capitalize">EMPR&ensp;</th>
+                          <th scope="col" class="capitalize">Num Rev&ensp;</th>
+                          <th scope="col" class="capitalize">Nome Emp&ensp;</th>
+                          <th scope="col" class="capitalize">NOME FILIAL&ensp;</th>
+                          <th scope="col" class="capitalize">Tipo&ensp;</th>
+                          <th scope="col" class="capitalize">Rev&ensp;</th>
+                          <th scope="col" class="capitalize">DN&ensp;</th>
+                          <th scope="col" class="capitalize">ATIVO&ensp;</th>
+                          <th scope="col" class="capitalize">VENDAS&ensp;</th>
+                          <th scope="col" class="capitalize">BD&ensp;</th>
+                          <th scope="col" class="capitalize">BANDEIRA&ensp;</th>
+                          <th scope="col" class="capitalize">REVMATRIZ&ensp;</th>
+                          <th scope="col" class="capitalize">CNPJ&ensp;</th>
                         </tr>
                       </thead>
                       <tbody>';
@@ -201,22 +201,22 @@ require_once('../config/query.php');
                           ';}
                       break;
                       case 4:
-                        echo'<table class="table table-bordered">
+                        echo'<table class="table datatable">
                         <thead>
                             <tr>
-                              <th scope="col" class="capitalize">EMPR</th>
-                              <th scope="col" class="capitalize">Num Rev</th>
-                              <th scope="col" class="capitalize">Nome Emp</th>
-                              <th scope="col" class="capitalize">NOME FILIAL</th>
-                              <th scope="col" class="capitalize">Tipo</th>
-                              <th scope="col" class="capitalize">Rev</th>
-                              <th scope="col" class="capitalize">DN</th>
-                              <th scope="col" class="capitalize">ATIVO</th>
-                              <th scope="col" class="capitalize">VENDAS</th>
-                              <th scope="col" class="capitalize">BD</th>
-                              <th scope="col" class="capitalize">BANDEIRA</th>
-                              <th scope="col" class="capitalize">REVMATRIZ</th>
-                              <th scope="col" class="capitalize">CNPJ</th>
+                              <th scope="col" class="capitalize">EMPR&ensp;</th>
+                              <th scope="col" class="capitalize">Num Rev&ensp;</th>
+                              <th scope="col" class="capitalize">Nome Emp&ensp;</th>
+                              <th scope="col" class="capitalize">NOME FILIAL&ensp;</th>
+                              <th scope="col" class="capitalize">Tipo&ensp;</th>
+                              <th scope="col" class="capitalize">Rev&ensp;</th>
+                              <th scope="col" class="capitalize">DN&ensp;</th>
+                              <th scope="col" class="capitalize">ATIVO&ensp;</th>
+                              <th scope="col" class="capitalize">VENDAS&ensp;</th>
+                              <th scope="col" class="capitalize">BD&ensp;</th>
+                              <th scope="col" class="capitalize">BANDEIRA&ensp;</th>
+                              <th scope="col" class="capitalize">REVMATRIZ&ensp;</th>
+                              <th scope="col" class="capitalize">CNPJ&ensp;</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -240,22 +240,22 @@ require_once('../config/query.php');
                             </table>';
                         break;
                 default:
-                  echo ' <table class="table table-bordered">
+                  echo ' <table class="table datatable">
                         <thead>
                             <tr>
-                              <th scope="col" class="capitalize">EMPR</th>
-                              <th scope="col" class="capitalize">Num Rev</th>
-                              <th scope="col" class="capitalize">Nome Emp</th>
-                              <th scope="col" class="capitalize">NOME FILIAL</th>
-                              <th scope="col" class="capitalize">Tipo</th>
-                              <th scope="col" class="capitalize">Rev</th>
-                              <th scope="col" class="capitalize">DN</th>
-                              <th scope="col" class="capitalize">ATIVO</th>
-                              <th scope="col" class="capitalize">VENDAS</th>
-                              <th scope="col" class="capitalize">BD</th>
-                              <th scope="col" class="capitalize">BANDEIRA</th>
-                              <th scope="col" class="capitalize">REVMATRIZ</th>
-                              <th scope="col" class="capitalize">CNPJ</th>
+                              <th scope="col" class="capitalize">EMPR&ensp;</th>
+                              <th scope="col" class="capitalize">Num Rev&ensp;</th>
+                              <th scope="col" class="capitalize">Nome Emp&ensp;</th>
+                              <th scope="col" class="capitalize">NOME FILIAL&ensp;</th>
+                              <th scope="col" class="capitalize">Tipo&ensp;</th>
+                              <th scope="col" class="capitalize">Rev&ensp;</th>
+                              <th scope="col" class="capitalize">DN&ensp;</th>
+                              <th scope="col" class="capitalize">ATIVO&ensp;</th>
+                              <th scope="col" class="capitalize">VENDAS&ensp;</th>
+                              <th scope="col" class="capitalize">BD&ensp;</th>
+                              <th scope="col" class="capitalize">BANDEIRA&ensp;</th>
+                              <th scope="col" class="capitalize">REVMATRIZ&ensp;</th>
+                              <th scope="col" class="capitalize">CNPJ&ensp;</th>
                             </tr>
                           </thead>
                           <tbody>';

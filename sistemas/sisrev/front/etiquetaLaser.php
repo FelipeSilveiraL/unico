@@ -59,7 +59,7 @@ require_once('../config/query.php'); //menu lateral da pagina
               </div>
               <div class="text-left py-3">
                 <button type="submit" value="1" name="der" class="btn btn-primary">Pesquisar</button>
-                <button type="submit" title="Selecione os itens para impressão de etiqueta" style="display:<?= ($_POST['der'] == 1)? '' : 'none' ?> " name="der" class="btn btn-primary"><i class="bx bx-printer"></i></button>
+                <button value="Print" onclick="window.print()" title="Selecione os itens para impressão de etiqueta" style="display:<?= ($_POST['der'] == 1)? '' : 'none' ?> " name="der" class="btn btn-primary"><i class="bx bx-printer"></i></button>
               </div>
             </form>
             <section class="section">
