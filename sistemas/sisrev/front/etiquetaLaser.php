@@ -34,12 +34,12 @@ require_once('../config/query.php'); //menu lateral da pagina
             <!--input's para pesquisa no banco de dados -->
             <form class="row g-3" method="POST" action="<?= $PHP_SELF ?>">
               <div class="col-2">
-                <label for="revEmp" class="form-label" >Revenda</label>
-                <input type="text" class="form-control" id="revEmp" name="rev" >
+                <label for="revEmp" class="form-label">Revenda</label>
+                <input type="text" class="form-control" id="revEmp" name="rev">
               </div>
               <div class="col-2">
                 <label for="revEmp" class="form-label">Empresa</label>
-                <input type="text" class="form-control" id="revEmp" name="emp" >
+                <input type="text" class="form-control" id="revEmp" name="emp">
               </div>
               <div class="col-2">
                 <label for="numeroNota" class="form-label">Nº Nota</label>
@@ -59,112 +59,119 @@ require_once('../config/query.php'); //menu lateral da pagina
               </div>
               <div class="text-left py-3">
                 <button type="submit" value="1" name="der" class="btn btn-primary">Pesquisar</button>
-                <button value="Print" onclick="window.print()" title="Selecione os itens para impressão de etiqueta" style="display:<?= ($_POST['der'] == 1)? '' : 'none' ?> " name="der" class="btn btn-primary"><i class="bx bx-printer"></i></button>
               </div>
             </form>
+            <form class="row g-3" action="../inc/print.php" method="POST">
+            <div>
+            <button type="submit" title="Selecione os itens para impressão de etiqueta" style="display:<?= ($_POST['der'] == 1) ? '' : 'none' ?>;float:right;" class="btn btn-primary"><i class="bx bx-printer"></i></button>
+            </div>
             <section class="section">
-                <div class="row">
-                  <!-- Table with stripped rows -->
-                  <table class="table datatable">
-                    <thead>
-                      <tr>
+              <div class="row">
+                <!-- Table with stripped rows -->
+                <table class="table datatable">
+                  <thead>
+                    <tr>
                       <th scope="col" class="capitalize">#</th>
-                        <th scope="col" class="capitalize">DATA NF</th>
-                        <th scope="col" class="capitalize">EMPRESA</th>
-                        <th scope="col" class="capitalize">REVENDA</th>
-                        <th scope="col" class="capitalize">Nº NF</th>
-                        <th scope="col" class="capitalize">PRODUTO</th>
-                        <th scope="col" class="capitalize">CAIXA</th>
-                        <th scope="col" class="capitalize">QTDE</th>
-                        <th scope="col" class="capitalize">TOT ITEM</th>
-                        <th scope="col" class="capitalize">VAL IPI</th>
-                        <th scope="col" class="capitalize">FORNEC</th>
-                        <!-- <th scope="col" class="capitalize">QTD</th> -->
-                      </tr>
-                    </thead>
+                      <th scope="col" class="capitalize">DATA NF</th>
+                      <th scope="col" class="capitalize">EMPRESA</th>
+                      <th scope="col" class="capitalize">REVENDA</th>
+                      <th scope="col" class="capitalize">Nº NF</th>
+                      <th scope="col" class="capitalize">PRODUTO</th>
+                      <th scope="col" class="capitalize">CAIXA</th>
+                      <th scope="col" class="capitalize">QTDE</th>
+                      <th scope="col" class="capitalize">TOT ITEM</th>
+                      <th scope="col" class="capitalize">VAL IPI</th>
+                      <th scope="col" class="capitalize">FORNEC</th>
+                      <!-- <th scope="col" class="capitalize">QTD</th>  -->
+                    </tr>
+                  </thead>
 
-                    <?php 
-                    //salvando informações nas variaveis 
-                      $numeroCaixa = $_POST['numeroCaixa'];
-                      $numeroNota  = $_POST['numeroNota'];
-                      $data        = $_POST['data'];
-                      $rev         = $_POST['rev'];
-                      $emp         = $_POST['emp'];
-                      $produto     = $_POST['produto'];
+                  <?php
+                  //salvando informações nas variaveis 
+                  $numeroCaixa = $_POST['numeroCaixa'];
+                  $numeroNota  = $_POST['numeroNota'];
+                  $data        = $_POST['data'];
+                  $rev         = $_POST['rev'];
+                  $emp         = $_POST['emp'];
+                  $produto     = $_POST['produto'];
 
-                      switch($_POST['der'] == 1){
-                          case $data:
-                            $buscaCarga.= " WHERE data_nota = '".$data."' ";
-                            break;
-                          case $numeroNota:
-                            $buscaCarga.= " WHERE numero_nota = '".$numeroNota."' ";
-                            break;
-                          case $numeroCaixa:
-                            $buscaCarga.= " WHERE caixa = '".$numeroCaixa."' ";
-                            break;
-                          case $revEmp:
-                            $buscaCarga.= " WHERE rev_emp = '".$revEmp."' ";
-                            break;
-                          case $rev:
-                            $buscaCarga.= " WHERE revenda = '".$rev."' ";
-                            break;
-                          case $emp:
-                            $buscaCarga.= " WHERE empresa = '".$emp."' ";
-                            break;
-                          case $produto:
-                            $buscaCarga.= " WHERE produto = '".$produto."' ";
-                            break;
-                      }
-                      $conSucesso = $conn->query($buscaCarga);
-                      while($row = $conSucesso->fetch_assoc()){
-                        $produto = $row['produto'];
-                        $produto = substr_replace($produto, '&nbsp;', 3, 0);
-                        // $produto = substr_replace($produto, '&nbsp;', -2, 0);
-                        $dataTab = $row['data_nota'];
-                        $dataTab = implode('/', array_reverse(explode('-', $dataTab)));
-                        $valorIpi = $row['val_ipi'];
-                        if($valorIpi === ' ,'){
-                          $valorIpi = substr_replace($valorIpi,'0',-3,0);
-                        }else{
-                          $valorIpi = $row['val_ipi'];
-                        }
-                        $qtde = $row['qtde'];
-                        $totalItem = $row['tot_item'];
-                        echo '<tr>
-                              <th> <input class="form-check-input" type="checkbox" name="etiqueta'.$row['id_nota'].'" id="etiqueta[]"></th>
-                              <th>'.$dataTab.'</th>
-                              <th>'.$row['empresa'].'</th>
-                              <th>'.$row['revenda'].'</th>
-                              <th>'.$row['numero_nota'].'</th>
-                              <th>'.$produto.'</th>
-                              <th><span style="color: red;">'.$row['caixa'].'</span></th>
-                              <th>'.$qtde.'</th>
-                              <th>'.$totalItem.'</th>
-                              <th>'.$valorIpi.'</th>
-                              <th>'.$row['fornecedor'].'</th>
-                              <th></th>
+                  switch ($_POST['der'] == 1) {
+                    case $data:
+                      $buscaCarga .= " WHERE data_nota = '" . $data . "' ";
+                      break;
+                    case $numeroNota:
+                      $buscaCarga .= " WHERE numero_nota = '" . $numeroNota . "' ";
+                      break;
+                    case $numeroCaixa:
+                      $buscaCarga .= " WHERE caixa = '" . $numeroCaixa . "' ";
+                      break;
+                    case $revEmp:
+                      $buscaCarga .= " WHERE rev_emp = '" . $revEmp . "' ";
+                      break;
+                    case $rev:
+                      $buscaCarga .= " WHERE revenda = '" . $rev . "' ";
+                      break;
+                    case $emp:
+                      $buscaCarga .= " WHERE empresa = '" . $emp . "' ";
+                      break;
+                    case $produto:
+                      $buscaCarga .= " WHERE produto = '" . $produto . "' ";
+                      break;
+                  }
+                  $conSucesso = $conn->query($buscaCarga);
+                  while ($row = $conSucesso->fetch_assoc()) {
+                    $produto = $row['produto'];
+                    $produto = substr_replace($produto, '&nbsp;', 3, 0);
+                    // $produto = substr_replace($produto, '&nbsp;', -2, 0);
+                    $dataTab = $row['data_nota'];
+                    $dataTab = implode('/', array_reverse(explode('-', $dataTab)));
+                    $valorIpi = $row['val_ipi'];
+                    if ($valorIpi === ' ,') {
+                      $valorIpi = substr_replace($valorIpi, '0', -3, 0);
+                    } else {
+                      $valorIpi = $row['val_ipi'];
+                    }
+                    $qtde = $row['qtde'];
+                    $totalItem = $row['tot_item'];
+                    echo '<tr>
+                              <th> <input class="form-check-input" type="checkbox" name="etiqueta" value="' . $row['id_nota'] . '" id="etiqueta"></th>
+                              <th>' . $dataTab . '</th>
+                              <th>' . $row['empresa'] . '</th>
+                              <th>' . $row['revenda'] . '</th>
+                              <th>' . $row['numero_nota'] . '</th>
+                              <th>' . $produto . '</th>
+                              <th><span style="color: red;">' . $row['caixa'] . '</span></th>
+                              <th>' . $qtde . '</th>
+                              <th>' . $totalItem . '</th>
+                              <th>' . $valorIpi . '</th>
+                              <th>' . $row['fornecedor'] . '</th>
+                              <th>
+                              <input type="hidden" name="copia" value="'.$row['qtde'].'" id="copia" style="width:50px;">
+                              </th>
                               
-                              </tr>'
-                              ;
-                      }
-                    ?>
-                  </table>
-                  <!-- End Table with stripped rows -->
-                </div>
-              </section>
+                              </tr>';
+                  }
+                  ?>
+                </table>
+                <!-- End Table with stripped rows -->
+              </div>
+            </section>
+            </form>
           </div>
         </div>
 
-        <!-- <div class="col-sm-1">
-                              <input type="number" style="width:50px;">
-                              </div> -->
+        <!--  -->
 
       </div>
     </div>
   </section>
 
   <!--################# section TERMINA AQUI #################-->
-
+<!-- <script>
+function myFunction() {
+  window.open("../inc/print.php");
+}
+</script> -->
 </main><!-- End #main -->
 
 <?php
