@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require '../../../vendor/autoload.php'; //autoload da biblioteca
 require_once('../config/query.php');
 require_once('../../../config/config.php');
@@ -8,7 +9,13 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet; //classe responsável pela manipulaç�
 
 $extXLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-!empty($_POST['empresa']) ?: header("location: ../front/atualizarPreco.php?pg=2");
+
+
+if($_POST['empresa'] == NULL){
+    header("location: ../front/atualizarPreco.php?pg=2&msn=10&erro=6");
+    exit;
+}
+
 
 switch ($_POST['empresa']) {
     case '55':
@@ -42,6 +49,7 @@ switch ($_POST['empresa']) {
                 $arquivo = $uploadfile;
                 $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader("Xlsx");
                 $spreadsheet = $reader->load($arquivo);
+                
                 $sheet = $spreadsheet->getActiveSheet();
 
                 foreach ($sheet->getRowIterator(8) as $row) {

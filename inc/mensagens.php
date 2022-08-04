@@ -87,6 +87,9 @@ if (!empty($_GET['msn'])) {
                 case '5':
                     echo '<p class="mb-0"><i class="bi bi-pin"></i> Campo(s) vazio(s)!</p>';
                     break;
+                case '6':
+                    echo '<p class="mb-0"><i class="bi bi-pin"></i> Não consegui reconhecer qual empresa deseja realizar a ação!</p>';
+                    break;
             }
             echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
