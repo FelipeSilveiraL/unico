@@ -67,4 +67,5 @@ foreach ($resultado->empresaSmart as $empSmart) {
 
 curl_close($ch);
 
+
 ?>
