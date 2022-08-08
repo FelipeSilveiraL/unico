@@ -1,14 +1,14 @@
 <?php
 
 	//SERVIDOR UNICO
-	$ipservidorUnico = "10.100.1.66";	
+	$ipservidorUnico = "10.100.1.67";	
 	$portaUnico = "3306";
 	$userUnico = "unico";
-	$passUnico = "#CAvpnGSVP20";
+	$passUnico = "Servopa123#";
 	$dbnameUnico = "unico";
 
 	//SERVIDOR NOTAS
-	$ipservidorNotas = "10.100.1.66";	
+	$ipservidorNotas = "10.100.1.67";	
 	$portaNotas = "3306";
 	$userNotas = "dbnotas";
 	$passNotas = "#CAvpnGSVP20";
@@ -34,10 +34,10 @@
 	}
 
 	// ########### LOCAL - UNICO ###########
-	$connLOCALUnico = new mysqli($ipservidorLocal, $userLocal, $passLocal, $dbnameLocal, $portaLocal);
+	/*$connLOCALUnico = new mysqli($ipservidorLocal, $userLocal, $passLocal, $dbnameLocal, $portaLocal);
 	if ($connLOCALUnico->connect_error) {
 		die("ERRO CONEXÂO SERVIDOR LOCAL-UNICO: " . $connLOCALUnico->connect_error);
-	}
+	}*/
 	
 ?>
 

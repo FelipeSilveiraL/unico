@@ -3,6 +3,10 @@
         "psr-4": {}
     },
     "require": {
-        "phpoffice/phpspreadsheet": "^1.23"
+        "ext-gd": "*",
+        "ext-mbstring": "*",
+        "ext-zip": "*",
+        "dompdf/dompdf": "^2.0",
+        "phpoffice/phpspreadsheet": "^1.24"
     }
 }

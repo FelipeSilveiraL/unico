@@ -49,7 +49,8 @@ switch ($_POST['empresa']) {
                 $arquivo = $uploadfile;
                 $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader("Xlsx");
                 $spreadsheet = $reader->load($arquivo);
-                
+
+                printf($spreadsheet);
                 $sheet = $spreadsheet->getActiveSheet();
 
                 foreach ($sheet->getRowIterator(8) as $row) {

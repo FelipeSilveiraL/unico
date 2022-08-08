@@ -1,7 +1,7 @@
 <?php
 require_once('../inc/paginacao.php'); //pg
  
-$querySistemaCores .=  'WHERE id_usuario = '.$_SESSION['id_usuario'].' AND id_sistema = '.$_SESSION['id_sistema'];
+$querySistemaCores .=  ' WHERE id_usuario = '.$_SESSION['id_usuario'].' AND id_sistema = '.$_SESSION['id_sistema'];
 
 $resultado = $conn->query($querySistemaCores);
 
