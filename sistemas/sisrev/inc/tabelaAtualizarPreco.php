@@ -6,7 +6,7 @@ if ($_GET['acao'] == 1) {
 
     switch ($_GET['empresa']) {
         case '55':
-            $queryListaPreco = "SELECT item, descricao, rrp as valor, status_item FROM 'sisrev_atualizacao_preco_triumph'";
+            $queryListaPreco = "SELECT item, descricao, rrp as valor, status_item FROM sisrev_atualizacao_preco_triumph";
             $resultListaPreco = $conn->query($queryListaPreco);
 
             $tabela = '<thead>
