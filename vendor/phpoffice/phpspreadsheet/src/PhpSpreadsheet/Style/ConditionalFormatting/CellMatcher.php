@@ -219,7 +219,7 @@ class CellMatcher
         foreach ($splitCondition as &$value) {
             //    Only count/replace in alternating array entries (ie. not in quoted strings)
             if ($i = !$i) {
-                $value = (string) preg_replace_callback(
+                $value = preg_replace_callback(
                     '/' . Calculation::CALCULATION_REGEXP_CELLREF_RELATIVE . '/i',
                     [$this, 'conditionCellAdjustment'],
                     $value
@@ -287,7 +287,7 @@ class CellMatcher
         $conditions = $this->adjustConditionsForCellReferences($conditional->getConditions());
         $expression = array_pop($conditions);
 
-        $expression = (string) preg_replace(
+        $expression = preg_replace(
             '/\b' . $this->referenceCell . '\b/i',
             (string) $this->wrapCellValue(),
             $expression

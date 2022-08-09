@@ -1297,10 +1297,11 @@ class Xls extends BaseReader
                         ($docSheet = $this->spreadsheet->getSheetByName(trim($explodes[0], "'")))
                     ) {
                         $extractedRange = $explodes[1];
+                        $extractedRange = str_replace('$', '', $extractedRange);
 
-                        $localOnly = ($definedName['scope'] === 0) ? false : true;
+                        $localOnly = ($definedName['scope'] == 0) ? false : true;
 
-                        $scope = ($definedName['scope'] === 0) ? null : $this->spreadsheet->getSheetByName($this->sheets[$definedName['scope'] - 1]['name']);
+                        $scope = ($definedName['scope'] == 0) ? null : $this->spreadsheet->getSheetByName($this->sheets[$definedName['scope'] - 1]['name']);
 
                         $this->spreadsheet->addNamedRange(new NamedRange((string) $definedName['name'], $docSheet, $extractedRange, $localOnly, $scope));
                     }
@@ -2280,15 +2281,13 @@ class Xls extends BaseReader
                 // bit: 31; mask: 0x80000000; 1 = diagonal line from bottom left to top right
                 $diagonalUp = (0x80000000 & self::getInt4d($recordData, 10)) >> 31 ? true : false;
 
-                if ($diagonalUp === false) {
-                    if ($diagonalDown == false) {
-                        $objStyle->getBorders()->setDiagonalDirection(Borders::DIAGONAL_NONE);
-                    } else {
-                        $objStyle->getBorders()->setDiagonalDirection(Borders::DIAGONAL_DOWN);
-                    }
-                } elseif ($diagonalDown == false) {
+                if ($diagonalUp == false && $diagonalDown == false) {
+                    $objStyle->getBorders()->setDiagonalDirection(Borders::DIAGONAL_NONE);
+                } elseif ($diagonalUp == true && $diagonalDown == false) {
                     $objStyle->getBorders()->setDiagonalDirection(Borders::DIAGONAL_UP);
-                } else {
+                } elseif ($diagonalUp == false && $diagonalDown == true) {
+                    $objStyle->getBorders()->setDiagonalDirection(Borders::DIAGONAL_DOWN);
+                } elseif ($diagonalUp == true && $diagonalDown == true) {
                     $objStyle->getBorders()->setDiagonalDirection(Borders::DIAGONAL_BOTH);
                 }
 
@@ -4523,17 +4522,17 @@ class Xls extends BaseReader
 
             // first row '1' + last row '16384' indicates that full column is selected (apparently also in BIFF8!)
             if (preg_match('/^([A-Z]+1\:[A-Z]+)16384$/', $selectedCells)) {
-                $selectedCells = (string) preg_replace('/^([A-Z]+1\:[A-Z]+)16384$/', '${1}1048576', $selectedCells);
+                $selectedCells = preg_replace('/^([A-Z]+1\:[A-Z]+)16384$/', '${1}1048576', $selectedCells);
             }
 
             // first row '1' + last row '65536' indicates that full column is selected
             if (preg_match('/^([A-Z]+1\:[A-Z]+)65536$/', $selectedCells)) {
-                $selectedCells = (string) preg_replace('/^([A-Z]+1\:[A-Z]+)65536$/', '${1}1048576', $selectedCells);
+                $selectedCells = preg_replace('/^([A-Z]+1\:[A-Z]+)65536$/', '${1}1048576', $selectedCells);
             }
 
             // first column 'A' + last column 'IV' indicates that full row is selected
             if (preg_match('/^(A\d+\:)IV(\d+)$/', $selectedCells)) {
-                $selectedCells = (string) preg_replace('/^(A\d+\:)IV(\d+)$/', '${1}XFD${2}', $selectedCells);
+                $selectedCells = preg_replace('/^(A\d+\:)IV(\d+)$/', '${1}XFD${2}', $selectedCells);
             }
 
             $this->phpSheet->setSelectedCells($selectedCells);

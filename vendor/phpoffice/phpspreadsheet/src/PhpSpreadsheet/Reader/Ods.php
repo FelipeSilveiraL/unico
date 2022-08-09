@@ -325,7 +325,7 @@ class Ods extends BaseReader
                 }
                 $spreadsheet->setActiveSheetIndex($worksheetID);
 
-                if ($worksheetName || is_numeric($worksheetName)) {
+                if ($worksheetName) {
                     // Use false for $updateFormulaCellReferences to prevent adjustment of worksheet references in
                     // formula cells... during the load, all formulae should be correct, and we're simply
                     // bringing the worksheet name in line with the formula, not the reverse
@@ -588,7 +588,6 @@ class Ods extends BaseReader
                             break;
                     }
                 }
-                $pageSettings->setVisibilityForWorksheet($spreadsheet->getActiveSheet(), $worksheetStyleName);
                 $pageSettings->setPrintSettingsForWorksheet($spreadsheet->getActiveSheet(), $worksheetStyleName);
                 ++$worksheetID;
             }
@@ -629,7 +628,7 @@ class Ods extends BaseReader
         foreach ($settings->getElementsByTagNameNS($configNs, 'config-item') as $t) {
             if ($t->getAttributeNs($configNs, 'name') === 'ActiveTable') {
                 try {
-                    $spreadsheet->setActiveSheetIndexByName($t->nodeValue ?? '');
+                    $spreadsheet->setActiveSheetIndexByName($t->nodeValue ?: '');
                 } catch (Throwable $e) {
                     // do nothing
                 }

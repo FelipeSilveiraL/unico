@@ -642,7 +642,7 @@ class Html
                 $text = ltrim($text);
             }
             // Trim any spaces immediately after a line break
-            $text = (string) preg_replace('/\n */mu', "\n", $text);
+            $text = preg_replace('/\n */mu', "\n", $text);
             $element->setText($text);
         }
     }
@@ -792,10 +792,10 @@ class Html
 
     protected function parseTextNode(DOMText $textNode): void
     {
-        $domText = (string) preg_replace(
+        $domText = preg_replace(
             '/\s+/u',
             ' ',
-            str_replace(["\r", "\n"], ' ', $textNode->nodeValue ?? '')
+            str_replace(["\r", "\n"], ' ', $textNode->nodeValue ?: '')
         );
         $this->stringData .= $domText;
         $this->buildTextRun();

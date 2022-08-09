@@ -318,7 +318,10 @@ class Worksheet extends WriterPart
         }
 
         // Set Zero Height row
-        if ($worksheet->getDefaultRowDimension()->getZeroHeight()) {
+        if (
+            (string) $worksheet->getDefaultRowDimension()->getZeroHeight() === '1' ||
+            strtolower((string) $worksheet->getDefaultRowDimension()->getZeroHeight()) == 'true'
+        ) {
             $objWriter->writeAttribute('zeroHeight', '1');
         }
 
@@ -1142,74 +1145,64 @@ class Worksheet extends WriterPart
         // Highest row number
         $highestRow = $worksheet->getHighestRow();
 
-        // Loop through cells building a comma-separated list of the columns in each row
-        // This is a trade-off between the memory usage that is required for a full array of columns,
-        //      and execution speed
-        /** @var array<int, string> $cellsByRow */
+        // Loop through cells
         $cellsByRow = [];
         foreach ($worksheet->getCoordinates() as $coordinate) {
-            [$column, $row] = Coordinate::coordinateFromString($coordinate);
-            $cellsByRow[$row] = $cellsByRow[$row] ?? '';
-            $cellsByRow[$row] .= "{$column},";
+            $cellAddress = Coordinate::coordinateFromString($coordinate);
+            $cellsByRow[$cellAddress[1]][] = $coordinate;
         }
 
         $currentRow = 0;
         while ($currentRow++ < $highestRow) {
-            $isRowSet = isset($cellsByRow[$currentRow]);
-            if ($isRowSet || $worksheet->rowDimensionExists($currentRow)) {
-                // Get row dimension
-                $rowDimension = $worksheet->getRowDimension($currentRow);
+            // Get row dimension
+            $rowDimension = $worksheet->getRowDimension($currentRow);
 
-                // Write current row?
-                $writeCurrentRow = $isRowSet || $rowDimension->getRowHeight() >= 0 || $rowDimension->getVisible() === false || $rowDimension->getCollapsed() === true || $rowDimension->getOutlineLevel() > 0 || $rowDimension->getXfIndex() !== null;
+            // Write current row?
+            $writeCurrentRow = isset($cellsByRow[$currentRow]) || $rowDimension->getRowHeight() >= 0 || $rowDimension->getVisible() == false || $rowDimension->getCollapsed() == true || $rowDimension->getOutlineLevel() > 0 || $rowDimension->getXfIndex() !== null;
 
-                if ($writeCurrentRow) {
-                    // Start a new row
-                    $objWriter->startElement('row');
-                    $objWriter->writeAttribute('r', $currentRow);
-                    $objWriter->writeAttribute('spans', '1:' . $colCount);
+            if ($writeCurrentRow) {
+                // Start a new row
+                $objWriter->startElement('row');
+                $objWriter->writeAttribute('r', $currentRow);
+                $objWriter->writeAttribute('spans', '1:' . $colCount);
 
-                    // Row dimensions
-                    if ($rowDimension->getRowHeight() >= 0) {
-                        $objWriter->writeAttribute('customHeight', '1');
-                        $objWriter->writeAttribute('ht', StringHelper::formatNumber($rowDimension->getRowHeight()));
-                    }
-
-                    // Row visibility
-                    if (!$rowDimension->getVisible() === true) {
-                        $objWriter->writeAttribute('hidden', 'true');
-                    }
-
-                    // Collapsed
-                    if ($rowDimension->getCollapsed() === true) {
-                        $objWriter->writeAttribute('collapsed', 'true');
-                    }
-
-                    // Outline level
-                    if ($rowDimension->getOutlineLevel() > 0) {
-                        $objWriter->writeAttribute('outlineLevel', $rowDimension->getOutlineLevel());
-                    }
-
-                    // Style
-                    if ($rowDimension->getXfIndex() !== null) {
-                        $objWriter->writeAttribute('s', $rowDimension->getXfIndex());
-                        $objWriter->writeAttribute('customFormat', '1');
-                    }
-
-                    // Write cells
-                    if (isset($cellsByRow[$currentRow])) {
-                        // We have a comma-separated list of column names (with a trailing entry); split to an array
-                        $columnsInRow = explode(',', $cellsByRow[$currentRow]);
-                        array_pop($columnsInRow);
-                        foreach ($columnsInRow as $column) {
-                            // Write cell
-                            $this->writeCell($objWriter, $worksheet, "{$column}{$currentRow}", $aFlippedStringTable);
-                        }
-                    }
-
-                    // End row
-                    $objWriter->endElement();
+                // Row dimensions
+                if ($rowDimension->getRowHeight() >= 0) {
+                    $objWriter->writeAttribute('customHeight', '1');
+                    $objWriter->writeAttribute('ht', StringHelper::formatNumber($rowDimension->getRowHeight()));
                 }
+
+                // Row visibility
+                if (!$rowDimension->getVisible() === true) {
+                    $objWriter->writeAttribute('hidden', 'true');
+                }
+
+                // Collapsed
+                if ($rowDimension->getCollapsed() === true) {
+                    $objWriter->writeAttribute('collapsed', 'true');
+                }
+
+                // Outline level
+                if ($rowDimension->getOutlineLevel() > 0) {
+                    $objWriter->writeAttribute('outlineLevel', $rowDimension->getOutlineLevel());
+                }
+
+                // Style
+                if ($rowDimension->getXfIndex() !== null) {
+                    $objWriter->writeAttribute('s', $rowDimension->getXfIndex());
+                    $objWriter->writeAttribute('customFormat', '1');
+                }
+
+                // Write cells
+                if (isset($cellsByRow[$currentRow])) {
+                    foreach ($cellsByRow[$currentRow] as $cellAddress) {
+                        // Write cell
+                        $this->writeCell($objWriter, $worksheet, $cellAddress, $aFlippedStringTable);
+                    }
+                }
+
+                // End row
+                $objWriter->endElement();
             }
         }
 

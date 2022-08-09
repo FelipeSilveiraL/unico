@@ -9,14 +9,14 @@ $sucesso = $conn->query($dropTableEstoque);
 
 $createTableItem = "CREATE TABLE `sisrev_etiqueta_estoque` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `XZONA` VARCHAR(80) NULL,
-    `XRUA` VARCHAR(10) NULL,
-    `XESTANTE` VARCHAR(10) NULL,
-    `XPRATELEIRA` VARCHAR(10) NULL,
-    `XEMPRESA` VARCHAR(10) NULL,
-    `XREVENDA` VARCHAR(10) NULL,
-    `XNUMERO` VARCHAR(10) NULL,
-    `XESTOQUE` VARCHAR(10) NULL,
+    `LOCACAO_ZONA` VARCHAR(80) NULL,
+    `LOCACAO_RUA` VARCHAR(100) NULL,
+    `LOCACAO_ESTANTE` VARCHAR(100) NULL,
+    `LOCACAO_PRATELEIRA` VARCHAR(100) NULL,
+    `EMPRESA` VARCHAR(100) NULL,
+    `REVENDA` VARCHAR(100) NULL,
+    `LOCACAO_NUMERO` VARCHAR(100) NULL,
+    `ITEM_ESTOQUE` VARCHAR(100) NULL,
     PRIMARY KEY (`id`))";
 
 
@@ -29,20 +29,19 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 $resultado = json_decode(curl_exec($ch));
 
-foreach ($resultado->$itensGaveta as $etiqLaser) {
-
-
+foreach ($resultado->itensGaveta as $etiqLaser) {
+  
     $insertEstoque = "INSERT INTO sisrev_etiqueta_estoque 
-                            (XEMPRESA,XESTANTE,XESTOQUE,XNUMERO,XPRATELEIRA,XREVENDA,XRUA,XZONA)
+                            (EMPRESA,LOCACAO_ESTANTE,ITEM_ESTOQUE,LOCACAO_NUMERO,LOCACAO_PRATELEIRA,REVENDA,LOCACAO_RUA,LOCACAO_ZONA)
    
-    VALUES ('" . $etiqLaser->XEMPRESA ."',
-            '" . $etiqLaser->XESTANTE . "',
-            '" . $etiqLaser->XESTOQUE . "' ,
-            '" . $etiqLaser->XNUMERO ."',
-            '" . $etiqLaser->XPRATELEIRA ."',
-            '" . $etiqLaser->XREVENDA ."',
-            '" . $etiqLaser->XRUA ."',
-            '" . $etiqLaser->XZONA ."'
+    VALUES ('" . $etiqLaser->EMPRESA ."',
+            '" . $etiqLaser->LOCACAO_ESTANTE . "',
+            '" . $etiqLaser->ITEM_ESTOQUE . "' ,
+            '" . $etiqLaser->LOCACAO_NUMERO ."',
+            '" . $etiqLaser->LOCACAO_PRATELEIRA ."',
+            '" . $etiqLaser->REVENDA ."',
+            '" . $etiqLaser->LOCACAO_RUA ."',
+            '" . $etiqLaser->LOCACAO_ZONA ."'
             )";
 
         
