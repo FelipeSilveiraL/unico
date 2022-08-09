@@ -1,5 +1,5 @@
 <?php 
-require_once('../config/session.php');
+require_once('../inc/paginacao.php'); 
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">

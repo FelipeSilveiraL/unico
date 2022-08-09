@@ -62,6 +62,7 @@ $usuarios = $resultado->fetch_assoc();
                     <tbody>
                       <?php
                       //chamando modulos
+                      $queryModulos .= " WHERE deletar = 0";
                       $resultadoModulos = $conn->query($queryModulos);
 
                       while ($modulos = $resultadoModulos->fetch_assoc()) {

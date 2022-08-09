@@ -26,18 +26,22 @@ require_once('menu.php'); //menu lateral da pagina
         <!-- Default Tabs -->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link <?php if($_GET['f'] == NULL) {echo 'active';} ?>" id="telas-tab" data-bs-toggle="tab" data-bs-target="#telas" type="button" role="tab" aria-controls="telas" aria-selected="true">Modulos</button>
+            <button class="nav-link <?php if ($_GET['f'] == NULL) {
+                                      echo 'active';
+                                    } ?>" id="telas-tab" data-bs-toggle="tab" data-bs-target="#telas" type="button" role="tab" aria-controls="telas" aria-selected="true">Modulos</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link <?php if($_GET['f'] != NULL) {echo 'active';} ?>" id="funcoes-tab" data-bs-toggle="tab" data-bs-target="#funcoes" type="button" role="tab" aria-controls="funcoes" aria-selected="false">Funções</button>
+            <button class="nav-link <?php if ($_GET['f'] != NULL) {
+                                      echo 'active';
+                                    } ?>" id="funcoes-tab" data-bs-toggle="tab" data-bs-target="#funcoes" type="button" role="tab" aria-controls="funcoes" aria-selected="false">Funções</button>
           </li>
         </ul>
         <div class="tab-content pt-2" id="myTabContent">
           <?php
-            require_once('../inc/telas.php');
+          require_once('../inc/telas.php');
           ?>
           <?php
-            require_once('../inc/funcoes.php');
+          require_once('../inc/funcoes.php');
           ?>
         </div><!-- End Default Tabs -->
       </div>

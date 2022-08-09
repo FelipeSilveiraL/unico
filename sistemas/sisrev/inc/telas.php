@@ -15,6 +15,9 @@
                                 <th scope="col">ID</th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Endereço</th>
+                                <th scope="col">Sub-módulo</th>                                
+                                <th scope="col">Localização</th>                                
+                                <th scope="col">Ícone</th>
                                 <th scope="col">Ação</th>
                             </tr>
                         </thead>
@@ -25,11 +28,32 @@
                                 $resultado = $conn->query($queryAcessos);
 
                                 while ($acessos = $resultado->fetch_assoc()) {
+
+                                    switch ($acessos['localizacao']) {
+                                        case '0':
+                                            $localizacao = 'Módulo';
+                                            break;
+                                        
+                                        case '1':
+                                            $localizacao = 'Telas';
+                                            break;
+                                        case '2':
+                                            $localizacao = 'Outros';
+                                            break;
+                                    }
+
+                                    $a = "SELECT nome FROM sisrev_modulos where id = ".$acessos['sub_modulo'];
+                                    $b = $conn->query($a);
+                                    $c = $b->fetch_assoc();
+
                                     echo '
                                     <tr>
                                         <th scope="row">' . $acessos['id'] . '</th>
                                         <td>' . $acessos['nome'] . '</td>
                                         <td>' . $acessos['endereco'] . '</td>
+                                        <td>'; echo empty($acessos['sub_modulo']) ? '' : $c['nome']; echo '</td>
+                                        <td>' . $localizacao . '</td>
+                                        <td>' . $acessos['icone'] . '</td>
                                         <td> 
                                             <a href="acessos_alterar.php?pg=' . $_GET['pg'] . '&tela=' . $_GET['tela'] . '&id=' . $acessos['id'] . '&acao=2" title="Editar" class="btn btn-primary btn-sm">
                                                 <i class="bi bi-pencil"></i>
