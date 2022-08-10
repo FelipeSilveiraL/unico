@@ -10,8 +10,8 @@
     <h1>Administração</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
         <li class="breadcrumb-item">Administração</li>
       </ol>
     </nav>
@@ -24,7 +24,7 @@
   <section class="section">
     <div class="row">
       <div class="col-sm-3"> 
-        <a href="processos.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>" class="list-group-item list-group-item-action">
+        <a href="processos.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Processos Fabrica VW</h4>

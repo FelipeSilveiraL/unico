@@ -11,6 +11,7 @@ require_once('menu.php'); //menu lateral da pagina
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>  
         <li class="breadcrumb-item"><a href="informatica.php?pg=<?= $_GET['pg'] ?>">Informática</a></li>
         <li class="breadcrumb-item"><a href="politicamente_exposto.php?pg=<?= $_GET['pg'] ?>">Politicamente Exposto</a></li>
         <li class="breadcrumb-item">Registros</li>

@@ -11,8 +11,8 @@ require_once('../inc/apiRecebeSelbetti.php');
     <h1>Nova Regra Empresa</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php?pg=1">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
         <li class="breadcrumb-item"><a href="informatica.php?pg=<?= $_GET['pg'] ?>">Informática</a></li>
         <li class="breadcrumb-item"><a href="empresas.php?pg=<?= $_GET['pg'] ?>">Empresa</a></li>
         <li class="breadcrumb-item">Nova Regra Empresa</li>

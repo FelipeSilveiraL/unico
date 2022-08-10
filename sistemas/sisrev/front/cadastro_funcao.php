@@ -10,9 +10,9 @@ require_once('menu.php'); //menu lateral da pagina
     <h1>Cadastro de Funções</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
-        <li class="breadcrumb-item">Configurações</li>
-        <li class="breadcrumb-item">Usuários</li>
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="configuracao.php?pg=<?= $_GET['pg'] ?>">Configurações</a></li>
+        <li class="breadcrumb-item"><a href="usuarios.php?pg=<?= $_GET['pg'] ?>">Usuários</a></li>
         <li class="breadcrumb-item">Funções</li>
       </ol>
     </nav>

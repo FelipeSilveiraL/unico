@@ -10,8 +10,8 @@ require_once('menu.php'); //menu lateral da pagina
     <h1>Edição de Usuários</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
-        <li class="breadcrumb-item">Configurações</li>
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="configuracao.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
         <li class="breadcrumb-item">Usuários</li>
       </ol>
     </nav>

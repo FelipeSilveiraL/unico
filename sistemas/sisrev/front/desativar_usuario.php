@@ -18,8 +18,8 @@ require_once('../config/query.php'); //Dados do banco MYSQL
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php">Departamentos</a></li>
-        <li class="breadcrumb-item"><a href="informatica.php">Informática</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="informatica.php?pg=<?= $_GET['pg'] ?>">Informática</a></li>
         <li class="breadcrumb-item">Usuários Sistemas</li>
       </ol>
     </nav>
@@ -38,7 +38,7 @@ require_once('../config/query.php'); //Dados do banco MYSQL
             <!-- General Form Elements -->
             <div class="header d-flex align-items-center header-scrolled">
               <div class="search-bar">
-                <form class="search-form d-flex align-items-center" method="POST" action="desativar_usuario.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>&saida=1">
+                <form class="search-form d-flex align-items-center" method="POST" action="desativar_usuario.php?pg=<?= $_GET['pg'] ?>&saida=1">
                   <input type="text" name="cpf" placeholder="Insira cpf" title="Enter search keyword" onkeydown="javascript: fMasc( this, mCPF );" maxlength="14" required>
                   <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>

@@ -138,7 +138,7 @@ require_once('menu.php'); //menu lateral da pagina
 
 
               <div class="modal-footer">
-                <a href="telas_funcoes.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>" class="btn btn-secondary">Voltar</a>
+                <a href="telas_funcoes.php?pg=<?= $_GET['pg'] ?>" class="btn btn-secondary">Voltar</a>
                 <button type="submit" class="btn btn-primary">Salvar</button>
               </div>
             </form>

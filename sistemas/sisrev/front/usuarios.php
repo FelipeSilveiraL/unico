@@ -10,7 +10,7 @@ require_once('menu.php'); //menu lateral da pagina
     <h1>Usuários</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="configuracao.php?pg=<?= $_GET['pg'] ?>">Configurações</a></li>
         <li class="breadcrumb-item">Usuários</li>
       </ol>
@@ -32,7 +32,7 @@ require_once('menu.php'); //menu lateral da pagina
             <h6>
               <p> Nesta tela só é possivel tratar permissões dos usuários para o Sistema Sisrev.</p>
               <p>Caso seja necessario mudar outras informações como por exemplo; usuário, senha, etc... Basta clicar neste icone
-              <a href="../../../front/usuarios.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>" class="btn btn-success button-rigth-espelho" title="Editar usuários" target="_blank">
+              <a href="../../../front/usuarios.php?pg=<?= $_GET['pg'] ?>" class="btn btn-success button-rigth-espelho" title="Editar usuários" target="_blank">
                 <i class="bx bxs-user-detail"></i>
               </a></p>
             </h6>

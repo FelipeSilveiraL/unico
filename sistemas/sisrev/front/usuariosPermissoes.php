@@ -16,9 +16,9 @@ $usuarios = $resultado->fetch_assoc();
     <h1>Perfis de Usuários</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="configuracao.php?pg=<?= $_GET['pg'] ?>">Configurações</a></li>
-        <li class="breadcrumb-item"><a href="usuarios.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>">Usuários</a></li>
+        <li class="breadcrumb-item"><a href="usuarios.php?pg=<?= $_GET['pg'] ?>">Usuários</a></li>
         <li class="breadcrumb-item"><?= $usuarios['nome'] ?></li>
       </ol>
     </nav>
@@ -48,7 +48,7 @@ $usuarios = $resultado->fetch_assoc();
             </ul>
             <div class="tab-content pt-2" id="myTabContent">
               <div class="tab-pane fade show active" id="telas" role="tabpanel" aria-labelledby="telas-tab">
-                <form action="../inc/usuariosPermissoes.php?id_usuarios=<?= $_GET['id_usuarios'] ?>&pg=<?= $_GET['pg'] ?>&acao=1" method="post">
+                <form action="../inc/usuariosPermissoes.php?id_usuarios=<?= $_GET['id_usuarios'] ?>&acao=1" method="post">
 
                   <!-- Table with stripped rows -->
                   <table class="table datatable">
@@ -97,7 +97,7 @@ $usuarios = $resultado->fetch_assoc();
                 </form>
               </div>
               <div class="tab-pane fade" id="funcoes" role="tabpanel" aria-labelledby="funcoes-tab">
-                <form action="../inc/usuariosPermissoes.php?id_usuarios=<?= $_GET['id_usuarios'] ?>&pg=<?= $_GET['pg'] ?>&acao=2" method="post">
+                <form action="../inc/usuariosPermissoes.php?id_usuarios=<?= $_GET['id_usuarios'] ?>&acao=2" method="post">
 
                   <!-- Table with stripped rows -->
                   <table class="table datatable">

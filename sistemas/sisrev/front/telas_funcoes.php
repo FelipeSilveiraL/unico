@@ -9,8 +9,8 @@ require_once('menu.php'); //menu lateral da pagina
     <h1>Cadastro de modulos e funções</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
-        <li class="breadcrumb-item"><a href="configuracao.php">Configurações</a></li>
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="configuracao.php?pg=<?= $_GET['pg'] ?>">Configurações</a></li>
         <li class="breadcrumb-item">Modulos e Funções</li>
       </ol>
     </nav>
