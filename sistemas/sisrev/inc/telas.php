@@ -54,7 +54,7 @@
                                         <th scope="row">' . $acessos['id'] . '</th>
                                         <td>' . $acessos['nome'] . '</td>
                                         <td>' . $acessos['endereco'] . '</td>
-                                        <td>'; echo empty($acessos['sub_modulo']) ? '' : $c['nome']; echo '</td>
+                                        <td>'; echo empty($acessos['sub_modulo']) ? '---' : $c['nome']; echo '</td>
                                         <td>' . $localizacao . '</td>
                                         <td>' . $acessos['icone'] . '</td>
                                         <td> 

@@ -21,27 +21,25 @@ require_once('menu.php'); //menu lateral da pagina
   ?>
 
   <section>
-    <div class="row">
+    <div class="row">      
       <section class="section">
         <div class="row">
-          <div class="col-lg-3 py-2">
-            <a href="telas_funcoes.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>" class="list-group-item list-group-item-action">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Modulos e funções</h5>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-lg-3 py-2">
-            <a href="usuarios.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>" class="list-group-item list-group-item-action">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Usuários</h5>
-                </div>
-              </div>
-            </a>
-          </div>
+        <?php  
+        $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = ".$_GET['pg']." AND deletar = 0";
+        $resultadoModulosM = $conn->query($queryModulosM);
+
+        while ($modulosM = $resultadoModulosM->fetch_assoc()) {
+          echo '<div class="col-sm-3">
+                  <a href="'.$modulosM['endereco'].'?pg='.$modulosM['sub_modulo'].'" class="list-group-item list-group-item-action">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">'.$modulosM['nome'].'</h5>
+                      </div>
+                    </div>
+                  </a>
+                </div>';
+        }
+        ?>
         </div>
       </section>
     </div>

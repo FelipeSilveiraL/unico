@@ -68,18 +68,24 @@ require_once('menu.php'); //menu lateral da pagina
               </div>
 
               <div class="row mb-3">
-                <label for="endereco" class="col-md-4 col-lg-3 col-form-label">Sub-módulo ?</label>
+                <label for="endereco" class="col-md-4 col-lg-3 col-form-label">O que ele é?</label>
                 <div class="col-sm-8">
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="submodulo" id="gridRadios1" value="1" onclick="myFunction()">
-                    <label class="form-check-label" for="gridRadios1">
-                      SIM
-                    </label>
-                  </div>
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="submodulo" id="gridRadios2" value="2" onclick="myFunctionTwo()">
                     <label class="form-check-label" for="gridRadios2">
-                      NÂO
+                      Módulo
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="submodulo" id="gridRadios1" value="1" onclick="myFunction()">
+                    <label class="form-check-label" for="gridRadios1">
+                      Sub-módulo
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="submodulo" id="gridRadios1" value="3" onclick="myFunctionOne()" checked>
+                    <label class="form-check-label" for="gridRadios1">
+                      Página
                     </label>
                   </div>
                 </div>
@@ -149,25 +155,22 @@ require_once('menu.php'); //menu lateral da pagina
 
 <script>
   function myFunction() {
-
     var display = document.getElementById("noSubmenu").style.display;
-
     if (display == 'none') {
       document.getElementById("noSubmenu").style.display = 'block';
       document.getElementById("submenu").style.display = 'none';
     }
-
   }
-
   function myFunctionTwo() {
-
     var display = document.getElementById("submenu").style.display;
-
     if (display == 'none') {
       document.getElementById("submenu").style.display = 'block';
       document.getElementById("noSubmenu").style.display = 'none';
     }
-
+  }
+  function myFunctionOne() {  
+    document.getElementById("submenu").style.display = 'none';
+    document.getElementById("noSubmenu").style.display = 'none';
   }
 </script>
 

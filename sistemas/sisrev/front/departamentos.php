@@ -26,35 +26,22 @@ require_once('menu.php'); //menu lateral da pagina
 
         <div class="row">
 
-          <div class="col-lg-3 py-2">
-            <a href="informatica.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Informática</h5>
-                </div>
-              </div>
-            </a>
-          </div>
+        <?php  
+        $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = ".$_GET['pg']." AND deletar = 0";
+        $resultadoModulosM = $conn->query($queryModulosM);
 
-          <div class="col-lg-3 py-2">
-            <a href="administracao.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Administração</h5>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-lg-3 py-2">
-            <a href="pecas.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Peças</h5>
-                </div>
-              </div>
-            </a>
-          </div>
+        while ($modulosM = $resultadoModulosM->fetch_assoc()) {
+          echo '<div class="col-sm-3">
+                  <a href="'.$modulosM['endereco'].'?pg='.$modulosM['sub_modulo'].'" class="list-group-item list-group-item-action">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">'.$modulosM['nome'].'</h5>
+                      </div>
+                    </div>
+                  </a>
+                </div>';
+        }
+        ?>
 
         </div>
 
