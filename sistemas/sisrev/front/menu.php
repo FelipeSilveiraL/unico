@@ -46,14 +46,14 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
                                             </li>
                                         </ul>';
                 } else {
-                    $linkmodulosub = 'href="' . $modulosM['endereco'] . '">';
+                    $linkmodulosub = 'href="' . $modulosM['endereco'] . '?pg='.$modulosM['id'].'">';
                     $submodulo = '';
                     $iconeSeta = '';
                 }
 
                 echo '<li class="nav-item">
                                 <a class="nav-link';
-                echo $_GET['pg'] == $modulosM['id'] ? '' : ' collapsed"';
+                echo $_GET['pg'] == $modulosM['id'] ? ' "' : ' collapsed"';
                 echo $linkmodulosub;
                 echo $modulosM['icone'];
                 echo '<span> ' . $modulosM['nome'] . '</span>';
@@ -94,14 +94,14 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
                                             </li>
                                         </ul>';
                 } else {
-                    $linkmodulosub = 'href="' . $modulosM['endereco'] . '">';
+                    $linkmodulosub = 'href="' . $modulosM['endereco'] . '?pg='.$modulosM['id'].'">';
                     $submodulo = '';
                     $iconeSeta = '';
                 }
 
                 echo '<li class="nav-item">
                                 <a class="nav-link';
-                echo $_GET['pg'] == $modulosM['id'] ? '' : ' collapsed"';
+                echo $_GET['pg'] == $modulosM['id'] ? ' "' : ' collapsed"';
                 echo $linkmodulosub;
                 echo $modulosM['icone'];
                 echo '<span> ' . $modulosM['nome'] . '</span>';
@@ -142,14 +142,14 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
                                             </li>
                                         </ul>';
                 } else {
-                    $linkmodulosub = 'href="' . $modulosM['endereco'] . '">';
+                    $linkmodulosub = 'href="' . $modulosM['endereco'] . '?pg='.$modulosM['id'].'">';
                     $submodulo = '';
                     $iconeSeta = '';
                 }
 
                 echo '<li class="nav-item">
                                 <a class="nav-link';
-                echo $_GET['pg'] == $modulosM['id'] ? '' : ' collapsed"';
+                echo $_GET['pg'] == $modulosM['id'] ? ' "' : ' collapsed"';
                 echo $linkmodulosub;
                 echo $modulosM['icone'];
                 echo '<span> ' . $modulosM['nome'] . '</span>';

@@ -24,7 +24,7 @@ require_once('menu.php'); //menu lateral da pagina
   <section class="section">
     <div class="row">
       <div class="col-sm-3">
-        <a href="atualizarPreco.php" class="list-group-item list-group-item-action">
+        <a href="atualizarPreco.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Atualizar Preço Peças</h5>
@@ -34,7 +34,7 @@ require_once('menu.php'); //menu lateral da pagina
       </div>
       
       <div class="col-sm-3">
-        <a href="etiquetaLaser.php" class="list-group-item list-group-item-action">
+        <a href="etiquetaLaser.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Etiquetas Fábrica Laser</h5>

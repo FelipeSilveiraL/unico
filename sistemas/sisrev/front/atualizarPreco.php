@@ -14,7 +14,7 @@ require_once('../inc/tabelaAtualizarPreco.php');
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
-        <li class="breadcrumb-item"><a href="pecas.php">Peças</a></li>
+        <li class="breadcrumb-item"><a href="pecas.php?pg=<?= $_GET['pg'] ?>">Peças</a></li>
         <li class="breadcrumb-item">Atualizar Preço Peças</li>
       </ol>
     </nav>
