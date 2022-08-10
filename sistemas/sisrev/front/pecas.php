@@ -10,7 +10,8 @@ require_once('menu.php'); //menu lateral da pagina
     <h1>Peças</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
         <li class="breadcrumb-item">peças</li>
       </ol>
     </nav>
@@ -31,6 +32,7 @@ require_once('menu.php'); //menu lateral da pagina
           </div>
         </a>
       </div>
+      
       <div class="col-sm-3">
         <a href="etiquetaLaser.php" class="list-group-item list-group-item-action">
           <div class="card">

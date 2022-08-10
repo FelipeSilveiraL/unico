@@ -11,9 +11,10 @@ require_once('../inc/apiRecebeSelbetti.php');
     <h1>Nova Regra Empresa</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php?pg=1">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="index.php?pg=1">Home</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php">Departamentos</a></li>
         <li class="breadcrumb-item"><a href="informatica.php?pg=<?= $_GET['pg'] ?>">Informática</a></li>
-        <li class="breadcrumb-item"><a href="empresas.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>">Empresa</a></li>
+        <li class="breadcrumb-item"><a href="empresas.php?pg=<?= $_GET['pg'] ?>">Empresa</a></li>
         <li class="breadcrumb-item">Nova Regra Empresa</li>
       </ol>
     </nav>
@@ -145,7 +146,7 @@ require_once('../inc/apiRecebeSelbetti.php');
                 <label for="aproCaixa">APROVADOR CAIXA:<span style="color: red;">*</span></label>
               </div>
               <div class="text-left py-2">
-                <a href="http://<?=$_SERVER['SERVER_ADDR']?>/unico/sistemas/sisrev/front/empresas.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="http://<?=$_SERVER['SERVER_ADDR']?>/unico/sistemas/sisrev/front/empresas.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                 <button type="submit" class="btn btn-success">Salvar</button>
               </div>

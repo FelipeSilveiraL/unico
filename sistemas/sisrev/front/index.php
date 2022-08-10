@@ -15,61 +15,67 @@ require_once('menu.php'); //menu lateral da pagina
   ?>
 
   <section class="section">
-    <h5 class="card-title"><span>| Departamentos</span></h5>
+
+    <h5 class="card-title"><span>| Módulos</span></h5>
     <div class="row">
-      <div class="col-sm-3">
-        <a href="informatica.php" class="list-group-item list-group-item-action">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Informática</h5>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-sm-3">
-        <a href="administracao.php" class="list-group-item list-group-item-action">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Administração</h4>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-sm-3">
-        <a href="pecas.php" class="list-group-item list-group-item-action">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Peças</h4>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-    <h5 class="card-title" style="margin-top: 10px;"><span>| Paginas</span></h5>
+      <?php  
+        $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = 0 AND localizacao = 1 and deletar = 0";
+        $resultadoModulosM = $conn->query($queryModulosM);
 
+        while ($modulosM = $resultadoModulosM->fetch_assoc()) {
+          echo '<div class="col-sm-3">
+                  <a href="'.$modulosM['endereco'].'" class="list-group-item list-group-item-action">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">'.$modulosM['nome'].'</h5>
+                      </div>
+                    </div>
+                  </a>
+                </div>';
+        }
+        ?>
+    </div>
+
+    <h5 class="card-title" style="margin-top: 10px;"><span>| Telas</span></h5>
     <div class="row">
+      <?php 
+        $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = 0 AND localizacao = 2 and deletar = 0";
+        $resultadoModulosM = $conn->query($queryModulosM);
 
-      <div class="col-sm-3">
-        <a href="configuracao.php" class="list-group-item list-group-item-action">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Configurações</h4>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <div class="col-sm-3">
-        <a href="ajuda.php" class="list-group-item list-group-item-action">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Ajuda</h4>
-            </div>
-          </div>
-        </a>
-      </div>
-      
+        while ($modulosM = $resultadoModulosM->fetch_assoc()) {
+          echo '<div class="col-sm-3">
+                  <a href="'.$modulosM['endereco'].'" class="list-group-item list-group-item-action">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">'.$modulosM['nome'].'</h5>
+                      </div>
+                    </div>
+                  </a>
+                </div>';
+        }
+      ?>      
     </div>
+
+    <h5 class="card-title" style="margin-top: 10px;"><span>| Outros</span></h5>
+    <div class="row">
+      <?php 
+        $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = 0 AND localizacao = 3 and deletar = 0";
+        $resultadoModulosM = $conn->query($queryModulosM);
+
+        while ($modulosM = $resultadoModulosM->fetch_assoc()) {
+          echo '<div class="col-sm-3">
+                  <a href="'.$modulosM['endereco'].'" class="list-group-item list-group-item-action">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">'.$modulosM['nome'].'</h5>
+                      </div>
+                    </div>
+                  </a>
+                </div>';
+        }
+      ?>      
+    </div>
+
   </section>
 
 </main><!-- End #main -->

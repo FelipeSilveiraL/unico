@@ -18,6 +18,7 @@ require_once('../config/query.php'); //Dados do banco MYSQL
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php">Departamentos</a></li>
         <li class="breadcrumb-item"><a href="informatica.php">Informática</a></li>
         <li class="breadcrumb-item">Usuários Sistemas</li>
       </ol>

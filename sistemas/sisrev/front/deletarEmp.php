@@ -10,9 +10,10 @@ require_once('../inc/deletaremp.php');
     <h1>DELETAR REGRA EMPRESA</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php">Departamentos</a></li>
         <li class="breadcrumb-item"><a href="informatica.php?pg=<?= $_GET['pg'] ?>">Informática</a></li>
-        <li class="breadcrumb-item"><a href="empresas.php?pg=<?= $_GET['pg'] ?>&tela=<?php $_GET['tela'] ?>">Empresas</a></li>
+        <li class="breadcrumb-item"><a href="empresas.php?pg=<?= $_GET['pg'] ?>">Empresas</a></li>
         <li class="breadcrumb-item">Deletar Nova Regra</li>
       </ol>
     </nav>

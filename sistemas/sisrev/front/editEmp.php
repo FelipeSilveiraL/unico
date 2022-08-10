@@ -10,7 +10,8 @@ require_once('menu.php'); //menu lateral da pagina
     <h1>Editar Regra Empresa</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php">Departamentos</a></li>
         <li class="breadcrumb-item"><a href="informatica.php">Informática</a></li>
         <li class="breadcrumb-item"><a href="empresas.php">Empresa</a></li>
         <li class="breadcrumb-item">Editar Regra Empresa</li>

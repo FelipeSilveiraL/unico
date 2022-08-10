@@ -88,7 +88,7 @@ require_once('menu.php'); //menu lateral da pagina
                 <div class="row mb-3">
                   <label for="endereco" class="col-md-4 col-lg-3 col-form-label">Ícone:</label>
                   <div class="col-md-8 col-lg-5">
-                    <input name="icone" type="text" class="form-control" id="icone" value="<?= $icone ?>" placeholder="Exemplo: <i class='bi bi-eye-fill'></i>">
+                    <input name="icone" type="text" class="form-control" id="icone" value="" placeholder="Exemplo: <i class='bi bi-eye-fill'></i>">
                     <div id="ques" style="margin-left: 377px;margin-top: -31px;">
                       <a href="../../../template/icons-bootstrap.html" target="_blank" title="Ver Modelos">
                         <i class="bi bi-eye-fill"></i>
@@ -102,9 +102,9 @@ require_once('menu.php'); //menu lateral da pagina
                   <div class="form-floating mb-3 col-md-5">
                     <select class="form-select" id="floatingSelect" name="localizacao">
                       <option value="">-------------</option>
-                      <option value="0">Módulos</option>
-                      <option value="1">Telas</option>
-                      <option value="2">Outros</option>
+                      <option value="1">Módulos</option>
+                      <option value="2">Telas</option>
+                      <option value="3">Outros</option>
                     </select>
                     <label for="floatingSelect" class="capitalize">Selecione localização no menu</label>
                   </div>
@@ -118,10 +118,10 @@ require_once('menu.php'); //menu lateral da pagina
                     <select class="form-select" id="floatingSelect" name="modulo">
                       <option value="">-------------</option>
                       <?php
-                      $queryAcessos .= ' WHERE sub_modulo = 0 AND deletar = 0';
-                      $execAcessos = $conn->query($queryAcessos);
-                      while ($rowModulos = $execAcessos->fetch_assoc()) {
-                        echo '<option value="' . $rowModulos['id'] . '">' . $rowModulos['nome'] . '</option>';
+                      $queryAcessosM .= 'SELECT * FROM sisrev_modulos WHERE sub_modulo = 0 AND deletar = 0';
+                      $execAcessosM = $conn->query($queryAcessosM);
+                      while ($rowModulosM = $execAcessosM->fetch_assoc()) {
+                        echo '<option value="' . $rowModulosM['id'] . '">' . $rowModulosM['nome'] . '</option>';
                       }
                       ?>
                     </select>

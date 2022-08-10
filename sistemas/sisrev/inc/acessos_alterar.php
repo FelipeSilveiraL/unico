@@ -8,7 +8,7 @@ require_once('../config/query.php');
             if($_POST['submodulo'] == 1){//SIM
                 $moduloCAMPO = ",sub_modulo";
                 $moduloVALUE = ",'".$_POST['modulo']."'";
-            }else{
+            }elseif($_POST['submodulo'] == 2){//NÂO
                 $moduloCAMPO = ",icone";
                 $moduloVALUE = ",'".$_POST['icone']."'";
 
@@ -28,7 +28,20 @@ require_once('../config/query.php');
 
             break;
         case 2://EDITAR
-            $queryUpdate = "UPDATE sisrev_modulos SET nome='".$_POST['nome']."', endereco='".$_POST['endereco']."' WHERE id='".$_GET['id']."'";
+
+
+            if($_POST['submodulo'] == 1){//SIM
+                $moduloCAMPO = ",sub_modulo = '".$_POST['modulo']."'";
+            }elseif($_POST['submodulo'] == 2){//NAÔ
+                $moduloCAMPO = ",icone = '".$_POST['icone']."'";
+
+                $localizacao = ",localizacao = '".$_POST['localizacao']."'";
+            }
+
+
+            $queryUpdate = "UPDATE sisrev_modulos SET nome='".$_POST['nome']."', endereco='".$_POST['endereco']."'".$moduloCAMPO.$localizacao."
+            WHERE id='".$_GET['id']."'";
+            
             if (!$resultUpdate = $conn->query($queryUpdate)){
                 printf("Erro ao editar as informações %s\n", $conn->error);
             }

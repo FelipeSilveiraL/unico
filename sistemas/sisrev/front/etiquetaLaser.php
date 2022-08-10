@@ -12,6 +12,7 @@ require_once('../config/query.php'); //menu lateral da pagina
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
         <li class="breadcrumb-item"><a href="pecas.php?pg=<?= $_GET['pg'] ?>">Peças</a></li>
         <li class="breadcrumb-item">Etiqueta Laser</li>
       </ol>
@@ -134,7 +135,7 @@ require_once('../config/query.php'); //menu lateral da pagina
                     $qtde = $row['qtde'];
                     $totalItem = $row['tot_item'];
                     echo '<tr>
-                              <th> <input class="form-check-input" type="checkbox" name="etiqueta" value="' . $row['produto'] . '" id="etiqueta"></th>
+                              <th> <input class="form-check-input" type="checkbox" name="etiqueta" value="' . $row['produto'] . ''.$row['revenda'].'" id="etiqueta"></th>
                               <th>' . $dataTab . '</th>
                               <th>' . $row['empresa'] . '</th>
                               <th>' . $row['revenda'] . '</th>

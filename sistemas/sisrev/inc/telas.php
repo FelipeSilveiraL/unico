@@ -30,15 +30,18 @@
                                 while ($acessos = $resultado->fetch_assoc()) {
 
                                     switch ($acessos['localizacao']) {
-                                        case '0':
+                                        case '1':
                                             $localizacao = 'Módulo';
                                             break;
                                         
-                                        case '1':
+                                        case '2':
                                             $localizacao = 'Telas';
                                             break;
-                                        case '2':
+                                        case '3':
                                             $localizacao = 'Outros';
+                                            break;
+                                        case '0':
+                                            $localizacao = '---';
                                             break;
                                     }
 

@@ -11,7 +11,8 @@ require_once('../config/query.php');
     <h1>Cadastramento Filiais Apollo</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php">Departamentos</a></li>
         <li class="breadcrumb-item"><a href="informatica.php?pg=<?= $_GET['pg'] ?>">Informática</a></li>
         <li class="breadcrumb-item">Cadastramento Filiais Apollo</li>
       </ol>

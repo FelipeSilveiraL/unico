@@ -20,7 +20,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
         <hr>
         <li class="nav-heading">Módulos</li>
         <?php
-            $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = 0 AND localizacao = 0 and deletar = 0";
+            $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = 0 AND localizacao = 1 and deletar = 0";
             $resultadoModulosM = $conn->query($queryModulosM);
 
             while ($modulosM = $resultadoModulosM->fetch_assoc()) {
@@ -38,7 +38,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
                     $querySubmenuM = 'SELECT * FROM sisrev_modulos where sub_modulo = ' . $modulosM['id'] . ' and deletar = 0';
                     $resuSubmenuM = $conn->query($querySubmenuM);
                     while ($submenuM = $resuSubmenuM->fetch_assoc()) {
-                        $submodulo .= '<a href="' . $submenuM['endereco'] . '"?pg=' . $modulosM['id'] . '">
+                        $submodulo .= '<a href="' . $submenuM['endereco'] . '?pg=' . $modulosM['id'] . '">
                                                     <i class="bi bi-circle"></i><span>' . $submenuM['nome'] . '</span>
                                                 </a>';
                     }
@@ -68,7 +68,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
         <hr>
         <li class="nav-heading">Telas</li>
         <?php
-            $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = 0 AND localizacao = 1 and deletar = 0";
+            $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = 0 AND localizacao = 2 and deletar = 0";
             $resultadoModulosM = $conn->query($queryModulosM);
 
             while ($modulosM = $resultadoModulosM->fetch_assoc()) {
@@ -86,7 +86,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
                     $querySubmenuM = 'SELECT * FROM sisrev_modulos where sub_modulo = ' . $modulosM['id'] . ' and deletar = 0';
                     $resuSubmenuM = $conn->query($querySubmenuM);
                     while ($submenuM = $resuSubmenuM->fetch_assoc()) {
-                        $submodulo .= '<a href="' . $submenuM['endereco'] . '"?pg=' . $modulosM['id'] . '">
+                        $submodulo .= '<a href="' . $submenuM['endereco'] . '?pg=' . $modulosM['id'] . '">
                                                     <i class="bi bi-circle"></i><span>' . $submenuM['nome'] . '</span>
                                                 </a>';
                     }
@@ -116,7 +116,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
         <hr>
         <li class="nav-heading">Outros</li>
         <?php
-            $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = 0 AND localizacao = 2 and deletar = 0";
+            $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = 0 AND localizacao = 3 and deletar = 0";
             $resultadoModulosM = $conn->query($queryModulosM);
 
             while ($modulosM = $resultadoModulosM->fetch_assoc()) {
@@ -134,7 +134,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
                     $querySubmenuM = 'SELECT * FROM sisrev_modulos where sub_modulo = ' . $modulosM['id'] . ' and deletar = 0';
                     $resuSubmenuM = $conn->query($querySubmenuM);
                     while ($submenuM = $resuSubmenuM->fetch_assoc()) {
-                        $submodulo .= '<a href="' . $submenuM['endereco'] . '"?pg=' . $modulosM['id'] . '">
+                        $submodulo .= '<a href="' . $submenuM['endereco'] . '?pg=' . $modulosM['id'] . '">
                                                     <i class="bi bi-circle"></i><span>' . $submenuM['nome'] . '</span>
                                                 </a>';
                     }
