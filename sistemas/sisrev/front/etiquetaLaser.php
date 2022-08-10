@@ -61,7 +61,7 @@ require_once('../config/query.php'); //menu lateral da pagina
                 <button type="submit" value="1" name="der" class="btn btn-primary">Pesquisar</button>
               </div>
             </form>
-            <form class="row g-3" action="../inc/print.php" method="POST">
+            <form class="row g-3" action="http://10.100.1.215/unico_api/sisrev/api_estoque.php" method="POST">
             <div>
             <button type="submit" title="Selecione os itens para impressão de etiqueta" style="display:<?= ($_POST['der'] == 1) ? '' : 'none' ?>;float:right;" class="btn btn-primary"><i class="bx bx-printer"></i></button>
             </div>
@@ -134,7 +134,7 @@ require_once('../config/query.php'); //menu lateral da pagina
                     $qtde = $row['qtde'];
                     $totalItem = $row['tot_item'];
                     echo '<tr>
-                              <th> <input class="form-check-input" type="checkbox" name="etiqueta" value="' . $row['id_nota'] . '" id="etiqueta"></th>
+                              <th> <input class="form-check-input" type="checkbox" name="etiqueta" value="' . $row['produto'] . '" id="etiqueta"></th>
                               <th>' . $dataTab . '</th>
                               <th>' . $row['empresa'] . '</th>
                               <th>' . $row['revenda'] . '</th>
