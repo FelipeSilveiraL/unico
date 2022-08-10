@@ -24,7 +24,7 @@ require_once('menu.php'); //menu lateral da pagina
 
         while ($modulosM = $resultadoModulosM->fetch_assoc()) {
           echo '<div class="col-sm-3">
-                  <a href="'.$modulosM['endereco'].'" class="list-group-item list-group-item-action">
+                  <a href="'.$modulosM['endereco'].'?pg='.$modulosM['id'].'" class="list-group-item list-group-item-action">
                     <div class="card">
                       <div class="card-body">
                         <h5 class="card-title">'.$modulosM['nome'].'</h5>
@@ -44,7 +44,7 @@ require_once('menu.php'); //menu lateral da pagina
 
         while ($modulosM = $resultadoModulosM->fetch_assoc()) {
           echo '<div class="col-sm-3">
-                  <a href="'.$modulosM['endereco'].'" class="list-group-item list-group-item-action">
+                  <a href="'.$modulosM['endereco'].'?pg='.$modulosM['id'].'" class="list-group-item list-group-item-action">
                     <div class="card">
                       <div class="card-body">
                         <h5 class="card-title">'.$modulosM['nome'].'</h5>
@@ -64,7 +64,7 @@ require_once('menu.php'); //menu lateral da pagina
 
         while ($modulosM = $resultadoModulosM->fetch_assoc()) {
           echo '<div class="col-sm-3">
-                  <a href="'.$modulosM['endereco'].'" class="list-group-item list-group-item-action">
+                  <a href="'.$modulosM['endereco'].'?pg='.$modulosM['id'].'" class="list-group-item list-group-item-action">
                     <div class="card">
                       <div class="card-body">
                         <h5 class="card-title">'.$modulosM['nome'].'</h5>

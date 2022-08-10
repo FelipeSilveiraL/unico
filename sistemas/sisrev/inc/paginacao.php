@@ -1,6 +1,10 @@
 <?php
 session_start();
+
+
 require_once('../config/query.php');//query SISREV
+$tela = basename($_SERVER['PHP_SELF']);
+
 
 
 /* ################## CORES DO SISTEMAS  ################## */
@@ -14,8 +18,6 @@ if (!$coressistema = $resultado->fetch_assoc()) { $color = "#fff"; } else { $col
 
 /* ################## PERMISSÕES  ################## */
 
-/* ==== GET TELA ====*/
-$tela = basename($_SERVER['PHP_SELF']);
 
 //SEGUNDO EU VEJO SE TENHO PERMISSÃO PARA ESTAR NESTA TELA!
 
@@ -36,3 +38,5 @@ while($modulosUser = $resultadoModulosUser->fetch_assoc()){
 /* ################## PAGINAÇÃO  ################## */
 
 /* ==== PAGINAS ====*/
+//index.php
+if($tela == "index.php"){if($_GET['pg'] != NULL){echo '<script>window.location.href = "index.php";</script>';}}
