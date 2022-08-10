@@ -95,7 +95,7 @@ if ($filial !== null) {
                         $valorIpi    = ltrim($valorIpi, '0');
                         $numeroCaixa = substr($ler, 143, 10);//seleciona a coluna do arquivo onde é o numero de caixa
                         $numeroCaixa = ltrim($numeroCaixa, '0');
-                        $nomeProduto = substr($ler, 51, 15);//seleciona a coluna do arquivo onde é o nome do produto
+                        $nomeProduto = substr($ler, 50, 15);//seleciona a coluna do arquivo onde é o nome do produto
                         $dataNota = substr($ler, 33, 8);//seleciona a coluna do arquivo onde é a data da nota
                         $dataNota = substr_replace($dataNota, '/', 2, 0);//{
                         $dataNota = substr_replace($dataNota, '/', 5, 0);//    apenas coloca / entre a data }

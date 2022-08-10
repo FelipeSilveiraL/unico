@@ -135,7 +135,7 @@ require_once('../config/query.php'); //menu lateral da pagina
                     $qtde = $row['qtde'];
                     $totalItem = $row['tot_item'];
                     echo '<tr>
-                              <th> <input class="form-check-input" type="checkbox" name="etiqueta" value="' . $row['produto'] . ''.$row['revenda'].'" id="etiqueta"></th>
+                              <th> <input class="form-check-input" type="checkbox" name="etiqueta" value="' . $row['produto'] . ''.$row['empresa'].'" id="etiqueta"></th>
                               <th>' . $dataTab . '</th>
                               <th>' . $row['empresa'] . '</th>
                               <th>' . $row['revenda'] . '</th>
