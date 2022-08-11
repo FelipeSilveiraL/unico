@@ -19,7 +19,6 @@ if (!$coressistema = $resultado->fetch_assoc()) {
 /* ################## PAGINAÇÃO  ################## */
 
 /* ==== PAGINAS ====*/
-//index.php
 if ($tela == "index.php") {
     if ($_GET['pg'] != NULL) {
         echo '<script>window.location.href = "index.php";</script>';
@@ -40,8 +39,8 @@ if ($tela == "index.php") {
         $resultadoModulosUser = $conn->query($queryModulosUserA);
 
         if (!$modulosUser = $resultadoModulosUser->fetch_assoc()) {
-            echo '<script>window.location.href = "index.php";</script>';
-            exit;
+           echo '<script>window.location.href = "index.php";</script>';
+           exit;
         }
     }
 }

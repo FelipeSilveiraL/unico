@@ -53,7 +53,7 @@ $usuarios = $resultado->fetch_assoc();
 
               <!--MODULOS-->
               <div class="tab-pane fade show active" id="modulos" role="tabpanel" aria-labelledby="modulos-tab">
-                <form action="../inc/usuariosPermissoes.php?id_usuarios=<?= $_GET['id_usuarios'] ?>&acao=1" method="post">
+                <form action="../inc/usuariosPermissoes.php?pg=<?= $_GET['pg'] ?>&id_usuarios=<?= $_GET['id_usuarios'] ?>&acao=1" method="post">
                   <!-- Table with stripped rows -->
                   <table class="table datatable">
                     <thead>
@@ -102,7 +102,7 @@ $usuarios = $resultado->fetch_assoc();
               
               <!--SUB-MODULOS-->
               <div class="tab-pane fade show" id="submodulos" role="tabpanel" aria-labelledby="submodulos-tab">
-                <form action="../inc/usuariosPermissoes.php?id_usuarios=<?= $_GET['id_usuarios'] ?>&acao=3" method="post">
+                <form action="../inc/usuariosPermissoes.php?pg=<?= $_GET['pg'] ?>&id_usuarios=<?= $_GET['id_usuarios'] ?>&acao=3" method="post">
 
                   <!-- Table with stripped rows -->
                   <table class="table datatable">
@@ -154,7 +154,7 @@ $usuarios = $resultado->fetch_assoc();
               </div>
               <!--FUNÇÕES-->
               <div class="tab-pane fade show" id="funcoes" role="tabpanel" aria-labelledby="funcoes-tab">
-                <form action="../inc/usuariosPermissoes.php?id_usuarios=<?= $_GET['id_usuarios'] ?>&acao=2" method="post">
+                <form action="../inc/usuariosPermissoes.php?pg=<?= $_GET['pg'] ?>&id_usuarios=<?= $_GET['id_usuarios'] ?>&acao=2" method="post">
 
                   <!-- Table with stripped rows -->
                   <table class="table datatable">
