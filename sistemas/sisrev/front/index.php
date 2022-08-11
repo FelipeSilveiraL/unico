@@ -82,6 +82,7 @@ require_once('menu.php'); //menu lateral da pagina
 
     <!--OUTROS-->
     <?php
+    unset($queryModulosUser2);
     $queryModulosUser2 = array('2' => " WHERE SM.sub_modulo = 0 AND SM.localizacao = 3 AND SM.deletar = 0 AND U.id_usuario = " . $_SESSION['id_usuario']);
 
     $merge = array_merge($queryModulosUser, $queryModulosUser2);
