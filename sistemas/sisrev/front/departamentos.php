@@ -2,6 +2,7 @@
 require_once('head.php'); //CSS e Departamentos HTML e session start
 require_once('header.php'); //logo e login
 require_once('menu.php'); //menu lateral da pagina
+echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
 
 <main id="main" class="main">

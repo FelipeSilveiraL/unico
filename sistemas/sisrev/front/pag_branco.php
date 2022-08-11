@@ -2,6 +2,9 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
+
+/* Essa opção descomentar após criar em telas_funcoes.php*/
+//echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
 
 <main id="main" class="main">

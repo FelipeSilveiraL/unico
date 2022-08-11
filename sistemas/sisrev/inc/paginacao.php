@@ -37,7 +37,6 @@ if ($tela == "index.php") {
         $concatena = array_merge($queryModulosUser, $queryModulosUser2);
         $queryModulosUserA = $concatena[0] . $concatena[1];
 
-
         $resultadoModulosUser = $conn->query($queryModulosUserA);
 
         if (!$modulosUser = $resultadoModulosUser->fetch_assoc()) {
