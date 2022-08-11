@@ -81,7 +81,8 @@ $queryModulosUser = array(
                         SM.nome AS nome_modulo,
                         SM.endereco,
                         SM.icone,
-                        SM.id AS id_modulo
+                        SM.id AS id_modulo,
+                        SM.sub_modulo
                     FROM
                         sisrev_usuario_modulo SUM
                     LEFT JOIN
