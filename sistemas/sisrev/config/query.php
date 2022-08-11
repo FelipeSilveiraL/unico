@@ -74,14 +74,20 @@ $tabelaEmpRev = "SELECT * FROM cad_emp_rev";
 
 $queryModulos = "SELECT * FROM sisrev_modulos";
 
-$queryModulosUser = "SELECT 
-                        SUM.id_usuario, SUM.id_modulo, U.nome AS usuario, SM.nome AS nome_modulo, SM.endereco
+$queryModulosUser = array(
+                    '1' => "SELECT 
+                        U.nome AS usuario,
+                        U.id_usuario,
+                        SM.nome AS nome_modulo,
+                        SM.endereco,
+                        SM.icone,
+                        SM.id AS id_modulo
                     FROM
                         sisrev_usuario_modulo SUM
                     LEFT JOIN
                         usuarios U ON (SUM.id_usuario = U.id_usuario)
                     LEFT JOIN
-                        sisrev_modulos SM ON (SUM.id_modulo = SM.id)";
+                        sisrev_modulos SM ON (SUM.id_modulo = SM.id)");
 
 //cores sistema
 $querySistemaCores = "SELECT id_usuario, id_sistema, color FROM usuarios_sistema_color ";

@@ -83,8 +83,8 @@ require_once('menu.php'); //menu lateral da pagina
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="submodulo" id="gridRadios1" value="3" onclick="myFunctionOne()" checked>
-                    <label class="form-check-label" for="gridRadios1">
+                    <input class="form-check-input" type="radio" name="submodulo" id="gridRadios3" value="3" onclick="myFunctionOne()" checked>
+                    <label class="form-check-label" for="gridRadios3">
                       Página
                     </label>
                   </div>

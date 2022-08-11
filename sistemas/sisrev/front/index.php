@@ -16,64 +16,100 @@ require_once('menu.php'); //menu lateral da pagina
 
   <section class="section">
 
-    <h5 class="card-title"><span>| Módulos</span></h5>
-    <div class="row">
-      <?php  
-        $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = 0 AND localizacao = 1 and deletar = 0";
-        $resultadoModulosM = $conn->query($queryModulosM);
+    <!--MODULOS-->
+    <?php
+    $queryModulosUser2 = array('2' => " WHERE SM.sub_modulo = 0 AND SM.localizacao = 1 AND SM.deletar = 0 AND U.id_usuario = " . $_SESSION['id_usuario']);
 
-        while ($modulosM = $resultadoModulosM->fetch_assoc()) {
-          echo '<div class="col-sm-3">
-                  <a href="'.$modulosM['endereco'].'?pg='.$modulosM['id'].'" class="list-group-item list-group-item-action">
+    $merge = array_merge($queryModulosUser, $queryModulosUser2);
+    $queryModulosM = $merge[0] . $merge[1];
+
+    $a = $conn->query($queryModulosM);
+
+    if ($liberado = $a->fetch_assoc()) {
+      echo '<h5 class="card-title"><span>| Módulos</span></h5>';
+    }
+    ?>
+
+    <div class="row">
+      <?php
+      $resultadoModulosM = $conn->query($queryModulosM);
+
+      while ($modulosM = $resultadoModulosM->fetch_assoc()) {
+        echo '<div class="col-sm-3">
+                  <a href="' . $modulosM['endereco'] . '?pg=' . $modulosM['id_modulo'] . '" class="list-group-item list-group-item-action">
                     <div class="card">
                       <div class="card-body">
-                        <h5 class="card-title">'.$modulosM['nome'].'</h5>
+                        <h5 class="card-title">' . $modulosM['nome_modulo'] . '</h5>
                       </div>
                     </div>
                   </a>
                 </div>';
-        }
-        ?>
+      }
+      ?>
     </div>
 
-    <h5 class="card-title" style="margin-top: 10px;"><span>| Telas</span></h5>
-    <div class="row">
-      <?php 
-        $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = 0 AND localizacao = 2 and deletar = 0";
-        $resultadoModulosM = $conn->query($queryModulosM);
+    <!--TELAS-->
+    <?php
+    unset($queryModulosUser2);
+    $queryModulosUser2 = array('2' => " WHERE SM.sub_modulo = 0 AND SM.localizacao = 2 AND SM.deletar = 0 AND U.id_usuario = " . $_SESSION['id_usuario']);
 
-        while ($modulosM = $resultadoModulosM->fetch_assoc()) {
-          echo '<div class="col-sm-3">
-                  <a href="'.$modulosM['endereco'].'?pg='.$modulosM['id'].'" class="list-group-item list-group-item-action">
-                    <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title">'.$modulosM['nome'].'</h5>
+    $merge = array_merge($queryModulosUser, $queryModulosUser2);
+    $queryModulosM = $merge[0] . $merge[1];
+
+    $resultadoModulosM = $conn->query($queryModulosM);
+
+    if ($liberado = $resultadoModulosM->fetch_assoc()) {
+      echo '<h5 class="card-title" style="margin-top: 10px;"><span>| Telas</span></h5>';
+    }
+    ?>
+    <div class="row">
+      <?php
+      $resultadoModulosM = $conn->query($queryModulosM);
+
+      while ($modulosM = $resultadoModulosM->fetch_assoc()) {
+        echo '<div class="col-sm-3">
+                    <a href="' . $modulosM['endereco'] . '?pg=' . $modulosM['id_modulo'] . '" class="list-group-item list-group-item-action">
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">' . $modulosM['nome_modulo'] . '</h5>
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                </div>';
-        }
-      ?>      
+                    </a>
+                  </div>';
+      }
+      ?>
     </div>
 
-    <h5 class="card-title" style="margin-top: 10px;"><span>| Outros</span></h5>
-    <div class="row">
-      <?php 
-        $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = 0 AND localizacao = 3 and deletar = 0";
-        $resultadoModulosM = $conn->query($queryModulosM);
+    <!--OUTROS-->
+    <?php
+    $queryModulosUser2 = array('2' => " WHERE SM.sub_modulo = 0 AND SM.localizacao = 3 AND SM.deletar = 0 AND U.id_usuario = " . $_SESSION['id_usuario']);
 
-        while ($modulosM = $resultadoModulosM->fetch_assoc()) {
-          echo '<div class="col-sm-3">
-                  <a href="'.$modulosM['endereco'].'?pg='.$modulosM['id'].'" class="list-group-item list-group-item-action">
+    $merge = array_merge($queryModulosUser, $queryModulosUser2);
+    $queryModulosM = $merge[0] . $merge[1];
+
+    $a = $conn->query($queryModulosM);
+
+    if ($liberado = $a->fetch_assoc()) {
+      echo '<h5 class="card-title"><span>| Outros</span></h5>';
+    }
+    ?>
+
+    <div class="row">
+      <?php
+      $resultadoModulosM = $conn->query($queryModulosM);
+
+      while ($modulosM = $resultadoModulosM->fetch_assoc()) {
+        echo '<div class="col-sm-3">
+                  <a href="' . $modulosM['endereco'] . '?pg=' . $modulosM['id_modulo'] . '" class="list-group-item list-group-item-action">
                     <div class="card">
                       <div class="card-body">
-                        <h5 class="card-title">'.$modulosM['nome'].'</h5>
+                        <h5 class="card-title">' . $modulosM['nome_modulo'] . '</h5>
                       </div>
                     </div>
                   </a>
                 </div>';
-        }
-      ?>      
+      }
+      ?>
     </div>
 
   </section>

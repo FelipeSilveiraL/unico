@@ -21,7 +21,7 @@ if (!$coressistema = $resultado->fetch_assoc()) { $color = "#fff"; } else { $col
 
 //SEGUNDO EU VEJO SE TENHO PERMISSÃO PARA ESTAR NESTA TELA!
 
-$queryModulosUser .= ' WHERE SUM.id_usuario = '.$_SESSION['id_usuario'];
+/* $queryModulosUser .= ' WHERE SUM.id_usuario = '.$_SESSION['id_usuario'];
 $resultadoModulosUser = $conn->query($queryModulosUser);
 
 while($modulosUser = $resultadoModulosUser->fetch_assoc()){
@@ -33,7 +33,7 @@ while($modulosUser = $resultadoModulosUser->fetch_assoc()){
         //echo 'é diferente';
     }
 
-}
+} */
 
 /* ################## PAGINAÇÃO  ################## */
 

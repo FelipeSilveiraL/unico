@@ -27,7 +27,10 @@ require_once('menu.php'); //menu lateral da pagina
         <div class="row">
 
         <?php  
-        $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = ".$_GET['pg']." AND deletar = 0";
+        $queryModulosUser2 = array('2' => " WHERE SM.sub_modulo = ".$_GET['pg']." AND SM.deletar = 0 AND U.id_usuario = " . $_SESSION['id_usuario']);
+        $merge = array_merge($queryModulosUser, $queryModulosUser2);
+        $queryModulosM = $merge[0] . $merge[1]; 
+        
         $resultadoModulosM = $conn->query($queryModulosM);
 
         while ($modulosM = $resultadoModulosM->fetch_assoc()) {
@@ -35,7 +38,7 @@ require_once('menu.php'); //menu lateral da pagina
                   <a href="'.$modulosM['endereco'].'?pg='.$modulosM['sub_modulo'].'" class="list-group-item list-group-item-action">
                     <div class="card">
                       <div class="card-body">
-                        <h5 class="card-title">'.$modulosM['nome'].'</h5>
+                        <h5 class="card-title">'.$modulosM['nome_modulo'].'</h5>
                       </div>
                     </div>
                   </a>
