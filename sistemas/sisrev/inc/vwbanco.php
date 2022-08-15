@@ -36,22 +36,22 @@ if ($filial !== null) {
                     $filial       = substr($ler, 40, 4);//seleciono o numero da empresa dentro do arquivo e renomeio para numero da filial
                     switch($filial){
                         case '0054':
-                            $filial = '10';
+                            $filial = '1';
                             break;
                         case '1225':
-                            $filial = '12';
+                            $filial = '4';
                             break;
                         case '1544':
-                            $filial = '14';
+                            $filial = '6';
                             break;
                         case '1329':
-                            $filial = '16';
+                            $filial = '9';
                             break;
                         case '1494':
                             $filial = '19';
                             break;
                         case '1417':
-                            $filial = '20';
+                            $filial = '2';
                             break;
                         case '4773':
                             $filial = '85';
@@ -95,7 +95,7 @@ if ($filial !== null) {
                         $valorIpi    = ltrim($valorIpi, '0');
                         $numeroCaixa = substr($ler, 143, 10);//seleciona a coluna do arquivo onde é o numero de caixa
                         $numeroCaixa = ltrim($numeroCaixa, '0');
-                        $nomeProduto = substr($ler, 50, 15);//seleciona a coluna do arquivo onde é o nome do produto
+                        $nomeProduto = substr($ler, 50, 19);//seleciona a coluna do arquivo onde é o nome do produto
                         $dataNota = substr($ler, 33, 8);//seleciona a coluna do arquivo onde é a data da nota
                         $dataNota = substr_replace($dataNota, '/', 2, 0);//{
                         $dataNota = substr_replace($dataNota, '/', 5, 0);//    apenas coloca / entre a data }
