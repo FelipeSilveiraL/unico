@@ -71,7 +71,7 @@
                                 echo' 
                                     <tr>
                                         <th scope="row">' .$rowFuncoes['id_funcao']. '</th>
-                                        <td>' .$rowFuncoes['nome']. '</td>
+                                        <td>' .$rowFuncoes['funcao']. '</td>
                                         <td>' .$rowFuncoes['modulo']. '</td>
                                         <td>' .$rowFuncoes['descricao']. '</td>
                                         <td> 
@@ -97,7 +97,7 @@
                                                 <div class="row mb-3" style="margin-top: 13px;">
                                                     <label for="nome" class="col-md-4 col-lg-3 col-form-label" style="margin-left: 12px;">Função:</label>
                                                     <div class="col-md-7 col-lg-8">
-                                                        <input name="nome" type="text" class="form-control" id="nome" value="'.$rowFuncoes['nome'].'">
+                                                        <input name="nome" type="text" class="form-control" id="nome" value="'.$rowFuncoes['funcao'].'">
                                                     </div>                                      
                                                     </div>
                                                     <div class="row mb-3">
@@ -158,7 +158,7 @@
                                                     <div class="row mb-3">
                                                         <label for="tela" class="col-md-4 col-lg-3 col-form-label" style="margin-left: 12px;">Tela:</label>
                                                         <div class="col-md-7 col-lg-8"> 
-                                                            <input name="descricao" type="text" class="form-control" id="descricao" value="'.$rowFuncoes['nome'].'" disabled>
+                                                            <input name="descricao" type="text" class="form-control" id="descricao" value="'.$rowFuncoes['funcao'].'" disabled>
                                                         </div>
                                                     </div>                                   
                                                     <div class="modal-footer">
