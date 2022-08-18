@@ -60,6 +60,7 @@
                                 <th scope="col">ID &nbsp;&nbsp;</th>
                                 <th scope="col">Função</th>
                                 <th scope="col">Modulo</th>
+                                <th scope="col">Tela</th>
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Ação</th>
                             </tr>
@@ -73,6 +74,7 @@
                                         <th scope="row">' .$rowFuncoes['id_funcao']. '</th>
                                         <td>' .$rowFuncoes['funcao']. '</td>
                                         <td>' .$rowFuncoes['modulo']. '</td>
+                                        <td>' .$rowFuncoes['tela']. '</td>
                                         <td>' .$rowFuncoes['descricao']. '</td>
                                         <td> 
                                         <a href="#" title="Editar" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editarModal'.$rowFuncoes['id_funcao'].'" '.$usuarioFuncao.'>

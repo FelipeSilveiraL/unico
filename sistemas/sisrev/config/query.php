@@ -55,7 +55,7 @@ $consorcio = ($edit["CONSORCIO"] == 'S') ? 'SIM' : 'NÃO';
 $queryUsers = "SELECT * FROM usuarios";
 
 
-$queryFuncaoUser = "SELECT id FROM sisrev_usuario_funcao ";
+$queryFuncaoUser = "SELECT * FROM sisrev_usuario_funcao ";
 
 $queryFuncaoModulos = "SELECT 
                             SF.id_funcao,

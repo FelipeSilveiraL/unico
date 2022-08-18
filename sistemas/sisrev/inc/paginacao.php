@@ -19,7 +19,7 @@ if (!empty($idUsuario)) {
     } else {
         $color = $coressistema['color'];
     }
-}else{
+} else {
     echo '<script>window.location.href = "../../../inc/unset.php";</script>';
 }
 
@@ -55,10 +55,28 @@ if ($tela == "index.php") {
 
 /* ################## FUNÇÕES  ################## */
 
-$queryFuncaoUser .= "WHERE id_usuario = '".$idUsuario."' AND id_funcao = (SELECT id_funcao FROM sisrev_funcao WHERE id_modulos = (SELECT id FROM sisrev_modulos WHERE endereco = '".$tela."'))";
+$queryFuncaoUser .= "WHERE id_usuario = '" . $idUsuario . "' AND id_funcao IN ( ";
 
-$resultadoFuncao = $conn->query($queryFuncaoUser);
+$queryA = "SELECT id_funcao FROM sisrev_funcao WHERE id_modulos = (SELECT id FROM sisrev_modulos WHERE endereco = '" . $tela . "')";
+$resultadoA = $conn->query($queryA);
 
-if (!$funcao = $resultadoFuncao->fetch_assoc()) {
-    $usuarioFuncao = 'style= "display: none"';
+while ($a = $resultadoA->fetch_assoc()) {
+    $queryFuncaoUser .= $a['id_funcao'] . ',';
+
+    //caso tenha mais de uma permissão em cada tela!..... pagina de exemplo é a front/usuarios.php
+    $validacao['idFuncao'][] = array(
+        'funcao' => $a['id_funcao'],
+    );
+}
+
+$count = strlen($queryFuncaoUser);
+$sub = substr($queryFuncaoUser, 0, $count - 1);
+$sub .= ")";
+
+$resultadoFuncao = $conn->query($sub);
+
+if ($resultadoFuncao != false) {
+    if (!$funcao = $resultadoFuncao->fetch_assoc()) {
+        $usuarioFuncao = 'style= "display: none"';
+    }
 }
