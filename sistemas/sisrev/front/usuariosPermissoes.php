@@ -164,6 +164,7 @@ $usuarios = $resultado->fetch_assoc();
                         <th scope="col" class="capitalize">Função</th>
                         <th scope="col" class="capitalize">Tela</th>
                         <th scope="col" class="capitalize">Descição</th>
+                        <th scope="col" class="capitalize">Módulo</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -185,9 +186,10 @@ $usuarios = $resultado->fetch_assoc();
 
                         echo '<tr>
                                 <th scope="row"><input type="checkbox" value="' . $modulosFuncao['id_funcao'] . '" name="funcao[]" id="funcao" ' . $checked . '></th>
-                                <td>' . $modulosFuncao['nome'] . '</td>
-                                <td>' . $modulosFuncao['modulo'] . '</td>
+                                <td>' . $modulosFuncao['funcao'] . '</td>
+                                <td>' . $modulosFuncao['tela'] . '</td>
                                 <td>' . $modulosFuncao['descricao'] . '</td>
+                                <td>' . $modulosFuncao['modulo'] . '</td>
                               </tr>';
                       }
 

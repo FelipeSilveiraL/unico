@@ -55,14 +55,15 @@ $consorcio = ($edit["CONSORCIO"] == 'S') ? 'SIM' : 'NÃO';
 $queryUsers = "SELECT * FROM usuarios";
 
 
-$queryFuncaoUser = "";
+$queryFuncaoUser = "SELECT id FROM sisrev_usuario_funcao ";
 
 $queryFuncaoModulos = "SELECT 
                             SF.id_funcao,
-                            SF.nome,
+                            SF.nome AS funcao,
+                            SM.nome AS tela,
+                            (SELECT nome FROM sisrev_modulos WHERE id = SM.sub_modulo) as modulo,
                             SF.descricao,
-                            SF.id_modulos,
-                            SM.nome AS modulo
+                            SF.id_modulos
                         FROM
                             sisrev_funcao SF
                         LEFT JOIN

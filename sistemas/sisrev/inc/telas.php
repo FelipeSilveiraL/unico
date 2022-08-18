@@ -3,8 +3,8 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Cadastrar Telas
-                        <a href="acessos_alterar.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>&acao=1" class="btn btn-success button-rigth-card" title="Nova tela">
+                    <h5 class="card-title">Cadastrar Módulos
+                        <a href="acessos_alterar.php?pg=<?= $_GET['pg'] ?>&tela=<?= $_GET['tela'] ?>&acao=1" class="btn btn-success button-rigth-card" title="Nova tela" <?= $usuarioFuncao ?> >
                             <i class="bi bi-plus"></i>
                         </a>
                     </h5>
@@ -58,10 +58,10 @@
                                         <td>' . $localizacao . '</td>
                                         <td>' . $acessos['icone'] . '</td>
                                         <td> 
-                                            <a href="acessos_alterar.php?pg=' . $_GET['pg'] . '&tela=' . $_GET['tela'] . '&id=' . $acessos['id'] . '&acao=2" title="Editar" class="btn btn-primary btn-sm">
+                                            <a href="acessos_alterar.php?pg=' . $_GET['pg'] . '&tela=' . $_GET['tela'] . '&id=' . $acessos['id'] . '&acao=2" title="Editar" class="btn btn-primary btn-sm" '.$usuarioFuncao.'>
                                                 <i class="bi bi-pencil"></i>
                                             </a>
-                                            <a href="#" title="Excluir" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#basicModal' . $acessos['id'] . '">
+                                            <a href="#" title="Excluir" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#basicModal' . $acessos['id'] . '" '.$usuarioFuncao.'>
                                                 <i class="bi bi-trash"></i>
                                             </a>
                                         </td>

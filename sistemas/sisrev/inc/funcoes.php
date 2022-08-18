@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Cadastrar Funções
-                        <a href="#" class="btn btn-success button-rigth-card" title="Nova função" data-bs-toggle="modal" data-bs-target="#novaFuncaoModal">
+                        <a href="#" class="btn btn-success button-rigth-card" title="Nova função" data-bs-toggle="modal" data-bs-target="#novaFuncaoModal" <?= $usuarioFuncao ?> >
                             <i class="bi bi-plus"></i>
                         </a>
                     </h5>
@@ -75,10 +75,10 @@
                                         <td>' .$rowFuncoes['modulo']. '</td>
                                         <td>' .$rowFuncoes['descricao']. '</td>
                                         <td> 
-                                        <a href="#" title="Editar" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editarModal'.$rowFuncoes['id_funcao'].'">
+                                        <a href="#" title="Editar" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editarModal'.$rowFuncoes['id_funcao'].'" '.$usuarioFuncao.'>
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <a href="#" title="Excluir" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deletarModal'.$rowFuncoes['id_funcao'].'">
+                                        <a href="#" title="Excluir" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deletarModal'.$rowFuncoes['id_funcao'].'" '.$usuarioFuncao.'>
                                             <i class="bi bi-trash"></i>
                                         </a>
                                         </td>
