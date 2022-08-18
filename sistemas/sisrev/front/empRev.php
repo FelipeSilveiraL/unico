@@ -31,8 +31,8 @@ require_once('../config/query.php');
         <div class="card">
           <div class="card-body">
             <br>
-            <form action="../inc/empRev.php" method="POST" >
-              <a href="../front/empRev.php?pg=<?= $_GET['pg'] ?>&id=4"><button class="btn btn-primary " style="float: right;margin-left: 10px;margin-bottom:10px;" type="button" title="Cadastrar filial"><i class="bi bi-person-plus"></i></button></a>
+            <form action="../inc/empRev.php" method="POST">
+              <a href="../front/empRev.php?pg=<?= $_GET['pg'] ?>&id=4" <?= $usuarioFuncao ?>><button class="btn btn-primary " style="float: right;margin-left: 10px;margin-bottom:10px;" type="button" title="Cadastrar filial"><i class="bi bi-person-plus"></i></button></a>
               <button type="submit" class="btn btn-primary " title="Salvar alterações" style="float: right;margin-left: 10px;margin-bottom:10px;display:<?= ($_GET['id'] == 2 or $_GET['id'] == 3 or $_GET['id'] == 4) ? '' : 'none;' ?>" type="button"><i class="ri-save-3-fill"></i></button>
               <a href="../front/empRev.php?pg=<?= $_GET['pg'] ?>&id=1"><button class="btn btn-success " title="Editar Filial" style="float: right;margin-left: 10px;margin-bottom:10px;" type="button"><i class="ri-edit-2-line"></i></button></a><br><br>
 
@@ -55,18 +55,18 @@ require_once('../config/query.php');
                               <th scope="col" class="capitalize">BANDEIRA&ensp;</th>
                               <th scope="col" class="capitalize">CNPJ&ensp;</th>
                               <th scope="col" class="capitalize" style="display:';
-                                    echo ($_GET['id'] == 1) ? '">' : 'none">';
+                  echo ($_GET['id'] == 1) ? '">' : 'none">';
 
-                                    echo 'AÇÃO&ensp;</th>
+                  echo 'AÇÃO&ensp;</th>
                             </tr>
                           </thead>
                           <tbody>';
 
-                          $conexaoSucesso = $conn->query($tabelaEmpRev);
+                  $conexaoSucesso = $conn->query($tabelaEmpRev);
 
-                          while ($row = $conexaoSucesso->fetch_assoc()) {
-                            echo
-                            '<tr>
+                  while ($row = $conexaoSucesso->fetch_assoc()) {
+                    echo
+                    '<tr>
                               <td>' . $row['EMPR'] . '</td>
                               <td>' . $row['num_rev'] . '</td>
                               <td>' . $row['nome_empresa'] . '</td>
@@ -81,11 +81,11 @@ require_once('../config/query.php');
                               <td>' . $row['cnpj'] . '</td>
                               <td style="display:';
 
-                            echo ($_GET['id'] == 1) ? '">' : 'none"';
-                            $id = $row['id'];
-                            echo '
-                      <a href="../front/empRev.php?pg='.$_GET['pg'].'&id=3&id2=' . $id . '"><span style="color: green;"><i class="ri-pencil-line"></i></span></a>
-                      <a href="../front/empRev.php?pg='.$_GET['pg'].'&id=5&id2=' . $id . '" data-bs-toggle="modal" data-bs-target="#excluir' . $id . '" ><span style="color:red;"><i class="ri-delete-bin-6-line"></i></span></a></td>
+                    echo ($_GET['id'] == 1) ? '">' : 'none"';
+                    $id = $row['id'];
+                    echo '
+                      <a href="../front/empRev.php?pg=' . $_GET['pg'] . '&id=3&id2=' . $id . '" ' . $usuarioFuncao . '><span style="color: green;"><i class="ri-pencil-line"></i></span></a>
+                      <a href="../front/empRev.php?pg=' . $_GET['pg'] . '&id=5&id2=' . $id . '" data-bs-toggle="modal" data-bs-target="#excluir' . $id . '" ' . $usuarioFuncao . '><span style="color:red;"><i class="ri-delete-bin-6-line"></i></span></a></td>
                       <div class="modal fade" id="excluir' . $id . '" tabindex="-1">
                       <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -98,22 +98,17 @@ require_once('../config/query.php');
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                            <a href="../inc/empRev.php?ex='.$id.'"><button type="button" class="btn btn-danger">Excluir</button></a>
+                            <a href="../inc/empRev.php?ex=' . $id . '"><button type="button" class="btn btn-danger">Excluir</button></a>
                           </div>
                         </div>
                       </div>
                     </div>
-                      </tr>
-
-                      
-                      
+                      </tr>                      
                       ';
-                      
-                }
-                echo '</tbody>
-                </table>'
-                ;
-                break;
+                  }
+                  echo '</tbody>
+                </table>';
+                  break;
                 case 2:
                   echo '<table class="table datatable">
                       <thead>
@@ -152,13 +147,13 @@ require_once('../config/query.php');
                       </table>';
                   break;
                   //editando dado
-                  case 3:
+                case 3:
 
-                    $id2 = $_GET['id2'];
-                    
-                    $tabelaEmpRev .= ' WHERE id='.$id2.'';
+                  $id2 = $_GET['id2'];
 
-                    echo '<table class="table datatable">
+                  $tabelaEmpRev .= ' WHERE id=' . $id2 . '';
+
+                  echo '<table class="table datatable">
                     <thead>
                         <tr>
                           <th scope="col" class="capitalize">EMPR&ensp;</th>
@@ -177,32 +172,33 @@ require_once('../config/query.php');
                         </tr>
                       </thead>
                       <tbody>';
-                      $conexaoSucesso = $conn->query($tabelaEmpRev);
+                  $conexaoSucesso = $conn->query($tabelaEmpRev);
 
-                          while ($row = $conexaoSucesso->fetch_assoc()) {
+                  while ($row = $conexaoSucesso->fetch_assoc()) {
 
-                            echo '<tr>
-                                    <input type="hidden" value="'.$row['id'].'" name="id">
-                                    <td><input style="width: 30px;" value="'.$row['EMPR'].'" name="EMPR"></td>
-                                    <td><input style="width: 30px;" value="'.$row['num_rev'].'" name="NUMREV"></td>
-                                    <td><input style="width: 100px;" value="'.$row['nome_empresa'].'" name="NOMEEMP"></td>
-                                    <td><input style="width: 60px;" value="'.$row['nome_filial'].'" name="NOMEFILIAL"></td>
-                                    <td><input style="width: 30px;" value="'.$row['tipo'].'" name="TIPO"></td>
-                                    <td><input style="width: 30px;" value="'.$row['rev'].'" name="REV"></td>
-                                    <td><input style="width: 40px;" value="'.$row['dn'].'" name="DN"></td>
-                                    <td><input style="width: 30px;" value="'.$row['ATIVO'].'" name="ATIVO"></td>
-                                    <td><input style="width: 30px;" value="'.$row['tem_vendas'].'" name="VENDAS"></td>
-                                    <td><input style="width: 30px;" value="'.$row['sistema_emp_bd'].'" name="BD"></td>
-                                    <td><input style="width: 30px;" value="'.$row['bandeira'].'" name="BANDEIRA"></td>
-                                    <td><input style="width: 30px;" value="'.$row['rev_matriz'].'" name="REVMATRIZ"></td>
-                                    <td><input style="width: 120px;" value="'.$row['cnpj'].'" name="CNPJ"></td>
+                    echo '<tr>
+                                    <input type="hidden" value="' . $row['id'] . '" name="id">
+                                    <td><input style="width: 30px;" value="' . $row['EMPR'] . '" name="EMPR"></td>
+                                    <td><input style="width: 30px;" value="' . $row['num_rev'] . '" name="NUMREV"></td>
+                                    <td><input style="width: 100px;" value="' . $row['nome_empresa'] . '" name="NOMEEMP"></td>
+                                    <td><input style="width: 60px;" value="' . $row['nome_filial'] . '" name="NOMEFILIAL"></td>
+                                    <td><input style="width: 30px;" value="' . $row['tipo'] . '" name="TIPO"></td>
+                                    <td><input style="width: 30px;" value="' . $row['rev'] . '" name="REV"></td>
+                                    <td><input style="width: 40px;" value="' . $row['dn'] . '" name="DN"></td>
+                                    <td><input style="width: 30px;" value="' . $row['ATIVO'] . '" name="ATIVO"></td>
+                                    <td><input style="width: 30px;" value="' . $row['tem_vendas'] . '" name="VENDAS"></td>
+                                    <td><input style="width: 30px;" value="' . $row['sistema_emp_bd'] . '" name="BD"></td>
+                                    <td><input style="width: 30px;" value="' . $row['bandeira'] . '" name="BANDEIRA"></td>
+                                    <td><input style="width: 30px;" value="' . $row['rev_matriz'] . '" name="REVMATRIZ"></td>
+                                    <td><input style="width: 120px;" value="' . $row['cnpj'] . '" name="CNPJ"></td>
                                   </tr>
                                 </tbody>
                                 </table>
-                          ';}
-                      break;
-                      case 4:
-                        echo'<table class="table datatable">
+                          ';
+                  }
+                  break;
+                case 4:
+                  echo '<table class="table datatable">
                         <thead>
                             <tr>
                               <th scope="col" class="capitalize">EMPR&ensp;</th>
@@ -239,7 +235,7 @@ require_once('../config/query.php');
                                   </tr>
                             </tbody>
                             </table>';
-                        break;
+                  break;
                 default:
                   echo ' <table class="table datatable">
                         <thead>
@@ -260,34 +256,34 @@ require_once('../config/query.php');
                             </tr>
                           </thead>
                           <tbody>';
-                          $conexaoSucesso = $conn->query($tabelaEmpRev);
+                  $conexaoSucesso = $conn->query($tabelaEmpRev);
 
-                          while ($row = $conexaoSucesso->fetch_assoc()) {
+                  while ($row = $conexaoSucesso->fetch_assoc()) {
 
-                            echo '<tr>
-                                    <td>'.$row['EMPR'].'</td>
-                                    <td>'.$row['num_rev'].'</td>
-                                    <td>'.$row['nome_empresa'].'</td>
-                                    <td>'.$row['nome_filial'].'</td>
-                                    <td>'.$row['tipo'].'</td>
-                                    <td>'.$row['rev'].'</td>
-                                    <td>'.$row['dn'].'</td>
-                                    <td>'.$row['ATIVO'].'</td>
-                                    <td>'.$row['tem_vendas'].'</td>
-                                    <td>'.$row['sistema_emp_bd'].'</td>
-                                    <td>'.$row['bandeira'].'</td>
-                                    <td>'.$row['rev_matriz'].'</td>
-                                    <td>'.$row['cnpj'].'</td>
+                    echo '<tr>
+                                    <td>' . $row['EMPR'] . '</td>
+                                    <td>' . $row['num_rev'] . '</td>
+                                    <td>' . $row['nome_empresa'] . '</td>
+                                    <td>' . $row['nome_filial'] . '</td>
+                                    <td>' . $row['tipo'] . '</td>
+                                    <td>' . $row['rev'] . '</td>
+                                    <td>' . $row['dn'] . '</td>
+                                    <td>' . $row['ATIVO'] . '</td>
+                                    <td>' . $row['tem_vendas'] . '</td>
+                                    <td>' . $row['sistema_emp_bd'] . '</td>
+                                    <td>' . $row['bandeira'] . '</td>
+                                    <td>' . $row['rev_matriz'] . '</td>
+                                    <td>' . $row['cnpj'] . '</td>
                                   </tr>
                           ';
-                          }
-                            echo '
+                  }
+                  echo '
                                   </tbody>
                                 </table>';
-                          break;
+                  break;
               }
               ?>
-             
+
             </form>
           </div>
         </div>

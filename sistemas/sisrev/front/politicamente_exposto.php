@@ -23,22 +23,23 @@ require_once('../inc/regras_pe.php');
   ?>
   <section class="section">
     <div class="row">
-
       <div class="col-lg-6" style="display: <?= $displayOne ?>">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Carregar arquivo</h5>
-            <!-- General Form Elements -->
-            <div class="header d-flex align-items-center header-scrolled">
-              <div class="search-bar">
-                <form class="search-form d-flex align-items-center" method="post" action="../inc/politicamente_exposto.php?pg=<?= $_GET['pg'] ?>" enctype="multipart/form-data">
-                  <input type="file" name="arquivo" placeholder="Insira Documento" id="arquivo" required>
-                  <button type="submit" title="Enviar" class="btn btn-success" onclick="teste()"><i class="bi bi-send"></i></button>
-                </form>
+        <div <?= $usuarioFuncao ?>>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Carregar arquivo</h5>
+              <!-- General Form Elements -->
+              <div class="header d-flex align-items-center header-scrolled">
+                <div class="search-bar">
+                  <form class="search-form d-flex align-items-center" method="post" action="../inc/politicamente_exposto.php?pg=<?= $_GET['pg'] ?>" enctype="multipart/form-data">
+                    <input type="file" name="arquivo" placeholder="Insira Documento" id="arquivo" required>
+                    <button type="submit" title="Enviar" class="btn btn-success" onclick="teste()"><i class="bi bi-send"></i></button>
+                  </form>
+                </div>
               </div>
+              <h6><code>Tipo de arquivo permitido[.csv]</code></h6>
+              <!-- End General Form Elements -->
             </div>
-            <h6><code>Tipo de arquivo permitido[.csv]</code></h6>
-            <!-- End General Form Elements -->
           </div>
         </div>
       </div>
@@ -46,12 +47,12 @@ require_once('../inc/regras_pe.php');
       <div class="col-lg-6" style="display: <?= $displayOne ?>">
         <div class="card">
           <div class="card-body">
-            <a href="logPoliticamente.php?pg=<?=$_GET['pg']?>" title="Logs Anteriores" class="btn btn-info btn-sm" style="margin-top: 5px;margin-left: 401px;">
-              <i class="bx bxs-report"></i>              
+            <a href="logPoliticamente.php?pg=<?= $_GET['pg'] ?>" title="Logs Anteriores" class="btn btn-info btn-sm" style="margin-top: 5px;margin-left: 401px;">
+              <i class="bx bxs-report"></i>
             </a>
             <h5 class="card-title" style="margin-top: -30px;">Log de execução - Ultima vez</h5>
-            
-            
+
+
             <!-- List group with active and disabled items -->
             <ul class="list-group list-group-flush">
               <li class="list-group-item"><code>Autor:</code> <?= $logPE['nome'] ?> <code style="margin-left: 64px;">Data:</code> <?= empty($logPE['data']) ? ' ' : date('d/m/Y H:i:s', strtotime($logPE['data'])) ?></li>
@@ -69,10 +70,10 @@ require_once('../inc/regras_pe.php');
             <p>Foram encontrados <span class="badge bg-warning"><?= $_SESSION['count'] ?> </span> registros</p>
             <p>Para continuar, basta clicar em <code>Efetuar Carga</code> que irá iniciar a atualização nos seguintes sistemas:</p>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">APOLLO</li>
-                <li class="list-group-item">NBS</li>
-                <li class="list-group-item">NBS RIBEIRÃO</li>
-              </ul>
+              <li class="list-group-item">APOLLO</li>
+              <li class="list-group-item">NBS</li>
+              <li class="list-group-item">NBS RIBEIRÃO</li>
+            </ul>
           </div>
           <div class="modal-footer">
             <a href="javascript:" class="btn btn-secondary" onclick="atualizar()">Voltar</a>

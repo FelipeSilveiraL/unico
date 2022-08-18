@@ -37,12 +37,12 @@ while ($rowResultado = $resultado->fetch_assoc()) {
             <td>';
                 if ($ativo == 'NÃO') {
                 $dados .='
-                <a href="desativar_usuario.php?pg='.$_GET['pg'].'&tela='.$_GET['tela'].'&saida=1&cpf='.$rowResultado['cpf'].'&sistema='.$rowResultado['sistema'].'&nome='.$rowResultado['nome'].'&acao=1&api=true" title="Ativar" class="btn btn-success btn-sm">
+                <a href="desativar_usuario.php?pg='.$_GET['pg'].'&tela='.$_GET['tela'].'&saida=1&cpf='.$rowResultado['cpf'].'&sistema='.$rowResultado['sistema'].'&nome='.$rowResultado['nome'].'&acao=1&api=true" title="Ativar" class="btn btn-success btn-sm" '.$usuarioFuncao.'>
                     <i class="bi bi-check-square"></i>
                 </a>';
                 } else {
                 $dados .='  
-                <a href="desativar_usuario.php?pg='.$_GET['pg'].'&tela='.$_GET['tela'].'&saida=1&cpf='.$rowResultado['cpf'].'&sistema='.$rowResultado['sistema'].'&nome='.$rowResultado['nome'].'&acao=2&api=true" title="Desativar" class="btn btn-danger btn-sm">
+                <a href="desativar_usuario.php?pg='.$_GET['pg'].'&tela='.$_GET['tela'].'&saida=1&cpf='.$rowResultado['cpf'].'&sistema='.$rowResultado['sistema'].'&nome='.$rowResultado['nome'].'&acao=2&api=true" title="Desativar" class="btn btn-danger btn-sm" '.$usuarioFuncao.'>
                     <i class="bi bi-trash"></i>
                 </a>';
                 }

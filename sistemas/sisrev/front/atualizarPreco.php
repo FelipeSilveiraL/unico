@@ -111,7 +111,7 @@ require_once('../inc/tabelaAtualizarPreco.php');
                           </div>
 
                           <!-- BOTÃO DO FORMULARIOS -->
-                          <div class="text-left  mb-3">
+                          <div class="text-left  mb-3" <?= $usuarioFuncao ?> >
                             <hr>
                             <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                             <input type="button" class="btn btn-success" id="submitInput" value="Atualizar peças" onclick="sub()">
@@ -166,7 +166,7 @@ require_once('../inc/tabelaAtualizarPreco.php');
                             </div>
                           </div>
                           <!-- BOTÃO DO FORMULARIOS -->
-                          <div class="text-left  mb-3">
+                          <div class="text-left  mb-3" <?= $usuarioFuncao ?>>
                             <hr>
                             <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                             <button type="submit" class="btn btn-success">Continuar</button>

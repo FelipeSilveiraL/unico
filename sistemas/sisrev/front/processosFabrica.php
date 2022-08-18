@@ -37,18 +37,18 @@ require_once('menu.php'); //menu lateral da pagina
             $msn = $_GET['msn'];
             $data1 = $_POST['dataPesquisa']; // recebe data
             $data2 = $_GET['dataArquivo'];
-            
-            if($data1){
-              $selecionada = implode('/', array_reverse(explode('-', $data1)));//transformar data em pt-BR
+
+            if ($data1) {
+              $selecionada = implode('/', array_reverse(explode('-', $data1))); //transformar data em pt-BR
               $data = implode('', array_reverse(explode('-', $data1))); //transformar a data para a verificação da pasta
-            }else{
+            } else {
               $selecionada = implode('/', array_reverse(explode('-', $data2))); //transformar data em pt-BR
               $data = implode('', array_reverse(explode('-', $data2))); //transformar a data para a verificação da pasta
             }
-          
+
             $Dir = "../documentos/CAR/" . $data . "";
 
-            $fileName = substr($data, 0,4);
+            $fileName = substr($data, 0, 4);
 
             //salva caminho do arquivo para verificação
             $las = "$Dir/las$fileName.txt";
@@ -62,7 +62,7 @@ require_once('menu.php'); //menu lateral da pagina
             $pmu = "$Dir/pmu$fileName.txt";
             $sjp = "$Dir/sjp$fileName.txt";
 
-          
+
 
             ?>
             <div class="col-lg-12" style="display: none" id="carregamento">
@@ -80,45 +80,45 @@ require_once('menu.php'); //menu lateral da pagina
 
             </div>
             <div class="card">
-                <!-- Default Tabs -->
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link <?= empty($msn)? 'active' : '' ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="<?= empty($data)? 'true' : 'false' ?>">Selecionar Data</button>
-                  </li>
-                  <li class="nav-item " role="presentation">
-                    <button class="nav-link <?= empty($msn)? '' : 'active' ?>" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="<?= empty($data)? 'false' : 'true' ?>">Carregar arquivo</button>
-                  </li>
-                </ul>
-                <div class="tab-content pt-2" id="myTabContent">
-                  <div class="tab-pane fade <?= empty($msn)? 'active show' : '' ?>" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="header d-flex align-items-center header-scrolled">
-                      <form method="POST" action="<?= $PHP_SELF ?>" class="search-form d-flex align-items-center">
-                        <input type="date" style="width:40%;" class="form-control col-lg-12" id="dataPesquisa" name="dataPesquisa">
-                        <button class="btn btn-sucess btn-sm" type="submit"><i class="bi bi-search"></i></button>
-                      </form>
-                    </div>
+              <!-- Default Tabs -->
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link <?= empty($msn) ? 'active' : '' ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="<?= empty($data) ? 'true' : 'false' ?>">Selecionar Data</button>
+                </li>
+                <li class="nav-item " role="presentation" <?= $usuarioFuncao ?>>
+                  <button class="nav-link <?= empty($msn) ? '' : 'active' ?>" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="<?= empty($data) ? 'false' : 'true' ?>">Carregar arquivo</button>
+                </li>
+              </ul>
+              <div class="tab-content pt-2" id="myTabContent">
+                <div class="tab-pane fade <?= empty($msn) ? 'active show' : '' ?>" id="home" role="tabpanel" aria-labelledby="home-tab">
+                  <div class="header d-flex align-items-center header-scrolled">
+                    <form method="POST" action="<?= $PHP_SELF ?>" class="search-form d-flex align-items-center">
+                      <input type="date" style="width:40%;" class="form-control col-lg-12" id="dataPesquisa" name="dataPesquisa">
+                      <button class="btn btn-sucess btn-sm" type="submit"><i class="bi bi-search"></i></button>
+                    </form>
                   </div>
-                  <div class="tab-pane fade <?= empty($msn)? '' : 'active show' ?>" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="header d-flex align-items-center header-scrolled">
-                      <form class="search-form d-flex align-items-center" method="POST" action='../inc/processosUpload.php?pg=<?= $_GET['pg'] ?>' enctype="multipart/form-data">
-                        <input type="file" name="arquivo[]" placeholder="Insira Documento" id="arquivo" style="width: 400px;" multiple="multiple">
-                        <button type="submit" title="Enviar" class="btn btn-success" onclick="teste()"><i class="bi bi-send"></i></button>
-                      </form>
-                      <code style="float:right;margin-right:30px;">Tipo de arquivo permitido[.txt]</code>
-                    </div>
+                </div>
+                <div class="tab-pane fade <?= empty($msn) ? '' : 'active show' ?>" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                  <div class="header d-flex align-items-center header-scrolled">
+                    <form class="search-form d-flex align-items-center" method="POST" action='../inc/processosUpload.php?pg=<?= $_GET['pg'] ?>' enctype="multipart/form-data">
+                      <input type="file" name="arquivo[]" placeholder="Insira Documento" id="arquivo" style="width: 400px;" multiple="multiple">
+                      <button type="submit" title="Enviar" class="btn btn-success" onclick="teste()"><i class="bi bi-send"></i></button>
+                    </form>
+                    <code style="float:right;margin-right:30px;">Tipo de arquivo permitido[.txt]</code>
                   </div>
-                </div><!-- End Default Tabs -->
-              </div>
-              <hr style="opacity: 0;">
-              <span style="color: red;"><?= !empty($data) ? $dataSelecionada = "*Data selecionada " . $selecionada . " *" : $dataSelecionada = "" ?></span>
+                </div>
+              </div><!-- End Default Tabs -->
+            </div>
+            <hr style="opacity: 0;">
+            <span style="color: red;"><?= !empty($data) ? $dataSelecionada = "*Data selecionada " . $selecionada . " *" : $dataSelecionada = "" ?></span>
             <form action="../inc/vwbanco.php?pg=<?= $_GET['pg'] ?>" method="POST" enctype="multipart/form-data">
-              <div class="container col-lg-6" style="margin-left: 170px;display:<?= !empty($selecionada)?'block' : 'none' ?>">
+              <div class="container col-lg-6" style="margin-left: 170px;display:<?= !empty($selecionada) ? 'block' : 'none' ?>">
                 <div class="row" style="margin-left:43px;">
                   <div class="col-sm-2">
                     <label class="form-check-label" for="flexSwitchCheckDefault1">MV</label>
                     <div class="form-check form-switch">
                       <input type="hidden" value="<?= $data ?>" name="data" id="data">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="filial[]" value="<?= (file_exists($lb3)) ? $status = "lb3" . $fileName . ".txt" : $status = ''; ?>"  <?= (file_exists($lb3)) ? $status = 'checked' : $status = ''; ?>>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="filial[]" value="<?= (file_exists($lb3)) ? $status = "lb3" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($lb3)) ? $status = 'checked' : $status = ''; ?>>
                     </div>
                   </div>
                   <div class="col-sm-3">
@@ -133,14 +133,14 @@ require_once('menu.php'); //menu lateral da pagina
                 <div class="row" style="margin-left:43px;">
                   <div class="col-sm-2">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault4"  name="filial[]" value="<?= (file_exists($lmc)) ? $status = "lmc" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($lmc)) ? $status = 'checked' : $status = ''; ?>>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault4" name="filial[]" value="<?= (file_exists($lmc)) ? $status = "lmc" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($lmc)) ? $status = 'checked' : $status = ''; ?>>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <input type="text" class="form-control" disabled value="12" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="lmc" style="padding: 0rem 0rem;" name="lmc"  value="<?= (file_exists($lmc)) ? $status = "lmc" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="lmc" style="padding: 0rem 0rem;" name="lmc" value="<?= (file_exists($lmc)) ? $status = "lmc" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
                 <div class="row" style="margin-left:43px;">
@@ -153,7 +153,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="14" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="las" style="padding: 0rem 0rem;"  name="las" value="<?= (file_exists($las)) ? $status = "las" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="las" style="padding: 0rem 0rem;" name="las" value="<?= (file_exists($las)) ? $status = "las" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
                 <div class="row" style="margin-left:43px;">
@@ -166,7 +166,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="16" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" value="" placeholder="pmu" style="padding: 0rem 0rem;"  name="pmu" value="<?= (file_exists($pmu)) ? $status = "pmu" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" value="" placeholder="pmu" style="padding: 0rem 0rem;" name="pmu" value="<?= (file_exists($pmu)) ? $status = "pmu" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
                 <div class="row" style="margin-left:43px;">
@@ -179,7 +179,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="19" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="lgf" style="padding: 0rem 0rem;"  name="lgf" value="<?= (file_exists($lgf)) ? $status = "lgf" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="lgf" style="padding: 0rem 0rem;" name="lgf" value="<?= (file_exists($lgf)) ? $status = "lgf" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
                 <div class="row" style="margin-left:43px;">
@@ -192,7 +192,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="20" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="l0s" style="padding: 0rem 0rem;"  name="l0s" value="<?= (file_exists($l0s)) ? $status = "l0s" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="l0s" style="padding: 0rem 0rem;" name="l0s" value="<?= (file_exists($l0s)) ? $status = "l0s" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
                 <div class="row" style="margin-left:43px;">
@@ -205,7 +205,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="85" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="lyf" style="padding: 0rem 0rem;"  name="lyf" value="<?= (file_exists($lyf)) ? $status = "lyf" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="lyf" style="padding: 0rem 0rem;" name="lyf" value="<?= (file_exists($lyf)) ? $status = "lyf" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
                 <div class="row" style="margin-left:43px;">
@@ -218,13 +218,13 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="86" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="sjp" style="padding: 0rem 0rem;"  name="sjp" value="<?= (file_exists($sjp)) ? $status = "sjp" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="sjp" style="padding: 0rem 0rem;" name="sjp" value="<?= (file_exists($sjp)) ? $status = "sjp" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
                 <div class="row" style="margin-left:43px;">
                   <div class="col-sm-2">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault11" name="filial[]" value="<?= (file_exists($l50)) ? $status = "l50" . $fileName . ".txt" : $status = ''; ?>"  <?= (file_exists($l50)) ? $status = 'checked' : $status = ''; ?>>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault11" name="filial[]" value="<?= (file_exists($l50)) ? $status = "l50" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($l50)) ? $status = 'checked' : $status = ''; ?>>
                     </div>
                   </div>
                   <div class="col-sm-3">
@@ -244,15 +244,17 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="101" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="luc" style="padding: 0rem 0rem;"  name="luc" value="<?= (file_exists($luc)) ? $status = "luc" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="luc" style="padding: 0rem 0rem;" name="luc" value="<?= (file_exists($luc)) ? $status = "luc" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
-                
+
               </div>
-              <div class="py-5" style="float: left;">
-                    <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/sisrev/front/processos.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
-                    <button type="submit" class="btn btn-primary" style="display: <?= !empty($selecionada)?'inline' : 'none' ?>;">Realizar Carga</button>
-                  </div>
+              <div <?= $usuarioFuncao ?> >
+                <div class="py-5" style="float: left;">
+                  <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/sisrev/front/processos.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                  <button type="submit" class="btn btn-primary" style="display: <?= !empty($selecionada) ? 'inline' : 'none' ?>;">Realizar Carga</button>
+                </div>
+              </div>
             </form>
             <!-- Vertical Form -->
           </div>
