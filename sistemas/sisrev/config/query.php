@@ -68,7 +68,7 @@ $queryFuncaoModulos = "SELECT
                         LEFT JOIN
                             sisrev_modulos SM ON SF.id_modulos = SM.id";
 
-$buscaCarga = "SELECT * FROM carga_vw_info";
+$buscaCarga = "SELECT * FROM sisrev_carga_vw_info";
 
 $tabelaEmpRev = "SELECT * FROM cad_emp_rev";
 

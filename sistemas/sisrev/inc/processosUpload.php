@@ -88,7 +88,7 @@ for ($i = 0; $i < $total;) {
                     $dataNota = substr($array5, 20, 39);
                     
                     
-                    $inserirDb = "INSERT INTO carga_vw_info (data_nota,numero_nota,produto,caixa,qtde,tot_item,val_ipi,seq,fornecedor) VALUES ('" . $numeroNota . "','" . $uploadfile . "','" . $data . "','" . $_SESSION['id_usuario'] . "');";
+                    $inserirDb = "INSERT INTO sisrev_carga_vw_info (data_nota,numero_nota,produto,caixa,qtde,tot_item,val_ipi,seq,fornecedor) VALUES ('" . $numeroNota . "','" . $uploadfile . "','" . $data . "','" . $_SESSION['id_usuario'] . "');";
                     $resultado = $conn->query($inserirDb);
                 }
                 $inserirDb = "INSERT INTO sisrev_arquivo_car (nome_arquivo,caminho,data,id_usuario) VALUES ('" . $nome . "','" . $uploadfile . "','" . $data . "','" . $_SESSION['id_usuario'] . "');";

@@ -66,13 +66,13 @@ if ($filial !== null) {
                     }
                     
                     //busca a coluna movimentacao do banco carga_wv
-                    $verificaMovimentacao = "SELECT movimentacao FROM carga_vw_info;";
+                    $verificaMovimentacao = "SELECT movimentacao FROM sisrev_carga_vw_info;";
                     $setem                = $conn->query($verificaMovimentacao);
                     
                     //while que apresenta as movimentações do select anteior
                     while ($der = $setem->fetch_assoc()) {
                         if ($der['movimentacao'] == $movimentacao) { //se o arquivo estiver com a mesma data, ele exclui apenas as linhas dessa data(movimentação)
-                            $delete  = "DELETE FROM carga_vw_info WHERE movimentacao = '" . $movimentacao . "';";
+                            $delete  = "DELETE FROM sisrev_carga_vw_info WHERE movimentacao = '" . $movimentacao . "';";
                             $success = $conn->query($delete);
                             break;
                         }
@@ -85,6 +85,7 @@ if ($filial !== null) {
                         
                         $ler = $row[$i];
                         
+                        
                         $numeroIpi   = substr($ler, 118, 10);//seleciona a coluna do arquivo onde é o valor total do item
                         $numeroIpi   = ltrim($numeroIpi, '0');//retirar os zeros da fração
                         $numeroIpi   = substr_replace($numeroIpi, '.', -2, 0);//coloca um ponto para mostrar que é uma fração
@@ -96,11 +97,11 @@ if ($filial !== null) {
                         $numeroCaixa = substr($ler, 143, 10);//seleciona a coluna do arquivo onde é o numero de caixa
                         $numeroCaixa = ltrim($numeroCaixa, '0');
                         $nomeProduto = substr($ler, 50, 19);//seleciona a coluna do arquivo onde é o nome do produto
-                        $dataNota = substr($ler, 33, 8);//seleciona a coluna do arquivo onde é a data da nota
-                        $dataNota = substr_replace($dataNota, '/', 2, 0);//{
-                        $dataNota = substr_replace($dataNota, '/', 5, 0);//    apenas coloca / entre a data }
-                        $dataNota = implode('-', array_reverse(explode('/', $dataNota)));
-                        $cnpjForn = substr($ler, 162, 20); // se não houver fornecedor será substuido o valor por '-------'
+                        $dataNota    = substr($ler, 33, 8);//seleciona a coluna do arquivo onde é a data da nota
+                        $dataNota    = substr_replace($dataNota, '/', 2, 0);//{
+                        $dataNota    = substr_replace($dataNota, '/', 5, 0);//    apenas coloca / entre a data }
+                        $dataNota    = implode('-', array_reverse(explode('/', $dataNota)));
+                        $cnpjForn    = substr($ler, 162, 20); // se não houver fornecedor será substuido o valor por '-------'
                         if ($cnpjForn = '00000000000000') {
                             $cnpjForn = '-------';
                         } else {
@@ -114,7 +115,7 @@ if ($filial !== null) {
                             break;//ele para o laço
                         }
                         
-                        $inserirBancoDados = 'INSERT INTO carga_vw_info(numero_nota,data_nota,produto,caixa,tot_item,val_ipi,fornecedor,qtde,movimentacao,revenda,empresa) VALUES ("' . $numeroNota . '","' . $dataNota . '","' . $nomeProduto . '","' . $numeroCaixa . '","' . $numeroIpi . '","' . $valorIpi . '","' . $cnpjForn . '","' . $qntd . '","' . $movimentacao . '","' . $filial . '","1")';
+                        $inserirBancoDados = 'INSERT INTO sisrev_carga_vw_info(numero_nota,data_nota,produto,caixa,tot_item,val_ipi,fornecedor,qtde,movimentacao,revenda,empresa,tipo_rel) VALUES ("' . $numeroNota . '","' . $dataNota . '","' . $nomeProduto . '","' . $numeroCaixa . '","' . $numeroIpi . '","' . $valorIpi . '","' . $cnpjForn . '","' . $qntd . '","' . $movimentacao . '","' . $filial . '","1","'.$FP9.'")';
                         $resultado         = $conn->query($inserirBancoDados); //Faz a inserção dentro do banco de dados
                         if ($resultado) { //se a inserção for um sucesso, ele redireciona para a pagina
                             header('location: ../front/processosFabrica.php?pg='.$_GET['pg'].'&msn=11');
