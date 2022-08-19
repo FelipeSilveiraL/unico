@@ -22,7 +22,7 @@ require_once('menu.php'); //menu lateral da pagina
 
     $merge = array_merge($queryModulosUser, $queryModulosUser2);
     $queryModulosM = $merge[0] . $merge[1];
-
+    
     $a = $conn->query($queryModulosM);
 
     if ($liberado = $a->fetch_assoc()) {

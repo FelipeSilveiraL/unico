@@ -16,7 +16,8 @@
                                 <th scope="col">Nome</th>
                                 <th scope="col">Endereço</th>
                                 <th scope="col">Sub-módulo</th>                                
-                                <th scope="col">Localização</th>                                
+                                <th scope="col">Localização</th>                                  
+                                <th scope="col">Página</th>                             
                                 <th scope="col">Ícone</th>
                                 <th scope="col">Ação</th>
                             </tr>
@@ -49,6 +50,10 @@
                                     $b = $conn->query($a);
                                     $c = $b->fetch_assoc();
 
+                                    $d = "SELECT nome FROM sisrev_modulos where id = ".$acessos['pagina'];
+                                    $e = $conn->query($d);
+                                    $f = $e->fetch_assoc();
+
                                     echo '
                                     <tr>
                                         <th scope="row">' . $acessos['id'] . '</th>
@@ -56,9 +61,10 @@
                                         <td>' . $acessos['endereco'] . '</td>
                                         <td>'; echo empty($acessos['sub_modulo']) ? '---' : $c['nome']; echo '</td>
                                         <td>' . $localizacao . '</td>
-                                        <td>' . $acessos['icone'] . '</td>
+                                        <td>'; echo empty($acessos['pagina']) ? '---' : $f['nome']; echo '</td>
+                                        <td>'; echo empty($acessos['icone']) ? '---' : $f['nome']; echo '</td>
                                         <td> 
-                                            <a href="acessos_alterar.php?pg=' . $_GET['pg'] . '&tela=' . $_GET['tela'] . '&id=' . $acessos['id'] . '&acao=2" title="Editar" class="btn btn-primary btn-sm" '.$usuarioFuncao.'>
+                                            <a href="acessos_alterar.php?pg=' . $_GET['pg'] . '&id=' . $acessos['id'] . '&acao=2" title="Editar" class="btn btn-primary btn-sm" '.$usuarioFuncao.'>
                                                 <i class="bi bi-pencil"></i>
                                             </a>
                                             <a href="#" title="Excluir" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#basicModal' . $acessos['id'] . '" '.$usuarioFuncao.'>
@@ -91,7 +97,7 @@
                                                 </form>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                                    <a href="../inc/acessos_alterar.php?pg=' . $_GET['pg'] . '&tela=' . $_GET['tela'] . '&acao=3&id=' . $acessos['id'] . '" title="Excluir" class="btn btn-danger">Deletar</a>
+                                                    <a href="../inc/acessos_alterar.php?pg=' . $_GET['pg'] . '&acao=3&id=' . $acessos['id'] . '" title="Excluir" class="btn btn-danger">Deletar</a>
                                                 </div>
                                             </div>
                                         </div>

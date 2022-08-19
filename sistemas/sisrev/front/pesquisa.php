@@ -29,13 +29,21 @@ $resultModulos = $conn->query($queryModulos);
     <div class="row">
       <br>
       <?php
-
       while ($modulo = $resultModulos->fetch_assoc()) {
+
+        if ($modulo['sub_modulo'] == 0 && $modulo['pagina'] == 0) {
+          $idPagina = $modulo['id'];
+        } elseif ($modulo['pagina'] == 0) {
+          $idPagina = $modulo['sub_modulo'];
+        } else {
+          $idPagina = $modulo['pagina'];
+        }
+        
         echo '<div class="col-lg-3"> 
-                <a href="'.$modulo['endereco'].'" class="list-group-item list-group-item-action">
+                <a href="' . $modulo['endereco'] . '?pg=' . $idPagina . '" class="list-group-item list-group-item-action">
                   <div class="card">
                     <div class="card-body">
-                      <h5 class="card-title capitalize">'.$modulo['nome'].'</h5>
+                      <h5 class="card-title capitalize">' . $modulo['nome'] . '</h5>
                     </div>
                   </div>
                 </a>

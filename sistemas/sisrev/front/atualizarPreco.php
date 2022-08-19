@@ -50,7 +50,7 @@ require_once('../inc/tabelaAtualizarPreco.php');
                     <div class="card">
                       <div class="card-body">
                         <div class="filter" style="margin-top: 10px;margin-left: 96%;">
-                          <a class="icon" href="logAtualizacaoPecas.php?empresa=1" title="Logs anteriores">
+                          <a class="icon" href="logAtualizacaoPecas.php?empresa=1&pg=<?= $_GET['pg'] ?>" title="Logs anteriores">
                             <i class="bi bi-file-earmark-bar-graph"></i>
                           </a>
                         </div>
@@ -131,7 +131,7 @@ require_once('../inc/tabelaAtualizarPreco.php');
                       <div class="card-body">
 
                         <div class="filter" style="margin-top: 10px;margin-left: 96%;">
-                          <a class="icon" href="logAtualizacaoPecas.php?empresa=2" title="Logs anteriores">
+                          <a class="icon" href="logAtualizacaoPecas.php?empresa=2&pg=<?= $_GET['pg'] ?>" title="Logs anteriores">
                             <i class="bi bi-file-earmark-bar-graph"></i>
                           </a>
                         </div>
