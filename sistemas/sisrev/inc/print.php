@@ -1,5 +1,6 @@
 
         <?php
+        session_start();
         require_once('../config/query.php');
 
         // ------------------ ETIQUETA LASER -------------
@@ -21,7 +22,7 @@
         
         $execCreate = $conn->query($createTableEst);
 
-        $url = "http://10.100.1.215/unico_api/sisrev/estoque.json";
+        $url = "http://".$_SESSION['servidorOracle']."/unico_api/sisrev/estoque.json";
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

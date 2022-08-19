@@ -1,6 +1,7 @@
 <?php
+session_start();
 
-$url = "http://10.100.1.215/smartshare/inc/selbettiApi.php";
+$url = "http://".$_SESSION['servidorOracle']."/smartshare/inc/selbettiApi.php";
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

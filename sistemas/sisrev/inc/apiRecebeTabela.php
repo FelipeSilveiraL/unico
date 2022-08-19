@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once('../../../config/databases.php');
 
 $droptable = "DROP TABLE IF EXISTS sisrev_empresas_bpmgp";
@@ -27,7 +29,7 @@ $createTableEmp = "CREATE TABLE `sisrev_empresas_bpmgp` (
 
 $execCreate = $conn->query($createTableEmp);
 
-$url = "http://10.100.1.215/smartshare/inc/smartApi.php";
+$url = "http://".$_SESSION['servidorOracle']."/smartshare/inc/smartApi.php";
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

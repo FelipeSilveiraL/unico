@@ -30,7 +30,7 @@ require_once('../inc/apiRecebeSelbetti.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <form class="row g-3" action="http://10.100.1.215/smartshare/bd/novaRegraEmp.php?pg=<?= $_GET['pg'] ?>" method="POST">
+            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle']?>/smartshare/bd/novaRegraEmp.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-12">
                 <input class="form-control" id="empresa" name="empresa" required>

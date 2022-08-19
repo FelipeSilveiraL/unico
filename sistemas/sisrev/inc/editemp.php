@@ -1,5 +1,6 @@
 
   <?php
+  session_start();
   require_once("../config/query.php");
   require_once('../../../config/databases.php');
   require_once('../inc/apiRecebeSelbetti.php');
@@ -27,7 +28,7 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-          <form class="row g-3" action="http://10.100.1.215/smartshare/bd/editemp.php?id_empresa=' . $info . '&pg='.$_GET['pg'].'" method="POST">
+          <form class="row g-3" action="http://'.$_SESSION['servidorOracle'].'/smartshare/bd/editemp.php?id_empresa=' . $info . '&pg='.$_GET['pg'].'" method="POST">
               <div class="form-floating mt-4 col-md-12">
                 <select class="form-select" id="floatingSelect" name="usuarioBPM" disabled>
                   <option value="1">' . $edit["NOME_EMPRESA"] . '</option>
