@@ -251,8 +251,8 @@ require_once('menu.php'); //menu lateral da pagina
               </div>
               <div <?= $usuarioFuncao ?> >
                 <div class="py-5" style="float: left;">
-                  <button type="button" class="btn btn-primary"><a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/sisrev/front/processos.php?pg=<?= $_GET['pg'] ?>">Voltar</a></button>
-                  <button type="submit" class="btn btn-primary" style="display: <?= !empty($selecionada) ? 'inline' : 'none' ?>;">Realizar Carga</button>
+                  <button type="button" class="btn btn-primary"><a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/sisrev/front/processos.php?pg=<?= $_GET['pg'] ?>"><span style="color: white;">Voltar</span></a></button>
+                  <button type="submit" class="btn btn-primary" onclick="teste()" style="display: <?= !empty($selecionada) ? 'inline' : 'none' ?>;">Realizar Carga</button>
                 </div>
               </div>
             </form>

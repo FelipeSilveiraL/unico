@@ -1,8 +1,10 @@
 <?php
+session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php');
 require_once('../config/query.php'); //menu lateral da pagina
+require_once('../../../config/config.php');
 ?>
 
 <main id="main" class="main">
@@ -62,7 +64,7 @@ require_once('../config/query.php'); //menu lateral da pagina
                 <button type="submit" value="1" name="der" class="btn btn-primary">Pesquisar</button>
               </div>
             </form>
-            <form class="row g-3" action="http://<?=$_SESSION['servidorOracle'] ?>/unico_api/sisrev/api_estoque.php" method="POST">
+            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/unico_api/sisrev/api_estoque.php" method="POST">
             <div>
             <button type="submit" title="Selecione os itens para impressão de etiqueta" style="display:<?= ($_POST['der'] == 1) ? '' : 'none' ?>;float:right;" class="btn btn-primary"><i class="bx bx-printer"></i></button>
             </div>

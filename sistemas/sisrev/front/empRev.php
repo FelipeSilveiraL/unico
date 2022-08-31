@@ -84,8 +84,9 @@ require_once('../config/query.php');
                     echo ($_GET['id'] == 1) ? '">' : 'none"';
                     $id = $row['id'];
                     echo '
-                      <a href="../front/empRev.php?pg=' . $_GET['pg'] . '&id=3&id2=' . $id . '" ' . $usuarioFuncao . '><span style="color: green;"><i class="ri-pencil-line"></i></span></a>
-                      <a href="../front/empRev.php?pg=' . $_GET['pg'] . '&id=5&id2=' . $id . '" data-bs-toggle="modal" data-bs-target="#excluir' . $id . '" ' . $usuarioFuncao . '><span style="color:red;"><i class="ri-delete-bin-6-line"></i></span></a></td>
+                    <a href="../front/empRev.php?pg=' . $_GET['pg'] . '&id=3&id2=' . $id . '" ' . $usuarioFuncao . '><button type="button" class="btn btn-success btn-sm"><i class="ri-pencil-line"></i></button></a>
+                    <a href="../front/empRev.php?pg=' . $_GET['pg'] . '&id=5&id2=' . $id . '" data-bs-toggle="modal" data-bs-target="#excluir' . $id . '" ' . $usuarioFuncao . '><span style="color:red;"><button type="button" class="btn btn-danger btn-sm"><i class="ri-delete-bin-6-line"></i></span></button></a>
+                      </td>
                       <div class="modal fade" id="excluir' . $id . '" tabindex="-1">
                       <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -152,121 +153,83 @@ require_once('../config/query.php');
                   $id2 = $_GET['id2'];
 
                   $tabelaEmpRev .= ' WHERE id=' . $id2 . '';
-
-                  echo '<table class="table datatable">
-                    <thead>
-                        <tr>
-                          <th scope="col" class="capitalize">EMPR&ensp;</th>
-                          <th scope="col" class="capitalize">Num Rev&ensp;</th>
-                          <th scope="col" class="capitalize">Nome Emp&ensp;</th>
-                          <th scope="col" class="capitalize">NOME FILIAL&ensp;</th>
-                          <th scope="col" class="capitalize">Tipo&ensp;</th>
-                          <th scope="col" class="capitalize">Rev&ensp;</th>
-                          <th scope="col" class="capitalize">DN&ensp;</th>
-                          <th scope="col" class="capitalize">ATIVO&ensp;</th>
-                          <th scope="col" class="capitalize">VENDAS&ensp;</th>
-                          <th scope="col" class="capitalize">BD&ensp;</th>
-                          <th scope="col" class="capitalize">BANDEIRA&ensp;</th>
-                          <th scope="col" class="capitalize">REVMATRIZ&ensp;</th>
-                          <th scope="col" class="capitalize">CNPJ&ensp;</th>
-                        </tr>
-                      </thead>
-                      <tbody>';
                   $conexaoSucesso = $conn->query($tabelaEmpRev);
 
                   while ($row = $conexaoSucesso->fetch_assoc()) {
 
-                    echo '<tr>
-                                    <input type="hidden" value="' . $row['id'] . '" name="id">
-                                    <td><input style="width: 30px;" value="' . $row['EMPR'] . '" name="EMPR"></td>
-                                    <td><input style="width: 30px;" value="' . $row['num_rev'] . '" name="NUMREV"></td>
-                                    <td><input style="width: 100px;" value="' . $row['nome_empresa'] . '" name="NOMEEMP"></td>
-                                    <td><input style="width: 60px;" value="' . $row['nome_filial'] . '" name="NOMEFILIAL"></td>
-                                    <td><input style="width: 30px;" value="' . $row['tipo'] . '" name="TIPO"></td>
-                                    <td><input style="width: 30px;" value="' . $row['rev'] . '" name="REV"></td>
-                                    <td><input style="width: 40px;" value="' . $row['dn'] . '" name="DN"></td>
-                                    <td><input style="width: 30px;" value="' . $row['ATIVO'] . '" name="ATIVO"></td>
-                                    <td><input style="width: 30px;" value="' . $row['tem_vendas'] . '" name="VENDAS"></td>
-                                    <td><input style="width: 30px;" value="' . $row['sistema_emp_bd'] . '" name="BD"></td>
-                                    <td><input style="width: 30px;" value="' . $row['bandeira'] . '" name="BANDEIRA"></td>
-                                    <td><input style="width: 30px;" value="' . $row['rev_matriz'] . '" name="REVMATRIZ"></td>
-                                    <td><input style="width: 120px;" value="' . $row['cnpj'] . '" name="CNPJ"></td>
-                                  </tr>
-                                </tbody>
-                                </table>
-
-                                <div class="row">
-                                <input type="hidden" value="' . $row['id'] . '" name="id">            
-                                <div class="form-floating mt-6 col-md-12" id="EMPR">
-                                <input type="text" value="' . $row['EMPR'] . '" class="form-control" id="EMPR" name="EMPR">
-                                  <label for="EMPR" class="capitalize">EMPRESA:</label>
-                                </div>
-                                <div class="form-floating mt-4 col-md-6" id="NUM">
-                                <input type="text" value="' . $row['num_rev'] . '" class="form-control" id="NUM" name="NUMREV">
-                                <label for="NUM">NUM REV:<span style="color: red;">*</span></label>
-                                </div>
-                                <div class="form-floating mt-4 col-md-6" id="NOMEEMP">
-                                <input type="text" value="' . $row['nome_empresa'] . '" class="form-control" id="NOMEEMP" name="NOMEEMP">
-                                  <label for="NOMEEMP">NOME EMPRESA:<span style="color: red;">*</span></label>
-                                </div>
-                                <div class="form-floating mt-4 col-md-6" id="NOMEFILIAL">
-                                <input type="text" value="' . $row['nome_filial'] . '" class="form-control" id="NOMEFILIAL" name="NOMEFILIAL">
-                                  <label for="NOMEFILIAL">NOME FILIAL:<span style="color: red;">*</span></label>
-                                </div>
-                                <div class="form-floating mt-4 col-md-6" id="TIPO">
-                                <input type="text" value="' . $row['tipo'] . '" class="form-control" id="TIPO" name="TIPO">
-                                  <label for="TIPO">TIPO:<span style="color: red;">*</span></label>
-                                </div>
-                                <div class="form-floating mt-4 col-md-6" id="REV">
-                                <input type="text" class="form-control" id="REV" name="REV">
-                                  <label for="REV">REV:<span style="color: red;">*</span></label>
-                                </div>
-                                <div class="form-floating mt-4 col-md-6" id="DN">
-                                <input type="text" class="form-control" id="DN" name="DN">
-                                  <label for="DN">DN:<span style="color: red;">*</span></label>
-                                </div>
-                                <div class="form-floating mt-4 col-md-6" id="ATIVO">
-                                <input type="text" class="form-control" id="ATIVO" name="ATIVO">
-                                  <label for="ATIVO">ATIVO:<span style="color: red;">*</span></label>
-                                </div>
-                                <div class="form-floating mt-4 col-md-6" id="VENDAS">
-                                <input type="text" class="form-control" id="VENDAS" name="VENDAS">
-                                  <label for="VENDAS">VENDAS:<span style="color: red;">*</span></label>
-                                </div>
-                                <div class="form-floating mt-4 col-md-6" id="BD">
-                                <input type="text" class="form-control" id="BD" name="BD">
-                                  <label for="BD">BD:<span style="color: red;">*</span></label>
-                                </div>
-                                <div class="form-floating mt-4 col-md-6" id="BANDEIRA">
-                                <input type="text" class="form-control" id="BANDEIRA" name="BANDEIRA">
-                                  <label for="BANDEIRA">BANDEIRA:<span style="color: red;">*</span></label>
-                                </div>
-                                <div class="form-floating mt-4 col-md-6" id="REVMATRIZ">
-                                <input type="text" class="form-control" id="REVMATRIZ" name="REVMATRIZ">
-                                  <label for="REVMATRIZ">REVMATRIZ:<span style="color: red;">*</span></label>
-                                </div>
-                                <div class="form-floating mt-4 col-md-6" id="CNPJ">
-                                <input type="text" class="form-control" id="CNPJ" name="CNPJ">
-                                  <label for="CNPJ">CNPJ:<span style="color: red;">*</span></label>
-                                </div>
-                              </div><br>
+                    echo '
+                          <div class="row">
+                          <input type="hidden" value="' . $row['id'] . '" name="id">  
+                          <div class="form-floating mt-6 col-md-12" id="NOMEEMP">
+                          <input type="text" value="' . $row['nome_empresa'] . '" class="form-control" id="NOMEEMP" name="NOMEEMP">
+                            <label for="NOMEEMP">NOME EMPRESA:<span style="color: red;">*</span></label>
+                          </div>          
+                          <div class="form-floating mt-4 col-md-6" id="EMPR">
+                          <input type="text" value="' . $row['EMPR'] . '" class="form-control" id="EMPR" name="EMPR">
+                            <label for="EMPR" class="capitalize">EMPRESA:</label>
+                          </div>
+                          <div class="form-floating mt-4 col-md-6" id="NUM">
+                          <input type="text" value="' . $row['num_rev'] . '" class="form-control" id="NUM" name="NUMREV">
+                          <label for="NUM">NUM REV:<span style="color: red;">*</span></label>
+                          </div>
+                          <div class="form-floating mt-4 col-md-6" id="NOMEFILIAL">
+                          <input type="text" value="' . $row['nome_filial'] . '" class="form-control" id="NOMEFILIAL" name="NOMEFILIAL">
+                            <label for="NOMEFILIAL">NOME FILIAL:<span style="color: red;">*</span></label>
+                          </div>
+                          <div class="form-floating mt-4 col-md-6" id="TIPO">
+                          <input type="text" value="' . $row['tipo'] . '" class="form-control" id="TIPO" name="TIPO">
+                            <label for="TIPO">TIPO:<span style="color: red;">*</span></label>
+                          </div>
+                          <div class="form-floating mt-4 col-md-6" id="REV">
+                          <input type="text" value="' . $row['rev'] . '" class="form-control" id="REV" name="REV">
+                            <label for="REV">REV:<span style="color: red;">*</span></label>
+                          </div>
+                          <div class="form-floating mt-4 col-md-6" id="DN">
+                          <input type="text" value="' . $row['dn'] . '" class="form-control" id="DN" name="DN">
+                            <label for="DN">DN:<span style="color: red;">*</span></label>
+                          </div>
+                          <div class="form-floating mt-4 col-md-6" id="ATIVO">
+                          <input type="text" value="' . $row['ATIVO'] . '" class="form-control" id="ATIVO" name="ATIVO">
+                            <label for="ATIVO">ATIVO:<span style="color: red;">*</span></label>
+                          </div>
+                          <div class="form-floating mt-4 col-md-6" id="VENDAS">
+                          <input type="text" value="' . $row['tem_vendas'] . '" class="form-control" id="VENDAS" name="VENDAS">
+                            <label for="VENDAS">VENDAS:<span style="color: red;">*</span></label>
+                          </div>
+                          <div class="form-floating mt-4 col-md-6" id="BD">
+                          <input type="text" value="' . $row['sistema_emp_bd'] . '" class="form-control" id="BD" name="BD">
+                            <label for="BD">BD:<span style="color: red;">*</span></label>
+                          </div>
+                          <div class="form-floating mt-4 col-md-6" id="BANDEIRA">
+                          <input type="text" value="' . $row['bandeira'] . '" class="form-control" id="BANDEIRA" name="BANDEIRA">
+                            <label for="BANDEIRA">BANDEIRA:<span style="color: red;">*</span></label>
+                          </div>
+                          <div class="form-floating mt-4 col-md-6" id="REVMATRIZ">
+                          <input type="text" value="' . $row['rev_matriz'] . '" class="form-control" id="REVMATRIZ" name="REVMATRIZ">
+                            <label for="REVMATRIZ">REVMATRIZ:<span style="color: red;">*</span></label>
+                          </div>
+                          <div class="form-floating mt-4 col-md-6" id="CNPJ">
+                          <input type="text" value="' . $row['cnpj'] . '" class="form-control" id="CNPJ" name="CNPJ">
+                            <label for="CNPJ">CNPJ:<span style="color: red;">*</span></label>
+                          </div>
+                        </div><br>
                           ';
                   }
                   break;
                 case 4:
                   echo' 
                   <div class="row">
-                    <div class="form-floating mt-6 col-md-12" id="EMPR">
+                    <div class="form-floating mt-6 col-md-12" id="NOMEEMP">
+                    <input type="text" class="form-control" id="NOMEEMP" name="NOMEEMP">
+                      <label for="NOMEEMP">NOME EMPRESA:<span style="color: red;">*</span></label>
+                    </div>
+                    <div class="form-floating mt-4 col-md-6" id="EMPR">
                     <input type="text" class="form-control" id="EMPR" name="EMPR">
                       <label for="EMPR" class="capitalize">EMPRESA:</label>
                     </div>
                     <div class="form-floating mt-4 col-md-6" id="NUM">
                     <input type="text" class="form-control" id="NUM" name="NUMREV">
                     <label for="NUM">NUM REV:<span style="color: red;">*</span></label>
-                    </div>
-                    <div class="form-floating mt-4 col-md-6" id="NOMEEMP">
-                    <input type="text" class="form-control" id="NOMEEMP" name="NOMEEMP">
-                      <label for="NOMEEMP">NOME EMPRESA:<span style="color: red;">*</span></label>
                     </div>
                     <div class="form-floating mt-4 col-md-6" id="NOMEFILIAL">
                     <input type="text" class="form-control" id="NOMEFILIAL" name="NOMEFILIAL">

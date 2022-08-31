@@ -44,20 +44,22 @@ require_once('../config/query.php');
                 $sub = $_POST['modulo'];
             }
             
-            $queryUpdate = 'UPDATE sisrev_modulos SET 
-                                nome ="'.$_POST['nome'].'", 
-                                endereco ="'.$_POST['endereco'].'",
-                                sub_modulo = "'; $queryUpdate .= empty($sub) ? "0" : $sub; $queryUpdate .='",
-                                icone = "'; $queryUpdate .= empty($_POST['icone']) ? "0" : $_POST['icone']; $queryUpdate .='",
-                                localizacao = "'; $queryUpdate .= empty($_POST['localizacao']) ? "0" : $_POST['localizacao']; $queryUpdate .='",
-                                pagina = "'; $queryUpdate .= empty($pag) ? "0" : $pag; $queryUpdate .='"
-                            WHERE id= '.$_GET['id'];
+            $queryUpdate = "UPDATE sisrev_modulos SET 
+                                nome ='".$_POST['nome']."', 
+                                endereco ='".$_POST['endereco']."',
+                                sub_modulo = '"; $queryUpdate .= empty($sub) ? '0' : $sub; $queryUpdate .="',
+                                icone = '"; $queryUpdate .= empty($_POST['icone']) ? '0' : $_POST['icone']; $queryUpdate .="',
+                                localizacao = '"; $queryUpdate .= empty($_POST['localizacao']) ? '0' : $_POST['localizacao']; $queryUpdate .="',
+                                pagina = '"; $queryUpdate .= empty($pag) ? '0' : $pag; $queryUpdate .="'
+                            WHERE id= ".$_GET['id'];
+
+            echo $queryUpdate;
 
             if (!$resultUpdate = $conn->query($queryUpdate)){
                 printf("Erro ao editar as informações %s\n", $conn->error);
             }
             
-            header('Location: ../front/telas_funcoes.php?pg='.$_GET['pg'].'&tela='.$_GET['tela'].'&msn=4');
+            //header('Location: ../front/telas_funcoes.php?pg='.$_GET['pg'].'&tela='.$_GET['tela'].'&msn=4');
         
             break;
 

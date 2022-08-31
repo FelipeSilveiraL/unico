@@ -1,4 +1,23 @@
-
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Grid - TipsCode</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: 200px 200px;
+            grid-column-gap: 20px;
+            grid-row-gap: 20px;
+            justify-items: stretch;
+            align-items: stretch;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
         <?php
         session_start();
         require_once('../config/query.php');
@@ -60,10 +79,14 @@
 
             $qtde = $row['qtde'];
 
-            for($i = 1; $i <= $qtde; $i++){
+            $i = 1;
+
+            while( $i <= $qtde){
                 
+                echo "
                 
-                echo "".$row['produto']."<br>
+                <div class='div".$i."'>
+                ".$row['produto']."<br>
                 &emsp;&emsp;NF ".$row['numero_nota']."<br>
                 &emsp;&emsp;".$row['caixa']."<br>";
                 
@@ -72,26 +95,25 @@
 
                 while($enderecoMostra = $deuCerto->fetch_assoc()){
                     echo '&emsp;'.$enderecoMostra['LOCACAO_ZONA'].'0'.$enderecoMostra['LOCACAO_RUA'].'&ensp;0'.$enderecoMostra['LOCACAO_ESTANTE'].'&ensp;'.$enderecoMostra['LOCACAO_PRATELEIRA'].'0'.$enderecoMostra['LOCACAO_NUMERO'].'';
-                    echo '<br><br>';
+                    echo '<br>';
                 }
+                echo "</div>";
 
-                        
-                
+            $i++;    
             }
         }
             
         curl_close($ch);
-
         $conn->close();
-
-
         ?>
-  
+        </div>
+  </body>
+</html>
 
 
 
 
-<!-- <script>
+<script>
 window.onload = function () { window.print(); window.addEventListener("afterprint", function(event) { window.close(); });
     window.onafterprint(); } 
-</script> -->
+</script>
