@@ -12,6 +12,7 @@ $i = 0;
 
 while ($i <= $total) {
 
+
     if ($arquivo[$i] === 'text/plain') {
 
         $data   = date('Y-m-d');
@@ -175,7 +176,7 @@ while ($i <= $total) {
             }
         }
     } else {
-        header("location: ../front/processosFabrica.php?pg=" . $_GET['pg'] . "&msn=10&erro=3");
+        header("location: ../front/processosFabrica.php?pg=" . $_GET['pg'] . "&dataArquivo=" . $data . "&msn=11");
     }
     
     $conn->close();

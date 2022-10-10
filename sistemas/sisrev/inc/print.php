@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>CSS Grid - TipsCode</title>
+    <title>Impressão etiqueta</title>
     <style>
         .container {
             display: grid;
@@ -13,7 +13,23 @@
             grid-row-gap: 20px;
             justify-items: stretch;
             align-items: stretch;
+            font-size: small;
         }
+
+        .div23 {
+            page-break-before: always;
+            page-break-inside: avoid;
+        }
+
+        .div24 {
+            page-break-before: always;
+            page-break-inside: avoid;
+        }
+        .div48 {
+            page-break-before: always;
+            page-break-inside: avoid;
+        }
+
     </style>
 </head>
 <body>

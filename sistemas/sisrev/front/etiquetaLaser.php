@@ -64,7 +64,7 @@ require_once('../../../config/config.php');
                 <button type="submit" value="1" name="der" class="btn btn-primary">Pesquisar</button>
               </div>
             </form>
-            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/unico_api/sisrev/api_estoque.php" method="POST">
+            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/unico_api/sisrev/imprimir.php" method="POST">
             <div>
             <button type="submit" title="Selecione os itens para impressão de etiqueta" style="display:<?= ($_POST['der'] == 1) ? '' : 'none' ?>;float:right;" class="btn btn-primary"><i class="bx bx-printer"></i></button>
             </div>
@@ -74,7 +74,7 @@ require_once('../../../config/config.php');
                 <table class="table datatable">
                   <thead>
                     <tr>
-                      <th scope="col" class="capitalize">#</th>
+                      <th scope="col" class="capitalize" ><input class="form-check-input" type="checkbox" id="select_all" name="select_all"></th>
                       <th scope="col" class="capitalize">DATA NF</th>
                       <th scope="col" class="capitalize">EMPRESA</th>
                       <th scope="col" class="capitalize">REVENDA</th>
@@ -137,7 +137,7 @@ require_once('../../../config/config.php');
                     $qtde = $row['qtde'];
                     $totalItem = $row['tot_item'];
                     echo '<tr>
-                              <th> <input class="form-check-input" type="checkbox" name="etiqueta" value="' . $row['produto'] . ''.$row['empresa'].'" id="etiqueta"></input><input type="hidden" name = "revenda" value="'.$row['revenda'].'"</input></th>
+                              <th> <input class="form-check-input" type="checkbox" name="etiqueta[]" value="' . $row['produto'] . ''.$row['empresa'].''.$row['numero_nota'].'' . $row['caixa'] . ''.$row['qtde'].'" id="etiqueta"></input><input type="hidden" name = "revenda" value="'.$row['revenda'].'"</input></th>
                               <th>' . $dataTab . '</th>
                               <th>' . $row['empresa'] . '</th>
                               <th>' . $row['revenda'] . '</th>
@@ -170,11 +170,15 @@ require_once('../../../config/config.php');
   </section>
 
   <!--################# section TERMINA AQUI #################-->
-<!-- <script>
-function myFunction() {
-  window.open("../inc/print.php");
-}
-</script> -->
+<script>
+    
+document.getElementById('select_all').onclick = function() {
+    var checkboxes = document.getElementsByName('select_all');
+    for (var checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+    }
+
+}</script>
 </main><!-- End #main -->
 
 <?php
