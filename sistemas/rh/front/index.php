@@ -1,16 +1,16 @@
 <?php
-require_once('../../../head.php'); //CSS e configurações HTML e session start
-require_once('../../../header.php'); //logo e login e banco de dados
-require_once('../../../menu.php'); //menu lateral da pagina
+require_once('head.php'); //CSS e configurações HTML e session start
+require_once('header.php'); //logo e login e banco de dados
+require_once('menu.php'); //menu lateral da pagina
 ?>
 
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>R.H</h1>
+    <h1>Home</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="../../../front/index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
       </ol>
     </nav>
   </div><!-- End Navegação -->
@@ -28,5 +28,5 @@ require_once('../../../menu.php'); //menu lateral da pagina
 </main><!-- End #main -->
 
 <?php
-require_once('../../../footer.php'); //Javascript e configurações afins
+require_once('footer.php'); //Javascript e configurações afins
 ?>
