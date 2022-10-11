@@ -11,7 +11,7 @@ require_once('menu.php'); //menu lateral da pagina
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item">Buscar CPF</li>
+        <?= !empty($_GET['table']) ? '<li class="breadcrumb-item"><a href="buscar.php?pg='.$_GET['pg'].'">Buscar CPF</a></li><li class="breadcrumb-item">Resultado</li>' : '<li class="breadcrumb-item">Buscar CPF</li>'; ?>
       </ol>
     </nav>
   </div><!-- End Navegação -->
@@ -31,7 +31,7 @@ require_once('menu.php'); //menu lateral da pagina
             <h5 class="card-title">Localizando funcionário na base de dados RH</h5><br>
 
             <!-- Horizontal Form -->
-            <form>
+            <form method="POST" action="../inc/buscar.php?pg=<?= $_GET['pg'] ?>">
 
               <fieldset class="row mb-10 pt-2">
                 <legend class="col-form-label col-sm-2 pt-2">Buscar por:</legend>
@@ -59,7 +59,7 @@ require_once('menu.php'); //menu lateral da pagina
               <hr><br>
               <div class="col-md-8" id="nomeFuncionario" style="display: none;">
                 <label for="inputName5" class="form-label">Nome Completo:</label>
-                <input type="text" class="form-control" id="inputNome" style="text-transform: uppercase;">
+                <input type="text" class="form-control" id="inputNome" name="nomeCompleto" style="text-transform: uppercase;">
               </div>
               <div class="col-md-2" id="cpfFuncionario" style="display: none;">
                 <label for="inputName5" class="form-label">CPF:</label>
@@ -80,7 +80,7 @@ require_once('menu.php'); //menu lateral da pagina
 
 
   <section class="section" style="display: <?= $displayBusca = !empty($_GET['table']) ? "block" : 'none'; ?>">
-    <div class="row">
+     <div class="row">
       <div class="col-lg-12">
 
         <div class="card">
@@ -97,11 +97,26 @@ require_once('menu.php'); //menu lateral da pagina
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Brandon Jacob</td>
-                  <td>07268977956</td>
-                  <td>072.689.779-56</td>
-                </tr>
+                <?php
+                if (!empty($_GET['table'])) {
+
+                  $queryBuscaColaboradoes = "SELECT * FROM rh_busca_colaborador";
+                  $resultBusca = $conn->query($queryBuscaColaboradoes);
+
+                  while ($colaborador = $resultBusca->fetch_assoc()) {
+
+                    $caracteres = array(".", "-");
+                    $cpfSemFormatacao = str_replace($caracteres, "", $colaborador['cpf']);
+
+                    echo '<tr>
+                          <td>' . $colaborador['nome'] . '</td>
+                          <td>' . $cpfSemFormatacao . '</td>
+                          <td>' . $colaborador['cpf'] . '</td>
+                        </tr>';
+                  }
+
+                }
+                ?>
               </tbody>
             </table>
             <!-- End Table with stripped rows -->
