@@ -1,10 +1,14 @@
 <?php
 require_once('../inc/paginacao.php'); //pg
 
-$querySistemaCores .=  ' WHERE id_usuario = '.$_SESSION['id_usuario'].' AND id_sistema = '.$_SESSION['id_sistema'];
+$querySistemaCores .=  ' WHERE id_usuario = ' . $_SESSION['id_usuario'] . ' AND id_sistema = ' . $_SESSION['id_sistema'];
 $resultado = $conn->query($querySistemaCores);
 echo $querySistemaCores;
-if(!$coressistema = $resultado->fetch_assoc()){ $color = "#fff";}else{ $color = $coressistema['color'];}
+if (!$coressistema = $resultado->fetch_assoc()) {
+    $color = "#fff";
+} else {
+    $color = $coressistema['color'];
+}
 ?>
 
 <aside id="sidebar" class="sidebar" style="background-image: linear-gradient(to bottom, #fff 73%, <?= $color ?> 100%);">
@@ -16,6 +20,13 @@ if(!$coressistema = $resultado->fetch_assoc()){ $color = "#fff";}else{ $color = 
                 <span>Home</span>
             </a>
         </li><!-- End Dashboard Nav -->
+        <hr>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="javascript:">
+                <i class="bi bi-person-bounding-box"></i>
+                <span>Busca CPF</span>
+            </a>
+        </li>
         <hr>
         <li class="nav-item">
             <a class="nav-link collapsed" href="../../../index.php">
