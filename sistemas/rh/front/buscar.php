@@ -1,0 +1,149 @@
+<?php
+require_once('head.php'); //CSS e configurações HTML e session start
+require_once('header.php'); //logo e login e banco de dados
+require_once('menu.php'); //menu lateral da pagina
+?>
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Buscar CPF</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item">Buscar CPF</li>
+      </ol>
+    </nav>
+  </div><!-- End Navegação -->
+
+  <?php
+  require_once('../../../inc/mensagens.php'); //Alertas
+  ?>
+
+  <!--################# COLE section AQUI #################-->
+
+  <section class="section" style="display: <?= $displayBusca = !empty($_GET['table']) ? "none" : 'block'; ?>">
+    <div class="row">
+      <div class="col-lg-12">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Localizando funcionário na base de dados RH</h5><br>
+
+            <!-- Horizontal Form -->
+            <form>
+
+              <fieldset class="row mb-10 pt-2">
+                <legend class="col-form-label col-sm-2 pt-2">Buscar por:</legend>
+                <div class="col-sm-5">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="busca" id="gridRadios1" value="1" onclick="escolheNome()">
+                    <label class="form-check-label" for="gridRadios1">
+                      Nome
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="busca" id="gridRadios2" value="2" onclick="escolheCpf()">
+                    <label class="form-check-label" for="gridRadios2">
+                      CPF
+                    </label>
+                  </div>
+                  <div class="form-check" style="display: none;">
+                    <input class="form-check-input" type="radio" name="busca" id="gridRadios3" value="3" onclick="escolheTodos()">
+                    <label class="form-check-label" for="gridRadios3">
+                      Todos
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
+              <hr><br>
+              <div class="col-md-8" id="nomeFuncionario" style="display: none;">
+                <label for="inputName5" class="form-label">Nome Completo:</label>
+                <input type="text" class="form-control" id="inputNome" style="text-transform: uppercase;">
+              </div>
+              <div class="col-md-2" id="cpfFuncionario" style="display: none;">
+                <label for="inputName5" class="form-label">CPF:</label>
+                <input name="cpf" type="text" class="form-control" id="inputCpf" onkeydown="javascript: fMasc( this, mCPF );" maxlength="14" onblur="ValidarCPF(this)">
+              </div>
+
+              <div class="text-center" style="margin-top: 25px; margin-bottom: 10px;">
+                <button type="submit" class="btn btn-success" id="localizar" disabled>Localizar <i class="bi bi-search"></i></button>
+              </div>
+            </form><!-- End Horizontal Form -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--################# section TERMINA AQUI #################-->
+
+
+  <section class="section" style="display: <?= $displayBusca = !empty($_GET['table']) ? "block" : 'none'; ?>">
+    <div class="row">
+      <div class="col-lg-12">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Dados do colaborador</h5>
+
+            <!-- Table with stripped rows -->
+            <table class="table datatable">
+              <thead>
+                <tr>
+                  <th scope="col" class="capitalize">Nome Completo</th>
+                  <th scope="col" class="capitalize">CPF sem formatação</th>
+                  <th scope="col" class="capitalize">CPF com formatação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Brandon Jacob</td>
+                  <td>07268977956</td>
+                  <td>072.689.779-56</td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- End Table with stripped rows -->
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main><!-- End #main -->
+
+<script>
+  function escolheNome() {
+    document.getElementById("nomeFuncionario").style.display = 'block';
+    document.getElementById("cpfFuncionario").style.display = 'none';
+    document.getElementById("inputCpf").required = false;
+    document.getElementById("inputNome").required = true;
+
+    document.getElementById("localizar").disabled = false
+  }
+
+  function escolheCpf() {
+    document.getElementById("nomeFuncionario").style.display = 'none';
+    document.getElementById("cpfFuncionario").style.display = 'block';
+    document.getElementById("inputCpf").required = true;
+    document.getElementById("inputNome").required = false;
+
+    document.getElementById("localizar").disabled = false
+  }
+
+  function escolheTodos() {
+    document.getElementById("nomeFuncionario").style.display = 'none';
+    document.getElementById("cpfFuncionario").style.display = 'none';
+    document.getElementById("inputCpf").required = false;
+    document.getElementById("inputNome").required = false;
+
+    document.getElementById("localizar").disabled = false
+  }
+</script>
+
+<?php
+require_once('footer.php'); //Javascript e configurações afins
+?>

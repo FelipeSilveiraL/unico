@@ -27,7 +27,7 @@ require_once('menu.php'); //menu lateral da pagina
 
         <div class="row">
           <div class="col-lg-3 py-2">
-            <a href="javascript:" class="list-group-item list-group-item-action">
+            <a href="buscar.php?pg=2" class="list-group-item list-group-item-action">
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">Buscar C.P.F</h5>

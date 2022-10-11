@@ -3,7 +3,6 @@ require_once('../inc/paginacao.php'); //pg
 
 $querySistemaCores .=  ' WHERE id_usuario = ' . $_SESSION['id_usuario'] . ' AND id_sistema = ' . $_SESSION['id_sistema'];
 $resultado = $conn->query($querySistemaCores);
-echo $querySistemaCores;
 if (!$coressistema = $resultado->fetch_assoc()) {
     $color = "#fff";
 } else {
@@ -22,9 +21,9 @@ if (!$coressistema = $resultado->fetch_assoc()) {
         </li><!-- End Dashboard Nav -->
         <hr>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="javascript:">
+            <a class="nav-link  <?= $_GET['pg'] == 2 ?: "collapsed" ?>" href="buscar.php?pg=2">
                 <i class="bi bi-person-bounding-box"></i>
-                <span>Busca CPF</span>
+                <span>Buscar CPF</span>
             </a>
         </li>
         <hr>
