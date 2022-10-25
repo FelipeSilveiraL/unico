@@ -43,7 +43,7 @@ require_once('menu.php'); //menu lateral da pagina
         </a>
       </div>
       <div class="col-sm-3">
-          <a href="gestorRH.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
+          <a href="custoVeiculos.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">CUSTO VEICULOS</h5>

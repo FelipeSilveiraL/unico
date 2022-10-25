@@ -38,7 +38,7 @@ require_once('../inc/apiRecebePerfil.php');
           <div class="card">
             <div class="card-body">
             <br>
-                <form method="POST" action=" http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novoLinkUnico.php" >
+                <form method="POST" action=" http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novoLink.php?pg=<?= $_GET['pg'] ?>" >
                   <div class="row mb-3">
                     <label for="user" class="col-sm-2 col-form-label" >Link:<span style="color: red;">*</span></label>
                     <div class="col-md-6">

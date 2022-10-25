@@ -32,7 +32,7 @@ require_once('../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?=$_SESSION['smartshare']?>/bd/editarSeminovos.php?id_fornecedor=<?=$_GET['id_semi']?>" method="POST">
+            <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?=$_SESSION['smartshare']?>/bd/editarSeminovos.php?pg=<?= $_GET['pg'] ?>&id_fornecedor=<?=$_GET['id_semi']?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               
                 <?php
@@ -57,14 +57,18 @@ require_once('../config/query.php');
 
                   if($ativo == 'S'){
                     $ativo = 'SIM';
+                    
                   }else{
                     $ativo = "NÃO";
                   }
                   if($smartshare == 'S'){
                     $smartshare = 'SIM';
+                    
                   }else{
                     $smartshare = "NÃO";
+                    
                   }
+                  
         echo '<div class="form-floating mt-4 col-md-6" id="cnpj"> 
                   <input type="text" value="'.$row['CNPJ'].'" class="form-control" disabled>
                   <input type="hidden" value="'.$row['CNPJ'].'" class="form-control" name="cnpj">
@@ -113,17 +117,17 @@ require_once('../config/query.php');
                 </select>
                 <label for="ativo">ATIVO:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6" id="utilizaSmartshare">
-              <select class="form-select"  name="utilizaSmartshare" required>
-              <option value="' . $row['SMARTSHARE'] . '">'.$smartshare.'</option>
-              <option value="">------------</option>
-              <option value="S">SIM</option>
-              <option value="N">NÃO</option>
-            </select>
-                <label for="utilizaSmartshare">SMARTSHARE:<span style="color: red;">*</span></label>
+              <div class="form-floating mt-4 col-md-6">
+                <select class="form-select"  name="utilizaSmartshare" id="utilizaSmartshare" onchange="aparece()" required>
+                  <option value="' . $row['SMARTSHARE'] . '">'.$smartshare.'</option>
+                  <option value="">------------</option>
+                  <option value="S">SIM</option>
+                  <option value="N">NÃO</option>
+                </select>
+                <label for="utilizaSmartshare2">SMARTSHARE:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6" id="SMARTSHARE_LOGIN">
-                <input type="text" value="' . $row['SMARTSHARE_LOGIN'] . '" class="form-control" name="login" required >
+              <div class="form-floating mt-4 col-md-6" id="SMARTSHARE_LOGIN" style="';echo ($smartshare == 'SIM') ? 'display: block;">': 'display: none;">';
+               echo '<input type="text" value="'.$smartshare_login.'" class="form-control" name="login" id="smartshareLogin" required >
                 <label for="SMARTSHARE_LOGIN">INFORME UM LOGIN:<span style="color: red;">*</span></label>
                 <span style="font-size: small;color: red;">NOME e os 3 primeiro números do CPF (Ex.: Joao.094)</span>
               </div>
@@ -147,15 +151,21 @@ require_once('../config/query.php');
 
 </main><!-- End #main -->
 
-<!-- 
 <script>
-  function empresaSelect() {
-    document.novaRegraEmpresa.action = "novaRegraAp.php"
-    document.novaRegraEmpresa.method = "GET"
-    document.novaRegraEmpresa.submit();
-  }
-</script> -->
+  function aparece() {
+    var value = document.getElementById("utilizaSmartshare").value;
 
+    if (value == "N") {
+      document.getElementById("SMARTSHARE_LOGIN").style.display = "none";
+      document.getElementById("smartshareLogin").required = false;
+      document.getElementById("smartshareLogin").value = "";
+      
+    } else {
+      document.getElementById("SMARTSHARE_LOGIN").style.display = "block";
+      document.getElementById("smartshareLogin").required = true;
+    }
+  }
+</script>
 
 <?php
 require_once('footer.php'); //Javascript e configurações afins

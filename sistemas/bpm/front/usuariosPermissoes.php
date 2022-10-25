@@ -72,7 +72,7 @@ $usuarios = $resultado->fetch_assoc();
                         while ($modulos = $resultadoModulos->fetch_assoc()) {
 
                           //verificando se o usuáros ja possui o modulo
-                          $queryModulosUser = "SELECT * FROM sisrev_usuario_modulo SM WHERE SM.id_usuario = " . $_GET['id_usuarios'] . " AND SM.id_modulo = " . $modulos['id'];
+                          $queryModulosUser = "SELECT * FROM bpm_usuario_modulo SM WHERE SM.id_usuario = " . $_GET['id_usuarios'] . " AND SM.id_modulo = " . $modulos['id'];
                           $resultModulosUser = $conn->query($queryModulosUser);
 
                           if ($modulosUser = $resultModulosUser->fetch_assoc()) {
@@ -117,13 +117,13 @@ $usuarios = $resultado->fetch_assoc();
                     <tbody>
                         <?php
                           //chamando modulos
-                          $queryModulosS = "SELECT * FROM sisrev_modulos WHERE sub_modulo not in (0) AND deletar = 0";
+                          $queryModulosS = "SELECT * FROM bpm_modulos WHERE sub_modulo not in (0) AND deletar = 0";
                           $resultadoModulosS = $conn->query($queryModulosS);
 
                           while ($modulosS = $resultadoModulosS->fetch_assoc()) {
 
                             //verificando se o usuáros ja possui o modulo
-                            $queryModulosUserS = "SELECT * FROM sisrev_usuario_modulo SM WHERE SM.id_usuario = " . $_GET['id_usuarios'] . " AND SM.id_modulo = " . $modulosS['id'];
+                            $queryModulosUserS = "SELECT * FROM bpm_usuario_modulo SM WHERE SM.id_usuario = " . $_GET['id_usuarios'] . " AND SM.id_modulo = " . $modulosS['id'];
                             $resultModulosUserS = $conn->query($queryModulosUserS);
 
                             if ($modulosUserS = $resultModulosUserS->fetch_assoc()) {
@@ -134,7 +134,7 @@ $usuarios = $resultado->fetch_assoc();
                             echo '<tr>
                                     <th scope="row"><input type="checkbox" value="' . $modulosS['id'] . '" name="modulo[]" id="modulo" ' . $checked . '></th>
                                     <td>' . $modulosS['nome'] . '</td>';
-                                    $d = "SELECT nome FROM sisrev_modulos WHERE id = ".$modulosS['sub_modulo'];
+                                    $d = "SELECT nome FROM bpm_modulos WHERE id = ".$modulosS['sub_modulo'];
                                     $e = $conn->query($d);
                                     $nomeModulo = $e->fetch_assoc();
                                     echo '<td>'.$nomeModulo['nome'].'</td>';
@@ -175,7 +175,7 @@ $usuarios = $resultado->fetch_assoc();
                       while ($modulosFuncao = $resultadoModulosFuncao->fetch_assoc()) {
 
                         //verificando se o usuáros ja possui o modulo
-                        $queryModulosUser = "SELECT * FROM sisrev_usuario_funcao SF WHERE SF.id_usuario = " . $_GET['id_usuarios'] . " AND SF.id_funcao = " . $modulosFuncao['id_funcao'];
+                        $queryModulosUser = "SELECT * FROM bpm_usuario_funcao SF WHERE SF.id_usuario = " . $_GET['id_usuarios'] . " AND SF.id_funcao = " . $modulosFuncao['id_funcao'];
                         $resultModulosUser = $conn->query($queryModulosUser);
 
                         if ($modulosUser = $resultModulosUser->fetch_assoc()) {

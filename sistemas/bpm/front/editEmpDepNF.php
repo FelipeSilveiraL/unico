@@ -10,14 +10,14 @@ require_once('../../../config/query.php');
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>EDITAR REGRA EMPRESA X DEPARTAMENTO</h1>
+    <h1>EDITAR REGRA EMPRESA X DEPARTAMENTO NF</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
         <li class="breadcrumb-item"><a href="NF.php?pg=<?= $_GET['pg'] ?>">NF</a></li>
         <li class="breadcrumb-item"><a href="nfEmpDep.php?pg=<?= $_GET['pg'] ?>">EMPRESA X DEPARTAMENTO NF</a></li>
-        <li class="breadcrumb-item">EDITAR REGRA EMPRESA X DEPARTAMENTO</li>
+        <li class="breadcrumb-item">EDITAR REGRA EMPRESA X DEPARTAMENTO NF</li>
       </ol>
     </nav>
   </div><!-- End Navegação -->
@@ -32,7 +32,7 @@ require_once('../../../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/editEmpDepNF.php" method="POST">
+            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/editEmpDepNF.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
                 <?php
                 $empDep = "SELECT * FROM bpm_nf_emp_dep WHERE ID_EMPDEP =" . $_GET['id'] . "";

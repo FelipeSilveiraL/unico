@@ -23,6 +23,10 @@ $criaTabela = "CREATE TABLE `bpm_nf_aprovadores` (
   `SITUACAO` VARCHAR(45) NULL,
   `TIPO_REGISTRO` VARCHAR(45) NULL,
   `APROVADOR_GESTOR` VARCHAR(45) NULL,
+  `LIMITE_AREA` VARCHAR(45) NULL,
+  `LIMITE_MARCA` VARCHAR(45) NULL,
+  `LIMITE_GERAL` VARCHAR(45) NULL,
+  `LIMITE_SUPERINTENDENTE` VARCHAR(45) NULL,
   PRIMARY KEY (`id`) )";
 
 $execTabela = $conn->query($criaTabela);
@@ -40,7 +44,8 @@ foreach ($resultado->aprov as $aprovador) {
 
     $queryApr = "INSERT INTO bpm_nf_aprovadores 
                             (ID_APROVADOR,APROVADOR_FILIAL,APROVADOR_AREA,APROVADOR_MARCA,APROVADOR_SUPERINTENDENTE,
-                            ID_EMPRESA,ID_DEPARTAMENTO,APROVADOR_GERENTE,NOME_EMPRESA,NOME_DEPARTAMENTO,SITUACAO,TIPO_REGISTRO,APROVADOR_GESTOR)
+                            ID_EMPRESA,ID_DEPARTAMENTO,APROVADOR_GERENTE,NOME_EMPRESA,
+                            NOME_DEPARTAMENTO,SITUACAO,TIPO_REGISTRO,APROVADOR_GESTOR,LIMITE_AREA,LIMITE_MARCA,LIMITE_GERAL,LIMITE_SUPERINTENDENTE)
    
     VALUES ('" . $aprovador->ID_APROVADOR ."',
             '" . $aprovador->APROVADOR_FILIAL . "',
@@ -54,7 +59,11 @@ foreach ($resultado->aprov as $aprovador) {
             '" . $aprovador->NOME_DEPARTAMENTO . "' ,
             '" . $aprovador->SITUACAO . "' ,
             '" . $aprovador->TIPO_REGISTRO . "' ,
-            '" . $aprovador->APROVADOR_GESTOR . "' 
+            '" . $aprovador->APROVADOR_GESTOR . "',
+            '" . $aprovador->LIMITE_AREA . "' ,
+            '" . $aprovador->LIMITE_MARCA . "' ,
+            '" . $aprovador->LIMITE_GERAL . "' ,
+            '" . $aprovador->LIMITE_SUPERINTENDENTE . "'
             )";
 
         

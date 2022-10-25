@@ -52,7 +52,7 @@ require_once('../inc/apiRecebeAprovNF.php');
           <div class="card-header">
             <a href="novaRegraApNF.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-success buttonAdd" title="Nova regra aprovadores" <?= $usuarioFuncao ?>><i class="bx bxs-file-plus"></i></a>
 
-            <a href="../bd/relatorioAprovadoresNF.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
+            <a href="../inc/relatorioAprovadoresNF.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
           </div>
           
           <div class="card-body">
@@ -68,9 +68,7 @@ require_once('../inc/apiRecebeAprovNF.php');
                   <th scope="col" class="capitalize">MARCA</th>
                   <th scope="col" class="capitalize">GERENTE GERAL</th>
                   <th scope="col" class="capitalize">SUPER INTEN.</th>
-                  <!-- <th scope="col" class="capitalize">SITUAÇÃO</th> -->
                   <th scope="col" class="capitalize">AÇÃO</th>
-
                 </tr>
               </thead>
               <tbody>

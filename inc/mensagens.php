@@ -150,11 +150,25 @@ if (!empty($_GET['msn'])) {
                 </div>';
             break;
             case '18':
-                echo '
+                echo 'f
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <span style="font-size: 12px">Já existe uma regra adicionada com a empresa e o departamento!</span>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
             break;
-    }
+            case '19':
+                echo '
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span style="font-size: 12px">CPF ou CNPJ já cadastrado</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
+            break;
+            case '20':
+                echo '
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span style="font-size: 12px">Já existem dados cadastrados</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
+            break;
+    }   
 }

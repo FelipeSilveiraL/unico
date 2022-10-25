@@ -9,7 +9,7 @@ foreach ($validacao['idFuncao'] as $key => $value) {
 
   switch ($value['funcao']) {
     case '5':
-      $aE = 'SELECT id FROM sisrev_usuario_funcao where id_usuario = '.$_SESSION['id_usuario'].' AND id_funcao = '.$value['funcao'].'';
+      $aE = 'SELECT id FROM bpm_usuario_funcao where id_usuario = '.$_SESSION['id_usuario'].' AND id_funcao = '.$value['funcao'].'';
       $resultadoaE = $conn->query($aE);
       if (!$fun = $resultadoaE->fetch_assoc()) {
         $usuarioFuncaoE = 'style= "display: none"';
@@ -17,7 +17,7 @@ foreach ($validacao['idFuncao'] as $key => $value) {
       break;
 
     case '6':
-      $aE = 'SELECT id FROM sisrev_usuario_funcao where id_usuario = '.$_SESSION['id_usuario'].' AND id_funcao = '.$value['funcao'].'';
+      $aE = 'SELECT id FROM bpm_usuario_funcao where id_usuario = '.$_SESSION['id_usuario'].' AND id_funcao = '.$value['funcao'].'';
       $resultadoaE = $conn->query($aE);
       if (!$fun = $resultadoaE->fetch_assoc()) {
         $usuarioFuncaoP = 'style= "display: none"';
@@ -56,7 +56,7 @@ foreach ($validacao['idFuncao'] as $key => $value) {
           <div class="card-body">
             <h5 class="card-title">Lista usuários</h5>
             <h6 <?= $usuarioFuncaoE ?>>
-              <p> Nesta tela só é possivel tratar permissões dos usuários para o Sistema Sisrev.</p>
+              <p> Nesta tela só é possivel tratar permissões dos usuários para o Sistema BPM.</p>
               <p>Caso seja necessario mudar outras informações como por exemplo; usuário, senha, etc... Basta clicar neste icone
                 <a href="../../../front/usuarios.php?pg=<?= $_GET['pg'] ?>" class="btn btn-success button-rigth-espelho" title="Editar usuários" target="_blank">
                   <i class="bx bxs-user-detail"></i>

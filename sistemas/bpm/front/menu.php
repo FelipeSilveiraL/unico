@@ -97,7 +97,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
 
             while ($modulosM = $resultadoModulosM->fetch_assoc()) {
 
-                $querySubmenu = 'SELECT * FROM sisrev_modulos where sub_modulo = ' . $modulosM['id_modulo'] . ' and deletar = 0';
+                $querySubmenu = 'SELECT * FROM bpm_modulos where sub_modulo = ' . $modulosM['id_modulo'] . ' and deletar = 0';
                 $resuSubmenu = $conn->query($querySubmenu);
 
                 if ($submenu = $resuSubmenu->fetch_assoc()) {
@@ -107,7 +107,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
 
                     $submodulo = '<ul id="modulo'.$modulosM['id_modulo'].'" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                                         <li>';
-                    $querySubmenuM = 'SELECT * FROM sisrev_modulos SM LEFT JOIN sisrev_usuario_modulo SUM ON (SUM.id_modulo = SM.id) where SM.sub_modulo = ' . $modulosM['id_modulo'] . ' and SM.deletar = 0 AND SUM.id_usuario = ' . $_SESSION['id_usuario'];
+                    $querySubmenuM = 'SELECT * FROM bpm_modulos SM LEFT JOIN bpm_usuario_modulo SUM ON (SUM.id_modulo = SM.id) where SM.sub_modulo = ' . $modulosM['id_modulo'] . ' and SM.deletar = 0 AND SUM.id_usuario = ' . $_SESSION['id_usuario'];
                     $resuSubmenuM = $conn->query($querySubmenuM);
                     while ($submenuM = $resuSubmenuM->fetch_assoc()) {
                         $submodulo .= '<a href="' . $submenuM['endereco'] . '?pg=' . $modulosM['id_modulo'] . '">
@@ -157,7 +157,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
 
             while ($modulosM = $resultadoModulosM->fetch_assoc()) {
 
-                $querySubmenu = 'SELECT * FROM sisrev_modulos where sub_modulo = ' . $modulosM['id_modulo'] . ' and deletar = 0';
+                $querySubmenu = 'SELECT * FROM bpm_modulos where sub_modulo = ' . $modulosM['id_modulo'] . ' and deletar = 0';
                 $resuSubmenu = $conn->query($querySubmenu);
 
                 if ($submenu = $resuSubmenu->fetch_assoc()) {
@@ -167,7 +167,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
 
                     $submodulo = '<ul id="modulo'.$modulosM['id_modulo'].'" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                                         <li>';
-                    $querySubmenuM = 'SELECT * FROM sisrev_modulos SM LEFT JOIN sisrev_usuario_modulo SUM ON (SUM.id_modulo = SM.id) where SM.sub_modulo = ' . $modulosM['id_modulo'] . ' and SM.deletar = 0 AND SUM.id_usuario = ' . $_SESSION['id_usuario'];
+                    $querySubmenuM = 'SELECT * FROM bpm_modulos SM LEFT JOIN bpm_usuario_modulo SUM ON (SUM.id_modulo = SM.id) where SM.sub_modulo = ' . $modulosM['id_modulo'] . ' and SM.deletar = 0 AND SUM.id_usuario = ' . $_SESSION['id_usuario'];
                     $resuSubmenuM = $conn->query($querySubmenuM);
                     while ($submenuM = $resuSubmenuM->fetch_assoc()) {
                         $submodulo .= '<a href="' . $submenuM['endereco'] . '?pg=' . $modulosM['id_modulo'] . '">

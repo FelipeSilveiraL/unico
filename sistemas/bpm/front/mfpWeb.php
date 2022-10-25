@@ -57,14 +57,24 @@ require_once('../inc/recebeMFP.php');//recebe os dados da api e insere no banco 
                  
                  while($row = $resultado->fetch_assoc()){
 
+                    $erro = $row["perfil"];
+
+                    switch($erro){
+                      case 'Area Padr?o':
+                        $erro = 'Area Padrão';
+                      break;
+                      case 'Centro Padr?o':
+                        $erro = 'Centro Padrão';
+                      break;
+                    }
                   echo'<tr>
                   <td>'.$row["link"].'</td>
                   <td>'.$row["id_perfil"].'</td>
-                  <td>'.$row["perfil"].'</td>
+                  <td>'.$erro.'</td>
                   <td>'.$row["descricao"].'</td>
                   <td><a href="editarLink.php?pg=' . $_GET["pg"] . '&perfil='.$row['id_perfil'].'" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
                             
-                  <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarLinkUnico.php?id_link=' . $row["id_link"] . '" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
+                  <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarLinkUnico.php?pg='.$_GET['pg'].'&id_link=' . $row["id_link"] . '" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
                   </tr>';
                  }
                  

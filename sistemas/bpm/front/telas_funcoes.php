@@ -38,10 +38,8 @@ require_once('menu.php'); //menu lateral da pagina
         </ul>
         <div class="tab-content pt-2" id="myTabContent">
           <?php
-          require_once('../inc/telas.php');
-          ?>
-          <?php
-          require_once('../inc/funcoes.php');
+            require_once('../inc/telas.php');
+            require_once('../inc/funcoes.php');
           ?>
         </div><!-- End Default Tabs -->
       </div>

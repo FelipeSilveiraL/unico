@@ -25,7 +25,12 @@ require_once('menu.php'); //menu lateral da pagina
       <section class="section">
         <div class="row">
         <?php  
-        $queryModulosM = "SELECT * FROM sisrev_modulos where sub_modulo = ".$_GET['pg']." AND deletar = 0";
+        $queryModulosM = "SELECT * FROM bpm_usuario_modulo BSM
+
+        LEFT JOIN bpm_modulos BM ON (BSM.id_modulo = BM.id)
+        
+        where BM.sub_modulo = ".$_GET['pg']." AND BM.deletar = 0 AND BSM.id_usuario = ".$_SESSION['id_usuario'];
+        
         $resultadoModulosM = $conn->query($queryModulosM);
 
         while ($modulosM = $resultadoModulosM->fetch_assoc()) {

@@ -11,13 +11,13 @@ $sucess = $conn->query($droptable);
 // Empresas tablea mysql
 
 $createTableMfp = "CREATE TABLE `unico`.`bpm_mfp_web` (
+    `id` INT NOT NULL AUTO_INCREMENT,
     `id_perfil` INT NOT NULL,
     `perfil` VARCHAR(45) NULL,
     `descricao` VARCHAR(45) NULL,
     `link` VARCHAR(45) NULL,
     `id_link` VARCHAR(45) NULL,
-    PRIMARY KEY (`id_perfil`) )
-  ";
+    PRIMARY KEY (`id`))";
    
 
 $execCreate = $conn->query($createTableMfp);

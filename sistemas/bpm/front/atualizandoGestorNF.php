@@ -70,7 +70,7 @@ require_once('../../../config/config.php');
 
               
               ?>
-                  <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/atualizandoGestorNF.php" method="POST" >
+                  <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/atualizandoGestorNF.php?pg=<?= $_GET['pg'] ?>" method="POST" >
                       <input type="hidden" name="gestorVelho" id="gestorVelho" value="<?= $_SESSION['login'] ?>">
                       <input type="hidden"  name="gestorNovo" id="gestorNovo" value="<?= $idGestorNovo ?>">
                       <div class="form-floating mt-4 col-md-6" style="margin-left: 25%;" id="depto">

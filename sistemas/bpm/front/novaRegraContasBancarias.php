@@ -10,14 +10,14 @@ require_once('../config/query.php');
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>EDITANDO CONTA BANCÁRIA</h1>
+    <h1>NOVA REGRA CONTA BANCÁRIA</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
         <li class="breadcrumb-item"><a href="manutencaoSmart.php?pg=<?= $_GET['pg'] ?>">MANUTENÇÃO SMARTSHARE</a></li>
         <li class="breadcrumb-item"><a href="contasBancarias.php?pg=<?= $_GET['pg'] ?>">CONTAS BANCARIAS</a></li>
-        <li class="breadcrumb-item">EDITANDO CONTA BANCÁRIA</li>
+        <li class="breadcrumb-item">NOVA REGRA CONTA BANCÁRIA</li>
       </ol>
     </nav>
   </div><!-- End Navegação -->
@@ -32,59 +32,42 @@ require_once('../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body"><br>
-            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?=$_SESSION['smartshare']?>/bd/editCBancarias.php?pg=<?= $_GET['pg'] ?>&id_conta=<?= $_GET['id_conta'] ?>" method="POST">
-              <!--DADOS PARA O LANÇAMENTO -->
+            <form  class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?=$_SESSION['smartshare']?>/bd/novaRegraCBancarias.php?pg=<?= $_GET['pg'] ?>" method="POST">
 
-              <?php
-              $idConta = $_GET['id_conta'];
-              $contasBancarias .= " WHERE ID_CONTA = ".$idConta." ";
-              
-              $conexao = $conn->query($contasBancarias);
-              
-            while($row = $conexao->fetch_assoc()){
 
-            $contagem = strlen($row['CNPJ_CPF']); 
-
-            if ($contagem == 11) {
-              $displayCPF = "block";
-              $displayCNPJ = "none";
-              $ativeCPF = 'checked';
-            } else {
-              $displayCPF = "none";
-              $displayCNPJ = "block";
-              $ativeCNPJ = 'checked';
-            }
-
-        echo' <div class="mb-3" style="text-align: center;">
-        <label for="exampleFormControlInput2" class="form-label">TIPO DE DOCUMENTO: </label><br>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="documento" id="inlineRadio1" value="1" onclick="cpfDisplay()" '.$ativeCPF.'>
-            <label class="form-check-label" for="inlineRadio1">CPF</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="documento" id="inlineRadio2" value="2" onclick="cnpjDisplay()" '.$ativeCNPJ.'>
-            <label class="form-check-label" for="inlineRadio2">CNPJ</label>
-        </div>
-    </div>
-              <div class="form-floating mt-4 col-md-12" id="NOME_EMPRESA">
-               <input type="text" value="'.$row['NOME_EMPRESA'].'" class="form-control" name="nomeEmpresa" required>
-               <label for="NOME_EMPRESA">NOME EMPRESA:<span style="color: red;">*</span></label>
-              </div><br>
-              <div class="form-floating mt-4 col-md-6" id="estados">
+              <div class="mb-3" style="text-align: center;" id="inlineRadio">
+                <label for="exampleFormControlInput2" class="form-label">TIPO DE DOCUMENTO: </label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="documento" id="inlineRadio1" value="1" onclick="cpfDisplay()">
+                    <label class="form-check-label" for="inlineRadio1">CPF</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="documento" id="inlineRadio2" value="2" onclick="cnpjDisplay()">
+                    <label class="form-check-label" for="inlineRadio2">CNPJ</label>
+                </div>
+              </div>
+              <div class="form-floating mt-4 col-md-12" id="nome_empresa">
+               <input type="text" class="form-control" name="nomeEmpresa" required>
+               <label for="nome_empresa">NOME EMPRESA:<span style="color: red;">*</span></label>
+              </div>
+              <div class="form-floating mt-4 col-md-6" id="banco">
               <select class="form-select"  name="banco" required>
-                <option value="'.$row['BANCO'].'">'.$row['BANCO'].'</option>
-                <option value="">--------</option>';
+              <?php
                 $resultadoUsuario = $conn->query("SELECT * FROM bancos order by banco ASC");
 
                 while ($bancos = $resultadoUsuario->fetch_assoc()) {
                     echo '<option value="' . $bancos['banco'] . '">' . $bancos['banco'] . '</option>';
                 }
-         echo '</select>
-                <label for="estados">BANCO:<span style="color: red;">*</span></label>
+                ?>
+              </select>
+                <label for="banco">BANCO:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6"  id="cpfInput" style="display: '.$displayCPF.';">
-                <input type="text" class="form-control" id="exampleFormControlInput2" name="cpfValue" id="cpfMerda" onkeydown="javascript: fMasc(this, mCPF);" maxlength="14" onblur="ValidarCPF(this)" value="'.$row['CNPJ_CPF'].'" autofocus="true">
-                <label for="email">CPF:<span style="color: red;">*</span></label>
+
+              <input type="text" name="valido" id="validoCasete" value="" style="display: none;">
+
+              <div class="form-floating mt-4 col-md-6"  id="cpfInput" style="display: block;">
+                <input type="text" class="form-control" name="cpfValue" id="cpfMerda" onkeydown="javascript: fMasc(this, mCPF);" maxlength="14" onblur="ValidarCPF(this)" autofocus="true">
+                <label for="cpfInput">CPF:<span style="color: red;">*</span></label>
                   <div style="font-size: 12px;">
                     <span style="color: green; display: none;" id="cpfValido">
                       <i class="bi bi-check-circle-fill"></i> CPF OK
@@ -94,31 +77,27 @@ require_once('../config/query.php');
                     </span>
                   </div>
               </div>
-              <div class="form-floating mt-4 col-md-6"  id="cnpjInput" style="display: '.$displayCNPJ.';">
-                <input type="text" class="form-control" name="cnpjValue"  onkeydown="javascript: fMasc(this, mcnpj);" maxlength="18" onblur="validarCNPJ(this)" value=" '.$row['CNPJ_CPF'].'" autofocus="true" required >
-                <label for="email">CNPJ:<span style="color: red;">*</span></label>
+              <div class="form-floating mt-4 col-md-6"  id="cnpjInput" style="display: none;">
+                <input type="text" class="form-control" name="cnpjValue"  onkeydown="javascript: fMasc(this, mcnpj);" maxlength="18" onblur="validarCNPJ(this)" autofocus="true" >
+                <label for="cnpjInput">CNPJ:<span style="color: red;">*</span></label>
                 <div style="font-size: 12px;">
                     <span style="color: green; display: none;" id="cnpjValido"><i class="bi bi-check-circle-fill"></i> CNPJ OK</span>
                     <span style="color: red; display: none;" id="cnpjInvalido"><i class="fas fa-circle-xmark"></i> Inválido</span>
                 </div>
               </div>
+              <br>
               <div class="form-floating mt-4 col-md-4" id="agencia">
-              <input type="text" onkeydown="javascript: fMasc(this, mnumero);" maxlength="10" class="form-control" id="inputEmail3" name="agencia" id="agencia" value="'.$row['AGENCIA'].'" required>
-              <label for="agencia">AGÊNCIA:<span style="color: red;">*</span></label>
-
+                <input type="text"  class="form-control" name="agencia" onkeydown="javascript: fMasc(this, mnumero);" maxlength="10" required>
+                <label for="agencia">AGÊNCIA:<span style="color: red;">*</span></label>
               </div>
               <div class="form-floating mt-4 col-md-4" id="conta">
-                <input type="text" onkeydown="javascript: fMasc(this, mnumero);" maxlength="20" class="form-control" id="inputEmail4" name="conta" id="conta" value="'.$row['CONTA'].'" required>
+                <input type="text" onkeydown="javascript: fMasc(this, mnumero);" maxlength="20" class="form-control" name="conta" required>
                 <label for="conta">CONTA:<span style="color: red;">*</span></label>
               </div>
               <div class="form-floating mt-4 col-md-4" id="digito">
-                <input type="text" value="'.$row['DIGITO'].'" class="form-control" onkeydown="javascript: fMasc(this, mnumero);" maxlength="5" name="digito "  required>
+                <input type="text" onkeydown="javascript: fMasc(this, mnumero);" maxlength="5" class="form-control" name="digito" required>
                 <label for="digito">DIGITO:<span style="color: red;">*</span></label>
-              </div>';
-
-            }
-
-            ?>
+              </div>
               <div class="text-left py-2">
                 <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/contasBancarias.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
@@ -137,14 +116,19 @@ require_once('../config/query.php');
 <script>
         function cpfDisplay() {
             document.getElementById("cnpjInput").style.display = "none";
+            document.getElementById("cnpjInput").required = false;
             document.getElementById("cpfInput").style.display = "block";
+            document.getElementById("cpfInput").required = true;
         }
 
         function cnpjDisplay() {
             document.getElementById("cnpjInput").style.display = "block";
+            document.getElementById("cnpjInput").required = true;
             document.getElementById("cpfInput").style.display = "none";
+            document.getElementById("cpfInput").required = false;
         }
     </script>
+
 
 <?php
 require_once('footer.php'); //Javascript e configurações afins

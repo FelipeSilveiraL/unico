@@ -32,45 +32,52 @@ require_once('../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraSeminovos.php" method="POST">
+            <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraSeminovos.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
-              <div class="form-floating mt-4 col-md-6" id="cnpj"> 
-                  <input type="text"class="form-control" name="cnpj" onkeypress='mascaraMutuario(this,cpfCnpj)' onblur='clearTimeout()' >
-                  <label for="cnpj">CNPJ:<span style="color: red;">*</span></label>
+              <div class="form-floating mt-4 col-md-6" id="cnpj">
+                <input type="text" class="form-control" name="cnpj" onkeypress='mascaraMutuario(this,cpfCnpj)' onblur='clearTimeout()'>
+                <label for="cnpj">CNPJ:<span style="color: red;">*</span></label>
               </div>
               <div class="form-floating mt-4 col-md-6" id="razao_social">
-               <input type="text"  class="form-control" name="razao_social" required>
-               <label for="razao_social">RAZÃO SOCIAL:<span style="color: red;">*</span></label>
+                <input type="text" class="form-control" name="razao_social" required>
+                <label for="razao_social">RAZÃO SOCIAL:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-3" id="cidade">
-                <input type="text"  class="form-control" name="cidade" required>
-                <label for="cidade">CIDADE:<span style="color: red;">*</span></label>
-              </div>
-              <div class="form-floating mt-4 col-md-3" id="estados">
-              <select class="form-select"  name="estados" required>
-              <option value="">------------</option>
-              <?php 
-              
-              $resultadoEstado = $conn->query($queryEstados);
 
-                while ($estados = $resultadoEstado->fetch_assoc()) {
-                    echo '<option value="' . $estados['sigla'] . '">' . $estados['sigla'] . ' - ' . $estados['nome'] . '</option>';
-                }
+              <div class="form-floating mt-4 col-md-3">
+                <select class="form-select" name="estados" id="estados" required>
+                  <option value="">-- Escolha um estado --</option>
+                  <?php
 
-              ?>
-              </select>
+                  $resultadoEstado = $conn->query($queryEstados);
+
+                  while ($estados = $resultadoEstado->fetch_assoc()) {
+                    $id = $estados['id'];
+
+                    echo '<option value="' . $estados['sigla'] . '">' . $estados['sigla'] . ' - ' . $estados['nome'] . '</option>
+                      ';
+                  }
+                  ?>
+
+                </select>
                 <label for="estados">UF:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6"  id="email">
+              <div class="form-floating mt-4 col-md-3">
+                <select class="form-select" name="cidade" id="cidade" required>
+                  <option value="">------------</option>
+
+                </select>
+                <label for="cidade">CIDADE:<span style="color: red;">*</span></label>
+              </div>
+              <div class="form-floating mt-4 col-md-6" id="email">
                 <input type="email" class="form-control" name="email" required>
                 <label for="email">EMAIL:<span style="color: red;">*</span></label>
               </div>
               <div class="form-floating mt-4 col-md-6" id="nome_responsavel">
-                <input type="text"  class="form-control" name="nome_responsavel" required>
+                <input type="text" class="form-control" name="nome_responsavel" required>
                 <label for="nome_responsavel">NOME_RESPONSAVEL:<span style="color: red;">*</span></label>
               </div>
               <div class="form-floating mt-4 col-md-6" id="ativo">
-                <select class="form-select"  name="ativo" required>
+                <select class="form-select" name="ativo" required>
                   <option value="">------------</option>
                   <option value="S">SIM</option>
                   <option value="N">NÃO</option>
@@ -78,15 +85,15 @@ require_once('../config/query.php');
                 <label for="ativo">ATIVO:<span style="color: red;">*</span></label>
               </div>
               <div class="form-floating mt-4 col-md-6" id="utilizaSmartshare">
-              <select class="form-select" id="utiliza" name="utilizaSmartshare" onchange="mostraDiv()" required>
-              <option value="">------------</option>
-              <option value="S">SIM</option>
-              <option value="N">NÃO</option>
-            </select>
+                <select class="form-select" id="utiliza" name="utilizaSmartshare" onchange="mostraDiv()" required>
+                  <option value="">------------</option>
+                  <option value="S">SIM</option>
+                  <option value="N">NÃO</option>
+                </select>
                 <label for="utilizaSmartshare">SMARTSHARE:<span style="color: red;">*</span></label>
               </div>
               <div class="form-floating mt-4 col-md-6" id="SMARTSHARE_LOGIN" style="display: none;">
-                <input type="text" class="form-control" name="login" id="login" required >
+                <input type="text" class="form-control" name="login" id="login" required>
                 <label for="SMARTSHARE_LOGIN">INFORME UM LOGIN:<span style="color: red;">*</span></label>
                 <span style="font-size: small;color: red;">NOME e os 3 primeiro números do CPF (Ex.: Joao.094)</span>
               </div>
@@ -105,71 +112,96 @@ require_once('../config/query.php');
 
 </main><!-- End #main -->
 
-<script>
-        function mostraDiv(){
-            var valueRevisao = document.getElementById("utiliza").value;            
-            switch(valueRevisao){
-              case 'S':
-                document.getElementById("SMARTSHARE_LOGIN").style.display = "block";
-                break;
-              case 'N':
-                document.getElementById("SMARTSHARE_LOGIN").style.display = "none";
-                document.getElementById('login').value = '';
-                document.getElementById("login").required = false;
-                break;
-            
-            }
-        }
+<script type="text/javascript">
+  function mostraDiv() {
+    var valueRevisao = document.getElementById("utiliza").value;
+    switch (valueRevisao) {
+      case 'S':
+        document.getElementById("SMARTSHARE_LOGIN").style.display = "block";
+        break;
+      case 'N':
+        document.getElementById("SMARTSHARE_LOGIN").style.display = "none";
+        document.getElementById('login').value = '';
+        document.getElementById("login").required = false;
+        break;
 
-       
- function mascaraMutuario(o,f){
-    v_obj=o
-    v_fun=f
-    setTimeout('execmascara()',1)
-}
- 
-function execmascara(){
-    v_obj.value=v_fun(v_obj.value)
-}
- 
-function cpfCnpj(v){
- 
-    //Remove tudo o que não é dígito
-    v=v.replace(/\D/g,"")
- 
-    if (v.length <= 12) { //CPF
- 
-        //Coloca um ponto entre o terceiro e o quarto dígitos
-        v=v.replace(/(\d{2})(\d)/,"$1.$2")
- 
-        //Coloca um ponto entre o terceiro e o quarto dígitos
-        //de novo (para o segundo bloco de números)
-        v=v.replace(/(\d{3})(\d)/,"$1.$2")
- 
-        //Coloca um hífen entre o terceiro e o quarto dígitos
-        v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2")
- 
-    } else { //CNPJ
- 
-        //Coloca ponto entre o segundo e o terceiro dígitos
-        v=v.replace(/^(\d{2})(\d)/,"$1.$2")
- 
-        //Coloca ponto entre o quinto e o sexto dígitos
-        v=v.replace(/^(\d{2})\.(\d{3})(\d)/,"$1.$2.$3")
- 
-        //Coloca uma barra entre o oitavo e o nono dígitos
-        v=v.replace(/\.(\d{3})(\d)/,".$1/$2")
- 
-        //Coloca um hífen depois do bloco de quatro dígitos
-        v=v.replace(/(\d{4})(\d)/,"$1-$2")
- 
     }
- 
-    return v
-}
-    </script>
+  }
 
+
+  function mascaraMutuario(o, f) {
+    v_obj = o
+    v_fun = f
+    setTimeout('execmascara()', 1)
+  }
+
+  function execmascara() {
+    v_obj.value = v_fun(v_obj.value)
+  }
+
+  function cpfCnpj(v) {
+
+    //Remove tudo o que não é dígito
+    v = v.replace(/\D/g, "")
+
+    if (v.length <= 12) { //CPF
+
+      //Coloca um ponto entre o terceiro e o quarto dígitos
+      v = v.replace(/(\d{2})(\d)/, "$1.$2")
+
+      //Coloca um ponto entre o terceiro e o quarto dígitos
+      //de novo (para o segundo bloco de números)
+      v = v.replace(/(\d{3})(\d)/, "$1.$2")
+
+      //Coloca um hífen entre o terceiro e o quarto dígitos
+      v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+
+    } else { //CNPJ
+
+      //Coloca ponto entre o segundo e o terceiro dígitos
+      v = v.replace(/^(\d{2})(\d)/, "$1.$2")
+
+      //Coloca ponto entre o quinto e o sexto dígitos
+      v = v.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+
+      //Coloca uma barra entre o oitavo e o nono dígitos
+      v = v.replace(/\.(\d{3})(\d)/, ".$1/$2")
+
+      //Coloca um hífen depois do bloco de quatro dígitos
+      v = v.replace(/(\d{4})(\d)/, "$1-$2")
+
+    }
+
+    return v
+  }
+</script>
 
 <?php
 require_once('footer.php'); //Javascript e configurações afins
 ?>
+<script>
+
+$("#estados").on("change", function(){
+    var idEstado = $("#estados").val();
+    
+    $.ajax({
+        url: '../inc/trazCidades.php',
+        type: 'POST',
+        data:{id:idEstado},
+        beforeSend:function(data){
+            $("#cidade").html('<option value="">Carregando...</option>');
+        },
+        success:function(data){
+            $("#cidade").html(data);
+        },
+        error:function(data){
+            $("#cidade").html('<option value="">Erro ao carregar...</option>');
+        }
+
+    });
+
+});
+
+</script>
+
+a orderm dos fatores altera o resultado kakakaka faz sentido kkkkk

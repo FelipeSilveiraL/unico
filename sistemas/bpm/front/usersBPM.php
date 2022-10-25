@@ -38,7 +38,7 @@ require_once('../../../config/config.php');
           <div class="card-header">
                 <a href="http://<?= $_SESSION['unico'] ?>/acoesAutomaticas/front/importarUsuarioVetorSelbetti.php" type="button" class="btn btn-success buttonAdd" title="Importar Usuários" <?= $usuarioFuncao ?> ><i class="bx bx-export"></i></a>
 
-                <a href="../bd/relatorioUserExcel.php" type="button" class="btn btn-success buttonAdd" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
+                <a href="../inc/relatorioUserExcel.php" type="button" class="btn btn-success buttonAdd" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
               </div><br>
             <div class="card-body">
               
@@ -48,6 +48,7 @@ require_once('../../../config/config.php');
                   <tr>
                     <th scope="col" class="capitalize">Id Regra</th>
                     <th scope="col" class="capitalize">USUÁRIO</th>
+                    <th scope="col" class="capitalize">PAPEL</th>
                     <th scope="col" class="capitalize">LOGIN</th>
                     <th scope="col" class="capitalize">E-MAIL</th>
                     <th scope="col" class="capitalize">SITUAÇÃO</th>
@@ -75,10 +76,11 @@ require_once('../../../config/config.php');
                     echo'<tr>
                     <td>'.$row["CD_USUARIO"].'</td>
                     <td>'.$row["DS_USUARIO"].'</td>
+                    <td>'.$row["DS_PAPEL"].'</td>
                     <td>'.$row["DS_LOGIN"].'</td>
                     <td>'.$row["DS_EMAIL"].'</td>
                     <td>'.$ativo.'</td>
-                    <td><a href="usersEdit.php?pg='.$_GET['pg'].'&id='.$row['id'].'" class="btn-primary btn-sm"><span style="color: white;"><i class="bi bi-pencil"></i></span></a></td>
+                    <td><a href="usersEdit.php?pg='.$_GET['pg'].'&id='.$row['id'].'" class="btn-primary btn-sm" '.$usuarioFuncao.'><span style="color: white;"><i class="bi bi-pencil"></i></span></a></td>
                     </tr>';
 
                    

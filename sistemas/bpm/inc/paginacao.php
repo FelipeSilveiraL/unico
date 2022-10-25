@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once('../config/query.php'); //query SISREV
+require_once('../config/query.php'); //query bpm
 
 $tela = basename($_SERVER['PHP_SELF']);
 $pagina = $_GET['pg'];
@@ -32,6 +32,7 @@ if ($tela == "index.php") {
         echo '<script>window.location.href = "index.php";</script>';
     }
 } else {
+
     if ($pagina == NULL) {
         echo '<script>window.location.href = "index.php";</script>';
         exit;
@@ -57,7 +58,7 @@ if ($tela == "index.php") {
 
 $queryFuncaoUser .= "WHERE id_usuario = '" . $idUsuario . "' AND id_funcao IN ( ";
 
-$queryA = "SELECT id_funcao FROM sisrev_funcao WHERE id_modulos = (SELECT id FROM sisrev_modulos WHERE endereco = '" . $tela . "')";
+$queryA = "SELECT id FROM bpm_funcao WHERE id_modulos = (SELECT id FROM bpm_modulos WHERE endereco = '" . $tela . "')";
 $resultadoA = $conn->query($queryA);
 
 while ($a = $resultadoA->fetch_assoc()) {
@@ -75,8 +76,11 @@ $sub .= ")";
 
 $resultadoFuncao = $conn->query($sub);
 
+
 if ($resultadoFuncao != false) {
     if (!$funcao = $resultadoFuncao->fetch_assoc()) {
         $usuarioFuncao = 'style= "display: none"';
+    }else{
+        $usuarioFuncao = 'oi';
     }
 }

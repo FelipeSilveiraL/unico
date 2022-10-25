@@ -80,7 +80,7 @@ require_once('../../../config/config.php');
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <a href="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/deletarEmp.php?id=<?= $ID_EMPRESA ?>" class="btn btn-danger">Deletar</a>
+        <a href="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/deletarEmp.php?pg=<?= $_GET['pg'] ?>&id=<?= $ID_EMPRESA ?>" class="btn btn-danger">Deletar</a>
       </div>
     </div>
   </div>

@@ -30,9 +30,9 @@ require_once('../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <a href="novaRegraSeminovos.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-success buttonAdd" title="Nova regra aprovadores" <?= $usuarioFuncao ?>><i class="bx bxs-file-plus"></i></a>
+            <a href="novaRegraContasBancarias.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-success buttonAdd" title="Nova regra aprovadores" <?= $usuarioFuncao ?>><i class="bx bxs-file-plus"></i></a>
 
-            <a href="../bd/relatorioSeminovos.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
+            <a href="../bd/relatorioContasBancarias.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
           </div>
           
           <div class="card-body">
@@ -64,8 +64,8 @@ require_once('../config/query.php');
                   echo '<td>' . $contaBancariasFornecedor['AGENCIA'] . '</td>';
                   echo '<td>' . $contaBancariasFornecedor['CONTA'] . '</td>';
                   echo '<td>' . $contaBancariasFornecedor['DIGITO'] . '</td>';
-                  echo '<td><a href="editContasBancarias.php?pg=' . $_GET["pg"] . '&id_semi=' . $fornecedoresSeminovos["ID_FORNECEDOR"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
-                  <a href="http://'.$_SESSION['smartshare'].'/'.$_SESSION['smartshare'].'/bd/deletarFor.php?id_fornecedor=' . $fornecedoresSeminovos["ID_FORNECEDOR"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
+                  echo '<td><a href="editContasBancarias.php?pg=' . $_GET["pg"] . '&id_conta=' . $contaBancariasFornecedor["ID_CONTA"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
+                  <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarCont.php?id_conta=' . $contaBancariasFornecedor["ID_CONTA"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
                  </tr>';
               }
                 ?>

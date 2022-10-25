@@ -37,15 +37,14 @@ require_once('../inc/apiRecebeSelbetti.php');
           <div class="card">
             <div class="card-body">
             <br>
-                <form method="POST" action=" http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraCxUs.php" >
+                <form method="POST" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraCxUs.php?pg=<?= $_GET['pg'] ?>" >
                   <div class="row mb-3">
                     <label for="user" class="col-sm-2 col-form-label" >EMPRESA:<span style="color: red;">*</span></label>
                     <div class="col-md-6">
                       <select class="form-select" id="empresa" name="empresa" required>
                         <option value="">--------------</option>
                           <?php 
-                          $empresa = "SELECT * FROM bpm_empresas";
-                          $result = $conn->query($empresa);
+                          $result = $conn->query($relatorioExcel);
 
                           while($row = $result->fetch_assoc()){
                             echo '<option value="'.$row['ID_EMPRESA'].'">'.$row['NOME_EMPRESA'].'</option>';

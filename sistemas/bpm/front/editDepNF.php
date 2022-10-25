@@ -21,7 +21,6 @@ require_once('../../../config/query.php');
       </ol>
     </nav>
   </div><!-- End Navegação -->
-
   <?php
   require_once('../../../inc/mensagens.php'); //Alertas
   ?>
@@ -32,7 +31,7 @@ require_once('../../../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraApNF.php" method="POST">
+            <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraApNF.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6" id="depto">
                 <?php
@@ -43,7 +42,7 @@ require_once('../../../config/query.php');
 
                 while ($row = $sucesso->fetch_assoc()) {
 
-                  echo '<input type="text" value="' . $row['NOME_DEPARTAMENTO'] . '" class="form-control" name="depto" id="depto" required>';
+                  echo '<input type="text" value="' . $row['NOME_DEPARTAMENTO'] . '" class="form-control" name="depto" id="depto" disabled>';
                 }
                 ?>
                 <label for="depto">DEPARTAMENTO:<span style="color: red;">*</span></label>
@@ -76,7 +75,7 @@ require_once('../../../config/query.php');
               </div>
 
               <div class="text-left py-2">
-                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/nfEmpDep.php?pg=<?=$_GET['pg']?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/departamentoNF.php?pg=<?=$_GET['pg']?>"><button type="button" class="btn btn-primary">Voltar</button></a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                 <button type="submit" class="btn btn-success">Salvar</button>
               </div>

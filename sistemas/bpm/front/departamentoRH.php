@@ -3,7 +3,7 @@ session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-// require_once('../inc/apiRecebeAprov.php');
+require_once('../inc/apiRecebeDepRH.php');
 ?>
 
 <main id="main" class="main">
@@ -55,6 +55,7 @@ require_once('menu.php'); //menu lateral da pagina
                   $sucesso = $conn->query($departamento);
 
                   while($row = $sucesso->fetch_assoc()){
+                    
                     $situacao = $row['SITUACAO'];
 
                     if($situacao == 'A'){

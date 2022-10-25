@@ -3,7 +3,7 @@ require_once('../inc/paginacao.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
-
+  
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">

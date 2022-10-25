@@ -45,7 +45,7 @@ require_once('../config/query.php');
 
             while ($row = $result->fetch_assoc()) {
 
-              echo '<form method="POST" action="http://' . $_SESSION['servidorOracle'] . '/'.$_SESSION['smartshare'].'/bd/editApNF.php" >
+              echo '<form method="POST" action="http://' . $_SESSION['servidorOracle'] . '/'.$_SESSION['smartshare'].'/bd/editApNF.php?pg='.$_GET['pg'].'id_aprovador='.$id.'" >
                 <div class="row mb-3">
                   <label for="user" class="col-sm-3 col-form-label" >EMPRESA:</label>
                   <div class="col-md-6">
@@ -83,12 +83,11 @@ require_once('../config/query.php');
                       while($rowUser = $sucesso->fetch_assoc()){
                         echo '<option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
                       };
-
               echo '
                     </select> 
                   </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 ">
                   <label for="sistema" class="col-sm-3 col-form-label">CIÊNCIA AREA:</label>
                   <div class="col-md-6">
                     <select class="form-select" id="sistema" name="area" required>';
@@ -115,6 +114,53 @@ require_once('../config/query.php');
 
               echo '</select>
                   </div>
+                  <div class="col-md-2">
+                      <input class="form-control" id="limitA" value="';
+                      $number = $row['LIMITE_AREA'];
+                
+                      $quantidade = strlen($number);
+
+                      if($quantidade <= 5){
+                          $c = $quantidade - 2;
+                          $valorDepoisVirgula = substr($number, $c);
+                          $valorAntesVirgula = substr($number, 0, $c);
+
+                          if($valorAntesVirgula != ''){
+                              echo $valorAntesVirgula.','.$valorDepoisVirgula;        
+                          }else{
+                              echo $valorDepoisVirgula;
+                          }  
+
+                      }else{
+                          $numeroDepoisVirgula = $quantidade - 2;
+                          $valorDepoisVirgula = substr($number, $numeroDepoisVirgula);
+                          $valorAntesVirgula = substr($number, 0, $numeroDepoisVirgula);
+                          $ponto = $quantidade - 5;
+                          $valorAntesponto = substr($number, $ponto, 3);
+                          $valorDepoisponto = substr($number, 0, $ponto);
+                          echo $valorDepoisponto.'.'.$valorAntesponto.','.$valorDepoisVirgula;
+                      }     
+                      
+                echo '" name="limitA" placeholder="LIMITE APROVAÇÃO">
+                  </div> 
+                  <div class="col-md-1" style="font-size:25px;" title="Ilimitado!">
+                    <a href="javascript:" title="Ilimitado!" onclick="SemLimitS()">
+                      <i class="bx bx-dollar"></i>
+                   </a>                      
+                      <script>
+                        function SemLimitS(){
+                            var check = document.getElementById("limitA").disabled
+                            if(check == true){
+                                document.getElementById("limitA").disabled = false;
+                            }else{
+                                document.getElementById("limitA").disabled = true;
+                                document.getElementById("limitA").value = 0;
+                            }
+
+                            
+                        }
+                    </script>
+                  </div>
                 </div>
                 <div class="row mb-3">
                   <label for="sistema" class="col-sm-3 col-form-label">CIÊNCIA MARCA:</label>
@@ -140,11 +186,58 @@ require_once('../config/query.php');
                     echo'
                     </select>
                   </div>
+                  <div class="col-md-2">
+                      <input class="form-control" id="limitM" value="';
+
+                      $number = $row['LIMITE_MARCA'];
+                      
+                      $quantidade = strlen($number);
+      
+                      if($quantidade <= 5){
+                          $c = $quantidade - 2;
+                          $valorDepoisVirgula = substr($number, $c);
+                          $valorAntesVirgula = substr($number, 0, $c);
+                          
+                          if($valorAntesVirgula != ''){
+                              echo $valorAntesVirgula.','.$valorDepoisVirgula;        
+                          }else{
+                              echo $valorDepoisVirgula;
+                          }  
+      
+                      }else{
+                          $numeroDepoisVirgula = $quantidade - 2;
+                          $valorDepoisVirgula = substr($number, $numeroDepoisVirgula);
+                          $valorAntesVirgula = substr($number, 0, $numeroDepoisVirgula);
+                          $ponto = $quantidade - 5;
+                          $valorAntesponto = substr($number, $ponto, 3);
+                          $valorDepoisponto = substr($number, 0, $ponto);
+                          echo $valorDepoisponto.'.'.$valorAntesponto.','.$valorDepoisVirgula;
+                      }
+                      
+                      echo '" name="limitM" placeholder="LIMITE APROVAÇÃO">
+                  </div> 
+                  <div class="col-md-1" style="font-size:25px;" title="Ilimitado!">
+                    <a href="javascript:" title="Ilimitado!" onclick="SemLimitM()">
+                      <i class="bx bx-dollar"></i>
+                    </a>                      
+                      <script>
+                        function SemLimitM(){
+                            var check = document.getElementById("limitM").disabled
+                            if(check == true){
+                                document.getElementById("limitM").disabled = false;
+                            }else{
+                                document.getElementById("limitM").disabled = true;
+                                document.getElementById("limitM").value = 0;
+                            }
+
+                            
+                        }
+                    </script>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 mt-3">
                   <label for="sistema" class="col-sm-3 col-form-label">GERENTE GERAL:</label>
                   <div class="col-md-6">
-                    <select class="form-select" id="sistema" name="gerente" required>';
+                    <select class="form-select" id="sistema" style="width: 440px;margin-left: 4px;" name="gerente" required>';
                     $query_users4 = "SELECT * FROM bpm_usuarios_smartshare WHERE ds_login='" . $row['APROVADOR_GERENTE'] . "' ";
 
                     $conecção4 = $conn->query($query_users4);
@@ -164,11 +257,59 @@ require_once('../config/query.php');
                     };
               echo' </select>
                   </div>
+                  <div class="col-md-2">
+                      <input class="form-control" id="limiteG" style="margin-left: 18px;width: 130px;" value="';
+                
+                      $number = $row['LIMITE_GERAL'];
+                      
+                      $quantidade = strlen($number);
+      
+                      if($quantidade <= 5){
+                          $c = $quantidade - 2;
+                          $valorDepoisVirgula = substr($number, $c);
+                          $valorAntesVirgula = substr($number, 0, $c);
+                          
+                          if($valorAntesVirgula != ''){
+                              echo $valorAntesVirgula.','.$valorDepoisVirgula;        
+                          }else{
+                              echo $valorDepoisVirgula;
+                          }  
+      
+                      }else{
+                          $numeroDepoisVirgula = $quantidade - 2;
+                          $valorDepoisVirgula = substr($number, $numeroDepoisVirgula);
+                          $valorAntesVirgula = substr($number, 0, $numeroDepoisVirgula);
+                          $ponto = $quantidade - 5;
+                          $valorAntesponto = substr($number, $ponto, 3);
+                          $valorDepoisponto = substr($number, 0, $ponto);
+                          echo $valorDepoisponto.'.'.$valorAntesponto.','.$valorDepoisVirgula;
+                      }
+                      
+                      echo '" name="limitG" placeholder="LIMITE APROVAÇÃO">
+                  </div> 
+                  <div class="col-md-1" style="font-size:25px;" title="Ilimitado!">
+                    <a href="javascript:" title="Ilimitado!" onclick="SemLimitG()">
+                      <i class="bx bx-dollar" style="margin-left: 23px;"></i>
+                    </a>                      
+                      <script>
+                        function SemLimitG(){
+                            var check = document.getElementById("limiteG").disabled
+                            if(check == true){
+                                document.getElementById("limiteG").disabled = false;
+                            }else{
+                                document.getElementById("limiteG").disabled = true;
+                                document.getElementById("limiteG").value = 0;
+                            }
+
+                            
+                        }
+                    </script>
+                  </div>
                 </div>
                 <div class="row mb-3">
                   <label for="sistema" class="col-sm-3 col-form-label">SUPERINTENDENTE:</label>
                   <div class="col-md-6">
-                    <select class="form-select" id="super" name="super" required>';
+                    <select class="form-select" id="super" name="super" style="width: 440px;margin-left: 4px;" required>';
                     $query_users5 = "SELECT * FROM bpm_usuarios_smartshare WHERE ds_login='" . $row['APROVADOR_SUPERINTENDENTE'] . "' ";
 
                     $conecção5 = $conn->query($query_users5);
@@ -188,11 +329,59 @@ require_once('../config/query.php');
                     };
               echo' </select>
                   </div>
+                  <div class="col-md-2">
+                      <input class="form-control" id="limiteSuper" style="margin-left: 18px;width: 130px;" value="';
+                
+                      $number = $row['LIMITE_SUPERITENDENTE'];
+                      
+                      $quantidade = strlen($number);
+      
+                      if($quantidade <= 5){
+                          $c = $quantidade - 2;
+                          $valorDepoisVirgula = substr($number, $c);
+                          $valorAntesVirgula = substr($number, 0, $c);
+                          
+                          if($valorAntesVirgula != ''){
+                              echo $valorAntesVirgula.','.$valorDepoisVirgula;        
+                          }else{
+                              echo $valorDepoisVirgula;
+                          }  
+      
+                      }else{
+                          $numeroDepoisVirgula = $quantidade - 2;
+                          $valorDepoisVirgula = substr($number, $numeroDepoisVirgula);
+                          $valorAntesVirgula = substr($number, 0, $numeroDepoisVirgula);
+                          $ponto = $quantidade - 5;
+                          $valorAntesponto = substr($number, $ponto, 3);
+                          $valorDepoisponto = substr($number, 0, $ponto);
+                          echo $valorDepoisponto.'.'.$valorAntesponto.','.$valorDepoisVirgula;
+                      }
+                      
+                      echo '" name="limitS" placeholder="LIMITE APROVAÇÃO">
+                  </div> 
+                  <div class="col-md-1" style="font-size:25px;" title="Ilimitado!">
+                    <a href="javascript:" title="Ilimitado!" onclick="SemLimitSuper()">
+                    <i class="bx bx-dollar" style="margin-left: 23px;"></i>
+                    </a>                      
+                      <script>
+                        function SemLimitSuper(){
+                            var check = document.getElementById("limiteSuper").disabled
+                            if(check == true){
+                                document.getElementById("limiteSuper").disabled = false;
+                            }else{
+                                document.getElementById("limiteSuper").disabled = true;
+                                document.getElementById("limiteSuper").value = 0;
+                            }
+
+                            
+                        }
+                    </script>
+                  </div>
                 </div>
                 <div class="row mb-3">
                   <label for="sistema" class="col-sm-3 col-form-label">SITUAÇÃO:</label>
                   <div class="col-md-6">
-                    <select class="form-select" id="situacao" name="situacao" required>';
+                    <select class="form-select" id="situacao" style="width: 440px;margin-left: 4px;" name="situacao" required>';
                       if($row['SITUACAO'] == 'A'){
                         $situacao = 'ATIVO';
                       }else{

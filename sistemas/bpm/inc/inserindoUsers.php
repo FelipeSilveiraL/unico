@@ -17,6 +17,7 @@ $createTableEmp = "CREATE TABLE `bpm_usuarios_smartshare` (
     `CD_USUARIO` VARCHAR(45) NULL,
     `DS_EMAIL` VARCHAR(80) NULL,
     `ST_ATIVO` VARCHAR(45) NULL,
+    `DS_PAPEL` VARCHAR(120) NULL,
     PRIMARY KEY (`id`));
   ";
 
@@ -34,13 +35,14 @@ foreach ($resultado->Users as $usersSelbetti) {
 
 
     $querySmart = "INSERT INTO bpm_usuarios_smartshare 
-                            (DS_USUARIO,DS_LOGIN,CD_USUARIO,DS_EMAIL,ST_ATIVO)
+                            (DS_USUARIO,DS_LOGIN,CD_USUARIO,DS_EMAIL,ST_ATIVO,DS_PAPEL)
    
     VALUES ('" . $usersSelbetti->DS_USUARIO ."',
             '" . $usersSelbetti->DS_LOGIN . "',
             '" . $usersSelbetti->CD_USUARIO . "' ,
             '" . $usersSelbetti->DS_EMAIL ."',
-            '" . $usersSelbetti->ST_ATIVO ."'
+            '" . $usersSelbetti->ST_ATIVO ."',
+            '" . $usersSelbetti->DS_PAPEL ."'
             )";
 
         

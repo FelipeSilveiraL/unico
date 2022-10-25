@@ -39,7 +39,7 @@ require_once('../inc/apiRecebeSelbetti.php');
             <?php 
               $id = $_GET['id'];
 
-              $consulta = "SELECT NOME_EMPRESA, USUARIO_CAIXA, ID_EMPRESA FROM caixa_nf WHERE id = ".$id."";
+              $consulta = "SELECT NOME_EMPRESA, USUARIO_CAIXA, ID_EMPRESA FROM bpm_caixa_nf WHERE id = ".$id."";
 
               $resultado = $conn->query($consulta);
 
@@ -48,7 +48,7 @@ require_once('../inc/apiRecebeSelbetti.php');
                 $id_empresa = $row['ID_EMPRESA'];
 
                 echo '
-                <form method="POST" action=" http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/editarCxUs.php" >
+                <form method="POST" action=" http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/editarCxUs.php?pg='.$_GET['pg'].'" >
                   <div class="row mb-3">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Nome Empresa</label>
                     <div class="col-md-6">

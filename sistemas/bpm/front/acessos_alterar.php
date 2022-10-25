@@ -156,7 +156,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <select class="form-select" id="modulos" name="modulo">
                       <?php
                         if ($_GET['id'] != NULL) {
-                          $queryAcessosSM .= 'SELECT * FROM sisrev_modulos WHERE id = ' . $row['sub_modulo'];
+                          $queryAcessosSM .= 'SELECT * FROM bpm_modulos WHERE id = ' . $row['sub_modulo'];
                           $execAcessosSM = $conn->query($queryAcessosSM);
                           while ($rowModulosSM = $execAcessosSM->fetch_assoc()) {
                             echo '<option value="' . $rowModulosSM['id'] . '">' . $rowModulosSM['nome'] . '</option>';
@@ -165,7 +165,7 @@ require_once('menu.php'); //menu lateral da pagina
                       ?>
                       <option value="">-------------</option>
                       <?php
-                      $queryAcessosM .= 'SELECT * FROM sisrev_modulos WHERE sub_modulo = 0 AND deletar = 0';
+                      $queryAcessosM .= 'SELECT * FROM bpm_modulos WHERE sub_modulo = 0 AND deletar = 0';
                       $execAcessosM = $conn->query($queryAcessosM);
                       while ($rowModulosM = $execAcessosM->fetch_assoc()) {
                         echo '<option value="' . $rowModulosM['id'] . '">' . $rowModulosM['nome'] . '</option>';

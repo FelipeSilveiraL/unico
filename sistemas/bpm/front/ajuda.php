@@ -10,7 +10,7 @@ require_once('menu.php'); //menu lateral da pagina
     <h1>Central de Ajuda</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="../index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item">Ajuda</li>
       </ol>
     </nav>

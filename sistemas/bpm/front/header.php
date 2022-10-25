@@ -1,6 +1,6 @@
 <?php
 require_once('../../../config/query.php'); //SISTEMA UNICO
-require_once('../config/query.php'); //SISTEMA SISREV
+require_once('../config/query.php'); //SISTEMA bpm
 
 if ($_SESSION['id_usuario'] == NULL) {
     header('Location: ../front/login.php?pg=' . $_GET['pg'] . '&msn=9'); //sessão nao iniciada!

@@ -32,7 +32,7 @@ require_once('../inc/apiEmpDep.php');
           <div class="card-header">
             <a href="novaRegraEmpDep.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-success buttonAdd" title="Nova regra departamento" <?= $usuarioFuncao ?>><i class="bx bxs-file-plus"></i></a>
 
-            <a href="../bd/relatorioEmpDep.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
+            <a href="../inc/relatorioEmpDep.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
           </div>
           
           <div class="card-body">
@@ -88,7 +88,7 @@ require_once('../inc/apiEmpDep.php');
                     <td>'.$situacao.'</td>
                     <td><a href="editEmpDep.php?pg=' . $_GET["pg"] . '&id=' . $row["ID_EMPDEP"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
                             
-                    <a href="http://'.$_SESSION['smartshare'].'/'.$_SESSION['smartshare'].'/bd/deletarEmpDep.php?id=' . $row["ID_EMPDEP"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a>
+                    <a href="http://'.$_SESSION['smartshare'].'/'.$_SESSION['smartshare'].'/bd/deletarEmpDep.php?pg='.$_GET['pg'].'id=' . $row["ID_EMPDEP"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a>
                     </td> 
                  
                     </tr>';

@@ -45,7 +45,7 @@ require_once('../config/query.php');
 
             while ($row = $result->fetch_assoc()) {
 
-              echo '<form method="POST" action="http://' . $_SESSION['servidorOracle'] . '/'.$_SESSION['smartshare'].'/bd/editAp.php" >
+              echo '<form method="POST" action="http://' . $_SESSION['servidorOracle'] . '/'.$_SESSION['smartshare'].'/bd/editAp.php?pg='.$_GET['pg'].'" >
                 <div class="row mb-3">
                   <label for="user" class="col-sm-3 col-form-label" >EMPRESA:</label>
                   <div class="col-md-6">

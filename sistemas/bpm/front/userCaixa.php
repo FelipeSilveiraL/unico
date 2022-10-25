@@ -35,7 +35,7 @@ require_once('../config/query.php');
           <div class="card">
               <div class="card-header">
                 <a href="novaRegraCx.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-success buttonAdd" title="Importar Usuários" <?= $usuarioFuncao ?> ><i class="bi bi-plus-lg"></i></a>
-                <a href="../bd/relatorioExcel.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
+                <a href="../inc/relatorioExcel.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
               </div><br>
             <div class="card-body">
 
@@ -63,7 +63,7 @@ require_once('../config/query.php');
                   <td>'.$row["USUARIO_CAIXA"].'</td>
                   <td><a href="editUserCx.php?pg=' . $_GET["pg"] . '&id='.$row['id'].'" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
                             
-                  <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarCxUs.php?id_empresa=' . $row["ID_EMPRESA"] . '&usuario_caixa='.$row["USUARIO_CAIXA"].'" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
+                  <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarCxUs.php?pg='.$_GET['pg'].'&id_empresa=' . $row["ID_EMPRESA"] . '&usuario_caixa='.$row["USUARIO_CAIXA"].'" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
                   </tr>';
                  }
                  

@@ -22,6 +22,7 @@ $html = "
                 <tr>				
                     <th>Id Regra</th>
                     <th>Usuário</th>
+                    <th>Papel</th>
                     <th>E-mail</th>
                     <th>Login</th>
                     <th>Situação</th>
@@ -34,6 +35,7 @@ while (($row_relatorio = $resultado->fetch_assoc()) != FAlSE) {
                             <tr>";
     $html .=  empty($row_relatorio['CD_USUARIO']) ? '<td>----------</td>' : '<td>' . $row_relatorio['CD_USUARIO'] . '</td>';
     $html .=  empty($row_relatorio['DS_USUARIO']) ? '<td>----------</td>' : '<td>' . $row_relatorio['DS_USUARIO'] . '</td>';
+    $html .=  empty($row_relatorio['DS_PAPEL']) ? '<td>----------</td>' : '<td>' . $row_relatorio['DS_PAPEL'] . '</td>';
     $html .=  empty($row_relatorio['DS_EMAIL']) ? '<td>----------</td>' : '<td>' . $row_relatorio['DS_EMAIL']  . '</td>';
     $html .=  empty($row_relatorio['DS_LOGIN']) ? '<td>----------</td>' : '<td>' . $row_relatorio['DS_LOGIN']  . '</td>';
     $html .=  ($row_relatorio['ST_ATIVO'] == 1) ? '<td>Ativo</td>' : '<td>Desativado</td>';

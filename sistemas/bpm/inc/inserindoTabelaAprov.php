@@ -26,26 +26,9 @@ echo '<td>' . $rowaprov['APROVADOR_SUPERINTENDENTE'] . '</td>';
 // echo '<td>' . $situacao . '</td>';
 echo '<td><a href="editAp.php?pg=' . $_GET["pg"] . '&id_aprovador=' . $rowaprov["ID_APROVADOR"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
                             
-<a href="../front/deletarAp.php?pg=' . $_GET["pg"] . '&ID=' . $row["ID_EMPRESA"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#verticalycentered" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a>
+<a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarApFilial.php?pg='.$_GET['pg'].'&id='.$rowaprov['ID_APROVADOR'] .'" title="Desativar" '. $usuarioFuncao .' style="margin-top: 3px;color: white;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a>
 </td> 
 
-<div class="modal fade" id="verticalycentered" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">'.$rowaprov['NOME_EMPRESA'].'</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-      </div>
-      <div class="modal-body">
-        <span style="Color: red;">Tem certeza que deseja deletar?</span>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger"><a href="http://'.$_SESSION['servidorOracle'].'/smartshare/bd/deletar.php?id='.$rowaprov['ID_APROVADOR'] .'" style="color: white;">DELETAR</button>
-      </div>
-    </div>
-  </div>
-</div>
 </tr>
 ';
 }
