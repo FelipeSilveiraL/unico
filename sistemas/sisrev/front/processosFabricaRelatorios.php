@@ -32,7 +32,7 @@ require_once('menu.php'); //menu lateral da pagina
       <div class="card-body">
 
         <!-- Multi Columns Form -->
-        <form class="row g-3">
+        <form class="row g-3" action="../inc/processosFabricaRelatorios.php" method="POST">
 
           <div class="col-8">
             <h5 class="card-title">Data de movimentação</h5>
@@ -43,28 +43,27 @@ require_once('menu.php'); //menu lateral da pagina
 
           <div class="col-md-4">
             <label for="inputEmail5" class="form-label">Inicial: </label>
-            <input type="date" class="form-control" id="inputEmail5">
+            <input type="date" class="form-control dataMovimentacao" id="dataMovimentacaoInicial" name="dataMovimentacaoInicial">
           </div>
           <div class="col-md-4">
             <label for="inputPassword5" class="form-label">Final: </label>
-            <input type="date" class="form-control" id="inputPassword5">
+            <input type="date" class="form-control dataMovimentacao" id="dataMovimentacaoFinal" name="dataMovimentacaoFinal">
           </div>
 
           <div class="col-md-4">
             <label for="inputAddress5" class="form-label">Data: </label>
-            <input type="date" class="form-control" id="inputAddres5s">
+            <input type="date" class="form-control dataArquivo" id="dataArquivo" name="dataArquivo">
           </div>
 
           <div class="col-12">
             <label for="inputState" class="form-label">Filial: </label>
-            <select id="inputState" class="form-select">
+            <select id="inputState" class="form-select" name="filial">
               <option value="">-------------</option>
               <?php
-              echo $queryTabela;
               $conSucesso = $conn->query($queryTabela);
 
               while ($row = $conSucesso->fetch_assoc()) {
-                echo 'option value="'.$row["id"].'">'.$row["NOME_EMPRESA"].'</option>';
+                echo '<option value="' . $row["id"] . '">' . $row["NOME_EMPRESA"] . '</option>';
               }
 
               ?>
@@ -101,7 +100,7 @@ require_once('menu.php'); //menu lateral da pagina
 
           <div class="text-center">
             <button type="reset" class="btn btn-secondary">Limpar</button>
-            <button type="submit" class="btn btn-primary">Gerar relátorio</button>
+            <button type="" class="btn btn-primary">Gerar relátorio</button>
           </div>
         </form><!-- End Multi Columns Form -->
 
@@ -116,3 +115,17 @@ require_once('menu.php'); //menu lateral da pagina
 <?php
 require_once('footer.php'); //Javascript e configurações afins
 ?>
+
+<script>
+  $(".dataMovimentacao").on("click", function() {
+    $(".dataMovimentacao").prop("readonly", false);
+    $('#dataArquivo').prop('readonly', true);
+
+  });
+
+  $("#dataArquivo").on("click", function() {
+    $('.dataMovimentacao').prop('readonly',true);
+    $('#dataArquivo').prop('readonly', false);
+
+  });
+</script>
