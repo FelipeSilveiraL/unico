@@ -32,7 +32,15 @@
           </div>
         </a>
       </div>
-      
+      <div class="col-sm-3"> 
+        <a href="empresas.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Empresas</h4>
+            </div>
+          </div>
+        </a>
+      </div>
       <div class="col-sm-3"> 
         <a href="politicamente_exposto.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
           <div class="card">

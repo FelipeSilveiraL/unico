@@ -112,7 +112,6 @@ require_once('menu.php'); //menu lateral da pagina
       }
       ?>
     </div>
-    
 
   </section>
 

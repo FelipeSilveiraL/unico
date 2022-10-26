@@ -1,0 +1,118 @@
+<?php
+require_once('head.php'); //CSS e configurações HTML e session start
+require_once('header.php'); //logo e login e banco de dados
+require_once('menu.php'); //menu lateral da pagina
+
+/* Essa opção descomentar após criar em telas_funcoes.php*/
+//echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
+?>
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Relatório arquivos da fábrica</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="administracao.php?pg=<?= $_GET['pg'] ?>">Administração</a></li>
+        <li class="breadcrumb-item"><a href="processos.php?pg=<?= $_GET['pg'] ?>">Processos fábrica VW</a></li>
+        <li class="breadcrumb-item">Relatórios</li>
+      </ol>
+    </nav>
+  </div><!-- End Navegação -->
+
+  <?php
+  require_once('../../../inc/mensagens.php'); //Alertas
+  ?>
+
+  <!--################# COLE section AQUI #################-->
+  <div class="col-lg-10">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- Multi Columns Form -->
+        <form class="row g-3">
+
+          <div class="col-8">
+            <h5 class="card-title">Data de movimentação</h5>
+          </div>
+          <div class="col-4">
+            <h5 class="card-title">Data do arquivo</h5>
+          </div>
+
+          <div class="col-md-4">
+            <label for="inputEmail5" class="form-label">Inicial: </label>
+            <input type="date" class="form-control" id="inputEmail5">
+          </div>
+          <div class="col-md-4">
+            <label for="inputPassword5" class="form-label">Final: </label>
+            <input type="date" class="form-control" id="inputPassword5">
+          </div>
+
+          <div class="col-md-4">
+            <label for="inputAddress5" class="form-label">Data: </label>
+            <input type="date" class="form-control" id="inputAddres5s">
+          </div>
+
+          <div class="col-12">
+            <label for="inputState" class="form-label">Filial: </label>
+            <select id="inputState" class="form-select">
+              <option value="">-------------</option>
+              <?php
+              echo $queryTabela;
+              $conSucesso = $conn->query($queryTabela);
+
+              while ($row = $conSucesso->fetch_assoc()) {
+                echo 'option value="'.$row["id"].'">'.$row["NOME_EMPRESA"].'</option>';
+              }
+
+              ?>
+            </select>
+          </div>
+
+          <div class="col-12">
+            <label for="inputCity" class="form-label">Tipo relátorio: </label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="gridCheck1">
+              <label class="form-check-label" for="gridCheck1">
+                FA3 - NF E NF DEBITO EM ABERTO
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="gridCheck1">
+              <label class="form-check-label" for="gridCheck1">
+                FA4 - EXTARTO CONTA CORRENTE DIARIO
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="gridCheck1">
+              <label class="form-check-label" for="gridCheck1">
+                FLH - EXTRATO CONTA CORRENTE
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="gridCheck1">
+              <label class="form-check-label" for="gridCheck1">
+                FNT - NOTA CRED/DEB
+              </label>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button type="reset" class="btn btn-secondary">Limpar</button>
+            <button type="submit" class="btn btn-primary">Gerar relátorio</button>
+          </div>
+        </form><!-- End Multi Columns Form -->
+
+      </div>
+    </div>
+  </div>
+
+  <!--################# section TERMINA AQUI #################-->
+
+</main><!-- End #main -->
+
+<?php
+require_once('footer.php'); //Javascript e configurações afins
+?>

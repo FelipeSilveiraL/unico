@@ -13,7 +13,7 @@ require_once('menu.php'); //menu lateral da pagina
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
         <li class="breadcrumb-item"><a href="administracao.php?pg=<?= $_GET['pg'] ?>">Administração</a></li>
-        <li class="breadcrumb-item"><a href="processos.php?pg=<?= $_GET['pg'] ?>">Processos fabrica VW</a></li>
+        <li class="breadcrumb-item"><a href="processos.php?pg=<?= $_GET['pg'] ?>">Processos fábrica VW</a></li>
         <li class="breadcrumb-item">Carga arquivos da fábrica</li>
       </ol>
     </nav>
@@ -32,7 +32,7 @@ require_once('menu.php'); //menu lateral da pagina
         <div class="card">
           <div class="card-body">
             <br>
-            <h5 class="card-title" style="text-align: left;">LISTA ARQUIVOS FABRICA</h5>
+            <h5 class="card-title" style="text-align: left;">LISTA ARQUIVOS FÁBRICA</h5>
             <?php
             $msn = $_GET['msn'];
             $data1 = $_POST['dataPesquisa']; // recebe data

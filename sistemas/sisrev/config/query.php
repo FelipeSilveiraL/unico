@@ -28,13 +28,32 @@ $resultLogPE = $conn->query($queryLogPE);
 $logPE = $resultLogPE->fetch_assoc();
 
 
+$queryTabela = "SELECT * FROM sisrev_empresas_bpmgp where ID_EMPRESA NOT IN(302,208,261) ORDER BY id ASC;";
+
+$editarTabela = "SELECT * FROM sisrev_empresas_bpmgp ";
+
+$relatorioExcel = "SELECT * FROM sisrev_empresas_bpmgp where ID_EMPRESA NOT IN(302,208,261) ";
+
+$deletar = "SELECT NOME_EMPRESA,SISTEMA,EMPRESA_NBS,CONSORCIO,EMPRESA_APOLLO,REVENDA_APOLLO,ORGANOGRAMA_SENIOR,EMPRESA_SENIOR,FILIAL_SENIOR FROM sisrev_empresas_bpmgp ";   
+
 $queryIsNullPE = "SELECT id FROM sisrev_politicamente_exposto WHERE ";
 
 //query chamar acessos rápidos Sisrev
 $queryAcessos = "SELECT * FROM sisrev_modulos";
 
+$consorcio = ($edit["CONSORCIO"] == 'S') ? 'SIM' : 'NÃO';
+
+    $situacao = ($edit["SITUACAO"] == 'A') ? 'ATIVO' : 'DESATIVADO';
+
+    $valueApollo = ($edit["EMPRESA_APOLLO"] == 0) ? '' : $edit["EMPRESA_APOLLO"];
+
+    $valueRevApollo = ($edit["REVENDA_APOLLO"] == 0) ? '' : $edit["REVENDA_APOLLO"];
+
+    $valueEmpNbs = ($edit["EMPRESA_NBS"] == 0) ? '' : $edit["EMPRESA_NBS"];
+
 //query para chamar todos os usuário para cadastrar funções na tela de configurações
 $queryUsers = "SELECT * FROM usuarios";
+
 
 $queryFuncaoUser = "SELECT * FROM sisrev_usuario_funcao ";
 

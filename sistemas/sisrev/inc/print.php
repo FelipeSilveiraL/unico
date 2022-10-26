@@ -57,7 +57,7 @@
         
         $execCreate = $conn->query($createTableEst);
 
-        $url = "http://".$_SESSION['servidorOracle']."/unico_api/sisrev/estoque.json";
+        $url = "http://".$_SESSION['servidorOracle']."/unico_api/sisrev/api_estoque.php";
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

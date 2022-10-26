@@ -74,7 +74,7 @@ require_once('../../../config/config.php');
                 <table class="table datatable">
                   <thead>
                     <tr>
-                      <th scope="col" class="capitalize" ><input class="form-check-input" type="checkbox" id="select_all" name="select_all"></th>
+                      <th scope="col" class="capitalize">#</th>
                       <th scope="col" class="capitalize">DATA NF</th>
                       <th scope="col" class="capitalize">EMPRESA</th>
                       <th scope="col" class="capitalize">REVENDA</th>
@@ -170,15 +170,11 @@ require_once('../../../config/config.php');
   </section>
 
   <!--################# section TERMINA AQUI #################-->
-<script>
-    
-document.getElementById('select_all').onclick = function() {
-    var checkboxes = document.getElementsByName('select_all');
-    for (var checkbox of checkboxes) {
-        checkbox.checked = this.checked;
-    }
-
-}</script>
+<!-- <script>
+function myFunction() {
+  window.open("../inc/print.php");
+}
+</script> -->
 </main><!-- End #main -->
 
 <?php

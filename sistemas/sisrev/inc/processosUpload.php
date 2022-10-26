@@ -12,7 +12,6 @@ $i = 0;
 
 while ($i <= $total) {
 
-
     if ($arquivo[$i] === 'text/plain') {
 
         $data   = date('Y-m-d');
