@@ -34,7 +34,8 @@ require_once('../inc/apiRecebeTabela.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-          <?= $usuarioFuncao; ?>
+          <!-- <?php if($usuarioFuncao == NULL){echo 'deu ruim';}else{echo 'deu boa';} ?> -->
+          <?= $sub; ?>
             <a href="novaRegraEmp.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-success buttonAdd" title="Nova regra empresa" <?= $usuarioFuncao ?> ><i class="bx bxs-file-plus"></i></a>
 
             <a href="../inc/relatorioExcel.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
