@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once('../config/query.php');
 
 //excluindo tabela temporaria antiga
@@ -36,5 +38,7 @@ while (sqlsrv_fetch($colaboradores)) {
 }
 
 header('Location: ../front/buscar.php?pg='.$_GET['pg'].'&table=1');
+
+$_SESSION['tipoPesquisa'] = $_POST['busca'];
 
 $conn->close();

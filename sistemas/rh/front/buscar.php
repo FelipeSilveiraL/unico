@@ -2,6 +2,22 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
+
+if (empty($_SESSION['tipoPesquisa'])) {
+  header('Location: buscar.php?pg=' . $_GET['pg'] . '');
+} else {
+  switch ($_SESSION['tipoPesquisa']) {
+    case '1':
+      $nome = 'checked';
+      break;
+
+    case '2':
+      $cpf = 'checked';
+      break;
+  }
+}
+
+
 ?>
 
 <main id="main" class="main">
@@ -11,7 +27,7 @@ require_once('menu.php'); //menu lateral da pagina
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <?= !empty($_GET['table']) ? '<li class="breadcrumb-item"><a href="buscar.php?pg='.$_GET['pg'].'">Buscar CPF</a></li><li class="breadcrumb-item">Resultado</li>' : '<li class="breadcrumb-item">Buscar CPF</li>'; ?>
+        <?= !empty($_GET['table']) ? '<li class="breadcrumb-item"><a href="buscar.php?pg=' . $_GET['pg'] . '">Buscar CPF</a></li><li class="breadcrumb-item">Resultado</li>' : '<li class="breadcrumb-item">Buscar CPF</li>'; ?>
       </ol>
     </nav>
   </div><!-- End Navegação -->
@@ -20,11 +36,11 @@ require_once('menu.php'); //menu lateral da pagina
   require_once('../../../inc/mensagens.php'); //Alertas
   ?>
 
-  <!--################# COLE section AQUI #################-->
+  <section class="section">
 
-  <section class="section" style="display: <?= $displayBusca = !empty($_GET['table']) ? "none" : 'block'; ?>">
     <div class="row">
-      <div class="col-lg-12">
+
+      <div class="col-lg-6">
 
         <div class="card">
           <div class="card-body">
@@ -34,24 +50,18 @@ require_once('menu.php'); //menu lateral da pagina
             <form method="POST" action="../inc/buscar.php?pg=<?= $_GET['pg'] ?>">
 
               <fieldset class="row mb-10 pt-2">
-                <legend class="col-form-label col-sm-2 pt-2">Buscar por:</legend>
+                <legend class="col-form-label col-sm-5 pt-2">Buscar por:</legend>
                 <div class="col-sm-5">
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="busca" id="gridRadios1" value="1" onclick="escolheNome()">
+                    <input class="form-check-input" type="radio" name="busca" id="gridRadios1" value="1" onclick="escolheNome()" <?= $nome ?>>
                     <label class="form-check-label" for="gridRadios1">
                       Nome
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="busca" id="gridRadios2" value="2" onclick="escolheCpf()">
+                    <input class="form-check-input" type="radio" name="busca" id="gridRadios2" value="2" onclick="escolheCpf()" <?= $cpf ?>>
                     <label class="form-check-label" for="gridRadios2">
                       CPF
-                    </label>
-                  </div>
-                  <div class="form-check" style="display: none;">
-                    <input class="form-check-input" type="radio" name="busca" id="gridRadios3" value="3" onclick="escolheTodos()">
-                    <label class="form-check-label" for="gridRadios3">
-                      Todos
                     </label>
                   </div>
                 </div>
@@ -61,7 +71,7 @@ require_once('menu.php'); //menu lateral da pagina
                 <label for="inputName5" class="form-label">Nome Completo:</label>
                 <input type="text" class="form-control" id="inputNome" name="nomeCompleto" style="text-transform: uppercase;">
               </div>
-              <div class="col-md-2" id="cpfFuncionario" style="display: none;">
+              <div class="col-md-5" id="cpfFuncionario" style="display: none;">
                 <label for="inputName5" class="form-label">CPF:</label>
                 <input name="cpf" type="text" class="form-control" id="inputCpf" onkeydown="javascript: fMasc( this, mCPF );" maxlength="14" onblur="ValidarCPF(this)">
               </div>
@@ -74,14 +84,8 @@ require_once('menu.php'); //menu lateral da pagina
           </div>
         </div>
       </div>
-    </div>
-  </section>
-  <!--################# section TERMINA AQUI #################-->
 
-
-  <section class="section" style="display: <?= $displayBusca = !empty($_GET['table']) ? "block" : 'none'; ?>">
-     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-6">
 
         <div class="card">
           <div class="card-body">
@@ -114,7 +118,6 @@ require_once('menu.php'); //menu lateral da pagina
                           <td>' . $colaborador['cpf'] . '</td>
                         </tr>';
                   }
-
                 }
                 ?>
               </tbody>
@@ -132,12 +135,36 @@ require_once('menu.php'); //menu lateral da pagina
 
 <script>
   function escolheNome() {
-    document.getElementById("nomeFuncionario").style.display = 'block';
-    document.getElementById("cpfFuncionario").style.display = 'none';
-    document.getElementById("inputCpf").required = false;
-    document.getElementById("inputNome").required = true;
 
-    document.getElementById("localizar").disabled = false
+    var verificando = document.getElementById("gridRadios1").checked;
+    var verificandoCPF = document.getElementById("gridRadios2").checked;
+
+    if (verificando == false) {
+
+      document.getElementById("nomeFuncionario").style.display = 'none';      
+      document.getElementById("inputNome").required = false;
+      document.getElementById("localizar").disabled = false;
+
+      if(verificandoCPF == false){
+        document.getElementById("cpfFuncionario").style.display = 'none';
+        document.getElementById("inputCpf").required = false;
+      }else{
+        document.getElementById("cpfFuncionario").style.display = 'block';
+        document.getElementById("inputCpf").required = true;
+      }
+
+      
+      
+    } else {
+      document.getElementById("nomeFuncionario").style.display = 'block';
+      document.getElementById("cpfFuncionario").style.display = 'none';
+      document.getElementById("inputCpf").required = false;
+      document.getElementById("inputNome").required = true;
+
+      document.getElementById("localizar").disabled = false
+    }
+
+
   }
 
   function escolheCpf() {
@@ -145,20 +172,12 @@ require_once('menu.php'); //menu lateral da pagina
     document.getElementById("cpfFuncionario").style.display = 'block';
     document.getElementById("inputCpf").required = true;
     document.getElementById("inputNome").required = false;
-
-    document.getElementById("localizar").disabled = false
-  }
-
-  function escolheTodos() {
-    document.getElementById("nomeFuncionario").style.display = 'none';
-    document.getElementById("cpfFuncionario").style.display = 'none';
-    document.getElementById("inputCpf").required = false;
-    document.getElementById("inputNome").required = false;
-
     document.getElementById("localizar").disabled = false
   }
 </script>
 
 <?php
 require_once('footer.php'); //Javascript e configurações afins
+
+unset($_SESSION['tipoPesquisa']);
 ?>

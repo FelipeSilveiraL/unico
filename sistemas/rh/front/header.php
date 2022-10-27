@@ -6,7 +6,7 @@ if ($_SESSION['id_usuario'] == NULL) {
 }
 ?>
 
-<body>
+<body <?= empty($_GET['table']) ?: 'onload="escolheNome()"' ?> >
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
 
