@@ -13,19 +13,23 @@ $queryCriando = "CREATE TABLE rh_busca_colaborador (
     PRIMARY KEY (id))";
 $resultCriando = $conn->query($queryCriando);
 
+
 //verificando o tipo da busca
 switch ($_POST['busca']) {
-    case '1'://NOME
-        $where = "WHERE nomfun LIKE '%".$_POST['nomeCompleto']."%'";
+
+    case '1': //NOME
+
+        $nome = explode(" ", $_POST['nomeCompleto'], 2);
+
+        $where = "WHERE  nomfun LIKE '".$nome[0]."%' AND nomfun LIKE '%".$nome[1]."%'";
         break;
-    
-    case '2'://CPF
-        $where = "WHERE numcpf = '".$_POST['cpf']."'";
+
+    case '2': //CPF
+        $where = "WHERE numcpf = '" . $_POST['cpf'] . "'";
         break;
 }
-
 //realizando a busca dentro da vetorh
-$queryBusca = "SELECT nomfun, numcpf FROM Vetorh.dbo.v_func ".$where;
+$queryBusca = "SELECT nomfun, numcpf FROM Vetorh.dbo.v_func ".$where." ORDER BY nomfun ASC";
 
 $colaboradores = sqlsrv_query($connVetorh, $queryBusca);
 
@@ -33,11 +37,11 @@ while (sqlsrv_fetch($colaboradores)) {
     $nome = sqlsrv_get_field($colaboradores, 0);
     $cpf = sqlsrv_get_field($colaboradores, 1);
 
-    $insertColaborador = "INSERT INTO rh_busca_colaborador (nome, cpf) VALUES ('".$nome."','".$cpf ."')";
+    $insertColaborador = "INSERT INTO rh_busca_colaborador (nome, cpf) VALUES ('" . $nome . "','" . $cpf . "')";
     $resultInsert = $conn->query($insertColaborador);
 }
 
-header('Location: ../front/buscar.php?pg='.$_GET['pg'].'&table=1');
+header('Location: ../front/buscar.php?pg=' . $_GET['pg'] . '&table=1');
 
 $_SESSION['tipoPesquisa'] = $_POST['busca'];
 
