@@ -85,7 +85,7 @@ if (!empty($_GET['msn'])) {
                     echo '<p class="mb-0"><i class="bi bi-pin"></i> Não foi possivel carregar o arquivo por completo - Contate o TI!</p>';
                     break;
                 case '5':
-                    echo '<p class="mb-0"><i class="bi bi-pin"></i> Campo(s) vazio(s)!</p>';
+                    echo '<p class="mb-0"><i class="bi bi-pin"></i>Preenchas os campo(s) obrigatórios(s)!</p>';
                     break;
             }
             echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -150,7 +150,7 @@ if (!empty($_GET['msn'])) {
                 </div>';
             break;
             case '18':
-                echo 'f
+                echo '
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <span style="font-size: 12px">Já existe uma regra adicionada com a empresa e o departamento!</span>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

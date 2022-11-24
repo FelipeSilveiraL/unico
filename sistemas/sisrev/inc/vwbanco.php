@@ -3,20 +3,17 @@
 session_start();
 require_once('../config/query.php');
 
-if (isset($_POST['filial'])) {
-    $filial = $_POST['filial'];
-}
 
-if ($filial !== null) {
+print_r($_POST['filial']);
 
-    $i = 0;
-    
-    while ($i <= $filial) {
+exit;
+if (!empty($_POST['filial'])) {
 
+    foreach ($_POST['filial'] as $key => $filial) {
         $data = $_POST['data'];
         empty($data) ? $data = date('dmY') : ''; //verifica se a informação vindo esta vazia 
 
-        $diretorioArquivo = '../documentos/CAR/' . $data . '/' . $filial[$i] . ''; //Salva o diretório dentro de uma variavel
+        $diretorioArquivo = '../documentos/CAR/' . $data . '/' . $filial. ''; //Salva o diretório dentro de uma variavel
         
         if (file_exists($diretorioArquivo)) { //verifica se o arquivo existe
 
@@ -246,6 +243,6 @@ if ($filial !== null) {
                 }
             }
         }
-        $i++;
     }
+
 }

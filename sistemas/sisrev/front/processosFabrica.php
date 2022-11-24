@@ -110,7 +110,9 @@ require_once('menu.php'); //menu lateral da pagina
               </div><!-- End Default Tabs -->
             </div>
             <hr style="opacity: 0;">
-            <span style="color: red;"><?= !empty($data) ? $dataSelecionada = "*Data selecionada " . $selecionada . " *" : $dataSelecionada = "" ?></span>
+            <code>
+              <?= !empty($data) ? $dataSelecionada = "* Data selecionada " . $selecionada : $dataSelecionada = "" ?>
+            </code>
             <form action="../inc/vwbanco.php?pg=<?= $_GET['pg'] ?>" method="POST" enctype="multipart/form-data">
               <div class="container col-lg-6" style="margin-left: 170px;display:<?= !empty($selecionada) ? 'block' : 'none' ?>">
                 <div class="row" style="margin-left:43px;">
@@ -249,9 +251,9 @@ require_once('menu.php'); //menu lateral da pagina
                 </div>
 
               </div>
-              <div <?= $usuarioFuncao ?> >
+              <div <?= $usuarioFuncao ?>>
                 <div class="py-5" style="float: left;">
-                  <button type="button" class="btn btn-primary"><a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/sisrev/front/processos.php?pg=<?= $_GET['pg'] ?>"><span style="color: white;">Voltar</span></a></button>
+                  <button type="button" class="btn btn-secondary"><a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/sisrev/front/processos.php?pg=<?= $_GET['pg'] ?>"><span style="color: white;">Voltar</span></a></button>
                   <button type="submit" class="btn btn-primary" onclick="teste()" style="display: <?= !empty($selecionada) ? 'inline' : 'none' ?>;">Realizar Carga</button>
                 </div>
               </div>

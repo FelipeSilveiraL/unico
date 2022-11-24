@@ -30,7 +30,6 @@ require_once('menu.php'); //menu lateral da pagina
   <div class="col-lg-10">
     <div class="card">
       <div class="card-body">
-
         <!-- Multi Columns Form -->
         <form class="row g-3" action="../inc/processosFabricaRelatorios.php" method="POST">
 
@@ -63,32 +62,35 @@ require_once('menu.php'); //menu lateral da pagina
           </div> -->
 
           <div class="col-12">
-            <label for="inputCity" class="form-label">Tipo relátorio: </label>
+            <label for="inputCity" class="form-label">Tipo relátorio: <code>*</code></label>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="fa3" name="fa3">
+              <input class="form-check-input" type="radio" id="fa3" name="tipoRalatorio[]" value="1">
               <label class="form-check-label" for="fa3">
                 FA3 - NF E NF DEBITO EM ABERTO
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="fa4" name="fa4">
+              <input class="form-check-input" type="radio" id="fa4" name="tipoRalatorio[]" value="2">
               <label class="form-check-label" for="fa4">
                 FA4 - EXTARTO CONTA CORRENTE DIARIO
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="flh" name="flh">
+              <input class="form-check-input" type="radio" id="flh" name="tipoRalatorio[]" value="3">
               <label class="form-check-label" for="flh">
                 FLH - EXTRATO CONTA CORRENTE
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="fnt" name="fnt">
+              <input class="form-check-input" type="radio" id="fnt" name="tipoRalatorio[]" value="4">
               <label class="form-check-label" for="fnt">
                 FNT - NOTA CRED/DEB
               </label>
             </div>
           </div>
+
+
+          <code>(*) Campos obrigatórios</code>
 
           <div class="text-center">
             <button type="reset" class="btn btn-secondary">Limpar</button>
@@ -116,7 +118,7 @@ require_once('footer.php'); //Javascript e configurações afins
   });
 
   $("#dataArquivo").on("click", function() {
-    $('.dataMovimentacao').prop('readonly',true);
+    $('.dataMovimentacao').prop('readonly', true);
     $('#dataArquivo').prop('readonly', false);
 
   });
