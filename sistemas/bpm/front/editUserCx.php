@@ -15,7 +15,7 @@ require_once('../inc/apiRecebeSelbetti.php');
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="bpmServopa.php?pg=<?= $_GET['pg'] ?>">BPMSERVOPA</a></li>
         <li class="breadcrumb-item"><a href="userCaixa.php?pg=<?= $_GET['pg'] ?>">USUÁRIOS CAIXA</a></li>
         <li class="breadcrumb-item">EDITANDO USUÁRIO CAIXA</li>
@@ -69,9 +69,9 @@ require_once('../inc/apiRecebeSelbetti.php');
                   </div>
                   <br>
                   <div class="text-left">
-                    <button type="button" class="btn btn-danger"><a href="userCaixa.php?pg='.$_GET['pg'].'" style="color:white;">Voltar</a></button>
+                    <button type="button" class="btn btn-primary"><a href="userCaixa.php?pg='.$_GET['pg'].'" style="color:white;">Voltar</a></button>
                     <button type="submit" class="btn btn-success">Editar</button>
-                  </div>
+                  </div><br>
                 </form>';
 
 

@@ -11,7 +11,7 @@ require_once('../inc/apiEmpDep.php');
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="RH.php?pg=<?= $_GET['pg'] ?>">RH</a></li>
         <li class="breadcrumb-item">EMPRESA X DEPARTAMENTO RH</li>
       </ol>
@@ -40,13 +40,13 @@ require_once('../inc/apiEmpDep.php');
             <table class="table datatable">
               <thead>
                 <tr>
-                  <th scope="col" class="capitalize">ID REGRA</th>
+                  <th scope="col" class="capitalize">#</th>
                   <th scope="col" class="capitalize">EMPRESA</th>
                   <th scope="col" class="capitalize">DEPARTAMENTO</th>
                   <th scope="col" class="capitalize">GERENTE APROVA</th>
                   <th scope="col" class="capitalize">SUPERINTENDENTE APROVA</th>
                   <th scope="col" class="capitalize">SITUAÇÃO</th>
-                  <th scope="col" class="capitalize">AÇÃO</th>
+                  <th scope="col" class="capitalize" <?= $usuarioFuncao ?> >AÇÃO</th>
                 </tr>
               </thead>
               <tbody>
@@ -86,9 +86,9 @@ require_once('../inc/apiEmpDep.php');
                     <td>'.$gerente.'</td>
                     <td>'.$super.'</td>
                     <td>'.$situacao.'</td>
-                    <td><a href="editEmpDep.php?pg=' . $_GET["pg"] . '&id=' . $row["ID_EMPDEP"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
+                    <td ' . $usuarioFuncao . ' ><a href="editEmpDep.php?pg=' . $_GET["pg"] . '&id=' . $row["ID_EMPDEP"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
                             
-                    <a href="http://'.$_SESSION['smartshare'].'/'.$_SESSION['smartshare'].'/bd/deletarEmpDep.php?pg='.$_GET['pg'].'id=' . $row["ID_EMPDEP"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a>
+                    <a href="http://'.$_SESSION['smartshare'].'/'.$_SESSION['smartshare'].'/bd/deletarEmpDep.php?pg='.$_GET['pg'].'id=' . $row["ID_EMPDEP"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                     </td> 
                  
                     </tr>';

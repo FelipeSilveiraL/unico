@@ -2,7 +2,14 @@
 session_start();
 require_once('../config/query.php');
 
-$queryUserApi = " SELECT
+$nomeGestor = $_POST['nomeGestor'];
+$nomeGestor = ctype_digit($nomeGestor) ? true : false;
+
+if ($nomeGestor == true){
+    $nomeGestor = strlen($_POST['nomeGestor']);
+    $nomeGestor = substr($_POST['nomeGestor'], 0 , -5);
+    
+    $queryUserApi = " SELECT
         DS_USUARIO,
         DS_LOGIN,
         CD_USUARIO,
@@ -15,8 +22,25 @@ $queryUserApi = " SELECT
                                 18110, 18111, 18112, 18113, 18484,
                                 18485, 18486, 18529, 18340, 16680,
                                 18782)
-    AND DS_USUARIO LIKE '".strtoupper($_POST['nomeGestor'])."%' OR DS_LOGIN LIKE '".strtolower($_POST['nomeGestor'])."%'";
+    AND DS_USUARIO LIKE '%".strtoupper($_POST['nomeGestor'])."%' OR DS_LOGIN LIKE '%".strtolower($nomeGestor)."%'";
+    
+}else{
+    $queryUserApi = " SELECT
+    DS_USUARIO,
+    DS_LOGIN,
+    CD_USUARIO,
+    DS_EMAIL
+FROM
+   bpm_usuarios_smartshare
+WHERE
+    ST_ATIVO = 1
+AND CD_USUARIO NOT IN ( 1, 23, 24, 22, 16681,
+                            18110, 18111, 18112, 18113, 18484,
+                            18485, 18486, 18529, 18340, 16680,
+                            18782)
+AND DS_USUARIO LIKE '%".strtoupper($_POST['nomeGestor'])."%' OR DS_LOGIN LIKE '%".strtolower($_POST['nomeGestor'])."%'";
 
+}
 
 $conexao = $conn->query($queryUserApi);
 
@@ -28,7 +52,7 @@ while($row = $conexao->fetch_assoc()){
 if($usuario != NULL){
     header('Location: ../front/gestorRH.php?pg='.$_GET['pg'].'&dado=1&login='.$login.'&usuario='.$usuario.'');
 }else{
-    header('Location: ./front/gestorRH.php?pg='.$_GET['pg'].'&erro=1');
+    header('Location: ../front/gestorRH.php?pg='.$_GET['pg'].'&erro=1');
 }
 
 ?>

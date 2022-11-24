@@ -1,7 +1,6 @@
 <?php
 require_once('../config/query.php');
 
-
 $conSucesso = $conn->query($queryTabela);
 
 while ($row = $conSucesso->fetch_assoc()) {
@@ -37,7 +36,7 @@ while ($row = $conSucesso->fetch_assoc()) {
                   <td>' . $sistemaMysql . '</td>
                   <td>' . $consorcio . '</td>
                   <td>' . $situacao . '</td>
-                  <td><a href="editEmp.php?pg=' . $_GET["pg"] . '&tela=3&ID=' . $row["ID_EMPRESA"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
+                  <td><a href="editEmp.php?pg=' . $_GET["pg"] . '&tela=3&ID=' . $row["ID_EMPRESA"] . '" title="Editar"  class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
                             
                             <a href="../front/deletarEmp.php?pg=' . $_GET["pg"] . '&ID=' . $row["ID_EMPRESA"] . '" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a>
 

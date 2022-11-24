@@ -64,7 +64,7 @@ require_once('../inc/apiRecebePerfil.php');
                     <button type="button" class="btn btn-primary"><a href="mfpWeb.php?pg=<?= $_GET['pg'] ?>" style="color:white;">Voltar</a></button>
                     <button type="submit" class="btn btn-success">Salvar</button>
                   </div>
-                </form>
+                </form><br>
             </div>
           </div>
 

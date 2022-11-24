@@ -3,6 +3,7 @@ require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 require_once('../inc/apiRecebeTabela.php');
+require_once('../inc/paginacao.php');
 ?>
 
 <main id="main" class="main">
@@ -16,7 +17,7 @@ require_once('../inc/apiRecebeTabela.php');
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="bpmServopa.php?pg=<?= $_GET['pg'] ?>">BPMSERVOPA</a></li>
         <li class="breadcrumb-item">EMPRESAS</li>
       </ol>
@@ -34,8 +35,6 @@ require_once('../inc/apiRecebeTabela.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-          <!-- <?php if($usuarioFuncao == NULL){echo 'deu ruim';}else{echo 'deu boa';} ?> -->
-          <?= $sub; ?>
             <a href="novaRegraEmp.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-success buttonAdd" title="Nova regra empresa" <?= $usuarioFuncao ?> ><i class="bx bxs-file-plus"></i></a>
 
             <a href="../inc/relatorioExcel.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
@@ -51,7 +50,7 @@ require_once('../inc/apiRecebeTabela.php');
                   <th scope="col" class="capitalize">SISTEMA</th>
                   <th scope="col" class="capitalize">CONSÓRCIO</th>
                   <th scope="col" class="capitalize">SITUAÇÃO</th>
-                  <th scope="col" class="capitalize">AÇÃO</th>
+                  <th scope="col" class="capitalize" <?= $usuarioFuncao ?>>AÇÃO</th>
                 </tr>
               </thead>
               <tbody>

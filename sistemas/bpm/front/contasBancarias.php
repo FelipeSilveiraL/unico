@@ -32,7 +32,7 @@ require_once('../config/query.php');
           <div class="card-header">
             <a href="novaRegraContasBancarias.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-success buttonAdd" title="Nova regra aprovadores" <?= $usuarioFuncao ?>><i class="bx bxs-file-plus"></i></a>
 
-            <a href="../bd/relatorioContasBancarias.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
+            <a href="../inc/relatorioContasBancarias.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
           </div>
           
           <div class="card-body">
@@ -46,7 +46,7 @@ require_once('../config/query.php');
                   <th scope="col" class="capitalize">AGÊNCIA</th>
                   <th scope="col" class="capitalize">CONTA</th>
                   <th scope="col" class="capitalize">DIGITO</th>
-                  <th scope="col" class="capitalize">AÇÃO</th>
+                  <th scope="col" class="capitalize" <?= $usuarioFuncao ?>>AÇÃO</th>
                 </tr>
               </thead>
               <tbody>
@@ -64,8 +64,8 @@ require_once('../config/query.php');
                   echo '<td>' . $contaBancariasFornecedor['AGENCIA'] . '</td>';
                   echo '<td>' . $contaBancariasFornecedor['CONTA'] . '</td>';
                   echo '<td>' . $contaBancariasFornecedor['DIGITO'] . '</td>';
-                  echo '<td><a href="editContasBancarias.php?pg=' . $_GET["pg"] . '&id_conta=' . $contaBancariasFornecedor["ID_CONTA"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
-                  <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarCont.php?id_conta=' . $contaBancariasFornecedor["ID_CONTA"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
+                  echo '<td ' . $usuarioFuncao . '><a href="editContasBancarias.php?pg=' . $_GET["pg"] . '&id_conta=' . $contaBancariasFornecedor["ID_CONTA"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
+                  <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarCont.php?pg='.$_GET['pg'].'&id_conta=' . $contaBancariasFornecedor["ID_CONTA"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a></td>
                  </tr>';
               }
                 ?>

@@ -14,7 +14,7 @@ require_once('../../../config/query.php');
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="NF.php?pg=<?= $_GET['pg'] ?>">NF</a></li>
         <li class="breadcrumb-item"><a href="nfEmpDep.php?pg=<?= $_GET['pg'] ?>">EMPRESA X DEPARTAMENTO NF</a></li>
         <li class="breadcrumb-item">EDITAR REGRA EMPRESA X DEPARTAMENTO NF</li>
@@ -44,6 +44,10 @@ require_once('../../../config/query.php');
                     $situacao = $row['SITUACAO'];
                     $gerente = $row['GERENTE_APROVA'];
                     $super = $row['SUPERINTENDENTE_APROVA'];
+                    $lanca = $row['LANCA_MULTAS'];
+                    $gestor = $row['GESTOR_AREA_APROVA_MULTAS'];
+                    $revisao = $row['REVISAO_ADM'];
+                    
 
                     if($situacao == 'A'){
                       $situacao = 'ATIVO';
@@ -62,6 +66,23 @@ require_once('../../../config/query.php');
                     }else{
                       $super = 'NÃO';
                     }
+                    if($lanca = 'S'){
+                      $lanca = 'SIM';
+                    }else{
+                      $lanca = 'NÃO';
+                    }
+                    if($gestor = 'S'){
+                      $gestor = 'SIM';
+                    }else{
+                      $gestor = 'NÃO';
+                    }
+                    if($revisao = 'S'){
+                      $revisao = 'SIM';
+                    }else{
+                      $revisao = 'NÃO';
+                    }
+
+
                   echo '
                   <input type="hidden" value="'.$row['ID_EMPDEP'].'" name="id_empdep">
               <div class="form-floating mt-4 col-md-6" id="empresa">
@@ -69,9 +90,15 @@ require_once('../../../config/query.php');
                 <label for="empresa">EMPRESA:</label>
               </div>
 
-              <div class="form-floating mt-4 col-md-6" id="depto">
-                <input type="text" class="form-control" value="'.$row['NOME_DEPARTAMENTO'].'" disabled >
-                <label for="depto">DEPARTAMENTO:</label>
+              <div class="form-floating mt-4 col-md-6" id="depto">';
+              $pesquisa = "SELECT * FROM bpm_nf_departamento WHERE ID_DEPARTAMENTO = ".$row['ID_DEPARTAMENTO']."";
+              $sucesso = $conn->query($pesquisa);
+              
+              while($row2 = $sucesso->fetch_assoc()){
+                echo' <input type="text" class="form-control" value="'.$row2['NOME_DEPARTAMENTO'].'" disabled >';
+              }
+              
+              echo'<label for="depto">DEPARTAMENTO:</label>
               </div>
 
               <div class="form-floating mt-4 col-md-6" id="gerente">
@@ -100,13 +127,55 @@ require_once('../../../config/query.php');
                   <option value="D">DESATIVADO</option>
                 </select>
                 <label for="situacao">SITUAÇÃO:<span style="color: red;">*</span></label>
-              </div>';
+              </div>
+              <div class="form-floating mt-4 col-md-6" id="lancarMulta">
+              <select class="form-select" name="lancarMulta" required>
+                <option value="'.$row['LANCA_MULTAS'].'">'.$lanca.'</option>
+                <option value="">------------</option>
+                <option value="S">SIM</option>
+                <option value="N">NÃO</option>
+              </select>
+              <label for="lancarMulta">LANÇAR MULTAS:<span style="color: red;">*</span></label>
+            </div>
+            <div class="form-floating mt-4 col-md-6" id="gestorAprovaM">
+              <select class="form-select" name="gestorAprovaM" required>
+                <option value="'.$row['GESTOR_AREA_APROVA_MULTAS'].'">'.$gestor.'</option>
+                <option value="">------------</option>
+                <option value="S">SIM</option>
+                <option value="N">NÃO</option>
+              </select>
+              <label for="gestorAprovaM">GESTOR ÁREA APROVA MULTAS:<span style="color: red;">*</span></label>
+            </div>
+            <div class="form-floating mt-4 col-md-6">
+              <select class="form-select" name="revisao_adm" id="revisao_adm" onchange="administrador()" required>
+                <option value="'.$row['REVISAO_ADM'].'">'.$revisao.'</option>
+                <option value="">------------</option>
+                <option value="S">SIM</option>
+                <option value="N">NÃO</option>
+              </select>
+              <label for="revisao_adm">REVISÃO ADMINISTRADOR:<span style="color: red;">*</span></label>
+            </div>
+            <div class="form-floating mt-4 col-md-6" id="loginAdministrador"'; echo ($row['LOGIN_ADM'] != NULL)? 'style="display: block;"' : 'style="display: none;"'; echo '>
+              <select class="form-select" name="login_adm" type="text" id="login_adm" required>
+                  <option value="'.$row['LOGIN_ADM'].'">'.$row['LOGIN_ADM'].'</option>
+                  <option value=" ">---------------------</option>';
+                  $query_users .= " WHERE id NOT IN (1)";
+
+                  $sucesso = $conn->query($query_users);
+
+                  while ($row2 = $sucesso->fetch_assoc()) {
+
+                  echo '<option value="' . $row2['DS_LOGIN'] . '"> ' . $row2['DS_USUARIO'] . ' / ' . $row2['DS_LOGIN'] . ' </option>';
+                  }
+            echo'  </select>
+              <label for="loginAdministrador">LOGIN ADMINISTRADOR:<span style="color: red;">*</span></label>
+            </div>';
                 }
                 ?>
                 <div class="text-left py-2">
                   <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/nfEmpDep.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
                   <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
-                  <button type="submit" class="btn btn-success">Salvar</button>
+                  <button type="submit" class="btn btn-success">Editar</button>
                 </div>
             </form><!-- FIM Form -->
           </div><!-- FIM card-body -->

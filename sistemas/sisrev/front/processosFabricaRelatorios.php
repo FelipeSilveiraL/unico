@@ -55,44 +55,36 @@ require_once('menu.php'); //menu lateral da pagina
             <input type="date" class="form-control dataArquivo" id="dataArquivo" name="dataArquivo">
           </div>
 
-          <div class="col-12">
+          <!-- <div class="col-12">
             <label for="inputState" class="form-label">Filial: </label>
             <select id="inputState" class="form-select" name="filial">
               <option value="">-------------</option>
-              <?php
-              $conSucesso = $conn->query($queryTabela);
-
-              while ($row = $conSucesso->fetch_assoc()) {
-                echo '<option value="' . $row["id"] . '">' . $row["NOME_EMPRESA"] . '</option>';
-              }
-
-              ?>
             </select>
-          </div>
+          </div> -->
 
           <div class="col-12">
             <label for="inputCity" class="form-label">Tipo relátorio: </label>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gridCheck1">
-              <label class="form-check-label" for="gridCheck1">
+              <input class="form-check-input" type="checkbox" id="fa3" name="fa3">
+              <label class="form-check-label" for="fa3">
                 FA3 - NF E NF DEBITO EM ABERTO
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gridCheck1">
-              <label class="form-check-label" for="gridCheck1">
+              <input class="form-check-input" type="checkbox" id="fa4" name="fa4">
+              <label class="form-check-label" for="fa4">
                 FA4 - EXTARTO CONTA CORRENTE DIARIO
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gridCheck1">
-              <label class="form-check-label" for="gridCheck1">
+              <input class="form-check-input" type="checkbox" id="flh" name="flh">
+              <label class="form-check-label" for="flh">
                 FLH - EXTRATO CONTA CORRENTE
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gridCheck1">
-              <label class="form-check-label" for="gridCheck1">
+              <input class="form-check-input" type="checkbox" id="fnt" name="fnt">
+              <label class="form-check-label" for="fnt">
                 FNT - NOTA CRED/DEB
               </label>
             </div>
@@ -100,7 +92,7 @@ require_once('menu.php'); //menu lateral da pagina
 
           <div class="text-center">
             <button type="reset" class="btn btn-secondary">Limpar</button>
-            <button type="" class="btn btn-primary">Gerar relátorio</button>
+            <button type="submit" class="btn btn-primary">Gerar relátorio</button>
           </div>
         </form><!-- End Multi Columns Form -->
 

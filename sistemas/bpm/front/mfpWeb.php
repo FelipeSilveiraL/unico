@@ -15,7 +15,7 @@ require_once('../inc/recebeMFP.php');//recebe os dados da api e insere no banco 
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="bpmServopa.php?pg=<?= $_GET['pg'] ?>">BPMSERVOPA</a></li>
         <li class="breadcrumb-item">MFP WEB</li>
       </ol>
@@ -46,7 +46,7 @@ require_once('../inc/recebeMFP.php');//recebe os dados da api e insere no banco 
                     <th scope="col" class="capitalize">ID PERFIL</th>
                     <th scope="col" class="capitalize">PERFIL</th>
                     <th scope="col" class="capitalize">DESCRIÇÃO</th>
-                    <th scope="col" class="capitalize">AÇÃO</th>
+                    <th scope="col" class="capitalize" <?= $usuarioFuncao ?>>AÇÃO</th>
                   </tr>
                 </thead>
                 <tbody>

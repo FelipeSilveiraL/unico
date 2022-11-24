@@ -33,11 +33,27 @@ require_once('../../../config/config.php');
           <div class="card-body">
             <form class="row g-3" action="http://<?= $_SESSION['servidorOracle']?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraEmp.php?pg=<?= $_GET['pg']?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
-              <div class="form-floating mt-4 col-md-12">
+              <div class="form-floating mt-4 col-md-6">
                 <input class="form-control" id="empresa" name="empresa" required>
                 <label for="filial" class="capitalize">EMPRESA:<span style="color: red;">*</span></label>
               </div>
-
+              <div class="modal fade" id="verticalycentered" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">CNPJ inválido, por favor verifique!</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">OK</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-floating mt-4 col-md-6">
+                <input onkeypress='mascaraMutuario(this,cpfCnpj)' onblur="validarCNPJ(this)" maxlength="18" class="form-control" id="CNPJ" name="cnpjValue" required>
+                <label for="filial" class="capitalize">CNPJ:<span style="color: red;">*</span></label>
+              </div>
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" id="sistema" name="sistema" onchange="camposObrigatorios()" required>
                   <option value="">--------------</option>
@@ -120,7 +136,10 @@ require_once('../../../config/config.php');
                 <input onkeypress="onlynumber()" class="form-control" onblur="aprovador()" name="numero_caixa" maxlength="2" id=ncaixa required>
                 <label for="numero_caixa">NUMERO CAIXA:<span style="color: red;">*</span></label>
               </div>
-
+              <div class="form-floating mt-4 col-md-6" id="empresaApollo">
+                <input class="form-control" name="empApollo" maxlength="2" onkeypress="onlynumber()" >
+                <label for="floatingSelect">BANDEIRA:<span style="color: red;">*</span></label>
+              </div>
               <div class="form-floating mt-4 col-md-6" style="display: <?= empty($_GET['APROVADOR_CAIXA']) ? 'none' : 'block' ?>;" id="liberarApro">
                 <select class="form-select" name="aproCaixa" required>
                   <?php
@@ -168,6 +187,8 @@ require_once('../../../config/config.php');
       document.getElementById("revApollo").value = "";
     }
   }
+
+  
 </script>
 
 <script>
@@ -182,7 +203,116 @@ require_once('../../../config/config.php');
       document.getElementById("aproCaixa").required = false;
     }
   }
+
+  function mascaraMutuario(o, f) {
+    v_obj = o
+    v_fun = f
+    setTimeout('execmascara()', 1)
+  }
+
+  function execmascara() {
+    v_obj.value = v_fun(v_obj.value)
+  }
+
+  function cpfCnpj(v) {
+
+    //Remove tudo o que não é dígito
+    v = v.replace(/\D/g, "")
+
+    if (v.length <= 12) { //CPF
+
+      //Coloca um ponto entre o terceiro e o quarto dígitos
+      v = v.replace(/(\d{2})(\d)/, "$1.$2")
+
+      //Coloca um ponto entre o terceiro e o quarto dígitos
+      //de novo (para o segundo bloco de números)
+      v = v.replace(/(\d{3})(\d)/, "$1.$2")
+
+      //Coloca um hífen entre o terceiro e o quarto dígitos
+      v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+
+    } else { //CNPJ
+
+      //Coloca ponto entre o segundo e o terceiro dígitos
+      v = v.replace(/^(\d{2})(\d)/, "$1.$2")
+
+      //Coloca ponto entre o quinto e o sexto dígitos
+      v = v.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+
+      //Coloca uma barra entre o oitavo e o nono dígitos
+      v = v.replace(/\.(\d{3})(\d)/, ".$1/$2")
+
+      //Coloca um hífen depois do bloco de quatro dígitos
+      v = v.replace(/(\d{4})(\d)/, "$1-$2")
+
+    }
+
+    return v
+  }
+  function _cnpj(cnpj) {
+
+cnpj = cnpj.replace(/[^\d]+/g, '');
+
+if (cnpj == '') return false;
+
+if (cnpj.length != 14)
+    return false;
+
+
+if (cnpj == "00000000000000" ||
+    cnpj == "11111111111111" ||
+    cnpj == "22222222222222" ||
+    cnpj == "33333333333333" ||
+    cnpj == "44444444444444" ||
+    cnpj == "55555555555555" ||
+    cnpj == "66666666666666" ||
+    cnpj == "77777777777777" ||
+    cnpj == "88888888888888" ||
+    cnpj == "99999999999999")
+    return false;
+
+
+tamanho = cnpj.length - 2
+numeros = cnpj.substring(0, tamanho);
+digitos = cnpj.substring(tamanho);
+soma = 0;
+pos = tamanho - 7;
+for (i = tamanho; i >= 1; i--) {
+    soma += numeros.charAt(tamanho - i) * pos--;
+    if (pos < 2)
+        pos = 9;
+}
+resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+if (resultado != digitos.charAt(0)) return false;
+tamanho = tamanho + 1;
+numeros = cnpj.substring(0, tamanho);
+soma = 0;
+pos = tamanho - 7;
+for (i = tamanho; i >= 1; i--) {
+    soma += numeros.charAt(tamanho - i) * pos--;
+    if (pos < 2)
+        pos = 9;
+}
+resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+if (resultado != digitos.charAt(1))
+    return false;
+
+return true;
+
+}
+
+function validarCNPJ(el){
+  if( !_cnpj(el.value) ){
+
+    $('#verticalycentered').modal('show')
+
+    // apaga o valor
+    el.value = "";
+  }
+}
+
 </script>
+
 
 
 <?php

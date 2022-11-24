@@ -57,16 +57,15 @@ if ($tela == "index.php") {
 /* ################## FUNÇÕES  ################## */
 
 $queryFuncaoUser .= "WHERE id_usuario = '" . $idUsuario . "' AND id_funcao IN ( ";
-
 $queryA = "SELECT id FROM bpm_funcao WHERE id_modulos = (SELECT id FROM bpm_modulos WHERE endereco = '" . $tela . "')";
 $resultadoA = $conn->query($queryA);
 
 while ($a = $resultadoA->fetch_assoc()) {
-    $queryFuncaoUser .= $a['id_funcao'] . ',';
+    $queryFuncaoUser .= $a['id'] . ',';
 
     //caso tenha mais de uma permissão em cada tela!..... pagina de exemplo é a front/usuarios.php
     $validacao['idFuncao'][] = array(
-        'funcao' => $a['id_funcao'],
+        'funcao' => $a['id'],
     );
 }
 
@@ -80,7 +79,5 @@ $resultadoFuncao = $conn->query($sub);
 if ($resultadoFuncao != false) {
     if (!$funcao = $resultadoFuncao->fetch_assoc()) {
         $usuarioFuncao = 'style= "display: none"';
-    }else{
-        $usuarioFuncao = 'oi';
     }
 }

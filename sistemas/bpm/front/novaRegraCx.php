@@ -69,7 +69,7 @@ require_once('../inc/apiRecebeSelbetti.php');
                     <button type="button" class="btn btn-primary"><a href="userCaixa.php?pg=<?= $_GET['pg'] ?>" style="color:white;">Voltar</a></button>
                     <button type="submit" class="btn btn-success">Salvar</button>
                   </div>
-                </form>
+                </form><br>
             </div>
           </div>
 

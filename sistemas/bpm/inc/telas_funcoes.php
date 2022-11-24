@@ -17,12 +17,13 @@ switch ($_GET['acao']) {
         
         break;    
     case '2': //Edição na tabela bpm_funcao
+        
         $updateFuncao = "UPDATE bpm_funcao 
                             SET 
                                 descricao = '".$_POST['descricao']."', 
                                 id_modulos = '".$_POST['tela']."',
                                 nome = '".$_POST['nome']."'
-                            WHERE id_funcao = '".$_GET['id']."'";
+                            WHERE id = '".$_GET['id']."'";
 
         if (!$resultUpdateFuncao = $conn->query($updateFuncao)){
             printf("Erro ao editar a Função %s\n", $conn->error);
@@ -35,7 +36,7 @@ switch ($_GET['acao']) {
 
         break;
     case '3': //Apagando na tabela bpm_funcao
-        $deleteFuncao = "DELETE FROM bpm_funcao WHERE id_funcao = '".$_GET['id']."'";
+        $deleteFuncao = "DELETE FROM bpm_funcao WHERE id = '".$_GET['id']."'";
 
         if (!$resultDeleteFuncao = $conn->query($deleteFuncao)){
             printf("Erro ao deletar a Função %s\n", $conn->error);
@@ -54,7 +55,7 @@ switch ($_GET['acao']) {
 
         //Salvando todas as funções do usuário
         foreach ($_POST['funcao'] as $key => $value) {
-        $queryInsert = "INSERT INTO bpm_usuario_funcao (id_funcao, id_usuario) VALUES ('".$value."', '".$_GET['id']."')";
+        $queryInsert = "INSERT INTO bpm_usuario_funcao (id, id_usuario) VALUES ('".$value."', '".$_GET['id']."')";
         $resultado = $conn->query($queryInsert);
         }
 

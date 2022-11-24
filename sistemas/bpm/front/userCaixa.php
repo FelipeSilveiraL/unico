@@ -15,7 +15,7 @@ require_once('../config/query.php');
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="bpmServopa.php?pg=<?= $_GET['pg'] ?>">BPMSERVOPA</a></li>
         <li class="breadcrumb-item">USUÁRIOS CAIXA</li>
       </ol>
@@ -46,7 +46,7 @@ require_once('../config/query.php');
                     <th scope="col" class="capitalize">EMPRESA</th>
                     <th scope="col" class="capitalize">CAIXA</th>
                     <th scope="col" class="capitalize">USUÁRIO</th>
-                    <th scope="col" class="capitalize">AÇÃO</th>
+                    <th scope="col" class="capitalize" <?= $usuarioFuncao ?>>AÇÃO</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -13,13 +13,12 @@ require_once('../inc/apiRecebeAprov.php');
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>GESTOR RH</h1>
+    <h1>VENDEDORES</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
-        <li class="breadcrumb-item"><a href="RH.php?pg=<?= $_GET['pg'] ?>">RH</a></li>
-        <li class="breadcrumb-item">GESTOR RH</li>
+        <li class="breadcrumb-item">VENDEDORES</li>
       </ol>
     </nav>
   </div><!-- End Navegação -->
@@ -41,10 +40,10 @@ require_once('../inc/apiRecebeAprov.php');
               <?php
                  
                   echo '
-                  <form class="row g-3" action="../inc/localizaGestor.php?pg='.$_GET['pg'].'" method="POST" style="display:'; echo  empty($_GET['dado'])? 'block;' : 'none;'; echo' ">
+                  <form class="row g-3" action="../inc/vendedores.php?pg='.$_GET['pg'].'" method="POST" style="display:'; echo  empty($_GET['dado'])? 'block;' : 'none;'; echo' ">
                       <div class="mt-4 col-md-6" style="margin-left: 25%;" id="depto">
-                      <label for="depto">Localizar gestor:</label>
-                        <input type="text" class="form-control" name="nomeGestor" style="text-transform: uppercase;" placeholder="LOGIN/CPF" required>  
+                      <label for="depto">Localizar vendedor:</label>
+                        <input type="text" class="form-control" name="nomeGestor" style="text-transform: uppercase;" placeholder="Digite o nome" required>  
                       </div>
                       '; 
                       $alert = $_GET['erro'];

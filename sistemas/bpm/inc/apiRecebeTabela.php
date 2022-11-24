@@ -13,6 +13,8 @@ $sucess = $conn->query($droptable);
 $createTableEmp = "CREATE TABLE `bpm_empresas` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `NOME_EMPRESA` VARCHAR(80) NULL,
+    `CNPJ` VARCHAR(80) NULL,
+    `APELIDO_NBS` VARCHAR(1) NULL,
     `SISTEMA` VARCHAR(1) NULL,
     `EMPRESA_APOLLO` VARCHAR(10) NULL,
     `REVENDA_APOLLO` VARCHAR(10) NULL,
@@ -42,10 +44,12 @@ foreach ($resultado->empresaSmart as $empSmart) {
 
 
     $querySmart = "INSERT INTO bpm_empresas 
-                            (NOME_EMPRESA,SISTEMA,UF_GESTAO,CONSORCIO,APROVADOR_CAIXA,NUMERO_CAIXA,FILIAL_SENIOR,ID_EMPRESA,EMPRESA_SENIOR,
+                            (NOME_EMPRESA,CNPJ,APELIDO_NBS,SISTEMA,UF_GESTAO,CONSORCIO,APROVADOR_CAIXA,NUMERO_CAIXA,FILIAL_SENIOR,ID_EMPRESA,EMPRESA_SENIOR,
                             ORGANOGRAMA_SENIOR,EMPRESA_APOLLO,REVENDA_APOLLO,SITUACAO,EMPRESA_NBS)
    
     VALUES ('" . $empSmart->NOME_EMPRESA ."',
+            '" . $empSmart->CNPJ ."',
+            '" . $empSmart->APELIDO_NBS ."',
             '" . $empSmart->SISTEMA . "',
             '" . $empSmart->UF_GESTAO . "' ,
             '" . $empSmart->CONSORCIO ."',

@@ -12,7 +12,7 @@ require_once('../inc/apiRecebeDepRH.php');
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="RH.php?pg=<?= $_GET['pg'] ?>">RH</a></li>
         <li class="breadcrumb-item">DEPARTAMENTO RH</li>
       </ol>
@@ -33,7 +33,7 @@ require_once('../inc/apiRecebeDepRH.php');
           <div class="card-header">
             <a href="novaRegraDep.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-success buttonAdd" title="Nova regra departamento" <?= $usuarioFuncao ?>><i class="bx bxs-file-plus"></i></a>
 
-            <a href="../bd/relatorioDepartamentoRH.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
+            <a href="../inc/relatorioDepartamentoRH.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
           </div>
           
           <div class="card-body">
@@ -44,7 +44,7 @@ require_once('../inc/apiRecebeDepRH.php');
                   <th scope="col" class="capitalize">#</th>
                   <th scope="col" class="capitalize">NOME DEPARTAMENTO</th>
                   <th scope="col" class="capitalize">SITUAÇÃO</th>
-                  <th scope="col" class="capitalize">AÇÃO</th>
+                  <th scope="col" class="capitalize" <?= $usuarioFuncao ?> >AÇÃO</th>
                 </tr>
               </thead>
               <tbody>
@@ -68,9 +68,9 @@ require_once('../inc/apiRecebeDepRH.php');
                     <td>'.$row['ID_DEPARTAMENTO'].'</td>
                     <td>'.$row['NOME_DEPARTAMENTO'].'</td>
                     <td>'.$situacao.'</td>
-                    <td><a href="editDep.php?pg=' . $_GET["pg"] . '&id_departamento=' . $row["ID_DEPARTAMENTO"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
-                            
-                    <a href="http://'.$_SESSION['servidorOracle'] .'/'.$_SESSION['smartshare'].'/bd/deletarDep.php?id=' . $row["ID_DEPARTAMENTO"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a>
+                    <td ' . $usuarioFuncao . '>
+                    <a href="editDep.php?pg=' . $_GET["pg"] . '&id_departamento=' . $row["ID_DEPARTAMENTO"] . '" title="Editar" class="btn-primary btn-sm" > <i class="bi bi-pencil"></i></a>
+                    <a href="http://'.$_SESSION['servidorOracle'] .'/'.$_SESSION['smartshare'].'/bd/deletarDep.php?id=' . $row["ID_DEPARTAMENTO"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm"> <i class="bi bi-trash"></i></a>
                     </td> 
                  
                     </tr>';

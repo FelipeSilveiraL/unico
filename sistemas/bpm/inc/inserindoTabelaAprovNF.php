@@ -24,9 +24,9 @@ echo '<td>' . $rowaprov['APROVADOR_MARCA'] . '</td>';
 echo '<td>' . $rowaprov['APROVADOR_GERENTE'] . '</td>';
 echo '<td>' . $rowaprov['APROVADOR_SUPERINTENDENTE'] . '</td>';
 // echo '<td>' . $situacao . '</td>';
-echo '<td><a href="editApNF.php?pg='.$_GET["pg"].'&id_aprovador='.$rowaprov["ID_APROVADOR"].'" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
+echo '<td ' . $usuarioFuncao . '><a href="editApNF.php?pg='.$_GET["pg"].'&id_aprovador='.$rowaprov["ID_APROVADOR"].'" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
                             
-<a href=http://'.$_SESSION['servidorOracle'].'/smartshare/bd/deletar.php?pg='.$_GET['pg'].'&id='.$rowaprov['ID_APROVADOR'] .'" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#verticalycentered" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a>
+<a href=http://'.$_SESSION['servidorOracle'].'/smartshare/bd/deletar.php?pg='.$_GET['pg'].'&id='.$rowaprov['ID_APROVADOR'] .'" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#verticalycentered" ><i class="bi bi-trash"></i></a>
 </td> 
 </tr>
 ';

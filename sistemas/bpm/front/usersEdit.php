@@ -15,7 +15,7 @@ require_once('../../../config/config.php');
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="bpmServopa.php?pg=<?= $_GET['pg'] ?>">BPMSERVOPA</a></li>
         <li class="breadcrumb-item"><a href="usersBPM.php?pg=<?= $_GET['pg'] ?>">USUÁRIOS SMARTSHARE</a></li>
         <li class="breadcrumb-item">EDITAR USUARIO SMARTSHARE</li>
@@ -68,8 +68,8 @@ require_once('../../../config/config.php');
                     </div>
                   </div>
                   <input type="hidden" value="'.$row['CD_USUARIO'].'" name="inputCd">
-                  <div class="text-center">
-                    <button type="button" class="btn btn-danger"><a href="usersBPM.php?pg='.$_GET['pg'].'" style="color:white;">voltar</a></button>
+                  <div class="text-left">
+                    <button type="button" class="btn btn-primary"><a href="usersBPM.php?pg='.$_GET['pg'].'" style="color:white;">voltar</a></button>
                     <button type="submit" class="btn btn-success">Editar</button>
                   </div>
                 </form>';
@@ -79,7 +79,7 @@ require_once('../../../config/config.php');
 
               $conn->close();
             ?>
-            </div>
+            </div><br>
           </div>
 
           

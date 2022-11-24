@@ -401,11 +401,13 @@ h6 {
 
 /* Breadcrumbs */
 .breadcrumb {
+	
   font-size     : 14px;
   font-family   : "Nunito", sans-serif;
   color         : #899bbd;
   font-weight   : 600;
   text-transform: capitalize;
+  
 }
 
 .breadcrumb a {
@@ -419,11 +421,18 @@ h6 {
 
 .breadcrumb .breadcrumb-item::before {
   color: #899bbd;
+  text-transform: lowercase;
+}
+
+.breadcrumb-item{
+ text-transform: lowercase;
 }
 
 .breadcrumb .active {
   color      : #51678f;
   font-weight: 600;
+text-transform: lowercase;
+ 
 }
 
 /* Bordered Tabs */

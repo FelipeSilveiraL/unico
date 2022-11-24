@@ -24,6 +24,9 @@ require_once('../config/query.php');
 
             $queryInsert = "INSERT INTO bpm_modulos (nome, endereco ".$moduloCAMPO .$localizacao.") 
             VALUES ('".$_POST['nome']."', '".$_POST['endereco']."'".$moduloVALUE.$localizacaoVALUE .")";
+
+            echo $queryInsert;
+            exit;
             if (!$resultInsert = $conn->query($queryInsert)){
                 echo $queryInsert."<br>"; 
                 printf("Erro ao inserir dados %s\n", $conn->error);

@@ -41,7 +41,7 @@ require_once('../../../config/config.php');
               <?php 
               $idGestor = $_SESSION['login'];
 
-              $queryCount = "SELECT COUNT(*) as quantidade FROM bpm_rh_aprovadores WHERE 
+              $queryCount = "SELECT COUNT(*) as quantidade FROM bpm_nf_aprovadores WHERE 
               aprovador_filial = '".$idGestor ."' OR
               aprovador_area = '".$idGestor ."' OR
               aprovador_marca = '".$idGestor ."' OR
@@ -56,7 +56,7 @@ require_once('../../../config/config.php');
              
              $idGestorNovo = explode(' ', $_POST['gestorNovo'])[0];
              
-             $queryCountNovo = "SELECT COUNT(*) as quantidade FROM bpm_rh_aprovadores WHERE 
+             $queryCountNovo = "SELECT COUNT(*) as quantidade FROM bpm_nf_aprovadores WHERE 
                 aprovador_filial = '".$idGestorNovo ."' OR
                 aprovador_area = '".$idGestorNovo ."' OR
                 aprovador_marca = '".$idGestorNovo ."' OR

@@ -17,7 +17,7 @@ require_once('../../../config/config.php');
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="bpmServopa.php?pg=<?= $_GET['pg'] ?>">BPMSERVOPA</a></li>
         <li class="breadcrumb-item">USUÁRIOS SMARTSHARE</li>
       </ol>
@@ -46,13 +46,13 @@ require_once('../../../config/config.php');
               <table class="table datatable">
                 <thead>
                   <tr>
-                    <th scope="col" class="capitalize">Id Regra</th>
+                    <th scope="col" class="capitalize">#</th>
                     <th scope="col" class="capitalize">USUÁRIO</th>
                     <th scope="col" class="capitalize">PAPEL</th>
                     <th scope="col" class="capitalize">LOGIN</th>
                     <th scope="col" class="capitalize">E-MAIL</th>
                     <th scope="col" class="capitalize">SITUAÇÃO</th>
-                    <th scope="col" class="capitalize">AÇÃO</th>
+                    <th scope="col" class="capitalize" <?= $usuarioFuncao ?>>AÇÃO</th>
                   </tr>
                 </thead>
                 <tbody>

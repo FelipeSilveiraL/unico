@@ -50,8 +50,8 @@ require_once('../config/query.php');
         <div class="card">
           <div class="card-header">
             <a href="novaRegraCusto.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-success buttonAdd" title="Nova regra aprovadores" <?= $usuarioFuncao ?>><i class="bx bxs-file-plus"></i></a>
-            <a href="historicoCVeiculos.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-warning" style="float: right;margin-left:10px;" title="Histórico registros alterados"><i class="bx bx-edit"></i></a>
-            <a href="../bd/relatorioCustoEspecifico.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></a>
+            <a href="historicoCVeiculos.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-warning" style="float: right;margin-left:10px;" title="Histórico registros alterados" <?= $usuarioFuncao ?> ><i class="bx bx-edit"></i></a>
+            <a href="../inc/relatorioCustoEspecifico.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel" <?= $usuarioFuncao ?> ><i class="ri-file-excel-2-fill" ></i></a>
           </div>
           
           <div class="card-body">
@@ -59,12 +59,12 @@ require_once('../config/query.php');
             <table class="table datatable">
               <thead>
                 <tr>
-                  <th scope="col" class="capitalize">ID REGISTRO</th>
+                  <th scope="col" class="capitalize">#</th>
                   <th scope="col" class="capitalize">EMPRESA</th>
                   <th scope="col" class="capitalize">TIPO DE CUSTO</th>
                   <th scope="col" class="capitalize">ANO REFERÊNCIA</th>
                   <th scope="col" class="capitalize">CUSTO ERP</th>
-                  <th scope="col" class="capitalize">AÇÂO</th>
+                  <th scope="col" class="capitalize" <?= $usuarioFuncao ?>>AÇÂO</th>
                 </tr>
               </thead>
               <tbody>
@@ -120,8 +120,8 @@ require_once('../config/query.php');
                       echo '<td>' . $tipoCusto . '</td>';
                       echo '<td>' . $custoVeiculo['ANO_REFERENCIA'] . '</td>';
                       echo $descricaoCusto;
-                      echo '<td><a href="editCustoEspecifico.php?pg=' . $_GET["pg"] . '&id_conta=' . $custoVeiculo['ID_CODIGO_CUSTO_VEICULO'] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
-                      <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarCVeiculos.php?&id_codigo=' . $custoVeiculo['ID_CODIGO_CUSTO_VEICULO'] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
+                      echo '<td ' . $usuarioFuncao . '><a href="editCustoEspecifico.php?pg=' . $_GET["pg"] . '&id_conta=' . $custoVeiculo['ID_CODIGO_CUSTO_VEICULO'] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
+                      <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarCVeiculos.php?pg='.$_GET['pg'].'&id_codigo=' . $custoVeiculo['ID_CODIGO_CUSTO_VEICULO'] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a></td>
                      </tr>';
                     }
 

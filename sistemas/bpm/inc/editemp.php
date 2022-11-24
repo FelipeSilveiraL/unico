@@ -30,13 +30,29 @@
         <div class="card">
           <div class="card-body">
           <form class="row g-3" action="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/editemp.php?id_empresa=' . $info . '&pg='.$_GET['pg'].'" method="POST">
-              <div class="form-floating mt-4 col-md-12">
+              <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" id="floatingSelect" name="usuarioBPM" disabled>
-                  <option value="1">' . $edit["NOME_EMPRESA"] . '</option>
+                  <option value="1" >' . $edit["NOME_EMPRESA"] . '</option>
                 </select>
-                <label for="floatingSelect" class="capitalize">EMPRESA:</label>
+                <label for="floatingSelect" class="capitalize" >EMPRESA:</label>
               </div>
-
+              <div class="form-floating mt-4 col-md-6" id="cnpj">
+                <input class="form-control" onblur="validarCNPJ(this)" name="cnpjValue" maxlength="14" value="'.$edit['CNPJ'].'">
+                <label for="cnpj" class="capitalize">CNPJ:</label>
+              </div>
+              <div class="modal fade" id="verticalycentered" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">CNPJ inválido, por favor verifique!</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">OK</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" onchange="camposObrigatorios()" id="sistema" name="sistema"  required>';
     if (!empty($edit["SISTEMA"])) {
@@ -160,39 +176,7 @@
     </div>
   </section>
 </main>
-              <script>
-  function aprovador() {
-    var tela = document.getElementById("liberarApro").style.display;
-
-    if (tela == "none") {
-      document.getElementById("liberarApro").style.display = "block";
-      document.getElementById("aproCaixa").required = true;
-    } else {
-      document.getElementById("liberarApro").style.display = "none";
-      document.getElementById("aproCaixa").required = false;
-    }
-  }
-</script>
-
-<script>
-  function camposObrigatorios() {
-    var value = document.getElementById("sistema").value
-
-    if (value == "A") {
-      document.getElementById("empresaNbs").style.display = "none";
-      document.getElementById("empnbs").value = "";
-      document.getElementById("empresaApollo").style.display = "block";
-      document.getElementById("revendaApollo").style.display = "block";
-
-    } else {
-      document.getElementById("empresaNbs").style.display = "block";
-      document.getElementById("empresaApollo").style.display = "none";
-      document.getElementById("revendaApollo").style.display = "none";
-      document.getElementById("empApollo").value = "";
-      document.getElementById("revApollo").value = "";
-    }
-  }
-</script>
+              
             ';
   }
 

@@ -14,7 +14,7 @@ require_once('../config/query.php');
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="manutencaoSmart.php?pg=<?= $_GET['pg'] ?>">MANUTENÇÃO SMARTSHARE</a></li>
         <li class="breadcrumb-item"><a href="seminovos.php?pg=<?= $_GET['pg'] ?>">SEMINOVOS</a></li>
         <li class="breadcrumb-item">EDITANDO FORNECEDOR</li>
@@ -61,12 +61,30 @@ require_once('../config/query.php');
                   }else{
                     $ativo = "NÃO";
                   }
+
                   if($smartshare == 'S'){
-                    $smartshare = 'SIM';
-                    
+                     $smartshare = 'SIM';
+                     //verifica no banco de dados se o usuario é admin
+
+                      $admin = "SELECT * FROM usuarios WHERE id_usuario = ".$_SESSION['id_usuario']." ";
+
+                      $conexao = $conn->query($admin);
+
+                      while($admin = $conexao->fetch_assoc()){
+                        if ($admin['admin'] == 1) { //apenas administrador pode realizar a edição deste campo
+                          $disable = '';
+                          $display = 'block';
+                          $smartshare = 'SIM';
+                        } else {
+                            $disable = 'readonly';
+                            $display = 'block';
+                        }
+                      }
+                      
                   }else{
                     $smartshare = "NÃO";
-                    
+                    $disable = '';
+                    $display = 'none';
                   }
                   
         echo '<div class="form-floating mt-4 col-md-6" id="cnpj"> 
@@ -74,7 +92,7 @@ require_once('../config/query.php');
                   <input type="hidden" value="'.$row['CNPJ'].'" class="form-control" name="cnpj">
                   <label for="cnpj">CNPJ:<span style="color: red;">*</span></label>
               </div>
-
+                
               <div class="form-floating mt-4 col-md-6" id="razao_social">
                <input type="text" value="' . $row['RAZAO_SOCIAL'] . '" class="form-control" name="razao_social" required>
                <label for="razao_social">RAZÃO SOCIAL:<span style="color: red;">*</span></label>
@@ -126,8 +144,8 @@ require_once('../config/query.php');
                 </select>
                 <label for="utilizaSmartshare2">SMARTSHARE:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6" id="SMARTSHARE_LOGIN" style="';echo ($smartshare == 'SIM') ? 'display: block;">': 'display: none;">';
-               echo '<input type="text" value="'.$smartshare_login.'" class="form-control" name="login" id="smartshareLogin" required >
+              <div class="form-floating mt-4 col-md-6" id="SMARTSHARE_LOGIN"  style="';echo ($smartshare == 'SIM') ? 'display: block;">': 'display: none;">';
+               echo '<input type="text" value="'.$smartshare_login.'"  class="form-control" name="login" id="smartshareLogin" required '.$disable.' >
                 <label for="SMARTSHARE_LOGIN">INFORME UM LOGIN:<span style="color: red;">*</span></label>
                 <span style="font-size: small;color: red;">NOME e os 3 primeiro números do CPF (Ex.: Joao.094)</span>
               </div>

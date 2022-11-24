@@ -48,7 +48,7 @@ require_once('../config/query.php');
                   <th scope="col" class="capitalize">EMAIL</th>
                   <th scope="col" class="capitalize">RESPONSAVEL</th>
                   <th scope="col" class="capitalize">ATIVO</th>
-                  <th scope="col" class="capitalize">AÇÃO</th>
+                  <th scope="col" class="capitalize" <?= $usuarioFuncao ?>>AÇÃO</th>
 
                 </tr>
               </thead>
@@ -65,7 +65,7 @@ require_once('../config/query.php');
                     $ativo = "NÃO";
                   }
                   echo '<tr>';
-                  echo '<td>' . $fornecedoresSeminovos['CNPJ'] . '</td>';
+                  echo '<td>' . str_pad($fornecedoresSeminovos['CNPJ'] , 14 , '0' , STR_PAD_LEFT) . '</td>';
                   echo '<td>' . $fornecedoresSeminovos['RAZAO_SOCIAL'] . '</td>';
                   echo '<td>' . $fornecedoresSeminovos['CIDADE'] . '</td>';
                   echo '<td>' . $fornecedoresSeminovos['UF'] . '</td>';
@@ -73,8 +73,8 @@ require_once('../config/query.php');
                   echo '<td>' . $fornecedoresSeminovos['EMAIL'] . '</td>';
                   echo '<td>' . $fornecedoresSeminovos['NOME_RESPONSAVEL'] . '</td>';
                   echo '<td>' . $ativo . '</td>';
-                  echo '<td><a href="editSeminovos.php?pg=' . $_GET["pg"] . '&id_semi=' . $fornecedoresSeminovos["ID_FORNECEDOR"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
-                       <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarFor.php?pg='.$_GET['pg'].'&id_fornecedor=' . $fornecedoresSeminovos["ID_FORNECEDOR"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
+                  echo '<td ' . $usuarioFuncao . '><a href="editSeminovos.php?pg=' . $_GET["pg"] . '&id_semi=' . $fornecedoresSeminovos["ID_FORNECEDOR"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
+                       <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarFor.php?pg='.$_GET['pg'].'&id_fornecedor=' . $fornecedoresSeminovos["ID_FORNECEDOR"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a></td>
                       </tr>';
               }
                 ?>

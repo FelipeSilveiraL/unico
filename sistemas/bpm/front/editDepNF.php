@@ -14,7 +14,7 @@ require_once('../../../config/query.php');
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="NF.php?pg=<?= $_GET['pg'] ?>">NF</a></li>
         <li class="breadcrumb-item"><a href="departamentoNF.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTO NF</a></li>
         <li class="breadcrumb-item">NOVA REGRA DEPARTAMENTO</li>
@@ -77,7 +77,7 @@ require_once('../../../config/query.php');
               <div class="text-left py-2">
                 <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/departamentoNF.php?pg=<?=$_GET['pg']?>"><button type="button" class="btn btn-primary">Voltar</button></a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
-                <button type="submit" class="btn btn-success">Salvar</button>
+                <button type="submit" class="btn btn-success">Editar</button>
               </div>
             </form><!-- FIM Form -->
           </div><!-- FIM card-body -->

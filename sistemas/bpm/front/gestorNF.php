@@ -5,6 +5,7 @@ require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 require_once('../inc/apiRecebeSelbetti.php');
 require_once('../config/query.php');
+require_once('../inc/apiRecebeAprovNF.php');
 /* Essa opção descomentar após criar em telas_funcoes.php*/
 //echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
@@ -43,15 +44,17 @@ require_once('../config/query.php');
                   <form class="row g-3" action="../inc/localizaGestorNF.php?pg='.$_GET['pg'].'" method="POST" style="display:'; echo  empty($_GET['dado'])? 'block;' : 'none;'; echo' ">
                       <div class="mt-4 col-md-6" style="margin-left: 25%;" id="depto">
                       <label for="depto">Localizar gestor:</label>
-                        <input type="text" class="form-control" name="nomeGestor" style="text-transform: uppercase;" placeholder="NOME, CPF OU USUÁRIO" required>  
+                        <input type="text" class="form-control" name="nomeGestor" style="text-transform: uppercase;" placeholder="LOGIN/CPF" required>  
                       </div>
                       '; 
-                      $alert = $_GET['erro'] != 1 ? '' : '<p style="color: red;">Usuário não localizado!</p>';
-                      
+                      $alert = $_GET['erro'];
+                      if($alert == 1){
+                        echo '<p style="color: red;text-align:center;">Usuário não localizado!</p>';
+                      }
                       echo '
-                    <div class="text-center">
-                      <a href="http://'.$_SERVER['SERVER_ADDR'].'/unico/sistemas/bpm/front/NF.php?pg='.$_GET['pg'].'"> <button type="button" class="btn btn-danger">Voltar</button></a>
-                      <button type="submit" class="btn btn-primary">Buscar</button>
+                    <div class="text-left">
+                      <a href="http://'.$_SERVER['SERVER_ADDR'].'/unico/sistemas/bpm/front/NF.php?pg='.$_GET['pg'].'"> <button type="button" class="btn btn-primary">Voltar</button></a>
+                      <button type="submit" class="btn btn-success">Buscar</button>
                     </div>
                   </form>';
 
@@ -84,7 +87,7 @@ require_once('../config/query.php');
                         <a href="http://'.$_SERVER['SERVER_ADDR'].'/unico/sistemas/bpm/front/NF.php?pg='.$_GET['pg'].'"> <button type="button" class="btn btn-danger">Voltar</button></a>
                         <button type="submit" class="btn btn-primary">Alterar</button>
                       </div>
-                    </form>';
+                    </form><br>';
 
                     
               ?>

@@ -82,7 +82,7 @@ $usuarios = $resultado->fetch_assoc();
                           }
 
                           echo '<tr>
-                                  <th scope="row"><input type="checkbox" value="' . $modulos['id'] . '" name="modulo[]" id="modulo" ' . $checked . '></th>
+                                  <th scope="row"><input type="checkbox" value="' . $modulos['id'] . '" name="modulo[]"  ' . $checked . '></th>
                                   <td>' . $modulos['nome'] . '</td>
                                   <td>' . $modulos['endereco'] . '</td>
                                 </tr>';
@@ -132,7 +132,7 @@ $usuarios = $resultado->fetch_assoc();
                               $checked = '';
                             }
                             echo '<tr>
-                                    <th scope="row"><input type="checkbox" value="' . $modulosS['id'] . '" name="modulo[]" id="modulo" ' . $checked . '></th>
+                                    <th scope="row"><input type="checkbox" value="' . $modulosS['id'] . '" name="modulo[]"  ' . $checked . '></th>
                                     <td>' . $modulosS['nome'] . '</td>';
                                     $d = "SELECT nome FROM bpm_modulos WHERE id = ".$modulosS['sub_modulo'];
                                     $e = $conn->query($d);
@@ -157,10 +157,10 @@ $usuarios = $resultado->fetch_assoc();
                 <form action="../inc/usuariosPermissoes.php?pg=<?= $_GET['pg'] ?>&id_usuarios=<?= $_GET['id_usuarios'] ?>&acao=2" method="post">
 
                   <!-- Table with stripped rows -->
-                  <table class="table datatable">
+                  <table class="table datatable" id="div_func">
                     <thead>
                       <tr>
-                        <th scope="col" class="capitalize">#</th>
+                        <th scope="col" class="capitalize "><input type="checkbox" id="all">&emsp;&emsp;</th>
                         <th scope="col" class="capitalize">Função</th>
                         <th scope="col" class="capitalize">Tela</th>
                         <th scope="col" class="capitalize">Descição</th>
@@ -173,26 +173,27 @@ $usuarios = $resultado->fetch_assoc();
                       $resultadoModulosFuncao = $conn->query($queryFuncaoModulos);
 
                       while ($modulosFuncao = $resultadoModulosFuncao->fetch_assoc()) {
-
+                        
                         //verificando se o usuáros ja possui o modulo
                         $queryModulosUser = "SELECT * FROM bpm_usuario_funcao SF WHERE SF.id_usuario = " . $_GET['id_usuarios'] . " AND SF.id_funcao = " . $modulosFuncao['id_funcao'];
                         $resultModulosUser = $conn->query($queryModulosUser);
 
+                        
                         if ($modulosUser = $resultModulosUser->fetch_assoc()) {
                           $checked = 'checked';
                         } else {
                           $checked = '';
                         }
-
+                        
                         echo '<tr>
-                                <th scope="row"><input type="checkbox" value="' . $modulosFuncao['id_funcao'] . '" name="funcao[]" id="funcao" ' . $checked . '></th>
+                                <th scope="row"><input onclick="addItem()" class="oi" type="checkbox" value="' . $modulosFuncao['id_funcao'] . '" name="funcao[]" id="funcao"  ' . $checked . '></th>
                                 <td>' . $modulosFuncao['funcao'] . '</td>
                                 <td>' . $modulosFuncao['tela'] . '</td>
                                 <td>' . $modulosFuncao['descricao'] . '</td>
                                 <td>' . $modulosFuncao['modulo'] . '</td>
                               </tr>';
                       }
-
+                      
                       ?>
 
                     </tbody>
@@ -202,7 +203,7 @@ $usuarios = $resultado->fetch_assoc();
                     <button type="reset" class="btn btn-secondary">Limpar Tabela</button>
                     <button type="submit" class="btn btn-success">Salvar</button>
                   </div>
-                  <!-- End Table with stripped rows -->
+                  <!-- End Table with stripped rows --
                 </form>
               </div>
             </div><!-- End Default Tabs -->
@@ -216,7 +217,31 @@ $usuarios = $resultado->fetch_assoc();
   <!--################# section TERMINA AQUI #################-->
 
 </main><!-- End #main -->
+<script>
+  $(document).ready(function() {
+    $('#all').click(function(event) {  //on click 
+        if(this.checked) { // check select status
+            $('.oi').each(function() { //loop through each checkbox
+                this.checked = true;  //select all checkboxes with class "oi"  
+            });
+        }else{
+            $('.oi').each(function() { //loop through each checkbox
+                this.checked = false; //deselect all checkboxes with class "oi"                       
+            });         
+        }
+    });
+},
 
+function additem(){
+  
+  var i = 0;
+  for(i=0; i<itens.length;i++){
+    itens[i].checked = marcar;
+  }
+}
+  
+
+</script>
 <?php
 require_once('footer.php'); //Javascript e configurações afins
 ?>

@@ -16,7 +16,10 @@ $criaTabela = "CREATE TABLE `bpm_nf_emp_dep` (
   `SITUACAO` VARCHAR(45) NULL,
   `GERENTE_APROVA` VARCHAR(45) NULL,
   `SUPERINTENDENTE_APROVA` VARCHAR(45) NULL,
-  `NOME_DEPARTAMENTO` VARCHAR(45) NULL,
+  `LANCA_MULTAS` VARCHAR(45) NULL,
+  `GESTOR_AREA_APROVA_MULTAS` VARCHAR(45) NULL,
+  `REVISAO_ADM` VARCHAR(45) NULL,
+  `LOGIN_ADM` VARCHAR(45) NULL,
   PRIMARY KEY (`id`) )";
 
 $execTabela = $conn->query($criaTabela);
@@ -34,7 +37,7 @@ foreach ($resultado->empresaDep as $empdep) {
 
     $queryEmpDep = "INSERT INTO bpm_nf_emp_dep 
                             (ID_EMPDEP,NOME_EMPRESA,ID_DEPARTAMENTO,SITUACAO,GERENTE_APROVA,
-                            SUPERINTENDENTE_APROVA,NOME_DEPARTAMENTO) VALUES (
+                            SUPERINTENDENTE_APROVA,LANCA_MULTAS,GESTOR_AREA_APROVA_MULTAS,REVISAO_ADM,LOGIN_ADM) VALUES (
    
             '" . $empdep->ID_EMPDEP ."',
             '" . $empdep->NOME_EMPRESA ."',
@@ -42,7 +45,10 @@ foreach ($resultado->empresaDep as $empdep) {
             '" . $empdep->SITUACAO ."',
             '" . $empdep->GERENTE_APROVA ."',
             '" . $empdep->SUPERINTENDENTE_APROVA . "' ,
-            '" . $empdep->NOME_DEPARTAMENTO . "' 
+            '" . $empdep->LANCA_MULTAS . "' ,
+            '" . $empdep->GESTOR_AREA_APROVA_MULTAS . "' ,
+            '" . $empdep->REVISAO_ADM . "' ,
+            '" . $empdep->LOGIN_ADM . "' 
             )";
 
         

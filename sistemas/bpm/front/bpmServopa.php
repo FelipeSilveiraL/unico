@@ -11,8 +11,8 @@ require_once('menu.php'); //menu lateral da pagina
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
-        <li class="breadcrumb-item">BPMServopa</li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
+        <li class="breadcrumb-item">BPMSERVOPA</li>
       </ol>
     </nav>
   </div><!-- End Navegação -->
@@ -63,10 +63,12 @@ require_once('menu.php'); //menu lateral da pagina
           </a>
         </div>
     </div>
-
-    <hr style="margin-top: 20px; opacity: 0;" > <!-- Repetir a cada 4 div  -->
-    
   </section>
+
+ 
+ <hr style="margin-top: 20px; opacity: 0;" > <!-- Repetir a cada 4 div  -->
+
+  
 </main><!-- End #main -->
 
 <?php

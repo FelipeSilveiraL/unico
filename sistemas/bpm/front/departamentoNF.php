@@ -3,7 +3,7 @@ session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-// require_once('../inc/apiRecebeAprov.php');
+require_once('../inc/apiRecebeDepNF.php');
 ?>
 
 <main id="main" class="main">
@@ -12,7 +12,7 @@ require_once('menu.php'); //menu lateral da pagina
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="NF.php?pg=<?= $_GET['pg'] ?>">NF</a></li>
         <li class="breadcrumb-item">DEPARTAMENTO NF</li>
       </ol>
@@ -44,7 +44,7 @@ require_once('menu.php'); //menu lateral da pagina
                   <th scope="col" class="capitalize">#</th>
                   <th scope="col" class="capitalize">NOME DEPARTAMENTO</th>
                   <th scope="col" class="capitalize">SITUAÇÃO</th>
-                  <th scope="col" class="capitalize">AÇÃO</th>
+                  <th scope="col" class="capitalize" <?= $usuarioFuncao ?>>AÇÃO</th>
                 </tr>
               </thead>
               <tbody>
@@ -72,9 +72,9 @@ require_once('menu.php'); //menu lateral da pagina
                     <td>'.$row['ID_DEPARTAMENTO'].'</td>
                     <td>'.$row['NOME_DEPARTAMENTO'].'</td>
                     <td>'.$situacao.'</td>
-                    <td><a href="editDepNF.php?pg=' . $_GET["pg"] . '&id_departamento=' . $row["ID_DEPARTAMENTO"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
+                    <td ' . $usuarioFuncao . '><a href="editDepNF.php?pg=' . $_GET["pg"] . '&id_departamento=' . $row["ID_DEPARTAMENTO"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
                             
-                    <a href="'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarDepNF.php?pg='.$_GET['pg'].'&id=' . $row["ID_DEPARTAMENTO"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a>
+                    <a href="'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarDepNF.php?pg='.$_GET['pg'].'&id=' . $row["ID_DEPARTAMENTO"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a>
                     </td> 
                  
                     </tr>';

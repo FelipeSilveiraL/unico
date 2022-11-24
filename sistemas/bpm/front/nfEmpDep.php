@@ -11,7 +11,7 @@ require_once('../inc/apiEmpDepNF.php');
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="NF.php?pg=<?= $_GET['pg'] ?>">NF</a></li>
         <li class="breadcrumb-item">EMPRESA X DEPARTAMENTO NF</li>
       </ol>
@@ -40,13 +40,13 @@ require_once('../inc/apiEmpDepNF.php');
             <table class="table datatable">
               <thead>
                 <tr>
-                  <th scope="col" class="capitalize">ID REGRA</th>
+                  <th scope="col" class="capitalize">#</th>
                   <th scope="col" class="capitalize">EMPRESA</th>
                   <th scope="col" class="capitalize">DEPARTAMENTO</th>
                   <th scope="col" class="capitalize">GERENTE APROVA</th>
                   <th scope="col" class="capitalize">SUPERINTENDENTE APROVA</th>
                   <th scope="col" class="capitalize">SITUAÇÃO</th>
-                  <th scope="col" class="capitalize">AÇÃO</th>
+                  <th scope="col" class="capitalize" <?= $usuarioFuncao ?>>AÇÃO</th>
                 </tr>
               </thead>
               <tbody>
@@ -60,6 +60,9 @@ require_once('../inc/apiEmpDepNF.php');
                     $situacao = $row['SITUACAO'];
                     $gerente = $row['GERENTE_APROVA'];
                     $super = $row['SUPERINTENDENTE_APROVA'];
+
+                    $pesquisa = "SELECT * FROM bpm_nf_departamento WHERE ID_DEPARTAMENTO = ".$row['ID_DEPARTAMENTO']."";
+                    $sucesso = $conn->query($pesquisa);
 
                     if($situacao == 'A'){
                       $situacao = 'ATIVO';
@@ -81,14 +84,16 @@ require_once('../inc/apiEmpDepNF.php');
 
                     echo '<tr>
                     <td>'.$row['ID_EMPDEP'].'</td>
-                    <td>'.$row['NOME_EMPRESA'].'</td>
-                    <td>'.$row['NOME_DEPARTAMENTO'].'</td>
+                    <td>'.$row['NOME_EMPRESA'].'</td>';
+                    while($row2 = $sucesso->fetch_assoc()){
+                      echo' <td>'.$row2['NOME_DEPARTAMENTO'].'" </td>';
+                    }echo'
                     <td>'.$gerente.'</td>
                     <td>'.$super.'</td>
                     <td>'.$situacao.'</td>
-                    <td><a href="editEmpDepNF.php?pg=' . $_GET["pg"] . '&id=' . $row["ID_EMPDEP"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
+                    <td ' . $usuarioFuncao . '><a href="editEmpDepNF.php?pg=' . $_GET["pg"] . '&id=' . $row["ID_EMPDEP"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
                             
-                    <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarEmpDepNF.php?pg='.$_GET['pg'].'&id=' . $row["ID_EMPDEP"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a>
+                    <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarEmpDepNF.php?pg='.$_GET['pg'].'&id=' . $row["ID_EMPDEP"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a>
                     </td> 
                  
                     </tr>';

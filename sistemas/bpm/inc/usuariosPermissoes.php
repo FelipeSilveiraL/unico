@@ -25,7 +25,8 @@ switch ($_GET['acao']) {
         //limpando geral
         $deleteGeral = "DELETE FROM bpm_usuario_funcao WHERE id_usuario = " . $_GET['id_usuarios'];
         $result = $conn->query($deleteGeral);
-
+        array($_POST['funcao']);
+        
         //adicionando apenas os selecionados
         foreach ($_POST['funcao'] as $key => $value) {
             $insert = "INSERT INTO bpm_usuario_funcao (id_usuario, id_funcao) VALUES (" . $_GET['id_usuarios'] . "," . $value . ")";

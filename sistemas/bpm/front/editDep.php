@@ -14,7 +14,7 @@ require_once('../../../config/query.php');
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="RH.php?pg=<?= $_GET['pg'] ?>">RH</a></li>
         <li class="breadcrumb-item"><a href="departamentoRH.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTO RH</a></li>
         <li class="breadcrumb-item">NOVA REGRA DEPARTAMENTO</li>
@@ -42,8 +42,7 @@ require_once('../../../config/query.php');
                 $sucesso = $conn->query($departamento);
 
                 while ($row = $sucesso->fetch_assoc()) {
-
-                  echo '<input type="text" value="" class="form-control" name="depto" id="depto" disabled>';
+                  echo '<input type="text" value="'.$row['NOME_DEPARTAMENTO'].'" class="form-control" name="depto" id="depto" disabled>';
                 }
                 ?>
                 <label for="depto">DEPARTAMENTO:<span style="color: red;">*</span></label>
@@ -78,7 +77,7 @@ require_once('../../../config/query.php');
               <div class="text-left py-2">
                 <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/departamentoRH.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
-                <button type="submit" class="btn btn-success">Salvar</button>
+                <button type="submit" class="btn btn-success">Editar</button>
               </div>
             </form><!-- FIM Form -->
           </div><!-- FIM card-body -->

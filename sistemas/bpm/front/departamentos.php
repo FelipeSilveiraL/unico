@@ -7,11 +7,11 @@ require_once('menu.php'); //menu lateral da pagina
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Departamentos</h1>
+    <h1>DEPARTAMENTOS</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item">Departamentos</li>
+        <li class="breadcrumb-item">DEPARTAMENTOS</li>
       </ol>
     </nav>
   </div><!-- End Navegação -->
@@ -31,7 +31,6 @@ require_once('menu.php'); //menu lateral da pagina
         $merge = array_merge($queryModulosUser, $queryModulosUser2);
         $queryModulosM = $merge[0] . $merge[1]; 
         
-     
         $resultadoModulosM = $conn->query($queryModulosM);
 
         while ($modulosM = $resultadoModulosM->fetch_assoc()) {
