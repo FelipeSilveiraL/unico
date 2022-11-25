@@ -131,12 +131,12 @@ require_once('menu.php'); //menu lateral da pagina
 
                   <div class="col-sm-3">
                     <label class="form-check-label" for="flexSwitchCheckDefault2">Revenda</label>
-                    <input type="text" class="form-control" disabled value="10" style="padding: 0rem 0rem;">
+                    <input type="text" class="form-control" value="10" style="padding: 0rem 0rem;" disabled>
                   </div>
 
                   <div class="col-sm-6">
                     <label class="form-check-label" for="flexSwitchCheckDefault3">Nome do arquivo:</label>
-                    <input type="text" class="form-control" placeholder="lb3" style="padding: 0rem 0rem;" name="lb3" value="<?= (file_exists($lb3)) ? $status = "lb3" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="lb3" style="padding: 0rem 0rem;" disabled name="lb3" value="<?= (file_exists($lb3)) ? $status = "lb3" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
 
                 </div>
@@ -152,7 +152,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="12" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="lmc" style="padding: 0rem 0rem;" name="lmc" value="<?= (file_exists($lmc)) ? $status = "lmc" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="lmc" style="padding: 0rem 0rem;" disabled name="lmc" value="<?= (file_exists($lmc)) ? $status = "lmc" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
 
@@ -167,7 +167,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="14" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="las" style="padding: 0rem 0rem;" name="las" value="<?= (file_exists($las)) ? $status = "las" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="las" style="padding: 0rem 0rem;" disabled name="las" value="<?= (file_exists($las)) ? $status = "las" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
 
@@ -182,7 +182,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="16" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="pmu" style="padding: 0rem 0rem;" name="pmu" 
+                    <input type="text" class="form-control" placeholder="pmu" style="padding: 0rem 0rem;" disabled name="pmu" 
                     value="<?= (file_exists($pmu)) ? $status = "pmu" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
@@ -198,7 +198,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="19" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="lgf" style="padding: 0rem 0rem;" name="lgf" value="<?= (file_exists($lgf)) ? $status = "lgf" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="lgf" style="padding: 0rem 0rem;" disabled name="lgf" value="<?= (file_exists($lgf)) ? $status = "lgf" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
 
@@ -213,7 +213,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="20" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="l0s" style="padding: 0rem 0rem;" name="l0s" value="<?= (file_exists($l0s)) ? $status = "l0s" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="l0s" style="padding: 0rem 0rem;" disabled name="l0s" value="<?= (file_exists($l0s)) ? $status = "l0s" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
 
@@ -228,7 +228,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="85" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="lyf" style="padding: 0rem 0rem;" name="lyf" value="<?= (file_exists($lyf)) ? $status = "lyf" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="lyf" style="padding: 0rem 0rem;" disabled name="lyf" value="<?= (file_exists($lyf)) ? $status = "lyf" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
 
@@ -243,7 +243,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="86" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="sjp" style="padding: 0rem 0rem;" name="sjp" value="<?= (file_exists($sjp)) ? $status = "sjp" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="sjp" style="padding: 0rem 0rem;" disabled name="sjp" value="<?= (file_exists($sjp)) ? $status = "sjp" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
 
@@ -258,7 +258,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="89" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="l50" style="padding: 0rem 0rem;" name="l50" value="<?= (file_exists($l50)) ? $status = "l50" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="l50" style="padding: 0rem 0rem;" disabled name="l50" value="<?= (file_exists($l50)) ? $status = "l50" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
 
@@ -273,7 +273,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <input type="text" class="form-control" disabled value="101" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="luc" style="padding: 0rem 0rem;" name="luc" value="<?= (file_exists($luc)) ? $status = "luc" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="luc" style="padding: 0rem 0rem;" disabled name="luc" value="<?= (file_exists($luc)) ? $status = "luc" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
 
