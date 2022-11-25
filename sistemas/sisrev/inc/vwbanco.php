@@ -22,7 +22,9 @@ if (!empty($_POST['filial'])) {
 
             $inicio = substr($ler, 0, 3); //seleciona as 3 primeiras letras
 
-            if ($inicio == 'FHI') { // se o arquivo começar com FHI, ele continua o processo
+            echo $inicio."<br />";
+
+            /* if ($inicio == 'FHI') { // se o arquivo começar com FHI, ele continua o processo
 
                 $ler = $row[1]; //posição da segunda linha
 
@@ -236,7 +238,7 @@ if (!empty($_POST['filial'])) {
                 }
             } else {
                 header('location: ../front/processosFabrica.php?pg=' . $_GET['pg'] . '&msn=10&erro=7');
-            }
+            } */
         }
     }
 }
