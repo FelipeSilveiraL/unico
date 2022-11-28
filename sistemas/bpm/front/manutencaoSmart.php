@@ -52,7 +52,7 @@ require_once('menu.php'); //menu lateral da pagina
           </a>
         </div>
         <div class="col-sm-3">
-        <a href="empresas.php?pg=4" class="list-group-item list-group-item-action">
+        <a href="depVendas.php?pg=4" class="list-group-item list-group-item-action">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">DEPARTAMENTO VENDAS</h5>
@@ -78,7 +78,7 @@ require_once('menu.php'); //menu lateral da pagina
       </div>
     
       <div class="col-sm-3">
-          <a href="mfpWeb.php?pg=4" class="list-group-item list-group-item-action">
+          <a href="gerentes.php?pg=4" class="list-group-item list-group-item-action">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">GERENTES</h5>

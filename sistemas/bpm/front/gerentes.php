@@ -5,7 +5,7 @@ require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 require_once('../inc/apiRecebeSelbetti.php');
 require_once('../config/query.php');
-require_once('../inc/apiRecebeVendedores.php');
+require_once('../inc/apiRecebeGerente.php');
 /* Essa opção descomentar após criar em telas_funcoes.php*/
 //echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
@@ -13,13 +13,13 @@ require_once('../inc/apiRecebeVendedores.php');
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>VENDEDORES</h1>
+    <h1>GERENTES</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
         <li class="breadcrumb-item"><a href="manutencaoSmart.php?pg=<?= $_GET['pg'] ?>">Manutenção Smartshare</a></li>
-        <li class="breadcrumb-item">VENDEDORES</li>
+        <li class="breadcrumb-item">GERENTES</li>
       </ol>
     </nav>
   </div><!-- End Navegação -->
@@ -37,10 +37,10 @@ require_once('../inc/apiRecebeVendedores.php');
         <div class="col-lg-12">
           <div class="card">
           <div class="card-header">
-              <a href="novaRegraVendedores.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-success buttonAdd" title="Nova regra aprovadores" <?= $usuarioFuncao ?>><i class="bx bxs-file-plus"></i></a>
+            <a href="novaRegraGerente.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-success buttonAdd" title="Nova regra aprovadores" <?= $usuarioFuncao ?>><i class="bx bxs-file-plus"></i></a>
 
-              <a href="../inc/relatorioSeminovos.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
-            </div>
+            <a href="../inc/relatorioSeminovos.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
+          </div>
             <div class="card-body">
               <br>
               <table class="table datatable">
@@ -59,8 +59,6 @@ require_once('../inc/apiRecebeVendedores.php');
                   </tr>
                 </tbody>
               </table>
-              <!-- Vertical Form -->
-                
             </div>
           </div>
         </div>

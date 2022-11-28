@@ -52,7 +52,7 @@ $querySistemaCores = "SELECT id_usuario, id_sistema, color FROM usuarios_sistema
 
 $deletar = "SELECT NOME_EMPRESA,SISTEMA,EMPRESA_NBS,CONSORCIO,EMPRESA_APOLLO,REVENDA_APOLLO,ORGANOGRAMA_SENIOR,EMPRESA_SENIOR,FILIAL_SENIOR FROM bpm_empresas ";
 
-$queryTabela = "SELECT * FROM bpm_empresas where ID_EMPRESA NOT IN(302,208,261) ORDER BY id ASC;";
+$queryTabela = "SELECT * FROM bpm_empresas where ID_EMPRESA NOT IN(302,208,261,402,382) ORDER BY id ASC;";
 
 $editarTabela = "SELECT * FROM bpm_empresas ";
 
@@ -88,3 +88,7 @@ $contasBancarias = "SELECT * FROM bpm_contas_bancarias";
 $queryCustoVeiculo = "SELECT * FROM bpm_custo_veiculo";
 
 $queryCidade = "SELECT * FROM cidades";
+
+$queryUsuario = "SELECT numcpf FROM v_func";
+
+$departamentosQuery = "SELECT * FROM bpm_rh_departamento";
