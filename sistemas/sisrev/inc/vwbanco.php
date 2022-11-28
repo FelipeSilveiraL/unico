@@ -22,15 +22,26 @@ if (!empty($_POST['filial'])) {
 
             $inicio = substr($ler, 0, 3); //seleciona as 3 primeiras letras
 
-            echo $inicio."<br />";
-
-            /* if ($inicio == 'FHI') { // se o arquivo começar com FHI, ele continua o processo
+            if ($inicio == 'FHI') { // se o arquivo começar com FHI, ele continua o processo
 
                 $ler = $row[1]; //posição da segunda linha
+                $lerInicio = $row[0]; //posição da primeira linha
 
-                $FPI          = substr($ler, 0, 3); //salva a informação dentro da variavel
-                $movimentacao = substr($ler, 17, 8); //pega a movimentação,onde eu escolhi para ser a condição de comparação
+                $FPI          = substr($ler, 0, 3); //salva a informação dentro da variavel              
                 $filial       = substr($ler, 40, 4); //seleciono o numero da empresa dentro do arquivo e renomeio para numero da filial
+
+                //data arquivo
+                $dia = substr($lerInicio, 17, 2); //data do arquivo
+                $mes = substr($lerInicio, 19, 2); //data do arquivo
+                $ano = substr($lerInicio, 21, 4); //data do arquivo
+                $dataArquivo = $ano . "-" . $mes . "-" . $dia;
+
+                //data movimentação
+
+                $dia = substr($ler, 17, 2); //data da movimentação
+                $mes = substr($ler, 19, 2); //data do movimentação
+                $ano = substr($ler, 21, 4); //data do movimentação                
+                $movimentacao = $ano . "-" . $mes . "-" . $dia;
 
                 switch ($filial) {
                     case '0054':
@@ -62,52 +73,16 @@ if (!empty($_POST['filial'])) {
                         break;
                 }
 
-                //busca a coluna movimentacao do banco carga_wv_info
-                $verificaMovimentacao = "SELECT * FROM sisrev_carga_vw_info WHERE movimentacao = '" . $movimentacao . "' ";
-                $setem = $conn->query($verificaMovimentacao);
-
-
-                //while que apresenta as movimentações do select anteior
-                while ($der = $setem->fetch_assoc()) {
-
-                    if ($der['movimentacao'] == $movimentacao) { //se o arquivo estiver com a mesma data, ele exclui apenas as linhas dessa data(movimentação)
-                        $delete  = "DELETE FROM sisrev_carga_vw_info WHERE movimentacao = '" . $movimentacao . "'";
-                        $success = $conn->query($delete);
-                        break;
-                    }
-                }
-
-                //busca a coluna movimentacao do banco carga_wv_FA3
-                $verificaMov = "SELECT * FROM sisrev_carga_FA3 WHERE movimentacao = '" . $movimentacao . "'";
-                $verificado = $conn->query($verificaMov);
-
-                while ($seDer = $verificado->fetch_assoc()) {
-                    if ($seDer['movimentacao'] == $movimentacao) { //se o arquivo estiver com a mesma data, ele exclui apenas as linhas dessa data(movimentação)
-                        $delete  = "DELETE FROM sisrev_carga_FA3 WHERE movimentacao = '" . $movimentacao . "'";
-                        $sucesso = $conn->query($delete);
-                        break;
-                    }
-                }
-
-                $verificaMovFA4 = "SELECT * FROM sisrev_carga_FA4 WHERE movimentacao = '" . $movimentacao . "'";
-                $verificadoFA4 = $conn->query($verificaMovFA4);
-
-                while ($deu = $verificadoFA4->fetch_assoc()) {
-                    if ($deu['movimentacao'] == $movimentacao) { //se o arquivo estiver com a mesma data, ele exclui apenas as linhas dessa data(movimentação)
-                        $delete  = "DELETE FROM sisrev_carga_FA4 WHERE movimentacao = '" . $movimentacao . "'";
-                        $successo = $conn->query($delete);
-                        break;
-                    }
-                }
-
+                //AGORA COLETANDO OS DADOS DO ARQUIVO E SALVANDO NO BANCO DE DADOS
                 $i = 2; //contador para o próximo while mostrar documentos 
 
                 while ($i < count($row)) { //while mostrar documentos
 
                     $ler = $row[$i];
-                    $FP9 = substr($ler, 0, 3);
+                    $tipoRelatorio = substr($ler, 0, 3);
                     //seleciona as 3 primeiras letras de cada linha
-                    switch ($FP9) {
+
+                    switch ($tipoRelatorio) {
 
                         case 'FP9': //quando for FP9 ele executa as linhas abaixo
                             $numeroIpi   = substr($ler, 118, 10); //seleciona a coluna do arquivo onde é o valor total do item
@@ -133,20 +108,35 @@ if (!empty($_POST['filial'])) {
                             }
                             $numeroNota = substr($ler, 27, 6);
 
-                            if ($FP9 != 'FP9') { //o arquivo devera conter os primeiros caracteres como FP9 caso o valor seja diferente
+                            if ($tipoRelatorio != 'FP9') { //o arquivo devera conter os primeiros caracteres como FP9 caso o valor seja diferente
                                 break; //ele para o laço
                             }
 
-                            $inserirBancoDados = 'INSERT INTO sisrev_carga_vw_info(numero_nota,data_nota,produto,caixa,tot_item,val_ipi,fornecedor,qtde,movimentacao,revenda,empresa,tipo_rel,id_usuario) VALUES ("' . $numeroNota . '","' . $dataNota . '","' . $nomeProduto . '","' . $numeroCaixa . '","' . $numeroIpi . '","' . $valorIpi . '","' . $cnpjForn . '","' . $qntd . '","' . $movimentacao . '","' . $filial . '","1","' . $FP9 . '","' . $_SESSION['id_usuario'] . '")';
+                            $inserirBancoDados = 'INSERT INTO sisrev_carga_vw_info(numero_nota,data_nota,produto,caixa,tot_item,val_ipi,fornecedor,qtde,movimentacao,revenda,empresa,tipo_rel,id_usuario) VALUES ("' . $numeroNota . '","' . $dataNota . '","' . $nomeProduto . '","' . $numeroCaixa . '","' . $numeroIpi . '","' . $valorIpi . '","' . $cnpjForn . '","' . $qntd . '","' . $movimentacao . '","' . $filial . '","1","' . $tipoRelatorio . '","' . $_SESSION['id_usuario'] . '")';
                             $resultado         = $conn->query($inserirBancoDados); //Faz a inserção dentro do banco de dados
 
                         case 'FA3':
+
+                            
+                            //VAMOS EXCLUIR DADOS ANTIGOS CASO A MOVIMENTAÇÃO É A MESMA
+                            $verificaMov = "SELECT id, movimentacao FROM sisrev_carga_FA3 WHERE revenda = '".$filial."' AND movimentacao = '" . $movimentacao . "'";
+                            $verificado = $conn->query($verificaMov);
+
+                            while ($seDer = $verificado->fetch_assoc()) {
+                                if ($seDer['movimentacao'] == $movimentacao) {
+                                    $delete  = "DELETE FROM sisrev_carga_FA3 WHERE id = '" . $seDer['id'] . "'";
+                                    $sucesso = $conn->query($delete);
+                                    break;
+                                }
+                            }
+
                             $numeroNota2       = substr($ler, 3, 13);
                             $dataNota2         = substr($ler, 15, 8);
                             $vencimento2       = substr($ler, 23, 8);
                             $valorNota         = substr($ler, 31, 15);
                             $saldoDevedor      = substr($ler, 46, 15);
                             $valorDesconto     = substr($ler, 61, 14);
+
                             if ($valorDesconto == '00000000000000') {
                                 $valorDesconto = null;
                             }
@@ -165,11 +155,58 @@ if (!empty($_POST['filial'])) {
                             $numeroFabrica      = substr($ler, 115, 4);
                             $descricaoDocumento = substr($ler, 119, 19);
 
-                            $inserirBancoDadosFa3 = 'INSERT INTO sisrev_carga_FA3(revenda,numero_nota,data_nota,vencimento,valor_nota,saldo_devedor,valor_desconto,valor_acrescimo,data_parcial,documento_bancario,numero_fabrica,descricao_documento,movimentacao,tipo_rel,id_usuario) 
-                            VALUES ("' . $filial . '","' . $numeroNota2 . '","' . $dataNota2 . '","' . $vencimento2 . '",' . $valorNota . ',"' . $saldoDevedor . '","' . $valorDesconto . '","' . $valorAcrescimo . '","' . $dataParcial . '","' . $documentoBancario . '","' . $numeroFabrica . '","' . $descricaoDocumento . '","' . $movimentacao . '","' . $FP9 . '","' . $_SESSION['id_usuario'] . '")';
-                            $resultadoFa3         = $conn->query($inserirBancoDadosFa3); //Faz a inserção dentro do banco de dados
+                            $inserirBancoDadosFa3 = 'INSERT INTO sisrev_carga_FA3(
+                                revenda,
+                                numero_nota,
+                                data_nota,
+                                vencimento,
+                                valor_nota,
+                                saldo_devedor,
+                                valor_desconto,
+                                valor_acrescimo,
+                                data_parcial,
+                                documento_bancario,
+                                numero_fabrica,
+                                descricao_documento,
+                                movimentacao,
+                                data_arquivo,
+                                tipo_rel,
+                                id_usuario) 
+                            VALUES (
+                                "' . $filial . '",
+                                "' . $numeroNota2 . '",
+                                "' . $dataNota2 . '",
+                                "' . $vencimento2 . '",
+                                "' . $valorNota . '",
+                                "' . $saldoDevedor . '","
+                                ' . $valorDesconto . '",
+                                "' . $valorAcrescimo . '",
+                                "' . $dataParcial . '",
+                                "' . $documentoBancario . '",
+                                "' . $numeroFabrica . '",
+                                "' . $descricaoDocumento . '",
+                                "' . $movimentacao . '",
+                                "' . $dataArquivo . '",
+                                "' . $tipoRelatorio . '",
+                                "' . $_SESSION['id_usuario'] . '")';
+
+                            $resultadoFa3 = $conn->query($inserirBancoDadosFa3); //Faz a inserção dentro do banco de dados
+
                             break;
                         case 'FA4':
+                            
+                            //VAMOS EXCLUIR DADOS ANTIGOS CASO A MOVIMENTAÇÃO É A MESMA
+                            $verificaMovFA4 = "SELECT id, movimentacao FROM sisrev_carga_FA4 WHERE revenda = '".$filial."' AND movimentacao = '" . $movimentacao . "'";
+                            $verificadoFA4 = $conn->query($verificaMovFA4);
+
+                            while ($deu = $verificadoFA4->fetch_assoc()) {
+                                if ($deu['movimentacao'] == $movimentacao) {
+                                    $delete  = "DELETE FROM sisrev_carga_FA4 WHERE id = '" . $deu['id'] . "'";
+                                    echo $delete."<br />";
+                                    /* $successo = $conn->query($delete); */
+                                    break;
+                                }
+                            }
 
                             $tipoDescDocumento  = substr($ler, 3, 4);
                             $descricao          = substr($ler, 7, 40);
@@ -184,10 +221,42 @@ if (!empty($_POST['filial'])) {
                             $valorDocumento     = substr($ler, 144, 14);
 
 
-                            $inserirBancoDadosFa4 = 'INSERT INTO sisrev_carga_FA4(tipo_desc_documento,descricao,data_lancamento,metodo_pagamento,valor_pagamento,tipo_documento,descricao_documento,numero_documento,data_documento,metodo_pagamento_2,valor_documento,movimentacao,tipo_rel,id_usuario) 
-                            VALUES ("' . $tipoDescDocumento . '","' . $descricao . '","' . $dataLancamento . '","' . $metodoPagamento . '",' . $valorPagamento . ',"' . $tipoDocumento . '","' . $descricaoDocumento . '","' . $numeroDocumento . '","' . $dataDocumento . '","' . $metodoPagamento2 . '","' . $valorDocumento . '","' . $movimentacao . '","' . $FP9 . '","' . $_SESSION['id_usuario'] . '")';
+                            $inserirBancoDadosFa4 = 'INSERT INTO sisrev_carga_FA4(
+                                revenda,
+                                tipo_desc_documento,
+                                descricao,
+                                data_lancamento,
+                                metodo_pagamento,
+                                valor_pagamento,
+                                tipo_documento,
+                                descricao_documento,
+                                numero_documento,
+                                data_documento,
+                                metodo_pagamento_2,
+                                valor_documento,
+                                movimentacao,
+                                data_arquivo,
+                                tipo_rel,
+                                id_usuario) 
+                            VALUES (
+                                "' . $filial . '",
+                                "' . $tipoDescDocumento . '",
+                                "' . $descricao . '",
+                                "' . $dataLancamento . '",
+                                "' . $metodoPagamento . '",
+                                "' . $valorPagamento . '",
+                                "' . $tipoDocumento . '",
+                                "' . $descricaoDocumento . '",
+                                "' . $numeroDocumento . '",
+                                "' . $dataDocumento . '",
+                                "' . $metodoPagamento2 . '",
+                                "' . $valorDocumento . '",
+                                "' . $movimentacao . '",
+                                "' . $dataArquivo . '",
+                                "' . $tipoRelatorio . '",
+                                "' . $_SESSION['id_usuario'] . '")';
 
-                            $resultadoFa4         = $conn->query($inserirBancoDadosFa4); //Faz a inserção dentro do banco de dados
+                            $resultadoFa4 = $conn->query($inserirBancoDadosFa4); //Faz a inserção dentro do banco de dados
                             break;
                         case 'FNT':
                             $subCodigo = substr($ler, 3, 2);
@@ -201,7 +270,7 @@ if (!empty($_POST['filial'])) {
                                     $cep = substr($ler, 128, 10);
 
                                     $inserirBancoDadosFNT = 'INSERT INTO sisrev_carga_FNT(dn,razao_social,endereco,cidade,estado,cep,movimentacao,tipo_rel) 
-                                    VALUES ( "' . $dn . '","' . $razaoSocial . '","' . $endereco . '","' . $cidade . '","' . $estado . '","' . $cep . '","' . $movimentacao . '","' . $FP9 . '")';
+                                    VALUES ( "' . $dn . '","' . $razaoSocial . '","' . $endereco . '","' . $cidade . '","' . $estado . '","' . $cep . '","' . $movimentacao . '","' . $tipoRelatorio . '")';
                                     $resultadoFNT         = $conn->query($inserirBancoDadosFNT);
                                     break;
                                 case '01':
@@ -219,7 +288,7 @@ if (!empty($_POST['filial'])) {
                             }
 
                             $inserirBancoFNT = 'INSERT INTO sisrev_carga_FNT(tipo_nota,nome_nota,cnpj,inscricao_estadual,serie,detalhe,movimentacao,tipo_rel) 
-                            VALUES ("' . $tipoNota . '","' . $nomeNota . '","' . $cnpj . '","' . $inscricaoEstadual . '",' . $serie . ',"' . $detalhe . '","' . $movimentacao . '","' . $FP9 . '")';
+                            VALUES ("' . $tipoNota . '","' . $nomeNota . '","' . $cnpj . '","' . $inscricaoEstadual . '",' . $serie . ',"' . $detalhe . '","' . $movimentacao . '","' . $tipoRelatorio . '")';
                             $resultadoFNT    = $conn->query($inserirBancoFNT); //Faz a inserção dentro do banco de dados
 
                             if ($resultadoFNT) { //se a inserção for um sucesso, ele redireciona para a pagina
@@ -229,8 +298,8 @@ if (!empty($_POST['filial'])) {
                                 header('location: ../front/processosFabrica.php?pg=' . $_GET['pg'] . '&msn=10&erro=1');
                             }
                             break;
-                        case 'FHF':
-                            header('location: ../front/processosFabrica.php?pg=' . $_GET['pg'] . '&msn=11');
+                        case 'FHF': //FIM DO ARQUIVO
+                            //header('location: ../front/processosFabrica.php?pg=' . $_GET['pg'] . '&msn=11');
                             $conn->close;
                             break;
                     }
@@ -238,7 +307,7 @@ if (!empty($_POST['filial'])) {
                 }
             } else {
                 header('location: ../front/processosFabrica.php?pg=' . $_GET['pg'] . '&msn=10&erro=7');
-            } */
+            }
         }
     }
 }
