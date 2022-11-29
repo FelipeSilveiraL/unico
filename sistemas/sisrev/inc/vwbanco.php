@@ -117,9 +117,9 @@ if (!empty($_POST['filial'])) {
 
                         case 'FA3':
 
-                            
+
                             //VAMOS EXCLUIR DADOS ANTIGOS CASO A MOVIMENTAÇÃO É A MESMA
-                            $verificaMov = "SELECT id, movimentacao FROM sisrev_carga_FA3 WHERE revenda = '".$filial."' AND movimentacao = '" . $movimentacao . "'";
+                            $verificaMov = "SELECT id, movimentacao FROM sisrev_carga_FA3 WHERE revenda = '" . $filial . "' AND movimentacao = '" . $movimentacao . "'";
                             $verificado = $conn->query($verificaMov);
 
                             while ($seDer = $verificado->fetch_assoc()) {
@@ -194,16 +194,15 @@ if (!empty($_POST['filial'])) {
 
                             break;
                         case 'FA4':
-                            
+
                             //VAMOS EXCLUIR DADOS ANTIGOS CASO A MOVIMENTAÇÃO É A MESMA
-                            $verificaMovFA4 = "SELECT id, movimentacao FROM sisrev_carga_FA4 WHERE revenda = '".$filial."' AND movimentacao = '" . $movimentacao . "'";
+                            $verificaMovFA4 = "SELECT id, movimentacao FROM sisrev_carga_FA4 WHERE revenda = '" . $filial . "' AND movimentacao = '" . $movimentacao . "'";
                             $verificadoFA4 = $conn->query($verificaMovFA4);
 
                             while ($deu = $verificadoFA4->fetch_assoc()) {
                                 if ($deu['movimentacao'] == $movimentacao) {
                                     $delete  = "DELETE FROM sisrev_carga_FA4 WHERE id = '" . $deu['id'] . "'";
-                                    echo $delete."<br />";
-                                    /* $successo = $conn->query($delete); */
+                                    $successo = $conn->query($delete);
                                     break;
                                 }
                             }
@@ -258,48 +257,11 @@ if (!empty($_POST['filial'])) {
 
                             $resultadoFa4 = $conn->query($inserirBancoDadosFa4); //Faz a inserção dentro do banco de dados
                             break;
-                        case 'FNT':
-                            $subCodigo = substr($ler, 3, 2);
-                            switch ($subCodigo) {
-                                case '00':
-                                    $dn = substr($ler, 7, 4);
-                                    $razaoSocial = substr($ler, 11, 14);
-                                    $endereco = substr($ler, 36, 39);
-                                    $cidade = substr($ler, 96, 29);
-                                    $estado = substr($ler, 126, 2);
-                                    $cep = substr($ler, 128, 10);
+                        case 'FLH':
+                            
 
-                                    $inserirBancoDadosFNT = 'INSERT INTO sisrev_carga_FNT(dn,razao_social,endereco,cidade,estado,cep,movimentacao,tipo_rel) 
-                                    VALUES ( "' . $dn . '","' . $razaoSocial . '","' . $endereco . '","' . $cidade . '","' . $estado . '","' . $cep . '","' . $movimentacao . '","' . $tipoRelatorio . '")';
-                                    $resultadoFNT         = $conn->query($inserirBancoDadosFNT);
-                                    break;
-                                case '01':
-                                    $tipoNota = substr($ler, 5, 1);
-                                    $nomeNota = substr($ler, 6, 24);
-                                    $cnpj     = substr($ler, 31, 18);
-                                    $inscricaoEstadual = substr($ler, 49, 17);
-                                    $serie = substr($ler, 123, 3);
-                                    break;
-                                case '02':
-                                    $detalhe = substr($ler, 5, 187);
-                                    $detalhe = rtrim($detalhe);
-                                    $detalhe = ltrim($detalhe);
-                                    break;
-                            }
-
-                            $inserirBancoFNT = 'INSERT INTO sisrev_carga_FNT(tipo_nota,nome_nota,cnpj,inscricao_estadual,serie,detalhe,movimentacao,tipo_rel) 
-                            VALUES ("' . $tipoNota . '","' . $nomeNota . '","' . $cnpj . '","' . $inscricaoEstadual . '",' . $serie . ',"' . $detalhe . '","' . $movimentacao . '","' . $tipoRelatorio . '")';
-                            $resultadoFNT    = $conn->query($inserirBancoFNT); //Faz a inserção dentro do banco de dados
-
-                            if ($resultadoFNT) { //se a inserção for um sucesso, ele redireciona para a pagina
-                                header('location: ../front/processosFabrica.php?pg=' . $_GET['pg'] . '&msn=11');
-                                $conn->close;
-                            } else {
-                                header('location: ../front/processosFabrica.php?pg=' . $_GET['pg'] . '&msn=10&erro=1');
-                            }
-                            break;
                         case 'FHF': //FIM DO ARQUIVO
-                            //header('location: ../front/processosFabrica.php?pg=' . $_GET['pg'] . '&msn=11');
+                            header('location: ../front/processosFabrica.php?pg=' . $_GET['pg'] . '&msn=11');
                             $conn->close;
                             break;
                     }
