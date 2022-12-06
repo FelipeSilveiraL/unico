@@ -15,7 +15,6 @@ require_once('../../../config/query.php');
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
-        <li class="breadcrumb-item"><a href="RH.php?pg=<?= $_GET['pg'] ?>">RH</a></li>
         <li class="breadcrumb-item"><a href="departamentoRH.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTO RH</a></li>
         <li class="breadcrumb-item">NOVA REGRA DEPARTAMENTO</li>
       </ol>

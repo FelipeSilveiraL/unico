@@ -17,7 +17,6 @@ require_once('../inc/apiRecebePerfil.php');
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
-        <li class="breadcrumb-item"><a href="bpmServopa.php?pg=<?= $_GET['pg'] ?>">BPMSERVOPA</a></li>
         <li class="breadcrumb-item"><a href="mfpWeb.php?pg=<?= $_GET['pg'] ?>">MFP WEB</a></li>
         <li class="breadcrumb-item">Editar MFP WEB</li>
       </ol>
@@ -33,66 +32,47 @@ require_once('../inc/apiRecebePerfil.php');
   <section class="section">
       <div class="row">
         <div class="col-lg-12">
-
           <div class="card">
-            <div class="card-body">
+            <div class="card-body"><br>
+            <form method="POST" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare']?>/bd/editLink.php?pg=<?= $_GET['pg'] ?>" >
+                
             <br>
             <?php
-            $id_perfil = $_GET['perfil'];
+            $id_link = $_GET['id_link'];
 
-            $mfpConsulta = "SELECT * FROM bpm_mfp_web WHERE id_perfil = ".$id_perfil."";
+            $mfpConsulta = "SELECT * FROM bpm_mfp_web WHERE id_link = ".$id_link."";
 
             $result = $conn->query($mfpConsulta);
 
             while($row = $result->fetch_assoc()){
 
-              echo'
-              <form method="POST" action="http://'. $_SESSION['servidorOracle']. '/'.$_SESSION['smartshare'].'/bd/editLink.php?pg='.$_GET['pg'].'" >
-                <div class="row mb-3">
-                  <label for="user" class="col-sm-2 col-form-label" >Link:<span style="color: red;">*</span></label>
-                  <div class="col-md-6">
-                    <input type="text" class="form-control" value='.$row['link'].' id="user" name="link" required>
-                  </div>
+      echo'     <div class="form-floating mt-4 col-md-6" id="link">
+                  <input value="'.$row['link'].'" class="form-control" name="link">
+                  <label for="link" >LINK:<code>*</code></label>
                 </div>
-                <div class="row mb-3">
-                  <label for="sistema" class="col-sm-2 col-form-label">Código perfil:<span style="color: red;">*</span></label>
-                  <div class="col-md-6">
-                    <select class="form-control" id="sistema" name="cdPerfil" required>
-                      <option value="'.$row['id_perfil'].'">'.$row['id_perfil'].' - '.$erro.' </option>
-                      <option value="">-----------</option>
-                      '.$mostra.' 
-                    </select> 
-                  </div>
+                <div class="form-floating mt-4 col-md-6">
+                <select class="form-select" id="sistema" name="cdPerfil">
+                  <option value="'.$row['id_perfil'].'">'.$row['id_perfil'].' - '.$erro.' </option>
+                  <option value="">-----------</option>
+                  '.$mostra.' 
+                  </select>
+                  <label for="sistema">Código perfil:<code>*</code></label>
                 </div>
-                <div class="row mb-3">
-                  <label for="descricao" class="col-sm-2 col-form-label" >Descrição:<span style="color: red;">*</span></label>
-                  <div class="col-md-6">
-                    <input type="text" class="form-control" id="descricao" value="'.$row['descricao'].'" name="descricao" required> 
-                  </div>
-                </div>
+                <div class="form-floating mt-4 col-md-6" id="descricao">
+                  <input type="text" class="form-control" value="'.$row['descricao'].'" name="descricao" required> 
+                  <label for="descricao" >DESCRIÇÃO:<code>*</code></label>
+                </div>';
+            }
+            ?>
                 <div class="text-left">
                   <button type="button" class="btn btn-primary"><a href="mfpWeb.php?pg= '.$_GET['pg'].' " style="color:white;">Voltar</a></button>
                   <button type="submit" class="btn btn-success">Editar</button>
-                </div><br>
-              </form>';
-
-
-
-            }
-
-            
-            
-            
-            ?>
-                
+                </div>
+              </form>
+              <br>
             </div>
-          </div><br>
-
-          
-
+          </div>
         </div>
-
-        
       </div>
     </section>
 

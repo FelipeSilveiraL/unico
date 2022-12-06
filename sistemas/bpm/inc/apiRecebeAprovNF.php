@@ -16,9 +16,7 @@ $criaTabela = "CREATE TABLE `bpm_nf_aprovadores` (
   `APROVADOR_MARCA` VARCHAR(45) NULL,
   `APROVADOR_SUPERINTENDENTE` VARCHAR(45) NULL,
   `ID_EMPRESA` VARCHAR(45) NULL,
-  `NOME_EMPRESA` VARCHAR(45) NULL,
   `ID_DEPARTAMENTO` VARCHAR(45) NULL,
-  `NOME_DEPARTAMENTO` VARCHAR(45) NULL,
   `APROVADOR_GERENTE` VARCHAR(45) NULL,
   `SITUACAO` VARCHAR(45) NULL,
   `TIPO_REGISTRO` VARCHAR(45) NULL,
@@ -44,8 +42,7 @@ foreach ($resultado->aprov as $aprovador) {
 
     $queryApr = "INSERT INTO bpm_nf_aprovadores 
                             (ID_APROVADOR,APROVADOR_FILIAL,APROVADOR_AREA,APROVADOR_MARCA,APROVADOR_SUPERINTENDENTE,
-                            ID_EMPRESA,ID_DEPARTAMENTO,APROVADOR_GERENTE,NOME_EMPRESA,
-                            NOME_DEPARTAMENTO,SITUACAO,TIPO_REGISTRO,APROVADOR_GESTOR,LIMITE_AREA,LIMITE_MARCA,LIMITE_GERAL,LIMITE_SUPERINTENDENTE)
+                            ID_EMPRESA,ID_DEPARTAMENTO,APROVADOR_GERENTE,SITUACAO,TIPO_REGISTRO,APROVADOR_GESTOR,LIMITE_AREA,LIMITE_MARCA,LIMITE_GERAL,LIMITE_SUPERINTENDENTE)
    
     VALUES ('" . $aprovador->ID_APROVADOR ."',
             '" . $aprovador->APROVADOR_FILIAL . "',
@@ -55,8 +52,6 @@ foreach ($resultado->aprov as $aprovador) {
             '" . $aprovador->ID_EMPRESA ."',
             '" . $aprovador->ID_DEPARTAMENTO ."',
             '" . $aprovador->APROVADOR_GERENTE . "' ,
-            '" . $aprovador->NOME_EMPRESA . "' ,
-            '" . $aprovador->NOME_DEPARTAMENTO . "' ,
             '" . $aprovador->SITUACAO . "' ,
             '" . $aprovador->TIPO_REGISTRO . "' ,
             '" . $aprovador->APROVADOR_GESTOR . "',
@@ -73,46 +68,6 @@ foreach ($resultado->aprov as $aprovador) {
     }
 }                    
 //API DEPARTAMENTO RH -------------------------------------------
-curl_close($ch);
-
-$excluiTabela2 = "DROP TABLE IF EXISTS bpm_nf_departamento";
-
-$sucess = $conn->query($excluiTabela2);
-
-$criaTabela2 = "CREATE TABLE `bpm_nf_departamento` (
-  `ID_DEPARTAMENTO` INT NOT NULL,
-  `NOME_DEPARTAMENTO` VARCHAR(45) NULL,
-  `SITUACAO` VARCHAR(45) NULL,
-  PRIMARY KEY (`ID_DEPARTAMENTO`) )";
-
-$execTabela = $conn->query($criaTabela2);
-
-
-$url = "http://".$_SESSION['servidorOracle']."/smartshare/inc/departamentoNF.php";
-$ch = curl_init($url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-$result = json_decode(curl_exec($ch));
-
-foreach ($result->dep as $departamento) {
-
-
-    $queryDep = "INSERT INTO bpm_nf_departamento 
-                            (ID_DEPARTAMENTO,NOME_DEPARTAMENTO,SITUACAO)
-   
-    VALUES ('" . $departamento->ID_DEPARTAMENTO ."',
-            '" . $departamento->NOME_DEPARTAMENTO . "',
-            '" . $departamento->SITUACAO ."'
-            )";
-
-        
-    
-    if (!$execQuery = $conn->query($queryDep)) {
-        echo "Error: " . $queryDep . "<br>" . $conn->error;
-    }
-}                    
-
 curl_close($ch);
 
 

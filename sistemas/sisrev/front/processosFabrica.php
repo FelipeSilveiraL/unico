@@ -13,7 +13,7 @@ require_once('menu.php'); //menu lateral da pagina
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
         <li class="breadcrumb-item"><a href="administracao.php?pg=<?= $_GET['pg'] ?>">Administração</a></li>
-        <li class="breadcrumb-item"><a href="processos.php?pg=<?= $_GET['pg'] ?>">Processos fábrica VW</a></li>
+        <li class="breadcrumb-item"><a href="processos.php?pg=<?= $_GET['pg'] ?>">Processos fabrica VW</a></li>
         <li class="breadcrumb-item">Carga arquivos da fábrica</li>
       </ol>
     </nav>
@@ -32,13 +32,13 @@ require_once('menu.php'); //menu lateral da pagina
         <div class="card">
           <div class="card-body">
             <br>
-            <h5 class="card-title" style="text-align: left;">LISTA ARQUIVOS FÁBRICA</h5>
+            <h5 class="card-title" style="text-align: left;">LISTA ARQUIVOS FABRICA</h5>
             <?php
             $msn = $_GET['msn'];
-            $data1 = $_POST['dataPesquisa']; // recebe data vindo pelo usuário
-            $data2 = $_GET['dataArquivo']; // recebe data vindo pelo arquivo carregado
+            $data1 = $_POST['dataPesquisa']; // recebe data
+            $data2 = $_GET['dataArquivo'];
 
-            if (!empty($data1)) {
+            if ($data1) {
               $selecionada = implode('/', array_reverse(explode('-', $data1))); //transformar data em pt-BR
               $data = implode('', array_reverse(explode('-', $data1))); //transformar a data para a verificação da pasta
             } else {
@@ -61,6 +61,8 @@ require_once('menu.php'); //menu lateral da pagina
             $l0s = "$Dir/l0s$fileName.txt";
             $pmu = "$Dir/pmu$fileName.txt";
             $sjp = "$Dir/sjp$fileName.txt";
+
+
 
             ?>
             <div class="col-lg-12" style="display: none" id="carregamento">
@@ -108,184 +110,151 @@ require_once('menu.php'); //menu lateral da pagina
               </div><!-- End Default Tabs -->
             </div>
             <hr style="opacity: 0;">
-            <code>
-              <?= !empty($data) ? $dataSelecionada = "* Data selecionada " . $selecionada : $dataSelecionada = "" ?>
-            </code>
-
-
-            <form action="../inc/vwbanco.php?pg=<?= $_GET['pg'] ?>" method="POST">
-              <div class="container col-lg-6" style="display:<?= !empty($selecionada) ? 'block' : 'none' ?>">
-
-                <!-- REVENDA 10 -->
-                <div class="row">
-
+            <span style="color: red;"><?= !empty($data) ? $dataSelecionada = "*Data selecionada " . $selecionada . " *" : $dataSelecionada = "" ?></span>
+            <form action="../inc/vwbanco.php?pg=<?= $_GET['pg'] ?>" method="POST" enctype="multipart/form-data">
+              <div class="container col-lg-6" style="margin-left: 170px;display:<?= !empty($selecionada) ? 'block' : 'none' ?>">
+                <div class="row" style="margin-left:43px;">
                   <div class="col-sm-2">
                     <label class="form-check-label" for="flexSwitchCheckDefault1">MV</label>
                     <div class="form-check form-switch">
-                      
                       <input type="hidden" value="<?= $data ?>" name="data" id="data">
-
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="filial[]" value="<?= (file_exists($lb3)) ? $status = "lb3" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($lb3)) ? $status = 'checked' : $status = 'disabled'; ?>>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="filial[]" value="<?= (file_exists($lb3)) ? $status = "lb3" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($lb3)) ? $status = 'checked' : $status = ''; ?>>
                     </div>
                   </div>
-
                   <div class="col-sm-3">
                     <label class="form-check-label" for="flexSwitchCheckDefault2">Revenda</label>
-                    <input type="text" class="form-control" value="10" style="padding: 0rem 0rem;" disabled>
+                    <input type="text" class="form-control" disabled value="10" style="padding: 0rem 0rem;">
                   </div>
-
                   <div class="col-sm-6">
                     <label class="form-check-label" for="flexSwitchCheckDefault3">Nome do arquivo:</label>
-                    <input type="text" class="form-control" placeholder="lb3" style="padding: 0rem 0rem;" disabled name="lb3" value="<?= (file_exists($lb3)) ? $status = "lb3" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="lb3" style="padding: 0rem 0rem;" name="lb3" value="<?= (file_exists($lb3)) ? $status = "lb3" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
-
                 </div>
-
-                <!-- REVENDA 12 -->
-                <div class="row">
+                <div class="row" style="margin-left:43px;">
                   <div class="col-sm-2">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault4" name="filial[]" value="<?= (file_exists($lmc)) ? $status = "lmc" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($lmc)) ? $status = 'checked' : $status = 'disabled'; ?>>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault4" name="filial[]" value="<?= (file_exists($lmc)) ? $status = "lmc" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($lmc)) ? $status = 'checked' : $status = ''; ?>>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <input type="text" class="form-control" disabled value="12" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="lmc" style="padding: 0rem 0rem;" disabled name="lmc" value="<?= (file_exists($lmc)) ? $status = "lmc" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="lmc" style="padding: 0rem 0rem;" name="lmc" value="<?= (file_exists($lmc)) ? $status = "lmc" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
-
-                <!-- REVENDA 14 -->
-                <div class="row">
+                <div class="row" style="margin-left:43px;">
                   <div class="col-sm-2">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault5" name="filial[]" value="<?= (file_exists($las)) ? $status = "las" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($las)) ? $status = 'checked' : $status = 'disabled'; ?>>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault5" name="filial[]" value="<?= (file_exists($las)) ? $status = "las" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($las)) ? $status = 'checked' : $status = ''; ?>>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <input type="text" class="form-control" disabled value="14" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="las" style="padding: 0rem 0rem;" disabled name="las" value="<?= (file_exists($las)) ? $status = "las" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="las" style="padding: 0rem 0rem;" name="las" value="<?= (file_exists($las)) ? $status = "las" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
-
-                <!-- REVENDA 16 -->
-                <div class="row">
+                <div class="row" style="margin-left:43px;">
                   <div class="col-sm-2">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault6" name="filial[]" value="<?= (file_exists($pmu)) ? $status = "pmu" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($pmu)) ? $status = 'checked' : $status = 'disabled'; ?>>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault6" name="filial[]" value="<?= (file_exists($pmu)) ? $status = "pmu" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($pmu)) ? $status = 'checked' : $status = ''; ?>>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <input type="text" class="form-control" disabled value="16" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="pmu" style="padding: 0rem 0rem;" disabled name="pmu" 
-                    value="<?= (file_exists($pmu)) ? $status = "pmu" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" value="" placeholder="pmu" style="padding: 0rem 0rem;" name="pmu" value="<?= (file_exists($pmu)) ? $status = "pmu" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
-
-                <!-- REVENDA 19 -->
-                <div class="row">
+                <div class="row" style="margin-left:43px;">
                   <div class="col-sm-2">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault7" name="filial[]" value="<?= (file_exists($lgf)) ? $status = "lgf" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($lgf)) ? $status = 'checked' : $status = 'disabled'; ?>>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault7" name="filial[]" value="<?= (file_exists($lgf)) ? $status = "lgf" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($lgf)) ? $status = 'checked' : $status = ''; ?>>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <input type="text" class="form-control" disabled value="19" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="lgf" style="padding: 0rem 0rem;" disabled name="lgf" value="<?= (file_exists($lgf)) ? $status = "lgf" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="lgf" style="padding: 0rem 0rem;" name="lgf" value="<?= (file_exists($lgf)) ? $status = "lgf" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
-
-                <!-- REVENDA 20 -->
-                <div class="row">
+                <div class="row" style="margin-left:43px;">
                   <div class="col-sm-2">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault8" name="filial[]" value="<?= (file_exists($l0s)) ? $status = "l0s" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($l0s)) ? $status = 'checked' : $status = 'disabled'; ?>>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault8" name="filial[]" value="<?= (file_exists($l0s)) ? $status = "l0s" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($l0s)) ? $status = 'checked' : $status = ''; ?>>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <input type="text" class="form-control" disabled value="20" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="l0s" style="padding: 0rem 0rem;" disabled name="l0s" value="<?= (file_exists($l0s)) ? $status = "l0s" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="l0s" style="padding: 0rem 0rem;" name="l0s" value="<?= (file_exists($l0s)) ? $status = "l0s" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
-
-                <!-- REVENDA 85 -->
-                <div class="row">
+                <div class="row" style="margin-left:43px;">
                   <div class="col-sm-2">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault9" name="filial[]" value="<?= (file_exists($lyf)) ? $status = "lyf" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($lyf)) ? $status = 'checked' : $status = 'disabled'; ?>>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault9" name="filial[]" value="<?= (file_exists($lyf)) ? $status = "lyf" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($lyf)) ? $status = 'checked' : $status = ''; ?>>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <input type="text" class="form-control" disabled value="85" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="lyf" style="padding: 0rem 0rem;" disabled name="lyf" value="<?= (file_exists($lyf)) ? $status = "lyf" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="lyf" style="padding: 0rem 0rem;" name="lyf" value="<?= (file_exists($lyf)) ? $status = "lyf" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
-
-                <!-- REVENDA 86 -->
-                <div class="row">
+                <div class="row" style="margin-left:43px;">
                   <div class="col-sm-2">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault10" name="filial[]" value="<?= (file_exists($sjp)) ? $status = "sjp" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($sjp)) ? $status = 'checked' : $status = 'disabled'; ?>>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault10" name="filial[]" value="<?= (file_exists($sjp)) ? $status = "sjp" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($sjp)) ? $status = 'checked' : $status = ''; ?>>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <input type="text" class="form-control" disabled value="86" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="sjp" style="padding: 0rem 0rem;" disabled name="sjp" value="<?= (file_exists($sjp)) ? $status = "sjp" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="sjp" style="padding: 0rem 0rem;" name="sjp" value="<?= (file_exists($sjp)) ? $status = "sjp" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
-
-                <!-- REVENDA 89 -->
-                <div class="row">
+                <div class="row" style="margin-left:43px;">
                   <div class="col-sm-2">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault11" name="filial[]" value="<?= (file_exists($l50)) ? $status = "l50" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($l50)) ? $status = 'checked' : $status = 'disabled'; ?>>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault11" name="filial[]" value="<?= (file_exists($l50)) ? $status = "l50" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($l50)) ? $status = 'checked' : $status = ''; ?>>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <input type="text" class="form-control" disabled value="89" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="l50" style="padding: 0rem 0rem;" disabled name="l50" value="<?= (file_exists($l50)) ? $status = "l50" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="l50" style="padding: 0rem 0rem;" name="l50" value="<?= (file_exists($l50)) ? $status = "l50" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
-
-                <!-- REVENDA 101 -->
-                <div class="row">
+                <div class="row" style="margin-left:43px;">
                   <div class="col-sm-2">
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault12" name="filial[]" value="<?= (file_exists($luc)) ? $status = "luc" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($luc)) ? $status = 'checked' : $status = 'disabled'; ?>>
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault12" name="filial[]" value="<?= (file_exists($luc)) ? $status = "luc" . $fileName . ".txt" : $status = ''; ?>" <?= (file_exists($luc)) ? $status = 'checked' : $status = ''; ?>>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <input type="text" class="form-control" disabled value="101" style="padding: 0rem 0rem;">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="luc" style="padding: 0rem 0rem;" disabled name="luc" value="<?= (file_exists($luc)) ? $status = "luc" . $fileName . ".txt" : $status = ''; ?>">
+                    <input type="text" class="form-control" placeholder="luc" style="padding: 0rem 0rem;" name="luc" value="<?= (file_exists($luc)) ? $status = "luc" . $fileName . ".txt" : $status = ''; ?>">
                   </div>
                 </div>
 
               </div>
-
-              <div <?= $usuarioFuncao ?>>
+              <div <?= $usuarioFuncao ?> >
                 <div class="py-5" style="float: left;">
-                  <button type="button" class="btn btn-secondary"><a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/sisrev/front/processos.php?pg=<?= $_GET['pg'] ?>"><span style="color: white;">Voltar</span></a></button>
+                  <button type="button" class="btn btn-primary"><a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/sisrev/front/processos.php?pg=<?= $_GET['pg'] ?>"><span style="color: white;">Voltar</span></a></button>
                   <button type="submit" class="btn btn-primary" onclick="teste()" style="display: <?= !empty($selecionada) ? 'inline' : 'none' ?>;">Realizar Carga</button>
                 </div>
               </div>
-
             </form>
             <!-- Vertical Form -->
           </div>

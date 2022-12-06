@@ -13,7 +13,6 @@ require_once('../inc/apiRecebeDepRH.php');
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
-        <li class="breadcrumb-item"><a href="RH.php?pg=<?= $_GET['pg'] ?>">RH</a></li>
         <li class="breadcrumb-item">DEPARTAMENTO RH</li>
       </ol>
     </nav>

@@ -65,7 +65,17 @@ require_once('menu.php'); //menu lateral da pagina
     </div>
 
     <hr style="margin-top: 20px; opacity: 0;" > <!-- Repetir a cada 4 div  -->
-    
+    <div class="row">
+      <div class="col-sm-3">
+          <a href="contasBancarias.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">CONTAS BANCÁRIAS</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
   </section>
 </main><!-- End #main -->
 

@@ -13,10 +13,10 @@ $sucess = $conn->query($droptable);
 $createTableMfp = "CREATE TABLE `unico`.`bpm_mfp_web` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `id_perfil` INT NOT NULL,
-    `perfil` VARCHAR(45) NULL,
-    `descricao` VARCHAR(45) NULL,
-    `link` VARCHAR(45) NULL,
-    `id_link` VARCHAR(45) NULL,
+    `perfil` VARCHAR(200) NULL,
+    `descricao` VARCHAR(200) NULL,
+    `link` VARCHAR(200) NULL,
+    `id_link` VARCHAR(200) NULL,
     PRIMARY KEY (`id`))";
    
 

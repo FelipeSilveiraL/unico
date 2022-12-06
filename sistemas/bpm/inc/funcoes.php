@@ -159,7 +159,7 @@
                                                         </div>
                                                         <div class="row mb-3">
                                                             <label for="tela" class="col-md-4 col-lg-3 col-form-label" style="margin-left: 12px;">Tela:</label>
-                                                            <div class="col-md-7 col-lg-8"> 
+                                                            <div class="col-md-7 col-lg-8">
                                                                 <input name="descricao" type="text" class="form-control" id="descricao" value="'.$rowFuncoes['funcao'].'" disabled>
                                                             </div>
                                                         </div>                                   

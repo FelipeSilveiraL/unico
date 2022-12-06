@@ -15,8 +15,7 @@ require_once('../config/query.php');
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
-        <li class="breadcrumb-item"><a href="bpmServopa.php?pg=<?= $_GET['pg'] ?>">BPMSERVOPA</a></li>
-        <li class="breadcrumb-item"><a href="manutencaoSmart.php?pg=<?= $_GET['pg'] ?>">Manutenção Smartshare</a></li>
+        <li class="breadcrumb-item"><a href="manutencaoSmart.php?pg=<?= $_GET['pg'] ?>">Vendas</a></li>
         <li class="breadcrumb-item">NOVA REGRA VENDEDORES</li>
       </ol>
     </nav>
@@ -38,32 +37,31 @@ require_once('../config/query.php');
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" name="empresa" id="empresa" required>
                   <option value="">Selecione a empresa</option>
-                <?php 
-       $sucesso = $conn->query($queryTabela);
+                    <?php 
+                      $sucesso = $conn->query($queryTabela);
 
-          while($row1 = $sucesso->fetch_assoc()){
-            echo '<option value="'.$row1['ID_EMPRESA'].'">'.$row1['NOME_EMPRESA'].'</option>';
-          }
+                          while($row1 = $sucesso->fetch_assoc()){
+                            echo '<option value="'.$row1['ID_EMPRESA'].'">'.$row1['NOME_EMPRESA'].'</option>';
+                          }
 
-               ?>
+                  ?>
                 </select>
-
                 <label for="empresa" class="capitalize">EMPRESA:<code>*</code></label>
               </div>
 
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" name="departamento" id="departamento" required>
-                <option value="">Selecione o departamento</option>
-                  <?php
+                  <option value="">Selecione o departamento</option>
+                    <?php
 
-                  $sucesso2 = $conn->query($departamentosQuery);
+                    $sucesso2 = $conn->query($depVendasQuery);
 
-                  while ($row2 = $sucesso2->fetch_assoc()) {
-                    echo '<option value="' . $row2['ID_DEPARTAMENTO'] . '">' . $row2['NOME_DEPARTAMENTO'] . '</option>';
-                  }
-                  ?>
+                    while ($row2 = $sucesso2->fetch_assoc()) {
+                      echo '<option value="' . $row2['ID_DEPARTAMENTO'] . '">' . $row2['NOME_DEPARTAMENTO'] . '</option>';
+                    }
+                    ?>
                 </select>
-                <label for="filial" class="capitalize">DEPARTAMENTO:<code>*</code></label>
+                  <label for="filial" class="capitalize">DEPARTAMENTO:<code>*</code></label>
               </div>
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" name="nome" id="nome">

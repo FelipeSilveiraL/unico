@@ -8,14 +8,12 @@ require_once('../config/query.php');
 
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>SEMINOVOS</h1>
+    <h1>FORNECEDORES TRIAGEM</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
-        <li class="breadcrumb-item"><a href="manutencaoSmart.php?pg=<?= $_GET['pg'] ?>">MANUTENÇÃO SMARTSHARE</a></li>
-        <li class="breadcrumb-item">SEMINOVOS</li>
-
+        <li class="breadcrumb-item">FORNECEDORES TRIAGEM</li>
       </ol>
     </nav>
   </div><!-- End Navegação -->
@@ -76,7 +74,7 @@ require_once('../config/query.php');
                   echo '<td ' . $usuarioFuncao . '><a href="editSeminovos.php?pg=' . $_GET["pg"] . '&id_semi=' . $fornecedoresSeminovos["ID_FORNECEDOR"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
                        <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarFor.php?pg='.$_GET['pg'].'&id_fornecedor=' . $fornecedoresSeminovos["ID_FORNECEDOR"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a></td>
                       </tr>';
-              }
+                  }
                 ?>
               </tbody>
             </table>

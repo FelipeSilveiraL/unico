@@ -8,5 +8,5 @@ $resultadoLogin = $conn->query($query_users);
 
 while ($login = $resultadoLogin->fetch_assoc()) {
    
-    echo '<option value="' . $login['DS_LOGIN'] . '" selected>' . $login['DS_LOGIN'].'</option>';
+    echo '<option value="' . $login['DS_LOGIN'] . '' . $login['CD_USUARIO'] . '" selected>' . $login['DS_LOGIN'].'</option>';
 }

@@ -10,14 +10,13 @@ require_once('../config/query.php');
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>NOVA REGRA SEMINOVOS</h1>
+    <h1>NOVA REGRA FORNECEDOR TRIAGEM</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
-        <li class="breadcrumb-item"><a href="manutencaoSmart.php?pg=<?= $_GET['pg'] ?>">MANUTENÇÃO SMARTSHARE</a></li>
-        <li class="breadcrumb-item"><a href="seminovos.php?pg=<?= $_GET['pg'] ?>">SEMINOVOS</a></li>
-        <li class="breadcrumb-item">NOVA REGRA SEMINOVOS</li>
+        <li class="breadcrumb-item"><a href="seminovos.php?pg=<?= $_GET['pg'] ?>">Fornecedor Triagem</a></li>
+        <li class="breadcrumb-item">NOVA REGRA FORNECEDOR TRIAGEM</li>
       </ol>
     </nav>
   </div><!-- End Navegação -->
@@ -35,8 +34,21 @@ require_once('../config/query.php');
             <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraSeminovos.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6" id="cnpj">
-                <input type="text" class="form-control" name="cnpj" onkeypress='mascaraMutuario(this,cpfCnpj)' onblur='clearTimeout()'>
+                <input type="text" maxlength="18" onblur="validarCNPJ(this)" class="form-control" name="cnpj" onkeypress='mascaraMutuario(this,cpfCnpj)'>
                 <label for="cnpj">CNPJ:<span style="color: red;">*</span></label>
+              </div>
+              <div class="modal fade" id="verticalycentered" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">CNPJ inválido, por favor verifique!</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">OK</button>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="form-floating mt-4 col-md-6" id="razao_social">
                 <input type="text" class="form-control" name="razao_social" required>
@@ -89,6 +101,7 @@ require_once('../config/query.php');
                   <option value="">------------</option>
                   <option value="S">SIM</option>
                   <option value="N">NÃO</option>
+                  <option value="P">PAPEL</option>
                 </select>
                 <label for="utilizaSmartshare">SMARTSHARE:<span style="color: red;">*</span></label>
               </div>
@@ -110,7 +123,7 @@ require_once('../config/query.php');
 <script type="text/javascript">
   function mostraDiv() {
     var valueRevisao = document.getElementById("utiliza").value;
-    switch (valueRevisao) {
+    switch (valueRevisao) { 
       case 'S':
         document.getElementById("SMARTSHARE_LOGIN").style.display = "block";
         break;
@@ -119,6 +132,11 @@ require_once('../config/query.php');
         document.getElementById('login').value = '';
         document.getElementById("login").required = false;
         break;
+      case 'P':
+      document.getElementById("SMARTSHARE_LOGIN").style.display = "none";
+      document.getElementById('login').value = '';
+      document.getElementById("login").required = false;
+      break;
 
     }
   }
@@ -169,13 +187,69 @@ require_once('../config/query.php');
 
     return v
   }
-</script>
 
-<?php
-require_once('footer.php'); //Javascript e configurações afins
-?>
-<script>
+function _cnpj(cnpj) {
 
+cnpj = cnpj.replace(/[^\d]+/g, '');
+
+if (cnpj == '') return false;
+
+if (cnpj.length != 14)
+    return false;
+
+
+if (cnpj == "00000000000000" ||
+    cnpj == "11111111111111" ||
+    cnpj == "22222222222222" ||
+    cnpj == "33333333333333" ||
+    cnpj == "44444444444444" ||
+    cnpj == "55555555555555" ||
+    cnpj == "66666666666666" ||
+    cnpj == "77777777777777" ||
+    cnpj == "88888888888888" ||
+    cnpj == "99999999999999")
+    return false;
+
+
+tamanho = cnpj.length - 2
+numeros = cnpj.substring(0, tamanho);
+digitos = cnpj.substring(tamanho);
+soma = 0;
+pos = tamanho - 7;
+for (i = tamanho; i >= 1; i--) {
+    soma += numeros.charAt(tamanho - i) * pos--;
+    if (pos < 2)
+        pos = 9;
+}
+resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+if (resultado != digitos.charAt(0)) return false;
+tamanho = tamanho + 1;
+numeros = cnpj.substring(0, tamanho);
+soma = 0;
+pos = tamanho - 7;
+for (i = tamanho; i >= 1; i--) {
+    soma += numeros.charAt(tamanho - i) * pos--;
+    if (pos < 2)
+        pos = 9;
+}
+resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+if (resultado != digitos.charAt(1))
+    return false;
+
+return true;
+
+}
+
+function validarCNPJ(el){
+  if( !_cnpj(el.value) ){
+
+    $('#verticalycentered').modal('show')
+
+    // apaga o valor
+    el.value = "";
+  }
+}
+  
 $("#estados").on("change", function(){
     var idEstado = $("#estados").val();
     
@@ -196,7 +270,14 @@ $("#estados").on("change", function(){
     });
 
 });
+</script>
+
+<?php
+require_once('footer.php'); //Javascript e configurações afins
+?>
+<script>
+
+
 
 </script>
 
-a orderm dos fatores altera o resultado kakakaka faz sentido kkkkk

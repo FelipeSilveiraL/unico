@@ -16,7 +16,6 @@ require_once('../inc/recebeMFP.php');//recebe os dados da api e insere no banco 
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
-        <li class="breadcrumb-item"><a href="bpmServopa.php?pg=<?= $_GET['pg'] ?>">BPMSERVOPA</a></li>
         <li class="breadcrumb-item">MFP WEB</li>
       </ol>
     </nav>
@@ -72,7 +71,7 @@ require_once('../inc/recebeMFP.php');//recebe os dados da api e insere no banco 
                   <td>'.$row["id_perfil"].'</td>
                   <td>'.$erro.'</td>
                   <td>'.$row["descricao"].'</td>
-                  <td><a href="editarLink.php?pg=' . $_GET["pg"] . '&perfil='.$row['id_perfil'].'" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
+                  <td><a href="editarLink.php?pg=' . $_GET["pg"] . '&id_link='.$row['id_link'].'" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
                             
                   <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarLinkUnico.php?pg='.$_GET['pg'].'&id_link=' . $row["id_link"] . '" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
                   </tr>';

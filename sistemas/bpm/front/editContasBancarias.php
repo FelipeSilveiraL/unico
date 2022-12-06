@@ -15,7 +15,6 @@ require_once('../config/query.php');
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
-        <li class="breadcrumb-item"><a href="manutencaoSmart.php?pg=<?= $_GET['pg'] ?>">MANUTENÇÃO SMARTSHARE</a></li>
         <li class="breadcrumb-item"><a href="contasBancarias.php?pg=<?= $_GET['pg'] ?>">CONTAS BANCARIAS</a></li>
         <li class="breadcrumb-item">EDITANDO CONTA BANCÁRIA</li>
       </ol>

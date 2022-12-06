@@ -7,12 +7,12 @@ require_once('menu.php'); //menu lateral da pagina
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>MANUTENÇÃO SMARTSHARE</h1>
+    <h1>VENDAS</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
-        <li class="breadcrumb-item">MANUTENÇÃO SMARTSHARE</li>
+        <li class="breadcrumb-item">VENDAS</li>
       </ol>
     </nav>
   </div><!-- End Navegação -->
@@ -27,21 +27,13 @@ require_once('menu.php'); //menu lateral da pagina
         <a href="seminovos.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">SEMINOVOS</h5>
+              <h5 class="card-title">FORNECEDORES TRIAGEM</h5>
             </div>
           </div>
         </a>
       </div>
       
-      <div class="col-sm-3">
-        <a href="contasBancarias.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">CONTAS BANCÁRIAS</h5>
-            </div>
-          </div>
-        </a>
-      </div>
+      
       <div class="col-sm-3">
           <a href="custoVeiculos.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
             <div class="card">
@@ -60,13 +52,6 @@ require_once('menu.php'); //menu lateral da pagina
           </div>
         </a>
       </div>
-    </div>
-    
-    </section>
-    <hr style="margin-top: 20px; opacity: 0;" > <!-- Repetir a cada 4 div  -->
-    <section class="section">
-   
-     <div class="row">
       <div class="col-sm-3">
         <a href="vendedores.php?pg=4" class="list-group-item list-group-item-action">
           <div class="card">
@@ -76,6 +61,14 @@ require_once('menu.php'); //menu lateral da pagina
           </div>
         </a>
       </div>
+    </div>
+    
+    </section>
+    <hr style="margin-top: 20px; opacity: 0;" > <!-- Repetir a cada 4 div  -->
+    <section class="section">
+   
+     <div class="row">
+      
     
       <div class="col-sm-3">
           <a href="gerentes.php?pg=4" class="list-group-item list-group-item-action">

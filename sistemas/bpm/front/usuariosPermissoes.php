@@ -203,7 +203,7 @@ $usuarios = $resultado->fetch_assoc();
                     <button type="reset" class="btn btn-secondary">Limpar Tabela</button>
                     <button type="submit" class="btn btn-success">Salvar</button>
                   </div>
-                  <!-- End Table with stripped rows --
+                  <!-- End Table with stripped rows -->
                 </form>
               </div>
             </div><!-- End Default Tabs -->

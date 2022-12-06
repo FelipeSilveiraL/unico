@@ -20,9 +20,6 @@ require_once '../config/query.php';
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET[
             'pg'
         ] ?>">DEPARTAMENTOS</a></li>
-        <li class="breadcrumb-item"><a href="NF.php?pg=<?= $_GET[
-            'pg'
-        ] ?>">NF</a></li>
         <li class="breadcrumb-item"><a href="aprovadoresNF.php?pg=<?= $_GET[
             'pg'
         ] ?>">APROVADORES NF</a></li>
@@ -50,6 +47,18 @@ require_once '../config/query.php';
             $result = $conn->query($aprovNF);
 
             while ($row = $result->fetch_assoc()) {
+
+              $searchCompany = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = ".$row['ID_EMPRESA']."";
+              $sucesso = $conn->query($searchCompany);
+              if($nameCompany = $sucesso->fetch_assoc()){
+                $name = $nameCompany['NOME_EMPRESA'];
+              }
+            
+              $searchDep = "SELECT NOME_DEPARTAMENTO FROM bpm_rh_departamento WHERE ID_DEPARTAMENTO = ".$row['ID_DEPARTAMENTO']."";
+              $success = $conn->query($searchDep);
+              if($nameDep = $success->fetch_assoc()){
+                $nameDepartament = $nameDep['NOME_DEPARTAMENTO'];
+              }
                 echo '<form method="POST" class="row g-3" action="http://' .
                     $_SESSION['servidorOracle'] .
                     '/' .
@@ -64,13 +73,13 @@ require_once '../config/query.php';
                     $id .
                     '" name = "id_aprovador">
                   <input type="text" class="form-select" value="' .
-                    $row['NOME_EMPRESA'] .
+                    $name .
                     '" disabled>
                   <label for="user">EMPRESA:</label>
                 </div>
                 <div class="form-floating mt-4 col-md-6" id="dep">
                   <input type="text" class="form-select" value="' .
-                    $row['NOME_DEPARTAMENTO'] .
+                    $nameDepartament .
                     '" name="dep" disabled>
                   <label for="dep">DEPARTAMENTO:</label>
                 </div>';
@@ -325,75 +334,75 @@ require_once '../config/query.php';
                 </div>
                 <div class="form-floating mt-4 col-md-6" id="gerente">
                     <select class="form-select" name="gerente" required>';
-                      $query_users4 =
-                          "SELECT * FROM bpm_usuarios_smartshare WHERE ds_login='" .
-                          $row['APROVADOR_GERENTE'] .
-                          "' ";
+                $query_users4 =
+                    "SELECT * FROM bpm_usuarios_smartshare WHERE ds_login='" .
+                    $row['APROVADOR_GERENTE'] .
+                    "' ";
 
-                      $conecção4 = $conn->query($query_users4);
-                      while ($fila4 = $conecção4->fetch_assoc()) {
-                          echo '
+                $conecção4 = $conn->query($query_users4);
+                while ($fila4 = $conecção4->fetch_assoc()) {
+                    echo '
                             <option value="' .
-                              $row['APROVADOR_GERENTE'] .
-                              '">' .
-                              $fila4['DS_USUARIO'] .
-                              ' / ' .
-                              $fila4['DS_LOGIN'] .
-                              '</option>';
-                      }
-                      echo '    
+                        $row['APROVADOR_GERENTE'] .
+                        '">' .
+                        $fila4['DS_USUARIO'] .
+                        ' / ' .
+                        $fila4['DS_LOGIN'] .
+                        '</option>';
+                }
+                echo '    
                           <option value="">-----------</option>';
 
-                      $query4 = 'SELECT * FROM bpm_usuarios_smartshare';
+                $query4 = 'SELECT * FROM bpm_usuarios_smartshare';
 
-                      $sucesso4 = $conn->query($query4);
+                $sucesso4 = $conn->query($query4);
 
-                      while ($rowUser4 = $sucesso4->fetch_assoc()) {
-                          echo '<option value="' .
-                              $rowUser4['DS_LOGIN'] .
-                              '">' .
-                              $rowUser4['DS_USUARIO'] .
-                              ' / ' .
-                              $rowUser4['DS_LOGIN'] .
-                              '</option>';
-                      }
+                while ($rowUser4 = $sucesso4->fetch_assoc()) {
+                    echo '<option value="' .
+                        $rowUser4['DS_LOGIN'] .
+                        '">' .
+                        $rowUser4['DS_USUARIO'] .
+                        ' / ' .
+                        $rowUser4['DS_LOGIN'] .
+                        '</option>';
+                }
                 echo ' </select>
                   <label for="gerente">GERENTE GERAL:</label>
                   </div>
                   <div class="form-floating mt-4 col-md-5"id="limiteG">
                       <input class="form-control"  value="';
 
-                          $number = $row['LIMITE_GERAL'];
+                $number = $row['LIMITE_GERAL'];
 
-                          $quantidade = strlen($number);
+                $quantidade = strlen($number);
 
-                          if ($quantidade <= 5) {
-                              $c = $quantidade - 2;
-                              $valorDepoisVirgula = substr($number, $c);
-                              $valorAntesVirgula = substr($number, 0, $c);
+                if ($quantidade <= 5) {
+                    $c = $quantidade - 2;
+                    $valorDepoisVirgula = substr($number, $c);
+                    $valorAntesVirgula = substr($number, 0, $c);
 
-                              if ($valorAntesVirgula != '') {
-                                  echo $valorAntesVirgula . ',' . $valorDepoisVirgula;
-                              } else {
-                                  echo $valorDepoisVirgula;
-                              }
-                          } else {
-                              $numeroDepoisVirgula = $quantidade - 2;
-                              $valorDepoisVirgula = substr($number, $numeroDepoisVirgula);
-                              $valorAntesVirgula = substr(
-                                  $number,
-                                  0,
-                                  $numeroDepoisVirgula
-                              );
-                              $ponto = $quantidade - 5;
-                              $valorAntesponto = substr($number, $ponto, 3);
-                              $valorDepoisponto = substr($number, 0, $ponto);
-                              echo $valorDepoisponto .
-                                  '.' .
-                                  $valorAntesponto .
-                                  ',' .
-                                  $valorDepoisVirgula;
-                          }
+                    if ($valorAntesVirgula != '') {
+                        echo $valorAntesVirgula . ',' . $valorDepoisVirgula;
+                    } else {
+                        echo $valorDepoisVirgula;
+                    }
+                } else {
+                    $numeroDepoisVirgula = $quantidade - 2;
+                    $valorDepoisVirgula = substr($number, $numeroDepoisVirgula);
+                    $valorAntesVirgula = substr(
+                        $number,
+                        0,
+                        $numeroDepoisVirgula
+                    );
+                    $ponto = $quantidade - 5;
+                    $valorAntesponto = substr($number, $ponto, 3);
+                    $valorDepoisponto = substr($number, 0, $ponto);
+                    echo $valorDepoisponto .
+                        '.' .
+                        $valorAntesponto .
+                        ',' .
+                        $valorDepoisVirgula;
+                }
 
                 echo '" name="limitG" >
                   <label for="limitG">LIMITE APROVAÇÃO:</label>
@@ -418,74 +427,74 @@ require_once '../config/query.php';
                 </div>
                 <div class="form-floating mt-4 col-md-6" id="super">
                     <select class="form-select"  name="super" required>';
-                        $query_users5 =
-                            "SELECT * FROM bpm_usuarios_smartshare WHERE ds_login='" .
-                            $row['APROVADOR_SUPERINTENDENTE'] .
-                            "' ";
+                $query_users5 =
+                    "SELECT * FROM bpm_usuarios_smartshare WHERE ds_login='" .
+                    $row['APROVADOR_SUPERINTENDENTE'] .
+                    "' ";
 
-                        $conecção5 = $conn->query($query_users5);
-                        while ($fila = $conecção5->fetch_assoc()) {
-                            echo '
+                $conecção5 = $conn->query($query_users5);
+                while ($fila = $conecção5->fetch_assoc()) {
+                    echo '
                               <option value="' .
-                                $row['APROVADOR_SUPERINTENDENTE'] .
-                                '">' .
-                                $fila['DS_USUARIO'] .
-                                ' / ' .
-                                $fila['DS_LOGIN'] .
-                                '</option>';
-                        }
-                        echo '    
+                        $row['APROVADOR_SUPERINTENDENTE'] .
+                        '">' .
+                        $fila['DS_USUARIO'] .
+                        ' / ' .
+                        $fila['DS_LOGIN'] .
+                        '</option>';
+                }
+                echo '    
                             <option value="">-----------</option>';
 
-                        $query5 = 'SELECT * FROM bpm_usuarios_smartshare';
+                $query5 = 'SELECT * FROM bpm_usuarios_smartshare';
 
-                        $sucesso5 = $conn->query($query5);
+                $sucesso5 = $conn->query($query5);
 
-                        while ($rowUser5 = $sucesso5->fetch_assoc()) {
-                            echo '<option value="' .
-                                $rowUser5['DS_LOGIN'] .
-                                '">' .
-                                $rowUser5['DS_USUARIO'] .
-                                ' / ' .
-                                $rowUser5['DS_LOGIN'] .
-                                '</option>';
-                        }
+                while ($rowUser5 = $sucesso5->fetch_assoc()) {
+                    echo '<option value="' .
+                        $rowUser5['DS_LOGIN'] .
+                        '">' .
+                        $rowUser5['DS_USUARIO'] .
+                        ' / ' .
+                        $rowUser5['DS_LOGIN'] .
+                        '</option>';
+                }
                 echo ' </select>
                   <label for="super">SUPERINTENDENTE:</label>
                   </div>
                   <div class="form-floating mt-4 col-md-5" id="limiteSuper">
                       <input class="form-control"  value="';
-                                $number = $row['LIMITE_SUPERITENDENTE'];
+                $number = $row['LIMITE_SUPERITENDENTE'];
 
-                                $quantidade = strlen($number);
+                $quantidade = strlen($number);
 
-                                if ($quantidade <= 5) {
-                                    $c = $quantidade - 2;
-                                    $valorDepoisVirgula = substr($number, $c);
-                                    $valorAntesVirgula = substr($number, 0, $c);
+                if ($quantidade <= 5) {
+                    $c = $quantidade - 2;
+                    $valorDepoisVirgula = substr($number, $c);
+                    $valorAntesVirgula = substr($number, 0, $c);
 
-                                    if ($valorAntesVirgula != '') {
-                                        echo $valorAntesVirgula . ',' . $valorDepoisVirgula;
-                                    } else {
-                                        echo $valorDepoisVirgula;
-                                    }
-                                } else {
-                                    $numeroDepoisVirgula = $quantidade - 2;
-                                    $valorDepoisVirgula = substr($number, $numeroDepoisVirgula);
-                                    $valorAntesVirgula = substr(
-                                        $number,
-                                        0,
-                                        $numeroDepoisVirgula
-                                    );
-                                    $ponto = $quantidade - 5;
-                                    $valorAntesponto = substr($number, $ponto, 3);
-                                    $valorDepoisponto = substr($number, 0, $ponto);
-                                    echo $valorDepoisponto .
-                                        '.' .
-                                        $valorAntesponto .
-                                        ',' .
-                                        $valorDepoisVirgula;
-                                }
+                    if ($valorAntesVirgula != '') {
+                        echo $valorAntesVirgula . ',' . $valorDepoisVirgula;
+                    } else {
+                        echo $valorDepoisVirgula;
+                    }
+                } else {
+                    $numeroDepoisVirgula = $quantidade - 2;
+                    $valorDepoisVirgula = substr($number, $numeroDepoisVirgula);
+                    $valorAntesVirgula = substr(
+                        $number,
+                        0,
+                        $numeroDepoisVirgula
+                    );
+                    $ponto = $quantidade - 5;
+                    $valorAntesponto = substr($number, $ponto, 3);
+                    $valorDepoisponto = substr($number, 0, $ponto);
+                    echo $valorDepoisponto .
+                        '.' .
+                        $valorAntesponto .
+                        ',' .
+                        $valorDepoisVirgula;
+                }
 
                 echo '" name="limitS">
                   <label for="limiteSuper">LIMITE APROVAÇÃO:</label>
@@ -517,7 +526,7 @@ require_once '../config/query.php';
               </form>';
             }
             ?>
-          <br>
+            <br>
           </div>
         </div>
 

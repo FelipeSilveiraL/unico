@@ -18,7 +18,6 @@ require_once('../inc/apiRecebeAprov.php');
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
-        <li class="breadcrumb-item"><a href="RH.php?pg=<?= $_GET['pg'] ?>">RH</a></li>
         <li class="breadcrumb-item">GESTOR RH</li>
       </ol>
     </nav>
@@ -53,7 +52,7 @@ require_once('../inc/apiRecebeAprov.php');
                       }
                       echo '
                     <div class="text-left">
-                      <a href="http://'.$_SERVER['SERVER_ADDR'].'/unico/sistemas/bpm/front/RH.php?pg='.$_GET['pg'].'"> <button type="button" class="btn btn-primary">Voltar</button></a>
+                      <a href="http://'.$_SERVER['SERVER_ADDR'].'/unico/sistemas/bpm/front/departamentos.php?pg='.$_GET['pg'].'"> <button type="button" class="btn btn-primary">Voltar</button></a>
                       <button type="submit" class="btn btn-success">Buscar</button>
                     </div>
                   </form>';
@@ -84,7 +83,7 @@ require_once('../inc/apiRecebeAprov.php');
                           <label for="aproCaixa">Alterar para novo gestor:<span style="color: red;">*</span></label>
                         </div>
                       <div class="text-center">
-                        <a href="http://'.$_SERVER['SERVER_ADDR'].'/unico/sistemas/bpm/front/RH.php?pg='.$_GET['pg'].'"> <button type="button" class="btn btn-danger">Voltar</button></a>
+                        <a href="http://'.$_SERVER['SERVER_ADDR'].'/unico/sistemas/bpm/front/departamentos.php?pg='.$_GET['pg'].'"> <button type="button" class="btn btn-danger">Voltar</button></a>
                         <button type="submit" class="btn btn-primary">Alterar</button>
                       </div>
                     </form><br>';

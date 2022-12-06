@@ -13,8 +13,9 @@ require_once('menu.php'); //menu lateral da pagina
 
   <?php
   require_once('../../../inc/mensagens.php'); //Alertas
+  
   ?>
-
+  
   <section class="section">
 
     <!--MODULOS-->
@@ -25,28 +26,22 @@ require_once('menu.php'); //menu lateral da pagina
     $queryModulosM = $merge[0] . $merge[1];
     
     $a = $conn->query($queryModulosM);
-
+    
     if ($liberado = $a->fetch_assoc()) {
       echo '<h5 class="card-title"><span>| Módulos</span></h5>';
     }
     ?>
 
     <div class="row">
-      <?php
-      $resultadoModulosM = $conn->query($queryModulosM);
 
-      while ($modulosM = $resultadoModulosM->fetch_assoc()) {
-        echo '<div class="col-sm-3">
-                  <a href="' . $modulosM['endereco'] . '?pg=' . $modulosM['id_modulo'] . '" class="list-group-item list-group-item-action">
-                    <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title">' . $modulosM['nome_modulo'] . '</h5>
-                      </div>
-                    </div>
-                  </a>
-                </div>';
-      }
-      ?>
+      <div class="col-sm-3">
+        <a href="departamentos.php?pg=4" class="list-group-item list-group-item-action">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Departamentos</h5>
+            </div>
+          </div>
+        </a>
     </div>
 
     <!--TELAS-->

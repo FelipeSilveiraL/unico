@@ -11,16 +11,15 @@ $sucess = $conn->query($droptable);
 // gerentes tablea mysql
 
 $createGerentes = "CREATE TABLE `bpm_gerentes` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `ID_GERENTE` INT(10) NULL,
+    `ID_GERENTE` INT(10) NOT NULL,
     `EMPRESA` INT(10) NULL,
     `DEPARTAMENTO` INT(10) NULL,
     `NOME` VARCHAR(100) NULL,
     `CPF` VARCHAR(14) NULL,
     `LOGIN_SMARTSHARE` VARCHAR(20) NULL,
-    `CODIGO_LOGIN_SMARTSHARE` VARCHAR(1) NULL,
+    `CODIGO_LOGIN_SMARTSHARE` VARCHAR(20) NULL,
     `SITUACAO` VARCHAR(1) NULL,
-    PRIMARY KEY (`id`))";
+    PRIMARY KEY (`ID_GERENTE`))";
 
 $execCreate = $conn->query($createGerentes);
 
@@ -45,13 +44,13 @@ foreach ($resultado->gerentes as $empSmart) {
             '" . $empSmart->CPF . "' ,
             '" . $empSmart->LOGIN_SMARTSHARE ."',
             '" . $empSmart->CODIGO_LOGIN_SMARTSHARE ."',
-            '" . $empSmart->SITUACAO ."',
+            '" . $empSmart->SITUACAO ."'
             )";
 
         
     
     if (!$execQuery = $conn->query($querySmart)) {
-        echo "Error: " . $querySmart . "<br>" . $conn->error;
+        echo "<br><br><br><br><br>Error: " . $querySmart . "<br>" . $conn->error;
     }
 }                    
 

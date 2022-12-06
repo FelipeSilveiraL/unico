@@ -15,8 +15,7 @@ require_once('../config/query.php');
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
-        <li class="breadcrumb-item"><a href="manutencaoSmart.php?pg=<?= $_GET['pg'] ?>">MANUTENÇÃO SMARTSHARE</a></li>
-        <li class="breadcrumb-item"><a href="seminovos.php?pg=<?= $_GET['pg'] ?>">SEMINOVOS</a></li>
+        <li class="breadcrumb-item"><a href="seminovos.php?pg=<?= $_GET['pg'] ?>">FORNECEDORES TRIAGEM</a></li>
         <li class="breadcrumb-item">EDITANDO FORNECEDOR</li>
       </ol>
     </nav>
@@ -132,6 +131,7 @@ require_once('../config/query.php');
                   <option value="">------------</option>
                   <option value="S">SIM</option>
                   <option value="N">NÃO</option>
+                  
                 </select>
                 <label for="ativo">ATIVO:<span style="color: red;">*</span></label>
               </div>
@@ -141,6 +141,7 @@ require_once('../config/query.php');
                   <option value="">------------</option>
                   <option value="S">SIM</option>
                   <option value="N">NÃO</option>
+                  <option value="N">PAPEL</option>
                 </select>
                 <label for="utilizaSmartshare2">SMARTSHARE:<span style="color: red;">*</span></label>
               </div>

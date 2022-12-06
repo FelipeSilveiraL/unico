@@ -27,7 +27,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
             $a = $conn->query($queryModulosM);
         
             if ($liberado = $a->fetch_assoc()) {
-            echo '<hr><li class="nav-heading">Módulos</li>';
+            echo '<hr><li class="nav-heading">Departamentos</li>';
             }
             
         ?>
@@ -39,7 +39,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
 
                 $querySubmenu = 'SELECT * FROM bpm_modulos where sub_modulo = ' . $modulosM['id_modulo'] . ' and deletar = 0';
                 $resuSubmenu = $conn->query($querySubmenu);
-
+                
                 if ($submenu = $resuSubmenu->fetch_assoc()) {
 
                     $linkmodulosub = '" data-bs-target="#modulo'.$modulosM['id_modulo'].'" data-bs-toggle="collapse" href="#">';
@@ -49,6 +49,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
                                         <li>';
                     $querySubmenuM = 'SELECT * FROM bpm_modulos SM LEFT JOIN bpm_usuario_modulo SUM ON (SUM.id_modulo = SM.id) where SM.sub_modulo = ' . $modulosM['id_modulo'] . ' and SM.deletar = 0 AND SUM.id_usuario = ' . $_SESSION['id_usuario'];
                     $resuSubmenuM = $conn->query($querySubmenuM);
+                    
                     while ($submenuM = $resuSubmenuM->fetch_assoc()) {
                         $submodulo .= '<a href="' . $submenuM['endereco'] . '?pg=' . $modulosM['id_modulo'] . '">
                                                     <i class="bi bi-circle"></i><span>' . $submenuM['nome'] . '</span>
@@ -99,7 +100,7 @@ if ($_GET['pg'] == 4 || $_GET['pg'] == 5 || $_GET['pg'] == 1) {
 
                 $querySubmenu = 'SELECT * FROM bpm_modulos where sub_modulo = ' . $modulosM['id_modulo'] . ' and deletar = 0';
                 $resuSubmenu = $conn->query($querySubmenu);
-
+                
                 if ($submenu = $resuSubmenu->fetch_assoc()) {
 
                     $linkmodulosub = '" data-bs-target="#modulo'.$modulosM['id_modulo'].'" data-bs-toggle="collapse" href="#">';

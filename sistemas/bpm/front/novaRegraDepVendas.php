@@ -14,7 +14,6 @@ require_once('../../../config/config.php');
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
-        <li class="breadcrumb-item"><a href="bpmServopa.php?pg=<?= $_GET['pg'] ?>">BPMSERVOPA</a></li>
         <li class="breadcrumb-item"><a href="manutencaoSmart.php?pg=<?= $_GET['pg'] ?>">Manutenção Smartshare</a></li>
         <li class="breadcrumb-item">NOVA REGRA DEPARTAMENTO VENDAS</li>
       </ol>
@@ -34,11 +33,6 @@ require_once('../../../config/config.php');
           
             <form class="row g-3" action="http://<?= $_SESSION['servidorOracle']?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraDepVendas.php?pg=<?= $_GET['pg']?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
-              <div class="form-floating mt-4 col-md-6">
-                <input class="form-control" id="empresa" name="empresa" required>
-                <label for="filial" class="capitalize">EMPRESA:<code>*</code></label>
-              </div>
-              
               <div class="form-floating mt-4 col-md-6">
                 <input class="form-control" id="CNPJ" name="departamento" required>
                 <label for="filial" class="capitalize">DEPARTAMENTO:<code>*</code></label>

@@ -12,7 +12,6 @@ require_once('../inc/apiRecebeAprovNF.php');
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
-        <li class="breadcrumb-item"><a href="NF.php?pg=<?= $_GET['pg'] ?>">NF</a></li>
         <li class="breadcrumb-item">APROVADORES NF</li>
       </ol>
     </nav>

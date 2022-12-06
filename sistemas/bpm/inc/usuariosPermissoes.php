@@ -6,8 +6,16 @@ switch ($_GET['acao']) {
 
         //limpando geral
         $deleteGeral = "DELETE FROM bpm_usuario_modulo WHERE id_subModulo = 0 AND localizacao NOT IN (0) AND id_usuario = " . $_GET['id_usuarios'];
+       
         $result = $conn->query($deleteGeral);
 
+        $deleteGeral2 = "DELETE FROM bpm_usuario_modulo WHERE id_subModulo = 6 AND localizacao NOT IN (0) AND id_usuario = " . $_GET['id_usuarios'];
+
+        $result2 = $conn->query($deleteGeral2);
+
+        $deleteGeral3 = "DELETE FROM bpm_usuario_modulo WHERE id_subModulo = 7 AND localizacao NOT IN (0) AND id_usuario = " . $_GET['id_usuarios'];
+
+        $result3 = $conn->query($deleteGeral3);
         //adicionando apenas os selecionados
         foreach ($_POST['modulo'] as $key => $value) {
 
@@ -17,6 +25,7 @@ switch ($_GET['acao']) {
 
             $insert = "INSERT INTO bpm_usuario_modulo (id_usuario, id_modulo, id_subModulo, localizacao) 
                         VALUES (" . $_GET['id_usuarios'] . "," . $value . ", ".$nomeModulo['sub_modulo'].", ".$nomeModulo['localizacao'].")";
+           
             $resultinsert = $conn->query($insert);
         }
         break;

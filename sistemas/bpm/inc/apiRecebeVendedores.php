@@ -11,16 +11,15 @@ $sucess = $conn->query($droptable);
 // gerentes tablea mysql
 
 $createVendedores = "CREATE TABLE `bpm_vendedores` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `ID_VENDEDOR` INT(10) NULL,
+    `ID_VENDEDOR` INT(10) NOT NULL ,
     `EMPRESA` INT(10) NULL,
     `DEPARTAMENTO` INT(10) NULL,
     `NOME` VARCHAR(100) NULL,
-    `CPF` VARCHAR(14) NULL,
+    `CPF` VARCHAR(15) NULL,
     `LOGIN_SMARTSHARE` VARCHAR(20) NULL,
-    `CODIGO_LOGIN_SMARTSHARE` VARCHAR(1) NULL,
+    `CODIGO_LOGIN_SMARTSHARE` VARCHAR(6) NULL,
     `SITUACAO` VARCHAR(1) NULL,
-    PRIMARY KEY (`id`))";
+    PRIMARY KEY (`ID_VENDEDOR`))";
 
 $execCreate = $conn->query($createVendedores);
 
@@ -32,10 +31,10 @@ curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 $resultado = json_decode(curl_exec($ch));
 
 
-foreach ($resultado->empresaSmart as $empSmart) {
+foreach ($resultado->vendedores as $empSmart) {
 
 
-    $querySmart = "INSERT INTO bpm_gerentes 
+    $querySmart = "INSERT INTO bpm_vendedores
                             (ID_VENDEDOR,EMPRESA,DEPARTAMENTO,NOME,CPF,LOGIN_SMARTSHARE,CODIGO_LOGIN_SMARTSHARE,SITUACAO)
    
     VALUES ('" . $empSmart->ID_VENDEDOR ."',
@@ -45,13 +44,13 @@ foreach ($resultado->empresaSmart as $empSmart) {
             '" . $empSmart->CPF . "' ,
             '" . $empSmart->LOGIN_SMARTSHARE ."',
             '" . $empSmart->CODIGO_LOGIN_SMARTSHARE ."',
-            '" . $empSmart->SITUACAO ."',
+            '" . $empSmart->SITUACAO ."'
             )";
 
         
     
     if (!$execQuery = $conn->query($querySmart)) {
-        echo "Error: " . $querySmart . "<br>" . $conn->error;
+        echo "<br><br><br><br><br>Error: " . $querySmart . "<br>" . $conn->error;
     }
 }                    
 
