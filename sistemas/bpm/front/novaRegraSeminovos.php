@@ -120,6 +120,11 @@ require_once('../config/query.php');
 
 </main><!-- End #main -->
 
+
+<?php
+require_once('footer.php'); //Javascript e configurações afins
+?>
+
 <script type="text/javascript">
   function mostraDiv() {
     var valueRevisao = document.getElementById("utiliza").value;
@@ -272,9 +277,6 @@ $("#estados").on("change", function(){
 });
 </script>
 
-<?php
-require_once('footer.php'); //Javascript e configurações afins
-?>
 <script>
 
 
