@@ -9,3 +9,4 @@ $resultadoCidade = $conn->query($queryCidade);
 while ($cidade = $resultadoCidade->fetch_assoc()) {
     echo '<option value="' . $cidade['nome'] . '">' . $cidade['nome'].'</option>';
 }
+$conn->close();

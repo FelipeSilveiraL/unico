@@ -125,7 +125,7 @@ require_once('../config/query.php');
 
                         echo '<option value="' . $row2['DS_LOGIN'] . '"> ' . $row2['DS_USUARIO'] . ' / ' . $row2['DS_LOGIN'] . ' </option>';
                         }
-
+                        $conn->close();
                     ?>
                 </select>
                 <label for="loginAdministrador">LOGIN ADMINISTRADOR:<span style="color: red;">*</span></label>

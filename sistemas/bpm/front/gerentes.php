@@ -98,7 +98,7 @@ require_once('../inc/apiRecebeGerente.php');
                     </tr>';
 
                   }
-                  
+                  $conn->close();
                   ?>
                 </tbody>
               </table>

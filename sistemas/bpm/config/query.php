@@ -52,11 +52,11 @@ $querySistemaCores = "SELECT id_usuario, id_sistema, color FROM usuarios_sistema
 
 $deletar = "SELECT NOME_EMPRESA,SISTEMA,EMPRESA_NBS,CONSORCIO,EMPRESA_APOLLO,REVENDA_APOLLO,ORGANOGRAMA_SENIOR,EMPRESA_SENIOR,FILIAL_SENIOR FROM bpm_empresas ";
 
-$queryTabela = "SELECT * FROM bpm_empresas where ID_EMPRESA NOT IN(302,208,261,402,382) ORDER BY id ASC;";
+$queryTabela = "SELECT * FROM bpm_empresas where ID_EMPRESA NOT IN(208,382) ORDER BY ID_EMPRESA ASC;";
 
 $editarTabela = "SELECT * FROM bpm_empresas ";
 
-$relatorioExcel = "SELECT * FROM bpm_empresas where ID_EMPRESA NOT IN(302,208,261,382) ";
+$relatorioExcel = "SELECT * FROM bpm_empresas where ID_EMPRESA NOT IN(208,382) ";
 
 $query_users = "SELECT * FROM bpm_usuarios_smartshare";
 

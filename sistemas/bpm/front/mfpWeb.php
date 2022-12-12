@@ -77,7 +77,7 @@ require_once('../inc/recebeMFP.php');//recebe os dados da api e insere no banco 
                   </tr>';
                  }
                  
-                 
+                 $conn->close();
                  
                  ?>
                 </tbody>

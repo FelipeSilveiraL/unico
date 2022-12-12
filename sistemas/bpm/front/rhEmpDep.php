@@ -93,7 +93,7 @@ require_once('../inc/apiEmpDep.php');
                     </tr>';
                     
                   }
-
+                  $conn->close();
                 ?>
               </tbody>
             </table>

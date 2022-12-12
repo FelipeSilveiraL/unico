@@ -80,12 +80,15 @@ require_once('../config/query.php');
                 </select>
                 <label for="nome" class="capitalize">NOME:<code>*</code></label>
               </div>
-             
-              <div class="form-floating mt-4 col-md-6">
-                <select class="form-control" id="cpfVet" name="cpfValue" required>
+              <div class="form-floating mt-4 col-md-6" id="cpfValue">
+                <select class="form-select" name="cpfValue" id="cpfVet" required>
                   <option value="">-------------------</option>
                 </select>
-                <label for="cpfVet" class="capitalize">CPF:<code>*</code></label>
+                <label for="cpf" class="capitalize">CPF:<span style="color: red;">*</span></label>
+              </div>
+              <div class="form-floating mt-4 col-md-6" id="cpfShow" style="display:none;">
+                <input class="form-control" onkeydown="javascript: fMasc(this, mCPF);" maxlength="14" onblur="ValidarCPF(this)" name="cpfValue" required >
+                <label for="cpf" class="capitalize">CPF:<span style="color: red;">*</span></label>
               </div>
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-control" id="login_smartshare" name="login_smartshare" required>
@@ -105,12 +108,12 @@ require_once('../config/query.php');
 
               <div class="text-left py-2">
                 <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/vendedores.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
-                <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
+                <button type="button" class="btn btn-secondary" onclick="mostrarBotao()">Cadastrar CPF</button>
                 <button type="submit" class="btn btn-success">Salvar</button>
               </div>
             </form><!-- FIM Form -->
           </div><!-- FIM card-body -->
-        </div><!-- FIM card -->
+        </div><!-- FIM card --> 
       </div>
     </div> <!-- FIM col-lg-12 -->
   </section><!-- FIM section -->
@@ -122,6 +125,24 @@ require_once('../config/query.php');
 require_once('footer.php'); //Javascript e configurações afins
 ?>
 <script>
+  function mostrarBotao() {
+    var tela = document.getElementById("cpfValue").style.display;
+
+    if (tela == "block") {
+      document.getElementById("cpfShow").style.display = "block";
+      document.getElementById("cpfShow").required = true;
+      document.getElementById("cpfValue").style.display = "none";
+      document.getElementById("cpfVet").required = false;
+      document.getElementById("cpfVet").value = "";
+    } else {
+      document.getElementById("cpfValue").style.display = "block";
+      document.getElementById("cpfValue").required = true;
+      document.getElementById("cpfShow").style.display = "none";
+      document.getElementById("cpfShow").required = false;
+      
+    }
+  }
+
   $("#nome").on("change", function() {
     var idUsuario = $("#nome").val();
 
@@ -162,4 +183,5 @@ require_once('footer.php'); //Javascript e configurações afins
     });
    
   });
+ 
 </script>

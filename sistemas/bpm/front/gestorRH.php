@@ -88,7 +88,7 @@ require_once('../inc/apiRecebeAprov.php');
                       </div>
                     </form><br>';
 
-                    
+                    $conn->close();
               ?>
               <!-- Vertical Form -->
                 

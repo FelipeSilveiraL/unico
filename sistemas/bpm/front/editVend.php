@@ -133,7 +133,7 @@ require_once('../config/query.php');
               }
 
 
-
+              $conn->close();
               ?>
 
 

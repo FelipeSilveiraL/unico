@@ -43,3 +43,4 @@ echo '<td ' . $usuarioFuncao . '><a href="editApNF.php?pg='.$_GET["pg"].'&id_apr
 </tr>
 ';
 }
+$conn->close();

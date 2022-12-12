@@ -30,7 +30,7 @@ while ($row = $conSucesso->fetch_assoc()) {
   }
 
   echo '<tr>
-                  <td>' . $row["id"] . '</td>
+                  <td>' . $row["ID_EMPRESA"] . '</td>
                   <td>' . $row["NOME_EMPRESA"] . '</td>
                   <td>' . $row["UF_GESTAO"] . '</td>
                   <td>' . $sistemaMysql . '</td>

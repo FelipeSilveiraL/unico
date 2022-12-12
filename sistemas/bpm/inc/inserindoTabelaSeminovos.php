@@ -49,3 +49,4 @@ echo '<td><a href="editAp.php?pg=' . $_GET["pg"] . '&id_aprovador=' . $rowaprov[
 </tr>
 ';
 }
+$conn->close();

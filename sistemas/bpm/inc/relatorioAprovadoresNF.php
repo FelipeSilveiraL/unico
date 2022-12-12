@@ -78,5 +78,5 @@ $arquivo = 'aprovadores_nf.xls';
         // Envia o conteÃºdo do arquivo
         echo $html;
 
-
+        $conn->close();
 ?>

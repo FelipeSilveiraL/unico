@@ -58,6 +58,7 @@ require_once('../../../config/query.php');
                     while($row = $sucesso->fetch_assoc()){
                       echo '<option value="'.$row['ID_DEPARTAMENTO'].'">'.$row['NOME_DEPARTAMENTO'].'</option>';
                     }
+                    $conn->close();
                   ?>
                 </select>
                 <label for="depto">DEPARTAMENTO:<span style="color: red;">*</span></label>

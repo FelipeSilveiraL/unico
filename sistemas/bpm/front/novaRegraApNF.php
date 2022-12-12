@@ -282,7 +282,7 @@ require_once('../../../config/query.php');
 
                     echo '<option value="' . $row['DS_LOGIN'] . '"> ' . $row['DS_USUARIO'] . ' / ' . $row['DS_LOGIN'] . ' </option>';
                   }
-
+                  $conn->close();
                   ?>
                 </select>
                 <label for="super">SUPERINTENDENTE:<span style="color: red;">*</span></label>

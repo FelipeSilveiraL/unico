@@ -67,7 +67,7 @@ require_once('../config/query.php');
 
                     echo '<option value="' . $estados['sigla'] . '">' . $estados['sigla'] . ' - ' . $estados['nome'] . '</option>
                       ';
-                  }
+                  }$conn->close();
                   ?>
 
                 </select>
@@ -119,11 +119,6 @@ require_once('../config/query.php');
   <!--################# section TERMINA AQUI #################-->
 
 </main><!-- End #main -->
-
-
-<?php
-require_once('footer.php'); //Javascript e configurações afins
-?>
 
 <script type="text/javascript">
   function mostraDiv() {
@@ -277,6 +272,9 @@ $("#estados").on("change", function(){
 });
 </script>
 
+<?php
+require_once('footer.php'); //Javascript e configurações afins
+?>
 <script>
 
 

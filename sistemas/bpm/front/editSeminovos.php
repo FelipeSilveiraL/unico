@@ -154,6 +154,7 @@ require_once('../config/query.php');
               ';
               
             }
+            $conn->close();
             ?>
               <div class="text-left py-2">
                 <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/seminovos.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>

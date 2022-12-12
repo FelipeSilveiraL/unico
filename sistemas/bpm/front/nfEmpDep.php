@@ -98,7 +98,7 @@ require_once('../inc/apiEmpDepNF.php');
                     </tr>';
                     
                   }
-
+                  $conn->close();
                 ?>
               </tbody>
             </table>

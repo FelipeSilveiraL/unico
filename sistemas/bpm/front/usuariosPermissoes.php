@@ -193,7 +193,7 @@ $usuarios = $resultado->fetch_assoc();
                                 <td>' . $modulosFuncao['modulo'] . '</td>
                               </tr>';
                       }
-                      
+                      $conn->close();
                       ?>
 
                     </tbody>

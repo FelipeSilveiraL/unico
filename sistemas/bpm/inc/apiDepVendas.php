@@ -9,10 +9,9 @@ $excluiTabela = "DROP TABLE IF EXISTS bpm_departamento_vendas";
 $sucess = $conn->query($excluiTabela);
 
 $criaTabela = "CREATE TABLE `bpm_departamento_vendas` (
-  `id` INT(10) NOT NULL AUTO_INCREMENT,	
-  `ID_DEPARTAMENTO` VARCHAR(10) NOT NULL,
+  `ID_DEPARTAMENTO` INT(10) NOT NULL,
   `NOME_DEPARTAMENTO` VARCHAR(45) NULL,
-  PRIMARY KEY (`ID`) )";
+  PRIMARY KEY (`ID_DEPARTAMENTO`) )";
 
 $execTabela = $conn->query($criaTabela);
 
@@ -30,7 +29,7 @@ foreach ($resultado->dep as $empdep) {
     $queryEmpDep = "INSERT INTO bpm_departamento_vendas 
                             (ID_DEPARTAMENTO,NOME_DEPARTAMENTO) VALUES (
    
-            '" . $empdep->ID ."',
+            '" . $empdep->ID."',
             '" . $empdep->NOME_DEPARTAMENTO ."'
             )";
 

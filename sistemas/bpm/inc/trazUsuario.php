@@ -5,7 +5,13 @@ $queryUsuario .= " WHERE nomfun = '".$_POST['id']."' ";
 
 $resultadoUsuario = sqlsrv_query($connVetorh, $queryUsuario);
 
-while ($usuario = sqlsrv_fetch_array($resultadoUsuario, SQLSRV_FETCH_ASSOC)) {
+if($usuario = sqlsrv_fetch_array($resultadoUsuario, SQLSRV_FETCH_ASSOC)) {
+
     $cpf = $usuario['numcpf'];
-    echo '<option value="' . $cpf . '" selected>' . $cpf.'</option>';
+   
+    echo '<option value="' . $cpf . '" >' . $cpf.'</option>';
+
+}else{
+    $cpf = "CPF não cadastrado na selbetti! Por favor cadastre";
+    echo '<option value="" >' . $cpf.'</option>';
 }

@@ -52,4 +52,5 @@ $arquivo = 'contas_bancarias_fornecedor.xls';
         header("Content-Description: PHP Generated Data");
         // Envia o conteúdo do arquivo
         echo $html;
+        $conn->close();
 ?>

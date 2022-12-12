@@ -145,6 +145,7 @@ require_once('../../../config/config.php');
                   <?php
                   echo '<option value=""> ------------ </option>';
                   echo $aprovador;
+                  $conn->close();
                   ?>
                 </select>
                 <label for="aproCaixa">APROVADOR CAIXA:<span style="color: red;">*</span></label>

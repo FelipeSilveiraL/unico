@@ -58,5 +58,5 @@ header("Content-Disposition: attachment; filename=\"{$arquivo}\"");
 header("Content-Description: PHP Generated Data");
 // Envia o conteúdo do arquivo
 echo $html;
-
+$conn->close();
 ?>

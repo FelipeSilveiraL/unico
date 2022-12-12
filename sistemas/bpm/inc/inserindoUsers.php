@@ -12,10 +12,10 @@ $sucess = $conn->query($droptable);
 
 $createTableEmp = "CREATE TABLE `bpm_usuarios_smartshare` (
     `id` INT(22) NOT NULL AUTO_INCREMENT,
-    `DS_USUARIO` VARCHAR(100) NULL,
+    `DS_USUARIO` VARCHAR(45) NULL,
     `DS_LOGIN` VARCHAR(45) NULL,
     `CD_USUARIO` VARCHAR(45) NULL,
-    `DS_EMAIL` VARCHAR(150) NULL,
+    `DS_EMAIL` VARCHAR(80) NULL,
     `ST_ATIVO` VARCHAR(45) NULL,
     `DS_PAPEL` VARCHAR(120) NULL,
     PRIMARY KEY (`id`));
