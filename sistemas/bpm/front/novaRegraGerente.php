@@ -79,15 +79,17 @@ require_once('../../../config/config.php');
 
               <div class="form-floating mt-4 col-md-6">
 
-                <input name="cpfVet" type="text" class="form-control" id="cpfVet" onkeydown="javascript: fMasc( this, mCPF );" maxlength="14" onblur="ValidarCPF(this)" value="" disabled>
+                <input name="cpfVet" type="text" class="form-control" id="cpfVet" onkeydown="javascript: fMasc( this, mCPF );" maxlength="14" onblur="ValidarCPF(this)" value="" readOnly>
                 <label for="cpfVet" class="capitalize">CPF:<span style="color: red;">*</span></label>
               </div>
 
               <div class="form-floating mt-4 col-md-6">
-                <input name="login_smartshare" type="text" class="form-control" id="login_smartshare" disabled>
+                <input name="login_smartshare" type="text" class="form-control" id="login_smartshare" readOnly>
                 <label for="login_smartshare" class="capitalize">LOGIN SMARTSHARE:<span style="color: red;">*</span></label>
               </div>
 
+              <input name="cd_smartshare" type="text" class="form-control" id="cd_smartshare" style="display: none;">
+              
               <div class="form-floating mt-4 col-md-6" id="situacao">
                 <select class="form-select" name="situacao" required>
                   <option value="">-----------------</option>
@@ -121,7 +123,7 @@ require_once('footer.php'); //Javascript e configurações afins
 
 <script>
   function liberar() {
-    document.getElementById("cpfVet").disabled = false;
+    document.getElementById("cpfVet").readOnly = false;
     document.getElementById("cpfVet").value = ' ';
     document.getElementById("cpfVet").focus();
   }
@@ -169,8 +171,10 @@ require_once('footer.php'); //Javascript e configurações afins
       beforeSend: function(data) {
         $("#login_smartshare").val('Carregando...');
       },
-      success: function(data) {
-        $("#login_smartshare").val(data);
+      success: function(data) {        
+        $("#login_smartshare").val(data.split("/")[0]);
+        $("#cd_smartshare").val(data.split("/")[1]);
+
       },
       error: function(data) {
         $("#login_smartshare").val('Erro ao carregar...');
