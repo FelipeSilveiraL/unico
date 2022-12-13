@@ -131,7 +131,6 @@ require_once('../config/query.php');
                     </div>';
                 }
               }
-              $conn->close();
               ?>
               <div class="text-left py-2">
                 <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/gerentes.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>

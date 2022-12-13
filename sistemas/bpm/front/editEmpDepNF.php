@@ -170,7 +170,6 @@ require_once('../../../config/query.php');
               <label for="loginAdministrador">LOGIN ADMINISTRADOR:<span style="color: red;">*</span></label>
             </div>';
                 }
-                $conn->close();
                 ?>
                 <div class="text-left py-2">
                   <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/nfEmpDep.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>

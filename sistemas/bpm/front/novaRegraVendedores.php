@@ -15,7 +15,7 @@ require_once('../config/query.php');
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
-        <li class="breadcrumb-item"><a href="manutencaoSmart.php?pg=<?= $_GET['pg'] ?>">Vendas</a></li>
+        <li class="breadcrumb-item"><a href="vendedores.php?pg=<?= $_GET['pg'] ?>">Vendedores</a></li>
         <li class="breadcrumb-item">NOVA REGRA VENDEDORES</li>
       </ol>
     </nav>
@@ -23,6 +23,9 @@ require_once('../config/query.php');
 
   <?php
   require_once('../../../inc/mensagens.php'); //Alertas
+
+  $cpfValue = $_POST['cpfValue'];
+
   ?>
 
   <!--################# COLE section AQUI #################-->
@@ -38,6 +41,7 @@ require_once('../config/query.php');
                 <select class="form-select" name="empresa" id="empresa" required>
                   <option value="">Selecione a empresa</option>
                     <?php 
+                     
                       $sucesso = $conn->query($queryTabela);
 
                           while($row1 = $sucesso->fetch_assoc()){
@@ -80,16 +84,18 @@ require_once('../config/query.php');
                 </select>
                 <label for="nome" class="capitalize">NOME:<code>*</code></label>
               </div>
-              <div class="form-floating mt-4 col-md-6" id="cpfValue">
-                <select class="form-select" name="cpfValue" id="cpfVet" required>
+              <div class="form-floating mt-4 col-md-6" id="cpfValue" style="<?= ($_GET['funcao']== 1)? 'display:none;':'display:block;' ?>" >
+                <select class="form-select" name="cpfValue" id="cpfVet" <?= ($_GET['funcao'] == '')? 'required' : '' ?>>
                   <option value="">-------------------</option>
                 </select>
                 <label for="cpf" class="capitalize">CPF:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6" id="cpfShow" style="display:none;">
-                <input class="form-control" onkeydown="javascript: fMasc(this, mCPF);" maxlength="14" onblur="ValidarCPF(this)" name="cpfValue" required >
-                <label for="cpf" class="capitalize">CPF:<span style="color: red;">*</span></label>
+              <!-- required -->
+              <div class="form-floating mt-4 col-md-6" id="cpfShow" style="<?= ($_GET['funcao']== 1)? 'display:block;':'display:none;' ?>" >
+                <input class="form-control" value="<?= $cpfValue ?>"onkeydown="javascript: fMasc(this, mCPF);" maxlength="14" onblur="ValidarCPF(this)" name="cpfValue" >
+                <label for="cpf" class="capitalize">CPF:<span style="color: red;">*</span></label>   
               </div>
+              <!-- fim required -->
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-control" id="login_smartshare" name="login_smartshare" required>
                   <option value="">-------------------</option>
@@ -105,13 +111,33 @@ require_once('../config/query.php');
                 </select>
                 <label for="situacao">SITUAÇÃO:<code>*</code></label>
               </div>
-
-              <div class="text-left py-2">
-                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/vendedores.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
-                <button type="button" class="btn btn-secondary" onclick="mostrarBotao()">Cadastrar CPF</button>
-                <button type="submit" class="btn btn-success">Salvar</button>
+                
+              <div class="text-left py-2" style="display:inline-flex">
+                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/vendedores.php?pg=<?= $_GET['pg'] ?>" ><button type="button" class="btn btn-primary">Voltar</button></a>
+                <button type="button" style="margin-left: 5px;<?= ($_GET['funcao']== 1)? 'display:none;' : 'display:block;'?>" id='botao' data-bs-toggle="modal" data-bs-target="#verticalycentered" class="btn btn-secondary" >Cadastrar CPF</button>
+                <button type="submit" style="margin-left: 5px;" class="btn btn-success">Salvar</button>
               </div>
-            </form><!-- FIM Form -->
+            </form>
+
+            <form action="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/novaRegraVendedores.php?pg=<?= $_GET['pg'] ?>&funcao=1" method="POST">
+              <div class="modal fade" id="verticalycentered" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Cadastro CPF</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <label for="cpf" class="capitalize">CPF:<span style="color: red;">*</span></label>                    
+                        <input class="form-control" onkeydown="javascript: fMasc(this, mCPF);" maxlength="14" onblur="ValidarCPF(this)" name="cpfValue" <?= ($_GET['funcao'] == '')? 'required' : '' ?> >
+                      <div class="modal-footer">
+                       <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/novaRegraVendedores.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button></a>
+                        <button type="submit" class="btn btn-primary">Cadastrar</button></a>
+                      </div>
+                    </div>
+                  </div>
+              </div><!-- FIM Form -->
+            </form>
           </div><!-- FIM card-body -->
         </div><!-- FIM card --> 
       </div>
@@ -125,6 +151,7 @@ require_once('../config/query.php');
 require_once('footer.php'); //Javascript e configurações afins
 ?>
 <script>
+
   function mostrarBotao() {
     var tela = document.getElementById("cpfValue").style.display;
 
@@ -142,7 +169,7 @@ require_once('footer.php'); //Javascript e configurações afins
       
     }
   }
-
+  
   $("#nome").on("change", function() {
     var idUsuario = $("#nome").val();
 
@@ -163,7 +190,7 @@ require_once('footer.php'); //Javascript e configurações afins
       }
 
     });
-
+    
     $.ajax({
       url: '../inc/trazLogin.php',
       type: 'POST',
@@ -182,6 +209,6 @@ require_once('footer.php'); //Javascript e configurações afins
 
     });
    
-  });
- 
+    });
+    
 </script>

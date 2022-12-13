@@ -60,9 +60,9 @@ require_once('../config/query.php');
                   }else{
                     $ativo = "NÃO";
                   }
-
-                  if($smartshare == 'S'){
-                     $smartshare = 'SIM';
+                  switch($smartshare){
+                    case 'S':
+                      $smartshare = 'SIM';
                      //verifica no banco de dados se o usuario é admin
 
                       $admin = "SELECT * FROM usuarios WHERE id_usuario = ".$_SESSION['id_usuario']." ";
@@ -70,6 +70,7 @@ require_once('../config/query.php');
                       $conexao = $conn->query($admin);
 
                       while($admin = $conexao->fetch_assoc()){
+                        
                         if ($admin['admin'] == 1) { //apenas administrador pode realizar a edição deste campo
                           $disable = '';
                           $display = 'block';
@@ -79,12 +80,21 @@ require_once('../config/query.php');
                             $display = 'block';
                         }
                       }
-                      
-                  }else{
-                    $smartshare = "NÃO";
-                    $disable = '';
-                    $display = 'none';
+                      break;
+                      case 'N':
+                        $smartshare = "NÃO";
+                        $disable = '';
+                        $display = 'none';
+                        break;
+                      case 'P':
+                        $smartshare = "PAPEL";
+                        $disable = '';
+                        $display = 'none';
+                        break;
                   }
+                 
+                     
+                  
                   
         echo '<div class="form-floating mt-4 col-md-6" id="cnpj"> 
                   <input type="text" value="'.$row['CNPJ'].'" class="form-control" disabled>
@@ -141,7 +151,7 @@ require_once('../config/query.php');
                   <option value="">------------</option>
                   <option value="S">SIM</option>
                   <option value="N">NÃO</option>
-                  <option value="N">PAPEL</option>
+                  <option value="P">PAPEL</option>
                 </select>
                 <label for="utilizaSmartshare2">SMARTSHARE:<span style="color: red;">*</span></label>
               </div>
@@ -174,16 +184,25 @@ require_once('../config/query.php');
 <script>
   function aparece() {
     var value = document.getElementById("utilizaSmartshare").value;
-
-    if (value == "N") {
-      document.getElementById("SMARTSHARE_LOGIN").style.display = "none";
+    switch(value){
+      case 'N':
+        document.getElementById("SMARTSHARE_LOGIN").style.display = "none";
       document.getElementById("smartshareLogin").required = false;
       document.getElementById("smartshareLogin").value = "";
-      
-    } else {
-      document.getElementById("SMARTSHARE_LOGIN").style.display = "block";
+      break;
+      case 'S':
+        document.getElementById("SMARTSHARE_LOGIN").style.display = "block";
       document.getElementById("smartshareLogin").required = true;
+      break;
+      case 'P':
+        document.getElementById("SMARTSHARE_LOGIN").style.display = "none";
+      document.getElementById("smartshareLogin").required = false;
+      document.getElementById("smartshareLogin").value = "";
+      break;
     }
+    
+      
+    
   }
 </script>
 

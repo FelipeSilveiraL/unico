@@ -147,7 +147,6 @@ require_once('../config/query.php');
                       echo' <td>' . date('d/m/Y m:i:s', strtotime($log['data_alteracao'])) . '</td>
                           </tr>';
                   }
-                  $conn->close();
                   ?>
               </tbody>
             </table>

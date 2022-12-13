@@ -74,7 +74,7 @@ require_once('../config/query.php');
                   echo '<td ' . $usuarioFuncao . '><a href="editSeminovos.php?pg=' . $_GET["pg"] . '&id_semi=' . $fornecedoresSeminovos["ID_FORNECEDOR"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
                        <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarFor.php?pg='.$_GET['pg'].'&id_fornecedor=' . $fornecedoresSeminovos["ID_FORNECEDOR"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a></td>
                       </tr>';
-                  }$conn->close();
+                  }
                 ?>
               </tbody>
             </table>

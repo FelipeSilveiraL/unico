@@ -12,6 +12,6 @@ if($usuario = sqlsrv_fetch_array($resultadoUsuario, SQLSRV_FETCH_ASSOC)) {
     echo '<option value="' . $cpf . '" >' . $cpf.'</option>';
 
 }else{
-    $cpf = "CPF não cadastrado na selbetti! Por favor cadastre";
-    echo '<option value="1" >' . $cpf.'</option>';
+    $cpf = "CPF não cadastrado na selbetti! Por favor cadastrar";
+    echo '<option value="" id="oi" selected="selected">' . $cpf.'</option>';
 }
