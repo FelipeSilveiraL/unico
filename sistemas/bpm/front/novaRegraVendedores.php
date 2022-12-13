@@ -34,19 +34,19 @@ require_once('../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-     
+
             <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraVendedores.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" name="empresa" id="empresa" required>
                   <option value="">Selecione a empresa</option>
-                    <?php 
-                     
-                      $sucesso = $conn->query($queryTabela);
+                  <?php
 
-                          while($row1 = $sucesso->fetch_assoc()){
-                            echo '<option value="'.$row1['ID_EMPRESA'].'">'.$row1['NOME_EMPRESA'].'</option>';
-                          }
+                  $sucesso = $conn->query($queryTabela);
+
+                  while ($row1 = $sucesso->fetch_assoc()) {
+                    echo '<option value="' . $row1['ID_EMPRESA'] . '">' . $row1['NOME_EMPRESA'] . '</option>';
+                  }
 
                   ?>
                 </select>
@@ -56,16 +56,16 @@ require_once('../config/query.php');
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" name="departamento" id="departamento" required>
                   <option value="">Selecione o departamento</option>
-                    <?php
+                  <?php
 
-                    $sucesso2 = $conn->query($depVendasQuery);
+                  $sucesso2 = $conn->query($depVendasQuery);
 
-                    while ($row2 = $sucesso2->fetch_assoc()) {
-                      echo '<option value="' . $row2['ID_DEPARTAMENTO'] . '">' . $row2['NOME_DEPARTAMENTO'] . '</option>';
-                    }
-                    ?>
+                  while ($row2 = $sucesso2->fetch_assoc()) {
+                    echo '<option value="' . $row2['ID_DEPARTAMENTO'] . '">' . $row2['NOME_DEPARTAMENTO'] . '</option>';
+                  }
+                  ?>
                 </select>
-                  <label for="filial" class="capitalize">DEPARTAMENTO:<code>*</code></label>
+                <label for="filial" class="capitalize">DEPARTAMENTO:<code>*</code></label>
               </div>
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" name="nome" id="nome">
@@ -84,24 +84,18 @@ require_once('../config/query.php');
                 </select>
                 <label for="nome" class="capitalize">NOME:<code>*</code></label>
               </div>
-              <div class="form-floating mt-4 col-md-6" id="cpfValue" style="<?= ($_GET['funcao']== 1)? 'display:none;':'display:block;' ?>" >
-                <select class="form-select" name="cpfValue" id="cpfVet" <?= ($_GET['funcao'] == '')? 'required' : '' ?>>
-                  <option value="">-------------------</option>
-                </select>
-                <label for="cpf" class="capitalize">CPF:<span style="color: red;">*</span></label>
-              </div>
-              <!-- required -->
-              <div class="form-floating mt-4 col-md-6" id="cpfShow" style="<?= ($_GET['funcao']== 1)? 'display:block;':'display:none;' ?>" >
-                <input class="form-control" value="<?= $cpfValue ?>"onkeydown="javascript: fMasc(this, mCPF);" maxlength="14" onblur="ValidarCPF(this)" name="cpfValue" >
-                <label for="cpf" class="capitalize">CPF:<span style="color: red;">*</span></label>   
-              </div>
-              <!-- fim required -->
               <div class="form-floating mt-4 col-md-6">
-                <select class="form-control" id="login_smartshare" name="login_smartshare" required>
-                  <option value="">-------------------</option>
-                </select>
-                <label for="login_smartshare" class="capitalize">LOGIN SMARTSHARE:<code>*</code></label>
+
+                <input name="cpfVet" type="text" class="form-control" id="cpfVet" onkeydown="javascript: fMasc( this, mCPF );" maxlength="14" onblur="ValidarCPF(this)" value="" readOnly>
+                <label for="cpfVet" class="capitalize">CPF:<span style="color: red;">*</span></label>
               </div>
+
+              <div class="form-floating mt-4 col-md-6">
+                <input name="login_smartshare" type="text" class="form-control" id="login_smartshare" readOnly>
+                <label for="login_smartshare" class="capitalize">LOGIN SMARTSHARE:<span style="color: red;">*</span></label>
+              </div>
+
+              <input name="cd_smartshare" type="text" class="form-control" id="cd_smartshare" style="display: none;">
 
               <div class="form-floating mt-4 col-md-6" id="situacao">
                 <select class="form-select" name="situacao" required>
@@ -109,37 +103,20 @@ require_once('../config/query.php');
                   <option value="A">ATIVO</option>
                   <option value="D">DESATIVADO</option>
                 </select>
-                <label for="situacao">SITUAÇÃO:<code>*</code></label>
+                <label for="situacao">SITUAÇÃO:<span style="color: red;">*</span></label>
               </div>
-                
-              <div class="text-left py-2" style="display:inline-flex">
-                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/vendedores.php?pg=<?= $_GET['pg'] ?>" ><button type="button" class="btn btn-primary">Voltar</button></a>
-                <button type="button" style="margin-left: 5px;<?= ($_GET['funcao']== 1)? 'display:none;' : 'display:block;'?>" id='botao' data-bs-toggle="modal" data-bs-target="#verticalycentered" class="btn btn-secondary" >Cadastrar CPF</button>
-                <button type="submit" style="margin-left: 5px;" class="btn btn-success">Salvar</button>
-              </div>
-            </form>
 
-            <form action="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/novaRegraVendedores.php?pg=<?= $_GET['pg'] ?>&funcao=1" method="POST">
-              <div class="modal fade" id="verticalycentered" tabindex="-1">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">Cadastro CPF</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <label for="cpf" class="capitalize">CPF:<span style="color: red;">*</span></label>                    
-                        <input class="form-control" onkeydown="javascript: fMasc(this, mCPF);" maxlength="14" onblur="ValidarCPF(this)" name="cpfValue" <?= ($_GET['funcao'] == '')? 'required' : '' ?> >
-                      <div class="modal-footer">
-                       <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/novaRegraVendedores.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button></a>
-                        <button type="submit" class="btn btn-primary">Cadastrar</button></a>
-                      </div>
-                    </div>
-                  </div>
-              </div><!-- FIM Form -->
-            </form>
+              <div class="text-left py-2">
+                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/gerentes.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
+                <button type="submit" class="btn btn-success">Salvar</button>
+
+                <button type="button" onclick="liberar()" id='addCPFSelbetti' style="margin-left: 426px; display: none;" class="btn btn-warning">Liberar campo CPF</button>
+              </div>
+            </form><!-- FIM Form -->
+
           </div><!-- FIM card-body -->
-        </div><!-- FIM card --> 
+        </div><!-- FIM card -->
       </div>
     </div> <!-- FIM col-lg-12 -->
   </section><!-- FIM section -->
@@ -150,47 +127,48 @@ require_once('../config/query.php');
 <?php
 require_once('footer.php'); //Javascript e configurações afins
 ?>
+
 <script>
-
-  function mostrarBotao() {
-    var tela = document.getElementById("cpfValue").style.display;
-
-    if (tela == "block") {
-      document.getElementById("cpfShow").style.display = "block";
-      document.getElementById("cpfShow").required = true;
-      document.getElementById("cpfValue").style.display = "none";
-      document.getElementById("cpfVet").required = false;
-      document.getElementById("cpfVet").value = "";
-    } else {
-      document.getElementById("cpfValue").style.display = "block";
-      document.getElementById("cpfValue").required = true;
-      document.getElementById("cpfShow").style.display = "none";
-      document.getElementById("cpfShow").required = false;
-      
-    }
+  function liberar() {
+    document.getElementById("cpfVet").readOnly = false;
+    document.getElementById("cpfVet").value = ' ';
+    document.getElementById("cpfVet").focus();
   }
-  
+
   $("#nome").on("change", function() {
     var idUsuario = $("#nome").val();
 
     $.ajax({
+
       url: '../inc/trazUsuario.php',
       type: 'POST',
       data: {
         id: idUsuario
       },
+
       beforeSend: function(data) {
-        $("#cpfVet").html('<option value="">Carregando...</option>');
+        $("#cpfVet").val('Carregando...');
       },
+
       success: function(data) {
-        $("#cpfVet").html(data);
+
+        $("#cpfVet").val(data);
+
+        if (data === "CPF não localizado no RH, favor verificar") {
+          $("#addCPFSelbetti").show();
+        } else {
+          $("#addCPFSelbetti").hide();
+        }
       },
+
       error: function(data) {
-        $("#cpfVet").html('<option value="">Erro ao carregar...</option>');
+        $("#cpfVet").val('Erro ao carregar...');
       }
 
     });
-    
+
+
+
     $.ajax({
       url: '../inc/trazLogin.php',
       type: 'POST',
@@ -198,17 +176,17 @@ require_once('footer.php'); //Javascript e configurações afins
         id: idUsuario
       },
       beforeSend: function(data) {
-        $("#login_smartshare").html('<option value="">Carregando...</option>');
+        $("#login_smartshare").val('Carregando...');
       },
       success: function(data) {
-        $("#login_smartshare").html(data);
+        $("#login_smartshare").val(data.split("/")[0]);
+        $("#cd_smartshare").val(data.split("/")[1]);
+
       },
       error: function(data) {
-        $("#login_smartshare").html('<option value="">Erro ao carregar...</option>');
+        $("#login_smartshare").val('Erro ao carregar...');
       }
 
     });
-   
-    });
-    
+  });
 </script>
