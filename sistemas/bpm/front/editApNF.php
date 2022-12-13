@@ -321,12 +321,15 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                         }
                     </script>
                 </div>
+
                 <div class="form-floating mt-4 col-md-6" id="gerente">
                     <select class="form-select" name="gerente" required>';
                 $query_users4 =
-                    "SELECT * FROM bpm_usuarios_smartshare WHERE ds_login='" .
+                    "SELECT * FROM bpm_usuarios_smartshare WHERE ds_login = '" .
                     $row['APROVADOR_GERENTE'] .
                     "' ";
+
+                    echo $query_users4;
 
                 $conecção4 = $conn->query($query_users4);
                 while ($fila4 = $conecção4->fetch_assoc()) {
