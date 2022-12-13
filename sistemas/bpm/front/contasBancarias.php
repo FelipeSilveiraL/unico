@@ -36,7 +36,7 @@ require_once('../config/query.php');
           
           <div class="card-body">
             <!-- Table with stripped rows -->
-            <table class="table datatable">
+            <table class="table table-striped datatable">
               <thead>
                 <tr>
                   <th scope="col" class="capitalize">CNPJ / CPF</th>

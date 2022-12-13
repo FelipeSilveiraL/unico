@@ -42,7 +42,7 @@ require_once('../inc/apiRecebeVendedores.php');
             </div>
             <div class="card-body">
               <br>
-              <table class="table datatable">
+              <table class="table table-striped datatable">
                 <thead>
                   <tr>
                     <th scope="col" class="capitalize">#</th>

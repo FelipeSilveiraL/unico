@@ -55,7 +55,7 @@ $usuarios = $resultado->fetch_assoc();
               <div class="tab-pane fade show active" id="modulos" role="tabpanel" aria-labelledby="modulos-tab">
                 <form action="../inc/usuariosPermissoes.php?pg=<?= $_GET['pg'] ?>&id_usuarios=<?= $_GET['id_usuarios'] ?>&acao=1" method="post">
                   <!-- Table with stripped rows -->
-                  <table class="table datatable">
+                  <table class="table table-striped datatable">
                     <thead>
                       <tr>
                         <th scope="col" class="capitalize">#</th>
@@ -105,7 +105,7 @@ $usuarios = $resultado->fetch_assoc();
                 <form action="../inc/usuariosPermissoes.php?pg=<?= $_GET['pg'] ?>&id_usuarios=<?= $_GET['id_usuarios'] ?>&acao=3" method="post">
 
                   <!-- Table with stripped rows -->
-                  <table class="table datatable">
+                  <table class="table table-striped datatable">
                     <thead>
                       <tr>
                         <th scope="col" class="capitalize">#</th>
@@ -157,7 +157,7 @@ $usuarios = $resultado->fetch_assoc();
                 <form action="../inc/usuariosPermissoes.php?pg=<?= $_GET['pg'] ?>&id_usuarios=<?= $_GET['id_usuarios'] ?>&acao=2" method="post">
 
                   <!-- Table with stripped rows -->
-                  <table class="table datatable" id="div_func">
+                  <table class="table table-striped datatable" id="div_func">
                     <thead>
                       <tr>
                         <th scope="col" class="capitalize "><input type="checkbox" id="all">&emsp;&emsp;</th>

@@ -56,7 +56,7 @@ require_once('../inc/apiRecebeAprov.php');
           
           <div class="card-body">
             <!-- Table with stripped rows -->
-            <table class="table datatable">
+            <table class="table table-striped datatable">
               <thead>
                 <tr>
                   <th scope="col" class="capitalize">#</th>
@@ -66,8 +66,8 @@ require_once('../inc/apiRecebeAprov.php');
                   <th scope="col" class="capitalize">AREA</th>
                   <th scope="col" class="capitalize">MARCA</th>
                   <th scope="col" class="capitalize">GERENTE GERAL</th>
-                  <th scope="col" class="capitalize">SUPER INTEN.</th>
-                  <th scope="col" class="capitalize">AÇÃO</th>
+                  <th scope="col" class="capitalize">SUPER INTEN.</th>                  
+                  <th scope="col" width="200" class="capitalize text-right">Ação</th>
 
                 </tr>
               </thead>

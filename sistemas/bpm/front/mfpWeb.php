@@ -38,7 +38,7 @@ require_once('../inc/recebeMFP.php');//recebe os dados da api e insere no banco 
             <div class="card-body">
 
               <!-- Table with stripped rows -->
-              <table class="table datatable">
+              <table class="table table-stripeddatatable">
                 <thead>
                   <tr>
                     <th scope="col" class="capitalize">LINK</th>

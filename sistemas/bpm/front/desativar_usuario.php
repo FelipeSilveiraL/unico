@@ -54,7 +54,7 @@ require_once('../config/query.php'); //Dados do banco MYSQL
           <div class="card-body">
             <h5 class="card-title">Listagem de sistemas do usuário</h5>
             <!-- Small tables -->
-            <table class="table table-sm">
+            <table class="table table-striped">
               <thead>
                 <tr>
                   <th scope="col" class="capitalize">#</th>

@@ -37,7 +37,7 @@ require_once('../inc/apiRecebeDepRH.php');
           
           <div class="card-body">
             <!-- Table with stripped rows -->
-            <table class="table datatable">
+            <table class="table table-striped datatable">
               <thead>
                 <tr>
                   <th scope="col" class="capitalize">#</th>
