@@ -7,7 +7,7 @@ require_once '../../../config/config.php';
 require_once '../config/query.php';
 
 /* Essa opção descomentar após criar em telas_funcoes.php*/
-//echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
+echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
 
 <main id="main" class="main">
@@ -43,29 +43,18 @@ require_once '../config/query.php';
             <br>
             <?php
             $id = $_GET['id_aprovador'];
-            $aprovNF .= ' WHERE ID_APROVADOR = ' . $id . '';
+            $aprovNF .= ' WHERE AP.ID_APROVADOR = ' . $id . '';
             $result = $conn->query($aprovNF);
 
             while ($row = $result->fetch_assoc()) {
 
-              $searchCompany = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = ".$row['ID_EMPRESA']."";
-              $sucesso = $conn->query($searchCompany);
-              if($nameCompany = $sucesso->fetch_assoc()){
-                $name = $nameCompany['NOME_EMPRESA'];
-              }
-            
-              $searchDep = "SELECT NOME_DEPARTAMENTO FROM bpm_rh_departamento WHERE ID_DEPARTAMENTO = ".$row['ID_DEPARTAMENTO']."";
-              $success = $conn->query($searchDep);
-              if($nameDep = $success->fetch_assoc()){
-                $nameDepartament = $nameDep['NOME_DEPARTAMENTO'];
-              }
                 echo '<form method="POST" class="row g-3" action="http://' .
                     $_SESSION['servidorOracle'] .
                     '/' .
                     $_SESSION['smartshare'] .
                     '/bd/editApNF.php?pg=' .
                     $_GET['pg'] .
-                    'id_aprovador=' .
+                    '&id_aprovador=' .
                     $id .
                     '" >
                 <div class="form-floating mt-4 col-md-6" id="user">
@@ -73,13 +62,13 @@ require_once '../config/query.php';
                     $id .
                     '" name = "id_aprovador">
                   <input type="text" class="form-select" value="' .
-                    $name .
+                    $row['NOME_EMPRESA'] .
                     '" disabled>
                   <label for="user">EMPRESA:</label>
                 </div>
                 <div class="form-floating mt-4 col-md-6" id="dep">
                   <input type="text" class="form-select" value="' .
-                    $nameDepartament .
+                    $row['NOME_DEPARTAMENTO'] .
                     '" name="dep" disabled>
                   <label for="dep">DEPARTAMENTO:</label>
                 </div>';
