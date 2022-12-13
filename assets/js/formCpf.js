@@ -45,7 +45,8 @@ function ValidarCPF(cpf) {
 
     if (retorno != true) {
         alert('CPF invalido!');
-        document.getElementById("cpfDoador").value = '';
+        document.getElementById("cpfVet").value = ' ';
+        document.getElementById("cpfVet").focus();
     }
 }
 

@@ -7,6 +7,6 @@
 
     $_SESSION['unico'] = "10.100.1.214";
 
-    $_SESSION['smartshare'] = "smartshare_new";
+    $_SESSION['smartshare'] = "smartshare";
 
 ?>

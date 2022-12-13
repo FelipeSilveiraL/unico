@@ -1,17 +1,20 @@
 <?php
-require_once('../config/query.php');
 
-$queryUsuario .= " WHERE nomfun = '".$_POST['id']."' ";
+    require_once('../config/query.php');
 
-$resultadoUsuario = sqlsrv_query($connVetorh, $queryUsuario);
+    $nome = explode("  ", $_POST['id']);
 
-if($usuario = sqlsrv_fetch_array($resultadoUsuario, SQLSRV_FETCH_ASSOC)) {
+    for ($i=0; trim($nome[$i]) != NULL ; $i++) { 
+        $nomeUsuario .= $nome[$i]." ";
+    }
+    
+    $queryUsuario .= " WHERE nomfun = '".$nomeUsuario."'";
 
-    $cpf = $usuario['numcpf'];
-   
-    echo '<option value="' . $cpf . '" >' . $cpf.'</option>';
+    $resultadoUsuario = sqlsrv_query($connVetorh, $queryUsuario);
 
-}else{
-    $cpf = "CPF não cadastrado na selbetti! Por favor cadastrar";
-    echo '<option value="" id="oi" selected="selected">' . $cpf.'</option>';
-}
+    if ($usuario = sqlsrv_fetch_array($resultadoUsuario, SQLSRV_FETCH_ASSOC)) {
+        echo $cpf = $usuario['numcpf'];
+    } else {
+        //se for alterar esta frase, tem que alterar tambem ../front/novaRegraGerente.php
+        echo $cpf = 'CPF não localizado no RH, favor verificar';
+    }

@@ -89,7 +89,7 @@ $queryCustoVeiculo = "SELECT * FROM bpm_custo_veiculo";
 
 $queryCidade = "SELECT * FROM cidades";
 
-$queryUsuario = "SELECT numcpf FROM v_func";
+$queryUsuario = "SELECT numcpf FROM dbo.v_func";
 
 $departamentosQuery = "SELECT * FROM bpm_rh_departamento";
 
