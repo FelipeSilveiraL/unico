@@ -13,7 +13,7 @@ switch ($_GET['acao']) {
         }
         break;
 
-    case '2': //EXCLUZÃO
+    case '2': //EXCLUIR
         $queryEspelho = "DELETE FROM cad_espelho WHERE id_usuariofilho = '" . $_GET['idUsuario'] . "' AND id_usuariopai = '" . $_GET['idUsuarioremover'] . "'";
         $msn = '1';
         break;

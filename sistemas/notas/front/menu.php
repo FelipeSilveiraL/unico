@@ -31,17 +31,7 @@ if(!$coressistema = $resultado->fetch_assoc()){ $color = "#fff";}else{ $color = 
             </a>
             <ul id="cadastro-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="#" <?= $_GET['tela'] == 1 ? "class='active'" : "" ?>>
-                        <i class="bi bi-circle"></i><span>Filial</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" <?= $_GET['tela'] == 2 ? "class='active'" : "" ?>>
-                        <i class="bi bi-circle"></i><span>Fornecedor</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" <?= $_GET['tela'] == 3 ? "class='active'" : "" ?>>
+                    <a href="rateioFornecedor.php" <?= $_GET['tela'] == 3 ? "class='active'" : "" ?>>
                         <i class="bi bi-circle"></i><span>Rateio Fornecedor</span>
                     </a>
                 </li>

@@ -41,4 +41,12 @@ $queryCountErros = "SELECT COUNT(CL.id_lancarnotas) as countErros FROM cad_lanca
 $resultCountErros = $connNOTAS->query($queryCountErros);
 $countErros = $resultCountErros->fetch_assoc();
 
+/*===================================*/
+
+$queryFilial = "SELECT ID_EMPRESA, NOME_EMPRESA FROM bpm_empresas WHERE SITUACAO = 'A'";
+
+/*===================================*/
+
+$queryBancos = "SELECT * FROM bancos";
+
 ?>

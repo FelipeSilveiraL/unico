@@ -123,8 +123,8 @@ if ($_SESSION['id_usuario'] == NULL) {
                 </div>
                 <div class="modal-body">
                     <!-- Profile Edit Form -->
-                    <form action="../../../inc/editar_perfil.php?id_usuario=<?= $_SESSION['id_usuario'] ?>&id_sistema=1" method="post">
-                        <h5 class="card-title">Principal</h5>
+                    <form action="../inc/editar_perfil.php?id_usuario=<?= $_SESSION['id_usuario'] ?>&id_sistema=1" method="post">
+                        <h5 class="card-title">Dados principais</h5>
                         <div class="row mb-3">
                             <label for="nomeUsuario" class="col-md-4 col-lg-3 col-form-label">Nome</label>
                             <div class="col-md-8 col-lg-9">
@@ -183,7 +183,7 @@ if ($_SESSION['id_usuario'] == NULL) {
                                 </select>
                             </div>
                         </div>
-                        <h5 class="card-title">Login</h5>
+                        <h5 class="card-title">Login Unico</h5>
                         <div class="row mb-3">
                             <label for="usuario" class="col-md-4 col-lg-3 col-form-label">Usuário</label>
                             <div class="col-md-8 col-lg-9">
@@ -195,6 +195,21 @@ if ($_SESSION['id_usuario'] == NULL) {
                             <label for="senha" class="col-md-4 col-lg-3 col-form-label">Senha</label>
                             <div class="col-md-8 col-lg-9">
                                 <input name="senha" type="password" class="form-control" id="senha" value="">
+                            </div>
+                        </div>
+
+                        <h5 class="card-title">Login SmartShare</h5>
+                        <div class="row mb-3">
+                            <label for="usuario" class="col-md-4 col-lg-3 col-form-label">Usuário</label>
+                            <div class="col-md-8 col-lg-9">
+                                <input name="usuarioSmart" type="text" class="form-control" id="usuario" value="<?= $_SESSION['usuario'] ?>" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="senha" class="col-md-4 col-lg-3 col-form-label">Senha</label>
+                            <div class="col-md-8 col-lg-9">
+                                <input name="senhaSmart" type="password" class="form-control" id="senha" value="" required>
                             </div>
                         </div>
 
