@@ -72,7 +72,6 @@ require_once('../config/query.php');
                       while($admin = $conexao->fetch_assoc()){
                         
                         if ($admin['admin'] == 1) { //apenas administrador pode realizar a edição deste campo
-                          $disable = '';
                           $display = 'block';
                           $smartshare = 'SIM';
                         } else {
@@ -83,12 +82,10 @@ require_once('../config/query.php');
                       break;
                       case 'N':
                         $smartshare = "NÃO";
-                        $disable = '';
                         $display = 'none';
                         break;
                       case 'P':
                         $smartshare = "PAPEL";
-                        $disable = '';
                         $display = 'none';
                         break;
                   }
@@ -156,7 +153,7 @@ require_once('../config/query.php');
                 <label for="utilizaSmartshare2">SMARTSHARE:<span style="color: red;">*</span></label>
               </div>
               <div class="form-floating mt-4 col-md-6" id="SMARTSHARE_LOGIN"  style="';echo ($smartshare == 'SIM') ? 'display: block;">': 'display: none;">';
-               echo '<input type="text" value="'.$smartshare_login.'"  class="form-control" name="login" id="smartshareLogin" required '.$disable.' >
+               echo '<input type="text" value="'.$smartshare_login.'"  class="form-control" name="login" id="smartshareLogin"  >
                 <label for="SMARTSHARE_LOGIN">INFORME UM LOGIN:<span style="color: red;">*</span></label>
                 <span style="font-size: small;color: red;">NOME e os 3 primeiro números do CPF (Ex.: Joao.094)</span>
               </div>
@@ -186,19 +183,20 @@ require_once('../config/query.php');
     var value = document.getElementById("utilizaSmartshare").value;
     switch(value){
       case 'N':
-        document.getElementById("SMARTSHARE_LOGIN").style.display = "none";
+      document.getElementById("SMARTSHARE_LOGIN").style.display = "none";
       document.getElementById("smartshareLogin").required = false;
-      document.getElementById("smartshareLogin").value = "";
+      document.getElementById("smartshareLogin").value = " ";
       break;
       case 'S':
         document.getElementById("SMARTSHARE_LOGIN").style.display = "block";
       document.getElementById("smartshareLogin").required = true;
       break;
       case 'P':
-        document.getElementById("SMARTSHARE_LOGIN").style.display = "none";
+      document.getElementById("SMARTSHARE_LOGIN").style.display = "none";
       document.getElementById("smartshareLogin").required = false;
-      document.getElementById("smartshareLogin").value = "";
+      document.getElementById("smartshareLogin").value = " ";
       break;
+      
     }
     
       

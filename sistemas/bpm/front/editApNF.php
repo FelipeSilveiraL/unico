@@ -361,8 +361,8 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                 echo ' </select>
                   <label for="gerente">GERENTE GERAL:</label>
                   </div>
-                  <div class="form-floating mt-4 col-md-5"id="limiteG">
-                      <input class="form-control"  value="';
+                  <div class="form-floating mt-4 col-md-5">
+                      <input class="form-control" id="limiteG"  value="';
 
                 $number = $row['LIMITE_GERAL'];
 
@@ -454,41 +454,41 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                 echo ' </select>
                   <label for="super">SUPERINTENDENTE:</label>
                   </div>
-                  <div class="form-floating mt-4 col-md-5" id="limiteSuper">
-                      <input class="form-control"  value="';
-                $number = $row['LIMITE_SUPERITENDENTE'];
+                  <div class="form-floating mt-4 col-md-5" >
+                    <input class="form-control" id="limiteSuper" value="';
+                      $number = $row['LIMITE_SUPERITENDENTE'];
 
-                $quantidade = strlen($number);
+                      $quantidade = strlen($number);
 
-                if ($quantidade <= 5) {
-                    $c = $quantidade - 2;
-                    $valorDepoisVirgula = substr($number, $c);
-                    $valorAntesVirgula = substr($number, 0, $c);
+                      if ($quantidade <= 5) {
+                          $c = $quantidade - 2;
+                          $valorDepoisVirgula = substr($number, $c);
+                          $valorAntesVirgula = substr($number, 0, $c);
 
-                    if ($valorAntesVirgula != '') {
-                        echo $valorAntesVirgula . ',' . $valorDepoisVirgula;
-                    } else {
-                        echo $valorDepoisVirgula;
-                    }
-                } else {
-                    $numeroDepoisVirgula = $quantidade - 2;
-                    $valorDepoisVirgula = substr($number, $numeroDepoisVirgula);
-                    $valorAntesVirgula = substr(
-                        $number,
-                        0,
-                        $numeroDepoisVirgula
-                    );
-                    $ponto = $quantidade - 5;
-                    $valorAntesponto = substr($number, $ponto, 3);
-                    $valorDepoisponto = substr($number, 0, $ponto);
-                    echo $valorDepoisponto .
-                        '.' .
-                        $valorAntesponto .
-                        ',' .
-                        $valorDepoisVirgula;
-                }
+                          if ($valorAntesVirgula != '') {
+                              echo $valorAntesVirgula . ',' . $valorDepoisVirgula;
+                          } else {
+                              echo $valorDepoisVirgula;
+                          }
+                      } else {
+                          $numeroDepoisVirgula = $quantidade - 2;
+                          $valorDepoisVirgula = substr($number, $numeroDepoisVirgula);
+                          $valorAntesVirgula = substr(
+                              $number,
+                              0,
+                              $numeroDepoisVirgula
+                          );
+                          $ponto = $quantidade - 5;
+                          $valorAntesponto = substr($number, $ponto, 3);
+                          $valorDepoisponto = substr($number, 0, $ponto);
+                          echo $valorDepoisponto .
+                              '.' .
+                              $valorAntesponto .
+                              ',' .
+                              $valorDepoisVirgula;
+                      }
 
-                echo '" name="limitS">
+                      echo '" name="limitS">
                   <label for="limiteSuper">LIMITE APROVAÇÃO:</label>
                   </div> 
                   <div class="form-floating col-md-1" style="font-size:25px;" title="Ilimitado!">

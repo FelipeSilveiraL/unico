@@ -24,7 +24,7 @@ $criaTabela = "CREATE TABLE `bpm_nf_aprovadores` (
   `LIMITE_AREA` VARCHAR(45) NULL,
   `LIMITE_MARCA` VARCHAR(45) NULL,
   `LIMITE_GERAL` VARCHAR(45) NULL,
-  `LIMITE_SUPERINTENDENTE` VARCHAR(45) NULL,
+  `LIMITE_SUPERITENDENTE` VARCHAR(45) NULL,
   PRIMARY KEY (`id`) )";
 
 $execTabela = $conn->query($criaTabela);
@@ -42,7 +42,7 @@ foreach ($resultado->aprov as $aprovador) {
 
     $queryApr = "INSERT INTO bpm_nf_aprovadores 
                             (ID_APROVADOR,APROVADOR_FILIAL,APROVADOR_AREA,APROVADOR_MARCA,APROVADOR_SUPERINTENDENTE,
-                            ID_EMPRESA,ID_DEPARTAMENTO,APROVADOR_GERENTE,SITUACAO,TIPO_REGISTRO,APROVADOR_GESTOR,LIMITE_AREA,LIMITE_MARCA,LIMITE_GERAL,LIMITE_SUPERINTENDENTE)
+                            ID_EMPRESA,ID_DEPARTAMENTO,APROVADOR_GERENTE,SITUACAO,TIPO_REGISTRO,APROVADOR_GESTOR,LIMITE_AREA,LIMITE_MARCA,LIMITE_GERAL,LIMITE_SUPERITENDENTE)
    
     VALUES ('" . $aprovador->ID_APROVADOR ."',
             '" . $aprovador->APROVADOR_FILIAL . "',
@@ -58,7 +58,7 @@ foreach ($resultado->aprov as $aprovador) {
             '" . $aprovador->LIMITE_AREA . "' ,
             '" . $aprovador->LIMITE_MARCA . "' ,
             '" . $aprovador->LIMITE_GERAL . "' ,
-            '" . $aprovador->LIMITE_SUPERINTENDENTE . "'
+            '" . $aprovador->LIMITE_SUPERITENDENTE . "'
             )";
 
         
