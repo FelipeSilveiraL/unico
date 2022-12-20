@@ -43,7 +43,7 @@ $countErros = $resultCountErros->fetch_assoc();
 
 /*===================================*/
 
-$queryFilial = "SELECT ID_EMPRESA, NOME_EMPRESA FROM bpm_empresas WHERE SITUACAO = 'A'";
+$queryFilial = "SELECT ID_EMPRESA, NOME_EMPRESA, SISTEMA FROM bpm_empresas WHERE SITUACAO = 'A'";
 
 /*===================================*/
 
