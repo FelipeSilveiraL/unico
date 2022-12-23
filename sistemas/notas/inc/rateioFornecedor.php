@@ -164,7 +164,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
             }
         }
     }else{
-        echo 'listar os fornecedores';
+        header('Location: ../front/fornecedor.php');
     }
 }
 

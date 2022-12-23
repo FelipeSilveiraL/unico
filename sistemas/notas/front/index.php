@@ -85,7 +85,7 @@ require_once('menu.php'); //menu lateral da pagina
               </thead>
               <tbody>
                 <?php
-                $color = array('bg-primary' => 1, 'bg-warning' => 2, 'bg-success' => 3);
+                /* $color = array('bg-primary' => 1, 'bg-warning' => 2, 'bg-success' => 3);
 
                 while ($notas = $resultado->fetch_assoc()) {
                   $value = array_search($notas['id_status'], $color);
@@ -105,7 +105,7 @@ require_once('menu.php'); //menu lateral da pagina
                               <a href="#" title="Desativar" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                             </td>
                           </tr>';
-                }
+                } */
                 ?>
               </tbody>
             </table>

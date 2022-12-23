@@ -22,6 +22,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php?pg=1">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="fornecedor.php">Fornecedor</a></li>
         <li class="breadcrumb-item">Rateio Fornecedor</li>
       </ol>
     </nav>

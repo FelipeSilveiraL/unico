@@ -49,4 +49,8 @@ $queryFilial = "SELECT ID_EMPRESA, NOME_EMPRESA, SISTEMA FROM bpm_empresas WHERE
 
 $queryBancos = "SELECT * FROM bancos";
 
+/*===================================*/
+
+$queryFornecedor = "SELECT * FROM cad_rateiofornecedor";
+
 ?>

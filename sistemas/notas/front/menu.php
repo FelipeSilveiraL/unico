@@ -31,15 +31,15 @@ if(!$coressistema = $resultado->fetch_assoc()){ $color = "#fff";}else{ $color = 
             </a>
             <ul id="cadastro-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="rateioFornecedor.php" <?= $_GET['tela'] == 3 ? "class='active'" : "" ?>>
+                    <a href="fornecedor.php" <?= $_GET['tela'] == 3 ? "class='active'" : "" ?>>
                         <i class="bi bi-circle"></i><span>Rateio Fornecedor</span>
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="#" <?= $_GET['tela'] == 4 ? "class='active'" : "" ?>>
-                        <i class="bi bi-circle"></i><span>Fornecedores catalogados</span>
+                        <i class="bi bi-circle"></i><span>Fornecedores catalogados(Robô)</span>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </li>
         <hr>
@@ -49,11 +49,6 @@ if(!$coressistema = $resultado->fetch_assoc()){ $color = "#fff";}else{ $color = 
                 <i class="bi bi-gear"></i><span>Configurações</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="config-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="#" <?= $_GET['tela'] == 1 ? "class='active'" : "" ?>>
-                        <i class="bi bi-circle"></i><span>Menus suspensos</span>
-                    </a>
-                </li>
                 <li>
                     <a href="espelhar_usuarios.php?pg=<?= $_GET['pg'] ?>&tela=2" <?= $_GET['tela'] == 2 ? "class='active'" : "" ?>>
                         <i class="bi bi-circle"></i><span>Usuários</span>
