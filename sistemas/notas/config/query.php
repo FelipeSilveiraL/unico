@@ -2,6 +2,27 @@
 
 require_once('../../../config/databases.php'); //banco de dados
 
+//-------------------------//
+$queryUsuarios = "SELECT
+U.id_usuario, 
+U.nome AS nome_usuario,
+U.cpf,
+CE.id AS id_empresa,
+CE.nome AS empresa,
+CD.id AS id_depto,
+CD.nome AS departamento,
+U.senha,
+U.usuario,
+U.id_usuario,
+U.email,
+U.admin,
+U.alterar_senha_login,
+U.deletar
+FROM
+usuarios U
+LEFT JOIN cad_empresa CE ON (U.empresa = CE.id)
+LEFT JOIN cad_depto CD ON (U.depto = CD.id) ";
+
 $queryNotas = "SELECT 
 CL.valor_nota,
 CL.emissao,

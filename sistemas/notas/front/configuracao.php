@@ -26,17 +26,6 @@ require_once('menu.php'); //menu lateral da pagina
       <section class="section">
 
         <div class="row">
-
-          <div class="col-lg-6 py-2">
-            <a href="#" class="list-group-item list-group-item-action">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Menus suspensos</h5>
-
-                </div>
-              </div>
-            </a>
-          </div>
           <div class="col-lg-6 py-2">
             <a href="espelhar_usuarios.php?pg=4&tela=2" class="list-group-item list-group-item-action">
               <div class="card">
