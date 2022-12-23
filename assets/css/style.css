@@ -24,6 +24,10 @@ select.dataTable-selector {
   display: none;
 }
 
+.top_margin{
+    margin-top: 24px;
+}
+
 .capitalize {
   text-transform: capitalize;
 }

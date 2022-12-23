@@ -7,6 +7,7 @@ require_once('menu.php'); //menu lateral da pagina
 
 //API
 require_once('../../bpm/inc/apiRecebeTabela.php'); //Empresas
+require_once('../api/centroCusto.php');
 
 //DADOS FORNECEDOR
 if (!empty($_GET['idRateioFornecedor'])) {
@@ -55,9 +56,9 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   } ?>
                   <option value="">-----------------</option>
                   <?php
-                  $resultFilial = $conn->query($queryFilial);
-                  while ($filial = $resultFilial->fetch_assoc()) {
-                    echo '<option value="' . $filial['NOME_EMPRESA'] . '">' . $filial['NOME_EMPRESA'] . '</option> ';
+                  $resultFilialLista = $conn->query($queryFilial);
+                  while ($filialLista = $resultFilialLista->fetch_assoc()) {
+                    echo '<option value="' . $filialLista['NOME_EMPRESA'] . '">' . $filialLista['NOME_EMPRESA'] . '</option> ';
                   }
                   ?>
                 </select>

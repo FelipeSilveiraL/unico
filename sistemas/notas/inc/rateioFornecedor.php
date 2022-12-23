@@ -20,16 +20,24 @@ function seo_friendly_url($string)
     return strtoupper(trim($string, '-'));
 }
 
-//trabalhando com o fornecedor
-if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
+function pontuacao($stingPontuacao)
+{
+    $stingPontuacao = str_replace(',', '.', $stingPontuacao);
 
-    if (!empty($_POST['dias'])) {
-        $dias = $_POST['dias'];
-    } elseif (!empty($_POST['diasCorridos'])) {
-        $dias =  $_POST['diasCorridos'];
-    } else {
-        $dias = 0;
-    }
+    return $stingPontuacao;
+}
+
+
+if (!empty($_POST['dias'])) {
+    $dias = $_POST['dias'];
+} elseif (!empty($_POST['diasCorridos'])) {
+    $dias =  $_POST['diasCorridos'];
+} else {
+    $dias = 0;
+}
+
+//trabalhando com o fornecedor
+if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor    
 
     //crio o id rateio fornecedor
     $insertFornecedor = "INSERT INTO cad_rateiofornecedor
@@ -94,17 +102,70 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
             }
         }
         //voltar para cadastrar o rateio
-        header('Location: ../front/rateioFornecedor.php?idRateioFornecedor='.$idForncedor['id_fornecedor'].'#rateioFornecedor');
-
+        header('Location: ../front/rateioFornecedor.php?idRateioFornecedor=' . $idForncedor['id_fornecedor'] . '#rateioFornecedor');
     } else {
         echo $insertFornecedor . "<br />";
         echo ("Error description [1]: " . $connNOTAS->error);
     }
-
 } else { //cadastro centro de custo ou editando o fornecedor
 
-    //id rateio fornecedor vinculo ao centro de custo
-    /* SELECT * FROM dbnotas.cad_rateiocentrocusto; */
+    //editar formulario
+    $updateFornecedor = "UPDATE cad_rateiofornecedor
+    SET
+    `filial` = '" . $_POST['filial'] . "',
+    `fornecedor` = '" . $_POST['NomeFornecedor'] . "',
+    `cpfcnpj_fornecedor` = '" . $_POST['cpfCnpjFor'] . "',
+    `tipopagamento` = '" . $_POST['tipoPagamento'] . "',
+    `tipodespesa` = '" . $_POST['tipodespesa'] . "',
+    `auditoria` = '" . $_POST['departamentoAuditoria'] . "',
+    `obra` = '" . $_POST['notasGrupo'] . "',
+    `marketing` = '" . $_POST['notasMarketing'] . "',
+    `observacao` = '" . seo_friendly_url($_POST['observacao']) . "',
+    `vencimento_tipo` = '" . $_POST['vencimento'] . "',
+    `vencimento` = '" . $dias . "',
+    `telefone` = '" . $_POST['telefone'] . "',
+    `tipo_serv` = '" . seo_friendly_url($_POST['tipoServico']) . "'
+    WHERE `id` = " . $_GET['idRateioFornecedor'];
+
+    $resultadoUpdate = $connNOTAS->query($updateFornecedor);
+
+    if ($_POST['centroCusto'] != null) {
+        //antes de salvar verificar se não passou dos 100%
+        $queryPorcentual = "SELECT SUM(PERCENTUAL) AS porcentual FROM cad_rateiocentrocusto WHERE id_rateiofornecedor = " . $_GET['idRateioFornecedor'] . " GROUP BY id_rateiofornecedor";
+        $aplicarPorcentual = $connNOTAS->query($queryPorcentual);
+        $porcentual = $aplicarPorcentual->fetch_assoc();
+
+        $porcentoFormulario = pontuacao($_POST['porcentual']);
+        $somatorio = $porcentoFormulario + $porcentual['porcentual'];
+
+        if ($somatorio > 100) {
+            header('Location: ../front/rateioFornecedor.php?idRateioFornecedor=' . $_GET['idRateioFornecedor'] . '&msn=10&erro=8');
+        } else {
+            $queryDuplicado = "SELECT id_centrocusto FROM cad_rateiocentrocusto WHERE id_centrocusto = '" . $_POST['centroCusto'] . "' AND id_rateiofornecedor = " . $_GET['idRateioFornecedor'];
+            $aplicarDuplicado = $connNOTAS->query($queryDuplicado);
+            $duplicado = $aplicarDuplicado->fetch_assoc();
+
+            if ($duplicado['id_centrocusto'] == NULL) {
+                //inserindo novo centro custo
+                $insertCentroCusto = "INSERT INTO cad_rateiocentrocusto
+                                (`ID_RATEIOFORNECEDOR`,
+                                `ID_CENTROCUSTO`,
+                                `PERCENTUAL`)
+                                VALUES
+                                (" . $_GET['idRateioFornecedor'] . ",
+                                '" . $_POST['centroCusto'] . "',
+                                '" . pontuacao($_POST['porcentual']) . "')";
+
+                $resultCentroCusto = $connNOTAS->query($insertCentroCusto);
+
+                header('Location: ../front/rateioFornecedor.php?idRateioFornecedor=' . $_GET['idRateioFornecedor'] . '#rateioFornecedor');
+            } else {
+                header('Location: ../front/rateioFornecedor.php?idRateioFornecedor=' . $_GET['idRateioFornecedor'] . '&msn=10&erro=9');
+            }
+        }
+    }else{
+        echo 'listar os fornecedores';
+    }
 }
 
 

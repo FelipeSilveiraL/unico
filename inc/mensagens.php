@@ -93,6 +93,12 @@ if (!empty($_GET['msn'])) {
                 case '7':
                     echo '<p class="mb-0"><i class="bi bi-pin"></i>Não foi possivel reconhecer este arquivo, por favor entre em contato com o administrador do sistema.</p>';
                     break;
+                case '8':
+                    echo '<p class="mb-0"><i class="bi bi-pin"></i>Valor da porcentagem ultrapassa os 100%.</p>';
+                    break;
+                case '9':
+                    echo '<p class="mb-0"><i class="bi bi-pin"></i>Centro de Custo já cadastrado.</p>';
+                    break;
             }
             echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
