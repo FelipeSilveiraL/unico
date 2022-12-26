@@ -71,7 +71,8 @@ while ($rateioBusca = $aplicarBusca->fetch_assoc()) {
     $aplicaqueryPegaBanco = $connNOTAS->query($queryPegaBanco);
     $bancoPai = $aplicaqueryPegaBanco->fetch_assoc();
 
-    if ($bancoPai['id_rateiobanco'] != NULL) {
+    if ($bancoPai['ID_RATEIOBANCO'] != NULL) {
+        echo 'AChei um'.$queryPegaBanco;
         //cad_rateiobanco - inserindo novo filho
         $inserindoNovobanco = "INSERT INTO cad_rateiobanco
         (`ID_RATEIOFORNECEDOR`,

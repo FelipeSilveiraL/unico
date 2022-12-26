@@ -46,6 +46,12 @@ if (!$coressistema = $resultado->fetch_assoc()) {
                 </li> -->
             </ul>
         </li>
+        <li class="nav-item">
+            <a class="nav-link <?= $_GET['pg'] == 1 ?: "collapsed" ?>" href="index.php?pg=<?= $_GET['pg'] ?>">
+                <i class="bi bi-clipboard-data"></i>
+                <span>Relatório</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
         <hr>
         <li class="nav-heading">Paginas</li>
         <li class="nav-item" style="display: <?= $_SESSION['administrador'] == 1 ? 'block' : 'none' ?>">
