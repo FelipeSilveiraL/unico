@@ -20,7 +20,7 @@ require_once('menu.php'); //menu lateral da pagina
   require_once('../../../inc/mensagens.php'); //Alertas
   require_once('../inc/senhaBPM.php'); //validar se possui senha cadastrada 
   ?>
-  <section class="section"  <?= $_GET['idUsuario'] == null ? 'style="display: block"' : 'style="display: none"' ?>>
+  <section class="section" <?= $_GET['idUsuario'] == null ? 'style="display: block"' : 'style="display: none"' ?>>
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
@@ -71,8 +71,6 @@ require_once('menu.php'); //menu lateral da pagina
     </div>
   </section>
 
-
-
   <section <?= $_GET['idUsuario'] != null ? 'style="display: block"' : 'style="display: none"' ?>>
     <div class="row">
       <div class="col-lg-12">
@@ -111,11 +109,11 @@ require_once('menu.php'); //menu lateral da pagina
                 <label for="floatingSelect">Qual usuário deseja espelhar ?</label>
               </div>
               <h6><code>Nesta lista contem apenas usuários que possui algum rateio de fornecedor cadastrado.</code></h6>
+              <div class="modal-footer">
+                <a href="espelhar_usuarios.php" class="btn btn-secondary">Voltar</a>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+              </div>
             </form>
-          </div>
-          <div class="modal-footer">
-            <a href="espelhar_usuarios.php" class="btn btn-secondary">Voltar</a>
-            <button type="submit" class="btn btn-primary">Salvar</button>
           </div>
           <!-- End Table with stripped rows -->
         </div>

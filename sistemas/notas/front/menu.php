@@ -1,9 +1,13 @@
-<?php 
-require_once('../inc/paginacao.php');//pg 
+<?php
+require_once('../inc/paginacao.php'); //pg 
 require_once('../inc/administrador.php'); //regra de perfis
-$querySistemaCores .=  ' WHERE id_usuario = '.$_SESSION['id_usuario'].' AND id_sistema = '.$_SESSION['id_sistema'];
+$querySistemaCores .=  ' WHERE id_usuario = ' . $_SESSION['id_usuario'] . ' AND id_sistema = ' . $_SESSION['id_sistema'];
 $resultado = $conn->query($querySistemaCores);
-if(!$coressistema = $resultado->fetch_assoc()){ $color = "#fff";}else{ $color = $coressistema['color'];}
+if (!$coressistema = $resultado->fetch_assoc()) {
+    $color = "#fff";
+} else {
+    $color = $coressistema['color'];
+}
 ?>
 
 

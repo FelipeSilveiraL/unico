@@ -32,9 +32,8 @@
 </body>
 
 <?php
-
 $conn->close();
-
+$connNOTAS->close();
 ?>
 
 </html>
