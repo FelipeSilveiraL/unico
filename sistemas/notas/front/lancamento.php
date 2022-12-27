@@ -158,7 +158,7 @@ require_once('../api/centroCusto.php');
 
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="departamentoAuditoria" name="departamentoAuditoria" readonly="readonly">
-                  <option >-----------------</option>
+                  <option>-----------------</option>
                   <option value="SIM">SIM</option>
                   <option value="NAO">NÃO</option>
                 </select>
@@ -167,7 +167,7 @@ require_once('../api/centroCusto.php');
 
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="notasGrupoObra" name="notasGrupo" readonly="readonly">
-                  <option >-----------------</option>
+                  <option>-----------------</option>
                   <option value="SIM">SIM</option>
                   <option value="NAO">NÃO</option>
                 </select>
@@ -176,7 +176,7 @@ require_once('../api/centroCusto.php');
 
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="notasMarketing" name="notasMarketing" readonly="readonly">
-                  <option >-----------------</option>
+                  <option>-----------------</option>
                   <option value="SIM">SIM</option>
                   <option value="NAO">NÃO</option>
                 </select>
@@ -184,34 +184,34 @@ require_once('../api/centroCusto.php');
               </div>
 
               <div class="mb-3 form-floating col-md-4">
-                <input type="text" class="form-control" id="floatingName" name="vencimento">
-                <label for="vencimento">Número Nota <span class="text-danger small pt-1 fw-bold">*</span></label>
+                <input type="text" class="form-control" name="numeroNota">
+                <label for="numeroNota">Número Nota <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div class="form-floating col-md-4">
-                <input type="text" class="form-control" id="floatingName" name="vencimento">
-                <label for="vencimento">Série <span class="text-danger small pt-1 fw-bold">*</span></label>
+                <input type="text" class="form-control" name="serie">
+                <label for="serie">Série <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
               <div class="form-floating col-md-4">
-                <input type="text" class="form-control" name="valor" maxlength="12" onKeyUp="mascaraMoeda(this, event)">
-                <label for="vencimento">Valor <span class="text-danger small pt-1 fw-bold">*</span></label>
+                <input type="text" class="form-control" id="valorNota" name="valor" maxlength="12" onKeyUp="mascaraMoeda(this, event)">
+                <label for="valor">Valor <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div class="form-floating col-md-6">
-                <input type="date" class="form-control" id="floatingName" name="vencimento">
-                <label for="vencimento">Emissão <span class="text-danger small pt-1 fw-bold">*</span></label>
+                <input type="date" class="form-control" name="emissao">
+                <label for="emissao">Emissão <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div class="form-floating col-md-6">
-                <input type="date" class="form-control" id="floatingName" name="vencimento">
+                <input type="date" class="form-control" name="vencimento">
                 <label for="vencimento">Vencimento <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div class="col-md-12 mb-3">
                 <div class="col-sm-10">
                   <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="carimbar">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Carimbar pelo Robô!</label>
+                    <input class="form-check-input" type="checkbox" name="carimbar">
+                    <label class="form-check-label" for="carimbar">Carimbar pelo Robô!</label>
                   </div>
                 </div>
               </div>
@@ -222,7 +222,7 @@ require_once('../api/centroCusto.php');
                   <label for="observacao">Observação <span class="text-danger small pt-1 fw-bold">*</span></label>
                 </div>
               </div>
-              
+
               <h5 class="card-title">Anexar documentos</h5>
 
               <div class="row mb-3">
@@ -242,16 +242,7 @@ require_once('../api/centroCusto.php');
               <div class="card" id="rateioFornecedor">
                 <h5 class="card-title">Tabela centro de custo</h5>
                 <div class="card-body">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th scope="col">Centro de Custo</th>
-                        <th scope="col">% Rateio</th>
-                        <th scope="col">Valor</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
+                  <table class="table table-bordered" id="tableCusto">  
                   </table>
                 </div>
               </div>
@@ -339,6 +330,30 @@ require_once('footer.php'); //Javascript e configurações afins
 
 <!--CNPJ FORNCENDOR-->
 <script>
+  $("#valorNota").on("blur", function() {
+    var cpfCNPJ = $("#cnpjVet").val();
+    var nomefilial = $("#selectFilial").val();
+    var valorNota = $("#valorNota").val();
+
+    $.ajax({
+      url: '../inc/valor.php',
+      type: 'POST',
+      data: {
+        idFilial: nomefilial,
+        id: cpfCNPJ,
+        valor: valorNota
+      },
+
+      success: function(data){
+
+        $("#tableCusto").empty();
+        $("#tableCusto").empty(data);
+        $("#tableCusto").append(data);
+      }
+    })
+  });
+
+
   $("#cnpjVet").on("blur", function() {
     var cpfCNPJ = $("#cnpjVet").val();
     var nomefilial = $("#selectFilial").val();
@@ -348,7 +363,9 @@ require_once('footer.php'); //Javascript e configurações afins
       url: '../inc/buscaFornecedor.php',
       type: 'POST',
       data: {
-        tipo: '1', idFilial: nomefilial, id: cpfCNPJ
+        tipo: '1',
+        idFilial: nomefilial,
+        id: cpfCNPJ
       },
 
       beforeSend: function(data) {
@@ -361,22 +378,22 @@ require_once('footer.php'); //Javascript e configurações afins
 
           $("#NomeFornecedor").val('Não Localizado...');
           $("#enviarNota").attr("disabled", true);
-          
+
         } else {
 
           var dados = data.split('-');
 
-          $("#NomeFornecedor").val(dados[0]);  
+          $("#NomeFornecedor").val(dados[0]);
 
           var tipoPagamento = dados[1];
           $("#tipoPagamento").html(tipoPagamento);
-          
 
-          if(tipoPagamento == '<option>Deposito</option>'){
+
+          if (tipoPagamento == '<option>Deposito</option>') {
             $('#tipopagamentoBancos').css('display', 'contents');
           }
-          
-          $("#tipoServicoInput").val(dados[2]);                 
+
+          $("#tipoServicoInput").val(dados[2]);
           $("#tipoDespesaSelect").html(dados[3]);
           $("#telefone").val(dados[4]);
           $("#departamentoAuditoria").html(dados[5]);
