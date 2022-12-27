@@ -34,7 +34,7 @@ require_once('../api/centroCusto.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <form class="row g-3" action="../inc/rateioFornecedor.php" method="post" enctype="multipart/form-data">
+            <form class="row g-3" action="../inc/lancamento.php" method="post" enctype="multipart/form-data">
 
               <!--DADOS PRINCIPAIS -->
               <h5 class="card-title">Dados Principais</h5>
@@ -242,7 +242,7 @@ require_once('../api/centroCusto.php');
               <div class="card" id="rateioFornecedor">
                 <h5 class="card-title">Tabela centro de custo</h5>
                 <div class="card-body">
-                  <table class="table table-bordered" id="tableCusto">  
+                  <table class="table table-bordered" id="tableCusto">
                   </table>
                 </div>
               </div>
@@ -330,6 +330,17 @@ require_once('footer.php'); //Javascript e configurações afins
 
 <!--CNPJ FORNCENDOR-->
 <script>
+  $(function() {
+    $(".money").maskMoney({
+      prefix: 'R$ ',
+      allowNegative: true,
+      thousands: '.',
+      decimal: ',',
+      affixesStay: false
+    });
+  })
+
+
   $("#valorNota").on("blur", function() {
     var cpfCNPJ = $("#cnpjVet").val();
     var nomefilial = $("#selectFilial").val();
@@ -344,7 +355,7 @@ require_once('footer.php'); //Javascript e configurações afins
         valor: valorNota
       },
 
-      success: function(data){
+      success: function(data) {
 
         $("#tableCusto").empty();
         $("#tableCusto").empty(data);

@@ -32,7 +32,9 @@ while ($rateio = $aplicarqueryrateio->fetch_assoc()) {
     $total = $_POST['valor'];
     $pctm = $rateio['PERCENTUAL'];
     $valor_descontado = $total - ($total / 100 * $pctm);    
-    echo  '<td>' . $valor_descontado . '</td>';
+
+
+    echo  '<td><input class="money" value="'.$valor_descontado.'" name="valorRateado[]" readonly></td>';
     echo '</tr>';
 }
 
