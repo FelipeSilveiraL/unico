@@ -130,13 +130,13 @@ require_once('../api/centroCusto.php');
 
               <div class="mb-3 col-md-4">
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingName" placeholder="Tipo de Serviço" name="tipoServico" maxlength="100" readonly>
-                  <label for="floatingName">Tipo de Serviço</label>
+                  <input type="text" class="form-control" id="tipoServicoInput" name="tipoServico" maxlength="100" readonly>
+                  <label for="tipoServicoInput">Tipo de Serviço</label>
                 </div>
               </div>
 
               <div class="form-floating col-md-4">
-                <select class="form-select" id="floatingSelect" name="tipodespesa" readonly="readonly">
+                <select class="form-select" id="tipoDespesaSelect" name="tipodespesa" readonly="readonly">
                   <option value="">-----------------</option>
                   <option value="AVULSA">Avulsa</option>
                   <option value="AVULSA FUNILARIA">Avulsa Funilaria</option>
@@ -146,13 +146,13 @@ require_once('../api/centroCusto.php');
                   <option value="SEMESTRAL">Semestral</option>
                   <option value="ANUAL">Anual</option>
                 </select>
-                <label for="floatingSelect">Tipo de Despesa <span class="text-danger small pt-1 fw-bold">*</span></label>
+                <label for="tipoDespesaSelect">Tipo de Despesa <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div id="divNomeFornecedor" class="col-md-4">
                 <div class="form-floating">
-                  <input type="text" class="form-control" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" title="Caso seja nota de telefonia" name="telefone" readonly>
-                  <label for="NomeFornecedor">Telefone</label>
+                  <input type="text" class="form-control" id="telefone" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" title="Caso seja nota de telefonia" name="telefone" readonly>
+                  <label for="telefone">Telefone</label>
                 </div>
               </div>
 
@@ -166,12 +166,12 @@ require_once('../api/centroCusto.php');
               </div>
 
               <div class="form-floating mb-3 col-md-4">
-                <select class="form-select" id="notasGrupo" name="notasGrupo" readonly="readonly">
+                <select class="form-select" id="notasGrupoObra" name="notasGrupo" readonly="readonly">
                   <option >-----------------</option>
                   <option value="SIM">SIM</option>
                   <option value="NAO">NÃO</option>
                 </select>
-                <label for="notasGrupo">Obras do G. Servopa? <span class="text-danger small pt-1 fw-bold">*</span></label>
+                <label for="notasGrupoObra">Obras do G. Servopa? <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div class="form-floating mb-3 col-md-4">
@@ -336,16 +336,19 @@ require_once('footer.php'); //Javascript e configurações afins
   }
 </script>
 
+
+<!--CNPJ FORNCENDOR-->
 <script>
   $("#cnpjVet").on("blur", function() {
     var cpfCNPJ = $("#cnpjVet").val();
+    var nomefilial = $("#selectFilial").val();
 
     $.ajax({
 
       url: '../inc/buscaFornecedor.php',
       type: 'POST',
       data: {
-        id: cpfCNPJ
+        tipo: '1', idFilial: nomefilial, id: cpfCNPJ
       },
 
       beforeSend: function(data) {
@@ -355,11 +358,38 @@ require_once('footer.php'); //Javascript e configurações afins
       success: function(data) {
 
         if (!data) {
+
           $("#NomeFornecedor").val('Não Localizado...');
           $("#enviarNota").attr("disabled", true);
+          
         } else {
-          $("#NomeFornecedor").val(data);
+
+          var dados = data.split('-');
+
+          $("#NomeFornecedor").val(dados[0]);  
+
+          var tipoPagamento = dados[1];
+          $("#tipoPagamento").html(tipoPagamento);
+          
+
+          if(tipoPagamento == '<option>Deposito</option>'){
+            $('#tipopagamentoBancos').css('display', 'contents');
+          }
+          
+          $("#tipoServicoInput").val(dados[2]);                 
+          $("#tipoDespesaSelect").html(dados[3]);
+          $("#telefone").val(dados[4]);
+          $("#departamentoAuditoria").html(dados[5]);
+          $("#notasGrupoObra").html(dados[6]);
+          $("#notasMarketing").html(dados[7]);
+          $("#observacao").html(dados[8]);
+          $("#nomeBanco").html(dados[9]);
+          $("#numAgencia").val(dados[10]);
+          $("#numConta").val(dados[11]);
+          $("#numDigito").val(dados[12]);
+
           $("#enviarNota").attr("disabled", false);
+
         }
       },
 

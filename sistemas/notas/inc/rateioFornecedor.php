@@ -91,9 +91,9 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
             VALUES
             (" . $idForncedor['id_fornecedor'] . ",
             '" . $_POST['banco'] . "',
-            '" . $_POST['agencia'] . "',
-            '" . $_POST['conta'] . "',
-            '" . $_POST['digito'] . "')";
+            '" . seo_friendly_url($_POST['agencia']) . "',
+            '" . seo_friendly_url($_POST['conta']) . "',
+            '" . seo_friendly_url($_POST['digito']) . "')";
 
             if (!$aplicarBanco = $connNOTAS->query($insertbanco)) {
                 echo $insertbanco . "<br />";
@@ -123,7 +123,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     `observacao` = '" . seo_friendly_url($_POST['observacao']) . "',
     `vencimento_tipo` = '" . $_POST['vencimento'] . "',
     `vencimento` = '" . $dias . "',
-    `telefone` = '" . $_POST['telefone'] . "',
+    `telefone` = '" . seo_friendly_url($_POST['telefone']) . "',
     `tipo_serv` = '" . seo_friendly_url($_POST['tipoServico']) . "'
     WHERE `id` = " . $_GET['idRateioFornecedor'];
 
