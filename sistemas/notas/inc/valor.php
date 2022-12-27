@@ -29,9 +29,10 @@ while ($rateio = $aplicarqueryrateio->fetch_assoc()) {
     echo '<td>' . $rateio['ID_CENTROCUSTO'] . '</td>';
     echo '<td>' . $rateio['PERCENTUAL'] . '</td>';
 
-    $resultado = ($_POST['valor'] / $rateio['PERCENTUAL']) * 100;
-    
-    echo  '<td>' . $resultado . '</td>';
+    $total = $_POST['valor'];
+    $pctm = $rateio['PERCENTUAL'];
+    $valor_descontado = $total - ($total / 100 * $pctm);    
+    echo  '<td>' . $valor_descontado . '</td>';
     echo '</tr>';
 }
 
