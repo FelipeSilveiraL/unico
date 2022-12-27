@@ -28,6 +28,12 @@ select.dataTable-selector {
     margin-top: 24px;
 }
 
+select[readonly] {
+  background: #eee; /*Simular campo inativo - Sugestão @GabrielRodrigues*/
+  pointer-events: none;
+  touch-action: none;
+}
+
 .capitalize {
   text-transform: capitalize;
 }

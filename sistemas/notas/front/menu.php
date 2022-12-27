@@ -47,7 +47,7 @@ if (!$coressistema = $resultado->fetch_assoc()) {
             </ul>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= $_GET['pg'] == 1 ?: "collapsed" ?>" href="index.php?pg=<?= $_GET['pg'] ?>">
+            <a class="nav-link <?= $_GET['pg'] == 6 ?: "collapsed" ?>" href="index.php?pg=<?= $_GET['pg'] ?>">
                 <i class="bi bi-clipboard-data"></i>
                 <span>Relatório</span>
             </a>
