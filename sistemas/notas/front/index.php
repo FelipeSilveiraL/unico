@@ -85,7 +85,7 @@ require_once('menu.php'); //menu lateral da pagina
               </thead>
               <tbody>
                 <?php
-                /* $color = array('bg-primary' => 1, 'bg-warning' => 2, 'bg-success' => 3);
+                $color = array('bg-primary' => 1, 'bg-warning' => 2, 'bg-success' => 3);
 
                 while ($notas = $resultado->fetch_assoc()) {
                   $value = array_search($notas['id_status'], $color);
@@ -94,18 +94,19 @@ require_once('menu.php'); //menu lateral da pagina
                             <td>' . $notas['empresa'] . '</td>
                             <td>' . $notas['fornecedor'] . '</td>
                             <td>' . $notas['valor_nota'] . '</td>
-                            <td>' . $notas['emissao'] . '</td>
-                            <td>' . $notas['vencimento'] . '</td>
+                            <td>' . date('d/m/y',strtotime($notas['emissao'])) . '</td>
+                            <td>' . date('d/m/y', strtotime($notas['vencimento'])) . '</td>
                             <td><a target="_blank" href="https://gruposervopa.fluig.com/portal/p/1/pageworkflowview?app_ecm_workflowview_detailsProcessInstanceID=' . $notas['numero_fluig'] . '">' . $notas['numero_fluig'] . '</a></td>
                             <td><span class="badge ';
                   echo empty($value) ? "bg-danger" : $value;
                   echo '">' . $notas['status'] . '</span></td>
                             <td>
                               <a href="#" title="Editar" class="btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
-                              <a href="#" title="Desativar" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                              <a href="#" title="Anexos" class="btn-success btn-sm"><i class="bi bi-file-earmark-pdf"></i></a>
+                              <a href="#" title="Excluir" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                             </td>
                           </tr>';
-                } */
+                }
                 ?>
               </tbody>
             </table>

@@ -24,18 +24,22 @@ echo '<thead>
 
 echo  '<tbody>';
 
+$cont = 0;
+
 while ($rateio = $aplicarqueryrateio->fetch_assoc()) {
     echo '<tr>';
-    echo '<td>' . $rateio['ID_CENTROCUSTO'] . '</td>';
-    echo '<td>' . $rateio['PERCENTUAL'] . '</td>';
+    echo '<td><input class="money" value="' . $rateio['ID_CENTROCUSTO'] . '" name="centroCusto'.$cont.'" readonly></td>';
+    echo '<td><input class="money" value="' . $rateio['PERCENTUAL'] . '" name="percentual'.$cont.'" readonly></td>';
 
     $total = $_POST['valor'];
     $pctm = $rateio['PERCENTUAL'];
     $valor_descontado = $total - ($total / 100 * $pctm);    
 
 
-    echo  '<td><input class="money" value="'.$valor_descontado.'" name="valorRateado[]" readonly></td>';
+    echo  '<td><input class="money" value="'.$valor_descontado.'" name="valorRateado'.$cont.'" readonly></td>';
     echo '</tr>';
+
+    $cont++;
 }
 
 echo '</tbody>';
