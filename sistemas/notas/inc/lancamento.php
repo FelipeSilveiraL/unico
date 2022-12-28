@@ -12,6 +12,7 @@ $insertNota = "INSERT INTO cad_lancarnotas
 `CNPJ`,
 `nome_fornecedor`,
 `auditoria`,
+`marketing`,
 `obra`,
 `observacao`,
 `numero_nota`,
@@ -32,6 +33,7 @@ VALUES
 '" . $_POST['cpfCnpjFor'] . "',
 '" . $_POST['NomeFornecedor'] . "',
 '" . $_POST['departamentoAuditoria'] . "',
+'" . $_POST['notasMarketing'] . "',
 '" . $_POST['notasGrupo'] . "',
 '" . $_POST['observacao'] . "',
 '" . $_POST['numeroNota'] . "',
@@ -105,15 +107,16 @@ if ($_FILES['filenota']["type"] === $extPDF) {
 if ($_FILES['fileboleto']["type"] != NULL) {
     if ($_FILES['fileboleto']["type"] === $extPDF) {
         //SUBINDO O ARQUIVO NO SERVIDOR
-        $uploadfile  = $caminhoBoleto . date('dmYhi') . $_FILES['fileboleto']['name'];
+        $nomeArquivoBoleto = date('dmYhi') . $_FILES['fileboleto']['name'];
+        $uploadfileB  = $caminhoBoleto . $nomeArquivoBoleto;
 
-        if (move_uploaded_file($_FILES['fileboleto']['tmp_name'], $uploadfile)) {
+        if (move_uploaded_file($_FILES['fileboleto']['tmp_name'], $uploadfileB)) {
             $insertAnexo = "INSERT INTO cad_anexos
             (`ID_LANCARNOTA`,
             `url_nota`)
             VALUES
             (" . $ultimo['id_lancarnotas'] . ",
-            'documentos/boletos/" . $nomeArquivo . "')";
+            'documentos/boletos/" . $nomeArquivoBoleto . "')";
 
             $aplicarAnexo = $connNOTAS->query($insertAnexo);
         } else {

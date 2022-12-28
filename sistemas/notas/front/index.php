@@ -11,11 +11,11 @@ require_once('menu.php'); //menu lateral da pagina
         <li class="breadcrumb-item"><a href="index.php?pg=<?= $_GET['pg'] ?>">Dashboard</a></li>
       </ol>
     </nav>
-  </div><!-- End Navegação --> 
-  
-  <?php 
+  </div><!-- End Navegação -->
+
+  <?php
   require_once('../inc/status.php');
-  require_once('../../../inc/mensagens.php');//Alertas
+  require_once('../../../inc/mensagens.php'); //Alertas
   require_once('../inc/senhaBPM.php'); //validar se possui senha cadastrada 
   ?>
   <!-- Alertas -->
@@ -70,6 +70,7 @@ require_once('menu.php'); //menu lateral da pagina
           <div class="card-body">
             <h5 class="card-title"><?= $nomeTabela ?></h5>
 
+
             <table class="table table-borderless datatable">
               <thead>
                 <tr class="capitalize">
@@ -94,18 +95,53 @@ require_once('menu.php'); //menu lateral da pagina
                             <td>' . $notas['empresa'] . '</td>
                             <td>' . $notas['fornecedor'] . '</td>
                             <td>R$ ' . $notas['valor_nota'] . '</td>
-                            <td>' . date('d/m/y',strtotime($notas['emissao'])) . '</td>
+                            <td>' . date('d/m/y', strtotime($notas['emissao'])) . '</td>
                             <td>' . date('d/m/y', strtotime($notas['vencimento'])) . '</td>
                             <td><a target="_blank" href="https://gruposervopa.fluig.com/portal/p/1/pageworkflowview?app_ecm_workflowview_detailsProcessInstanceID=' . $notas['numero_fluig'] . '">' . $notas['numero_fluig'] . '</a></td>
                             <td><span class="badge ';
                   echo empty($value) ? "bg-danger" : $value;
                   echo '">' . $notas['status'] . '</span></td>
                             <td>
-                              <a href="#" title="Editar" class="btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
-                              <a href="#" title="Anexos" class="btn-success btn-sm"><i class="bi bi-file-earmark-pdf"></i></a>
-                              <a href="#" title="Excluir" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                              <a href="editLancarnota.php?id='.$notas['id_lancarnotas'].'" title="Editar" class="btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
+
+                              <a href="javascript:" title="Anexos" class="btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#smallModal' . $notas['id_lancarnotas'] . '"><i class="bi bi-file-earmark-pdf"></i></a>
+                              
+                              <a href="../inc/deletarLancamento.php?id=' . $notas['id_lancarnotas'] . '" title="Excluir" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                             </td>
-                          </tr>';
+                          </tr>
+
+                          <!-- Small Modal-->
+                          <div class="modal fade" id="smallModal' . $notas['id_lancarnotas'] . '" tabindex="-1">
+                          <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title">Anexos</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                              ';
+                  $queryAnexos = "SELECT * FROM cad_anexos WHERE ID_LANCARNOTA = " . $notas['id_lancarnotas'];
+                  $aplicaAnexos = $connNOTAS->query($queryAnexos);
+                  while ($anexos = $aplicaAnexos->fetch_assoc()) {
+
+                    $tipo = substr($anexos['url_nota'], 11, 1);
+
+                    if ($tipo == 'n') {
+                      echo '<code><u>Nota Fiscal</u></code>';
+                      echo '<p><i class="bi bi-arrow-right"></i> <a href="../' . $anexos['url_nota'] . '" target="_blank">'.substr($anexos['url_nota'], 29).'</a></p>';
+                    } else {
+                      echo '<code><u>Boleto</u></code>';
+                      echo '<p><i class="bi bi-arrow-right"></i> <a href="../' . $anexos['url_nota'] . '" target="_blank">'.substr($anexos['url_nota'], 31).'</a></p>';
+                    }
+                  }
+                  echo '
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div><!-- End Small Modal-->';
                 }
                 ?>
               </tbody>

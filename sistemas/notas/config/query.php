@@ -23,7 +23,8 @@ usuarios U
 LEFT JOIN cad_empresa CE ON (U.empresa = CE.id)
 LEFT JOIN cad_depto CD ON (U.depto = CD.id) ";
 
-$queryNotas = "SELECT 
+$queryNotas = "SELECT
+CL.id_lancarnotas, 
 CL.valor_nota,
 CL.emissao,
 CL.vencimento,

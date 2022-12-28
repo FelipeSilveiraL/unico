@@ -99,6 +99,9 @@ if (!empty($_GET['msn'])) {
                 case '9':
                     echo '<p class="mb-0"><i class="bi bi-pin"></i>Centro de Custo já cadastrado.</p>';
                     break;
+                case '10':
+                    echo '<p class="mb-0"><i class="bi bi-pin"></i>Permissão negada.</p>';
+                    break;
             }
             echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';

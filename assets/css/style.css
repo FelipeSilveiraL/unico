@@ -38,6 +38,10 @@ select[readonly] {
   text-transform: capitalize;
 }
 
+.mb-6 {
+  margin-top: 6%;
+}
+
 .button-rigth-espelho {
   margin-left: 94%;
   margin-top : -8%;
