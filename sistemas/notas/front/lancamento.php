@@ -184,26 +184,26 @@ require_once('../api/centroCusto.php');
               </div>
 
               <div class="mb-3 form-floating col-md-4">
-                <input type="text" class="form-control" name="numeroNota">
+                <input type="text" class="form-control" name="numeroNota" required>
                 <label for="numeroNota">Número Nota <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div class="form-floating col-md-4">
-                <input type="text" class="form-control" name="serie">
+                <input type="text" class="form-control" name="serie" required>
                 <label for="serie">Série <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
               <div class="form-floating col-md-4">
-                <input type="text" class="form-control" id="valorNota" name="valor" maxlength="12" onKeyUp="mascaraMoeda(this, event)">
+                <input type="text" class="form-control" id="valorNota" name="valor" maxlength="12" onKeyUp="mascaraMoeda(this, event)" required> 
                 <label for="valor">Valor <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div class="form-floating col-md-6">
-                <input type="date" class="form-control" name="emissao">
+                <input type="date" class="form-control" name="emissao" required>
                 <label for="emissao">Emissão <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div class="form-floating col-md-6">
-                <input type="date" class="form-control" name="vencimento">
+                <input type="date" class="form-control" name="vencimento" required>
                 <label for="vencimento">Vencimento <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 

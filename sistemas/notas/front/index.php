@@ -78,7 +78,7 @@ require_once('menu.php'); //menu lateral da pagina
                   <th scope="col">valor&emsp;</th>
                   <th scope="col">emissao</th>
                   <th scope="col">vencimento&emsp;</th>
-                  <th scope="col"><?= $_SESSION['nome_bpm'] ?>&emsp;</th>
+                  <th scope="col">SmartShare&emsp;</th>
                   <th scope="col">status&emsp;</th>
                   <th scope="col">ação&emsp;</th>
                 </tr>
@@ -93,7 +93,7 @@ require_once('menu.php'); //menu lateral da pagina
                   echo '<tr>                          
                             <td>' . $notas['empresa'] . '</td>
                             <td>' . $notas['fornecedor'] . '</td>
-                            <td>' . $notas['valor_nota'] . '</td>
+                            <td>R$ ' . $notas['valor_nota'] . '</td>
                             <td>' . date('d/m/y',strtotime($notas['emissao'])) . '</td>
                             <td>' . date('d/m/y', strtotime($notas['vencimento'])) . '</td>
                             <td><a target="_blank" href="https://gruposervopa.fluig.com/portal/p/1/pageworkflowview?app_ecm_workflowview_detailsProcessInstanceID=' . $notas['numero_fluig'] . '">' . $notas['numero_fluig'] . '</a></td>
