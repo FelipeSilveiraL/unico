@@ -78,7 +78,7 @@ require_once('menu.php'); //menu lateral da pagina
                   <th scope="col">valor&emsp;</th>
                   <th scope="col">emissao</th>
                   <th scope="col">vencimento&emsp;</th>
-                  <th scope="col">SmartShare&emsp;</th>
+                  <th scope="col">smartShare&emsp;</th>
                   <th scope="col">status&emsp;</th>
                   <th scope="col">ação&emsp;</th>
                 </tr>
