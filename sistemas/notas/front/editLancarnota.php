@@ -239,7 +239,7 @@ require_once('../inc/dadoslancarnota.php');
                                   </td>
                                   <td>NOTA FISCAL</td>
                                   <td>
-                                    <a href="../inc/deletarLancamento.php?id=' . $notas['id_lancarnotas'] . '" title="Excluir" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                                    <a href="../inc/deletarArquivo.php?idAnexo=' . $anexos['ID'] . '&id='.$_GET['id'].'" title="Excluir" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                                   </td>
                                 </tr>';
                         } else {
@@ -249,7 +249,7 @@ require_once('../inc/dadoslancarnota.php');
                                 </td>
                                 <td>BOLETO</td>
                                 <td>
-                                <a href="../inc/deletarLancamento.php?id=' . $notas['id_lancarnotas'] . '" title="Excluir" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                                <a href="../inc/deletarArquivo.php?idAnexo=' . $anexos['ID']. '&id='.$_GET['id'].'" title="Excluir" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                                 </td>
                               </tr>';
                         }

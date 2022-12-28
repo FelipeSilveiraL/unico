@@ -91,6 +91,21 @@ require_once('menu.php'); //menu lateral da pagina
                 while ($notas = $resultado->fetch_assoc()) {
                   $value = array_search($notas['id_status'], $color);
 
+                  $queryAnexos = "SELECT * FROM cad_anexos WHERE ID_LANCARNOTA = " . $notas['id_lancarnotas'];
+                  $aplicaAnexos = $connNOTAS->query($queryAnexos);
+                  while ($anexos = $aplicaAnexos->fetch_assoc()) {
+
+                    $tipo = substr($anexos['url_nota'], 11, 1);
+
+                    if ($tipo == 'n') {
+
+                      $notasDoc .= '<p><i class="bi bi-arrow-right"></i> <a href="../' . $anexos['url_nota'] . '" target="_blank">' . substr($anexos['url_nota'], 29) . '</a></p>';
+                    } else {
+
+                      $boletosDoc .= '<p><i class="bi bi-arrow-right"></i> <a href="../' . $anexos['url_nota'] . '" target="_blank">' . substr($anexos['url_nota'], 31) . '</a></p>';
+                    }
+                  }
+
                   echo '<tr>                          
                             <td>' . $notas['empresa'] . '</td>
                             <td>' . $notas['fornecedor'] . '</td>
@@ -102,7 +117,7 @@ require_once('menu.php'); //menu lateral da pagina
                   echo empty($value) ? "bg-danger" : $value;
                   echo '">' . $notas['status'] . '</span></td>
                             <td>
-                              <a href="editLancarnota.php?id='.$notas['id_lancarnotas'].'" title="Editar" class="btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
+                              <a href="editLancarnota.php?id=' . $notas['id_lancarnotas'] . '" title="Editar" class="btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
 
                               <a href="javascript:" title="Anexos" class="btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#smallModal' . $notas['id_lancarnotas'] . '"><i class="bi bi-file-earmark-pdf"></i></a>
                               
@@ -119,21 +134,13 @@ require_once('menu.php'); //menu lateral da pagina
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
-                              ';
-                  $queryAnexos = "SELECT * FROM cad_anexos WHERE ID_LANCARNOTA = " . $notas['id_lancarnotas'];
-                  $aplicaAnexos = $connNOTAS->query($queryAnexos);
-                  while ($anexos = $aplicaAnexos->fetch_assoc()) {
-
-                    $tipo = substr($anexos['url_nota'], 11, 1);
-
-                    if ($tipo == 'n') {
-                      echo '<code><u>Nota Fiscal</u></code>';
-                      echo '<p><i class="bi bi-arrow-right"></i> <a href="../' . $anexos['url_nota'] . '" target="_blank">'.substr($anexos['url_nota'], 29).'</a></p>';
-                    } else {
-                      echo '<code><u>Boleto</u></code>';
-                      echo '<p><i class="bi bi-arrow-right"></i> <a href="../' . $anexos['url_nota'] . '" target="_blank">'.substr($anexos['url_nota'], 31).'</a></p>';
-                    }
-                  }
+                                <p><code><u>Nota Fiscal</u></code></p>
+                                ';
+                  echo $notasDoc;
+                  echo '
+                                <p><code><u>Boleto</u></code></p>
+                                ';
+                  echo $boletosDoc;
                   echo '
                               </div>
                               <div class="modal-footer">
