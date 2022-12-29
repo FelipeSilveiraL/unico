@@ -90,22 +90,6 @@ require_once('menu.php'); //menu lateral da pagina
 
                 while ($notas = $resultado->fetch_assoc()) {
                   $value = array_search($notas['id_status'], $color);
-
-                  $queryAnexos = "SELECT * FROM cad_anexos WHERE ID_LANCARNOTA = " . $notas['id_lancarnotas'];
-                  $aplicaAnexos = $connNOTAS->query($queryAnexos);
-                  while ($anexos = $aplicaAnexos->fetch_assoc()) {
-
-                    $tipo = substr($anexos['url_nota'], 11, 1);
-
-                    if ($tipo == 'n') {
-
-                      $notasDoc .= '<p><i class="bi bi-arrow-right"></i> <a href="../' . $anexos['url_nota'] . '" target="_blank">' . substr($anexos['url_nota'], 29) . '</a></p>';
-                    } else {
-
-                      $boletosDoc .= '<p><i class="bi bi-arrow-right"></i> <a href="../' . $anexos['url_nota'] . '" target="_blank">' . substr($anexos['url_nota'], 31) . '</a></p>';
-                    }
-                  }
-
                   echo '<tr>                          
                             <td>' . $notas['empresa'] . '</td>
                             <td>' . $notas['fornecedor'] . '</td>
@@ -133,16 +117,24 @@ require_once('menu.php'); //menu lateral da pagina
                                 <h5 class="modal-title">Anexos</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
-                              <div class="modal-body">
-                                <p><code><u>Nota Fiscal</u></code></p>
+                              <div class="modal-body">                                
                                 ';
-                  echo $notasDoc;
-                  echo '
-                                <p><code><u>Boleto</u></code></p>
-                                ';
-                  echo $boletosDoc;
-                  echo '
-                              </div>
+
+                  $queryAnexos = "SELECT * FROM cad_anexos WHERE ID_LANCARNOTA = " . $notas['id_lancarnotas'];
+                  $aplicaAnexos = $connNOTAS->query($queryAnexos);
+                  while ($anexos = $aplicaAnexos->fetch_assoc()) {
+
+                    $tipo = substr($anexos['url_nota'], 11, 1);
+
+                    if ($tipo == 'n') {
+
+                      echo '<p><code><u>Nota Fiscal:</u></code> <a href="../' . $anexos['url_nota'] . '" target="_blank">' . substr($anexos['url_nota'], 29) . '</a></p>';
+                    } else {
+
+                      echo '<p><code><u>Boleto:</u></code> <a href="../' . $anexos['url_nota'] . '" target="_blank">' . substr($anexos['url_nota'], 31) . '</a></p>';
+                    }
+                  }
+                  echo '</div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                               </div>
