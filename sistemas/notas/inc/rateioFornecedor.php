@@ -58,7 +58,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     
     (" . $_SESSION['id_usuario'] . ",
     '" . $_POST['filial'] . "',
-    '" . $_POST['NomeFornecedor'] . "',
+    '" . seo_friendly_url($_POST['NomeFornecedor']) . "',
     '" . $_POST['cpfCnpjFor'] . "',
     '" . $_POST['tipoPagamento'] . "',
     '" . $_POST['tipodespesa'] . "',
