@@ -69,11 +69,19 @@ if (!$coressistema = $resultado->fetch_assoc()) {
         <!-- End Charts Nav -->
 
         <li class="nav-item">
+            <a class="nav-link collapsed" href="../../../../notas/fun/validation.php?usuario = <?= $_SESSION['usuario'] ?>&email = <?= $_SESSION['email'] ?>&senha = <?= $_SESSION['senha'] ?>&admin = <?= $_SESSION['administrador'] ?>&cpf = <?= $_SESSION['cpf'] ?>&nome = <?= $_SESSION['nome_usuario'] ?>">
+                <i class="bi bi-signpost-split"></i>
+                <span>Versão Anterior (FLUIG)</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link  <?= $_GET['pg'] == 5 ?: "collapsed" ?>" href="ajuda.php?pg=<?= $_GET['pg'] ?>">
                 <i class="bi bi-question-circle"></i>
                 <span>Ajuda?</span>
             </a>
         </li>
+
         <hr>
         <li class="nav-item">
             <a class="nav-link collapsed" href="../../../index.php">
