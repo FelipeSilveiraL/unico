@@ -12,7 +12,9 @@ $sucess = $conn->query($droptable);
 
 $createTableCentroCusto = "CREATE TABLE `notas_centro_custo` (
     `NOME_EMPRESA` VARCHAR(80) NOT NULL,
-    `NOME_DEPARTAMENTO` VARCHAR(80) NOT NULL)";
+    `NOME_DEPARTAMENTO` VARCHAR(80) NOT NULL,
+    `ID_DEPARTAMENTO` INT(11) NULL,
+    `ID_EMPRESA` INT(11) NULL)";
 
 $execCreate = $conn->query($createTableCentroCusto);
 
@@ -30,14 +32,16 @@ $resultado = json_decode(curl_exec($ch));
 foreach ($resultado->centro_custo as $centroCusto) {
 
     $querySmart = "INSERT INTO notas_centro_custo 
-                            (NOME_EMPRESA, NOME_DEPARTAMENTO)
+                            (NOME_EMPRESA, NOME_DEPARTAMENTO, ID_DEPARTAMENTO, ID_EMPRESA)
    
     VALUES ('" . $centroCusto->NOME_EMPRESA ."',
-            '" . $centroCusto->NOME_DEPARTAMENTO ."'
+            '" . $centroCusto->NOME_DEPARTAMENTO ."',
+            '" . $centroCusto->ID_DEPARTAMENTO ."',
+            '" . $centroCusto->ID_EMPRESA ."'
             )";        
     
     if (!$execQuery = $conn->query($querySmart)) {
-        echo "Error: " . $querySmart . "<br>" . $conn->error;
+        //echo "Error: " . $querySmart . "<br>" . $conn->error;
     }
 }                    
 

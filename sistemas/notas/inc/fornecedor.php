@@ -8,11 +8,11 @@ $aplicarBusca = $connNOTAS->query($buscaFornecedor);
 
 if ($fornecedor = $aplicarBusca->fetch_assoc()) {
 
-    $filial = $fornecedor['filial'];
+    $filial = $fornecedor['ID_FILIAL'];
     $fornecedorNome = $fornecedor['fornecedor'];
     $cpfcnpjFornecedor = $fornecedor['cpfcnpj_fornecedor'];
-    $tipopagamento = $fornecedor['tipopagamento'];
-    $tipodespesa = $fornecedor['tipodespesa'];
+    $tipopagamento = $fornecedor['ID_TIPOPAGAMENTO'];
+    $tipodespesa = $fornecedor['ID_TIPODESPESA'];
     $auditoria = $fornecedor['auditoria'];
     $obra = $fornecedor['obra'];
     $marketing = $fornecedor['marketing'];

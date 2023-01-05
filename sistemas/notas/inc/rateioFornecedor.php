@@ -41,12 +41,12 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
 
     //crio o id rateio fornecedor
     $insertFornecedor = "INSERT INTO cad_rateiofornecedor
-    (id_usuario,
-    filial,
+    (ID_USUARIO,
+    ID_FILIAL,
     fornecedor,
     cpfcnpj_fornecedor,
-    tipopagamento,
-    tipodespesa,
+    ID_TIPOPAGAMENTO,
+    ID_TIPODESPESA,
     auditoria,
     obra,
     marketing,
@@ -74,7 +74,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     if ($aplicarInsert = $connNOTAS->query($insertFornecedor)) {
 
         //pegando o ID_FORNECEDOR QUE ACABAMOS DE CRIAR
-        $queryIdFornecedor = "SELECT MAX(id) as id_fornecedor FROM cad_rateiofornecedor";
+        $queryIdFornecedor = "SELECT MAX(ID_RATEIOFORNECEDOR) as id_fornecedor FROM cad_rateiofornecedor";
         $aplicarIdFornecedor = $connNOTAS->query($queryIdFornecedor);
         $idForncedor = $aplicarIdFornecedor->fetch_assoc();
 
@@ -112,11 +112,11 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     //editar formulario
     $updateFornecedor = "UPDATE cad_rateiofornecedor
     SET
-    `filial` = '" . $_POST['filial'] . "',
+    `ID_FILIAL` = '" . $_POST['filial'] . "',
     `fornecedor` = '" . $_POST['NomeFornecedor'] . "',
     `cpfcnpj_fornecedor` = '" . $_POST['cpfCnpjFor'] . "',
-    `tipopagamento` = '" . $_POST['tipoPagamento'] . "',
-    `tipodespesa` = '" . $_POST['tipodespesa'] . "',
+    `ID_TIPOPAGAMENTO` = '" . $_POST['tipoPagamento'] . "',
+    `ID_TIPODESPESA` = '" . $_POST['tipodespesa'] . "',
     `auditoria` = '" . $_POST['departamentoAuditoria'] . "',
     `obra` = '" . $_POST['notasGrupo'] . "',
     `marketing` = '" . $_POST['notasMarketing'] . "',
@@ -125,13 +125,13 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     `vencimento` = '" . $dias . "',
     `telefone` = '" . seo_friendly_url($_POST['telefone']) . "',
     `tipo_serv` = '" . seo_friendly_url($_POST['tipoServico']) . "'
-    WHERE `id` = " . $_GET['idRateioFornecedor'];
+    WHERE `ID_RATEIOFORNECEDOR` = " . $_GET['idRateioFornecedor'];
 
     $resultadoUpdate = $connNOTAS->query($updateFornecedor);
 
     if ($_POST['centroCusto'] != null) {
         //antes de salvar verificar se não passou dos 100%
-        $queryPorcentual = "SELECT SUM(PERCENTUAL) AS porcentual FROM cad_rateiocentrocusto WHERE id_rateiofornecedor = " . $_GET['idRateioFornecedor'] . " GROUP BY id_rateiofornecedor";
+        $queryPorcentual = "SELECT SUM(percentual) AS porcentual FROM cad_rateiocentrocusto WHERE ID_RATEIOFORNECEDOR = " . $_GET['idRateioFornecedor'] . " GROUP BY ID_RATEIOFORNECEDOR";
         $aplicarPorcentual = $connNOTAS->query($queryPorcentual);
         $porcentual = $aplicarPorcentual->fetch_assoc();
 
@@ -141,7 +141,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
         if ($somatorio > 100) {
             header('Location: ../front/rateioFornecedor.php?idRateioFornecedor=' . $_GET['idRateioFornecedor'] . '&msn=10&erro=8');
         } else {
-            $queryDuplicado = "SELECT id_centrocusto FROM cad_rateiocentrocusto WHERE id_centrocusto = '" . $_POST['centroCusto'] . "' AND id_rateiofornecedor = " . $_GET['idRateioFornecedor'];
+            $queryDuplicado = "SELECT ID_CENTROCUSTO FROM cad_rateiocentrocusto WHERE ID_CENTROCUSTO = '" . $_POST['centroCusto'] . "' AND id_rateiofornecedor = " . $_GET['idRateioFornecedor'];
             $aplicarDuplicado = $connNOTAS->query($queryDuplicado);
             $duplicado = $aplicarDuplicado->fetch_assoc();
 

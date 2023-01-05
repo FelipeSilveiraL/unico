@@ -26,7 +26,7 @@ switch ($_GET['status']) {
         break;
 
     default:
-        $queryNotas .= "WHERE CL.ID_USUARIO = '".$_SESSION['id_usuario']."' AND CL.deletar = 0 ".$dataMes;
+        $queryNotas .= "WHERE CL.ID_USUARIO = '".$_SESSION['id_usuario']."' AND CL.status_desc = 1 AND CL.deletar = 0 ".$dataMes;
         $nomeTabela = 'Todas as notas  <span>| deste mês</span>';
         break;
 }

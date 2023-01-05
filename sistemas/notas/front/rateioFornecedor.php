@@ -46,7 +46,8 @@ if (!empty($_GET['idRateioFornecedor'])) {
               <h5 class="card-title">Dados Principais</h5>
 
               <div class="form-floating mb-3 col-md-6">
-                <input type="text" class="form-control" name="usuarioResponsavel" value="<?= $_SESSION['nome_usuario'] ?>" readonly>
+                <input type="text" class="form-control" value="<?= $_SESSION['nome_usuario'] ?>" readonly>
+                <input type="text" name="usuarioResponsavel" value="<?= $_SESSION['id_usuario'] ?>" style="display: none;">
                 <label for="floatingSelect" class="capitalize">Usuario responsável </label>
               </div>
 
@@ -59,7 +60,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   <?php
                   $resultFilialLista = $conn->query($queryFilial);
                   while ($filialLista = $resultFilialLista->fetch_assoc()) {
-                    echo '<option value="' . $filialLista['NOME_EMPRESA'] . '">' . $filialLista['NOME_EMPRESA'] . '</option> ';
+                    echo '<option value="' . $filialLista['ID_EMPRESA'] . '">' . $filialLista['NOME_EMPRESA'] . '</option> ';
                   }
                   ?>
                 </select>

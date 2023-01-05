@@ -53,7 +53,7 @@ require_once('menu.php'); //menu lateral da pagina
                   echo '<tr>                          
                             <td>' . $fornecedor['cpfcnpj_fornecedor'] . '</td>
                             <td>' . $fornecedor['fornecedor'] . '</td>
-                            <td>' . $fornecedor['filial'] . '</td>
+                            <td>' . $fornecedor['ID_FILIAL'] . '</td>
                             <td>' . $fornecedor['observacao'] . '</td>
                             <td>
                               <a href="rateioFornecedor.php?idRateioFornecedor='.$fornecedor['id'].'" title="Editar" class="btn-primary btn-sm"><i class="bi bi-pencil"></i></a>

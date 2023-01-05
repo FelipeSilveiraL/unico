@@ -41,7 +41,7 @@ require_once('../api/centroCusto.php');
 
               <div class="form-floating mb-3 col-md-6">
                 <input type="text" class="form-control" value="<?= $_SESSION['nome_usuario'] ?>" readonly>
-                <input type="text" name="usuarioResponsavel" value="<?= $_SESSION['nome_usuario'] ?>" style="display: none;">
+                <input type="text" name="usuarioResponsavel" value="<?= $_SESSION['id_usuario'] ?>" style="display: none;">
                 <label for="floatingSelect" class="capitalize">Usuario responsável </label>
               </div>
 

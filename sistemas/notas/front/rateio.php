@@ -1,9 +1,9 @@
 <?php
-$buscaRateio = "SELECT * FROM cad_rateiocentrocusto WHERE id_rateiofornecedor = " . $_GET['idRateioFornecedor'];
+$buscaRateio = "SELECT * FROM cad_rateiocentrocusto WHERE ID_RATEIOFORNECEDOR = " . $_GET['idRateioFornecedor'];
 $aplicaBuscaRateio = $connNOTAS->query($buscaRateio);
 
 //contagem de porcento
-$queryPorcentual = "SELECT SUM(PERCENTUAL) AS porcentual FROM cad_rateiocentrocusto WHERE id_rateiofornecedor = " . $_GET['idRateioFornecedor'] . " GROUP BY id_rateiofornecedor";
+$queryPorcentual = "SELECT SUM(PERCENTUAL) AS porcentual FROM cad_rateiocentrocusto WHERE ID_RATEIOFORNECEDOR = " . $_GET['idRateioFornecedor'] . " GROUP BY ID_RATEIOFORNECEDOR";
 $aplicarPorcentual = $connNOTAS->query($queryPorcentual);
 $porcentual = $aplicarPorcentual->fetch_assoc();
 
@@ -22,11 +22,11 @@ if ($porcentual['porcentual'] < '100') {
   <select class="form-select" id="floatingSelect" name="centroCusto">
     <option value="">-----------------</option>
     <?php
-    $queryCentroCusto = "SELECT * FROM notas_centro_custo WHERE NOME_EMPRESA = '" . $filial . "' ORDER BY NOME_DEPARTAMENTO ASC";
+    $queryCentroCusto = "SELECT * FROM notas_centro_custo WHERE ID_EMPRESA = '" . $filial . "' ORDER BY NOME_DEPARTAMENTO ASC";
     $resutadoCentro = $conn->query($queryCentroCusto);
 
     while ($centroCusto = $resutadoCentro->fetch_assoc()) {
-      echo '<option value="' . $centroCusto['NOME_DEPARTAMENTO'] . '">' . $centroCusto['NOME_DEPARTAMENTO'] . '</option>';
+      echo '<option value="' . $centroCusto['ID_DEPARTAMENTO'] . '">' . $centroCusto['NOME_DEPARTAMENTO'] . '</option>';
     }
     ?>
   </select>
