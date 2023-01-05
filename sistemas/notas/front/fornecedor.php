@@ -2,6 +2,9 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
+
+//APIS
+require_once('../../bpm/inc/apiRecebeTabela.php');//EMPRESAS
 ?>
 
 <main id="main" class="main">
@@ -50,16 +53,18 @@ require_once('menu.php'); //menu lateral da pagina
                 $resultadoFor = $connNOTAS->query($queryFornecedor);
                 while ($fornecedor = $resultadoFor->fetch_assoc()) {
 
-                  require_once('../api/nomes.php?filial='.$fornecedor['ID_FILIAL'].'&fornecedor='.$fornecedor['cpfcnpj_fornecedor'].'');
+                  $buscaNomeFilial = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = ".$fornecedor['ID_FILIAL'];
+                  $plica = $conn->query($buscaNomeFilial);
+                  $nomeEmpresa = $plica->fetch_assoc();
 
                   echo '<tr>                          
                             <td>' . $fornecedor['cpfcnpj_fornecedor'] . '</td>
-                            <td>' . $nomeFornecedor. '</td>
-                            <td>' . $nomeFilial. '</td>
+                            <td>' . $fornecedor['fornecedor'] . '</td>
+                            <td>' . $nomeEmpresa['NOME_EMPRESA'] . '</td>
                             <td>' . $fornecedor['observacao'] . '</td>
                             <td>
-                              <a href="rateioFornecedor.php?idRateioFornecedor='.$fornecedor['id'].'" title="Editar" class="btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
-                              <a href="../inc/deletarFornecedor.php?idRateioFornecedor='.$fornecedor['id'].'" title="Desativar" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                              <a href="rateioFornecedor.php?idRateioFornecedor='.$fornecedor['ID_RATEIOFORNECEDOR'].'" title="Editar" class="btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
+                              <a href="../inc/deletarFornecedor.php?idRateioFornecedor='.$fornecedor['ID_RATEIOFORNECEDOR'].'" title="Desativar" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                             </td>
                           </tr>';
                 }
