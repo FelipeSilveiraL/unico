@@ -50,10 +50,12 @@ require_once('menu.php'); //menu lateral da pagina
                 $resultadoFor = $connNOTAS->query($queryFornecedor);
                 while ($fornecedor = $resultadoFor->fetch_assoc()) {
 
+                  require_once('../api/nomes.php?filial='.$fornecedor['ID_FILIAL'].'&fornecedor='.$fornecedor['cpfcnpj_fornecedor'].'');
+
                   echo '<tr>                          
                             <td>' . $fornecedor['cpfcnpj_fornecedor'] . '</td>
-                            <td>' . $fornecedor['fornecedor'] . '</td>
-                            <td>' . $fornecedor['ID_FILIAL'] . '</td>
+                            <td>' . $nomeFornecedor. '</td>
+                            <td>' . $nomeFilial. '</td>
                             <td>' . $fornecedor['observacao'] . '</td>
                             <td>
                               <a href="rateioFornecedor.php?idRateioFornecedor='.$fornecedor['id'].'" title="Editar" class="btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
