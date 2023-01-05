@@ -24,7 +24,7 @@
 <script src="../../../assets/js/formCpf.js"></script>
 <script src="../../../assets/js/mascaras.js"></script>
 <script src="../../../assets/js/jquery.js"></script>
-<script src="../../../assets/js/seg.js"></script>
+<!-- <script src="../../../assets/js/seg.js"></script> -->
 
 <!-- Template Main JS File -->
 <script src="../../../assets/js/main.js"></script>
@@ -32,7 +32,9 @@
 </body>
 
 <?php
+//UNICO
 $conn->close();
+//NOTAS
 $connNOTAS->close();
 ?>
 
