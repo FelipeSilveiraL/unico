@@ -47,7 +47,7 @@ foreach ($resultado->empresaSmart as $empSmart) {
                             ORGANOGRAMA_SENIOR,EMPRESA_APOLLO,REVENDA_APOLLO,SITUACAO,EMPRESA_NBS)
    
     VALUES ('" . $empSmart->NOME_EMPRESA ."',
-            '" . $empSmart->CNPJ ."',
+            '" .str_pad($empSmart->CNPJ , 14 , '0' , STR_PAD_LEFT)."',
             '" . $empSmart->APELIDO_NBS ."',
             '" . $empSmart->SISTEMA . "',
             '" . $empSmart->UF_GESTAO . "' ,
@@ -63,12 +63,10 @@ foreach ($resultado->empresaSmart as $empSmart) {
             '" . $empSmart->SITUACAO . "',
             '" . $empSmart->EMPRESA_NBS ."'
             )";
-
+    
     if (!$execQuery = $conn->query($querySmart)) {
         echo "Error: " . $querySmart . "<br>" . $conn->error;
     }
 }                    
 
 curl_close($ch);
-
-?>
