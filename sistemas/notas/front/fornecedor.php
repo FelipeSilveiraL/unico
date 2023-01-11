@@ -4,7 +4,7 @@ require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 
 //APIS
-//require_once('../../bpm/inc/apiRecebeTabela.php');//EMPRESAS
+require_once('../../bpm/inc/apiRecebeTabela.php');//EMPRESAS
 ?>
 
 <main id="main" class="main">
@@ -52,8 +52,9 @@ require_once('menu.php'); //menu lateral da pagina
                 $queryFornecedor .= " WHERE id_usuario = " . $_SESSION['id_usuario'];
                 $resultadoFor = $connNOTAS->query($queryFornecedor);
                 while ($fornecedor = $resultadoFor->fetch_assoc()) {
-
+                  
                   $buscaNomeFilial = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = ".$fornecedor['ID_FILIAL'];
+
                   $plica = $conn->query($buscaNomeFilial);
                   $nomeEmpresa = $plica->fetch_assoc();
 

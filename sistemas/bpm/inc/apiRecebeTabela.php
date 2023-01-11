@@ -32,6 +32,7 @@ $createTableEmp = "CREATE TABLE `bpm_empresas` (
 
 $execCreate = $conn->query($createTableEmp);
 
+
 $url = "http://".$_SESSION['servidorOracle']."/".$_SESSION['smartshare']."/inc/smartApi.php";
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -39,9 +40,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 $resultado = json_decode(curl_exec($ch));
 
-
 foreach ($resultado->empresaSmart as $empSmart) {
-
 
     $querySmart = "INSERT INTO bpm_empresas 
                             (NOME_EMPRESA,CNPJ,APELIDO_NBS,SISTEMA,UF_GESTAO,CONSORCIO,APROVADOR_CAIXA,NUMERO_CAIXA,FILIAL_SENIOR,ID_EMPRESA,EMPRESA_SENIOR,
@@ -65,14 +64,11 @@ foreach ($resultado->empresaSmart as $empSmart) {
             '" . $empSmart->EMPRESA_NBS ."'
             )";
 
-        
-    
     if (!$execQuery = $conn->query($querySmart)) {
         echo "Error: " . $querySmart . "<br>" . $conn->error;
     }
 }                    
 
 curl_close($ch);
-
 
 ?>
