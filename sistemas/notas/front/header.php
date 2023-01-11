@@ -1,10 +1,10 @@
 <?php
-require_once('../../../config/query.php'); //SISTEMA UNICO
-require_once('../config/query.php'); //SISTEMA NOTAS
-
-if ($_SESSION['id_usuario'] == NULL) {
+if (!isset($_SESSION['id_usuario'])) {
     header('Location: ../front/login.php?pg=' . $_GET['pg'] . '&msn=9'); //sessão nao iniciada!
 }
+
+require_once('../../../config/query.php'); //SISTEMA UNICO
+require_once('../config/query.php'); //SISTEMA NOTAS
 ?>
 
 <body>
