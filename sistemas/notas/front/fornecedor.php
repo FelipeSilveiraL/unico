@@ -4,7 +4,7 @@ require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 
 //APIS
-require_once('../../bpm/inc/apiRecebeTabela.php');//EMPRESAS
+//require_once('../../bpm/inc/apiRecebeTabela.php');//EMPRESAS
 ?>
 
 <main id="main" class="main">
