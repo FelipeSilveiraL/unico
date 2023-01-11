@@ -2,17 +2,29 @@
 
 $idRateio = $_GET['idRateioFornecedor'];
 
-$buscaFornecedor = "SELECT * FROM cad_rateiofornecedor WHERE id = " . $idRateio;
-$aplicarBusca = $connNOTAS->query($buscaFornecedor);
+$buscaFornecedor = "SELECT 
+UBE.nome_empresa,
+CP.nome AS periodicidade,
+CR.*
+FROM
+cad_rateiofornecedor CR
+LEFT JOIN
+unico.bpm_empresas UBE ON (CR.id_filial = UBE.id_empresa)
+LEFT JOIN
+cad_periodicidade CP ON (CR.ID_PERIODICIDADE = CP.ID_PERIODICIDADE)
+WHERE ID_RATEIOFORNECEDOR =  " . $idRateio;
 
+$aplicarBusca = $connNOTAS->query($buscaFornecedor);
 
 if ($fornecedor = $aplicarBusca->fetch_assoc()) {
 
     $filial = $fornecedor['ID_FILIAL'];
+    $nomeFilial = $fornecedor['nome_empresa'];
     $fornecedorNome = $fornecedor['fornecedor'];
     $cpfcnpjFornecedor = $fornecedor['cpfcnpj_fornecedor'];
     $tipopagamento = $fornecedor['ID_TIPOPAGAMENTO'];
-    $tipodespesa = $fornecedor['ID_TIPODESPESA'];
+    $tipoPeriodicidade = $fornecedor['periodicidade'];
+    $idPeriodicidade = $fornecedor['ID_PERIODICIDADE'];
     $auditoria = $fornecedor['auditoria'];
     $obra = $fornecedor['obra'];
     $marketing = $fornecedor['marketing'];

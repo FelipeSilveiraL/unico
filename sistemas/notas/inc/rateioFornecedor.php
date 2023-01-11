@@ -116,7 +116,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     `fornecedor` = '" . $_POST['NomeFornecedor'] . "',
     `cpfcnpj_fornecedor` = '" . $_POST['cpfCnpjFor'] . "',
     `ID_TIPOPAGAMENTO` = '" . $_POST['tipoPagamento'] . "',
-    `ID_TIPODESPESA` = '" . $_POST['tipodespesa'] . "',
+    `ID_PERIODICIDADE` = '" . $_POST['tipodespesa'] . "',
     `auditoria` = '" . $_POST['departamentoAuditoria'] . "',
     `obra` = '" . $_POST['notasGrupo'] . "',
     `marketing` = '" . $_POST['notasMarketing'] . "',

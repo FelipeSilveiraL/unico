@@ -54,7 +54,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
               <div id="divFilial" class="form-floating mb-3 col-md-6">
                 <select class="form-select" id="selectFilial" name="filial" required>
                   <?php if (!empty($idRateio)) {
-                    echo '<option value="' . $filial . '">' . $filial . '</option>';
+                    echo '<option value="' . $filial . '">' . $nomeFilial . '</option>';
                   } ?>
                   <option value="">-----------------</option>
                   <?php
@@ -190,16 +190,16 @@ if (!empty($_GET['idRateioFornecedor'])) {
               <div class="form-floating col-md-4">
                 <select class="form-select" id="floatingSelect" name="tipodespesa" required="">
                   <?php if (!empty($idRateio)) {
-                    echo '<option value="' . $tipodespesa . '">' . $tipodespesa . '</option>';
+                    echo '<option value="' . $idPeriodicidade . '">' . $tipoPeriodicidade . '</option>';
                   } ?>
                   <option value="">-----------------</option>
-                  <option value="AVULSA">Avulsa</option>
-                  <option value="AVULSA FUNILARIA">Avulsa Funilaria</option>
-                  <option value="MENSAL">Mensal</option>
-                  <option value="TRIAGEM">Triagem</option>
-                  <option value="BIMESTRAL">Bimestral</option>
-                  <option value="SEMESTRAL">Semestral</option>
-                  <option value="ANUAL">Anual</option>
+                  <?php
+                  $querytipodespesa .= " order by CP.nome ASC";
+                  $resulttipodespesa = $connNOTAS->query($querytipodespesa);
+                  while ($tipodespesa  = $resulttipodespesa->fetch_assoc()) {
+                    echo '<option value="' . $tipodespesa['ID_PERIODICIDADE'] . '">' . $tipodespesa['nome'] . '</option> ';
+                  }
+                  ?>
                 </select>
                 <label for="floatingSelect">Tipo de Despesa <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
@@ -215,12 +215,21 @@ if (!empty($_GET['idRateioFornecedor'])) {
 
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="departamentoAuditoria" name="departamentoAuditoria" required="">
-                  <?php if (!empty($idRateio)) {
-                    echo '<option value="' . $auditoria . '">' . $auditoria . '</option>';
-                  } ?>
-                  <option value="-1">-----------------</option>
-                  <option value="SIM">SIM</option>
-                  <option value="NAO" selected>NÃO</option>
+                  <?php
+                  if (!empty($idRateio)) {
+                    echo '<option value="' . $auditoria . '">';
+                    echo empty($auditoria) ? 'NÂO' : 'SIM';
+                    echo '</option>';
+
+                    echo '<option value="-1">-----------------</option>
+                    <option value="1">SIM</option>
+                    <option value="0">NÃO</option>';
+                  } else {
+                    echo '<option value="-1">-----------------</option>
+                    <option value="1">SIM</option>
+                    <option value="0" selected>NÃO</option>';
+                  }
+                  ?>
                 </select>
                 <label for="departamentoAuditoria">Nota do Departamento de Auditoria? <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
@@ -228,11 +237,19 @@ if (!empty($_GET['idRateioFornecedor'])) {
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="notasGrupo" name="notasGrupo" required="">
                   <?php if (!empty($idRateio)) {
-                    echo '<option value="' . $obra . '">' . $obra . '</option>';
-                  } ?>
-                  <option value="-1">-----------------</option>
-                  <option value="SIM">SIM</option>
-                  <option value="NAO" selected>NÃO</option>
+                    echo '<option value="' . $obra . '">';
+                    echo empty($obra) ? 'NÂO' : 'SIM';
+                    echo '</option>';
+
+                    echo '<option value="-1">-----------------</option>
+                    <option value="1">SIM</option>
+                    <option value="0">NÃO</option>';
+                  } else {
+                    echo '<option value="-1">-----------------</option>
+                    <option value="1">SIM</option>
+                    <option value="0" selected>NÃO</option>';
+                  }
+                  ?>
                 </select>
                 <label for="notasGrupo">Nota de Obras do Grupo Servopa? <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
@@ -240,11 +257,19 @@ if (!empty($_GET['idRateioFornecedor'])) {
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="notasMarketing" name="notasMarketing" required="">
                   <?php if (!empty($idRateio)) {
-                    echo '<option value="' . $marketing . '">' . $marketing . '</option>';
-                  } ?>
-                  <option value="-1">-----------------</option>
-                  <option value="SIM">SIM</option>
-                  <option value="NAO" selected>NÃO</option>
+                    echo '<option value="' . $marketing . '">';
+                    echo empty($marketing) ? 'NÂO' : 'SIM';
+                    echo '</option>';
+
+                    echo '<option value="-1">-----------------</option>
+                    <option value="1">SIM</option>
+                    <option value="0">NÃO</option>';
+                  } else {
+                    echo '<option value="-1">-----------------</option>
+                    <option value="1">SIM</option>
+                    <option value="0" selected>NÃO</option>';
+                  }
+                  ?>
                 </select>
                 <label for="notasMarketing">Nota do Depart. de Marketing? <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
@@ -273,35 +298,35 @@ if (!empty($_GET['idRateioFornecedor'])) {
               </div>
 
               <div class="col-md-4" id="diasCorridos" style="display: <?php if (!empty($idRateio)) {
-                                                                          if ($vencimentoTipo == 2) {
-                                                                            echo 'block';
-                                                                          } else {
-                                                                            echo 'none';
-                                                                          }
+                                                                        if ($vencimentoTipo == 2) {
+                                                                          echo 'block';
                                                                         } else {
                                                                           echo 'none';
-                                                                        } ?>;">
+                                                                        }
+                                                                      } else {
+                                                                        echo 'none';
+                                                                      } ?>;">
                 <div class="form-floating">
                   <input type="text" class="form-control" maxlength="3" name="diasCorridos" id="inputDiascorridos" <?php if (!empty($idRateio)) {
-                                                                                                                                                echo 'value="' . $vencimento . '"';
-                                                                                                                                              } ?>>
+                                                                                                                      echo 'value="' . $vencimento . '"';
+                                                                                                                    } ?>>
                   <label for="diasCorridos">Dias Corridos <span class="text-danger small pt-1 fw-bold">*</span></label>
                 </div>
               </div>
 
               <div class="col-md-4" id="dias" style="display: <?php if (!empty($idRateio)) {
-                                                                          if ($vencimentoTipo == 3) {
-                                                                            echo 'block';
-                                                                          } else {
-                                                                            echo 'none';
-                                                                          }
-                                                                        } else {
-                                                                          echo 'none';
-                                                                        } ?>;">
+                                                                if ($vencimentoTipo == 3) {
+                                                                  echo 'block';
+                                                                } else {
+                                                                  echo 'none';
+                                                                }
+                                                              } else {
+                                                                echo 'none';
+                                                              } ?>;">
                 <div class="form-floating">
                   <input type="text" class="form-control" id="diasInput" maxlength="2" name="dias" onblur="diasMaximos()" <?php if (!empty($idRateio)) {
-                                                                                                                                                echo 'value="' . $vencimento . '"';
-                                                                                                                                              } ?>>
+                                                                                                                            echo 'value="' . $vencimento . '"';
+                                                                                                                          } ?>>
                   <label for="dias">Dia <span class="text-danger small pt-1 fw-bold">*</span></label>
                 </div>
               </div>
@@ -311,8 +336,8 @@ if (!empty($_GET['idRateioFornecedor'])) {
               <div class="col-12">
                 <div class="form-floating">
                   <textarea class="form-control" placeholder="Address" id="observacao" style="height: 100px;" name="observacao" required=""><?php if (!empty($idRateio)) {
-                                                                                                                                                echo  $observacao;
-                                                                                                                                              } ?></textarea>
+                                                                                                                                              echo  $observacao;
+                                                                                                                                            } ?></textarea>
                   <label for="observacao">Observação <span class="text-danger small pt-1 fw-bold">*</span></label>
                 </div>
               </div>

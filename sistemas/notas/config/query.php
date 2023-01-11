@@ -71,4 +71,6 @@ $queryBancos = "SELECT * FROM bancos";
 
 $queryFornecedor = "SELECT * FROM cad_rateiofornecedor";
 
+$querytipodespesa = "SELECT * FROM cad_periodicidade CP";
+
 ?>
