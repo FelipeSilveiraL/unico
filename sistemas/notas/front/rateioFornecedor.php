@@ -7,7 +7,8 @@ require_once('menu.php'); //menu lateral da pagina
 
 //API
 require_once('../../bpm/inc/apiRecebeTabela.php'); //Empresas
-require_once('../api/centroCusto.php');
+require_once('../../bpm/inc/apiRecebeDepNF.php'); //CentroCusto
+require_once('../../bpm/inc/apiEmpDepNF.php'); //CentroCustoEmpresa
 
 //DADOS FORNECEDOR
 if (!empty($_GET['idRateioFornecedor'])) {
@@ -41,6 +42,27 @@ if (!empty($_GET['idRateioFornecedor'])) {
         <div class="card">
           <div class="card-body">
             <form class="row g-3" action="../inc/rateioFornecedor.php?idRateioFornecedor=<?= $idRateio ?>" method="post">
+              <!--SISTEMA -->
+              <h5 class="card-title">Sistema responsável para receber as notas</h5>
+              <div class="form-floating mb-3 col-md-12">
+                <select class="form-select" name="sistema" required>
+                  <?php if (!empty($idRateio)) {
+                    switch ($sistema) {
+                      case '1':
+                        echo '<option value="1">FLUIG</option>';
+                        break;
+
+                      case '2':
+                        echo '<option value="2">SMARTSHARE</option>';
+                        break;
+                    }
+                  } ?>
+                  <option value="">-----------------</option>
+                  <option value="1">FLUIG</option>
+                  <option value="2">SMARTSHARE</option>
+                </select>
+                <label for="floatingSelect">Sistema lançamento notas<span class="text-danger small pt-1 fw-bold"> * </span></label>
+              </div>
 
               <!--DADOS PRINCIPAIS -->
               <h5 class="card-title">Dados Principais</h5>
@@ -64,7 +86,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   }
                   ?>
                 </select>
-                <label for="selectFilial">Filial <span class="text-danger small pt-1 fw-bold">*</span></label>
+                <label for="selectFilial">Filial <span class="text-danger small pt-1 fw-bold"> * </span></label>
               </div>
 
               <span class="text-danger small pt-1 fw-bold" style="font-size: 12px;"><i class="bi bi-pin-fill"></i>Caso não esteja encontrando a FILIAL, abra um chamado no <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/glpi/front/ticket.form.php" target="_blank">GLPI</a> ao departamento <b>Smartshare</b></span>
@@ -89,7 +111,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   <option value="1">Boleto</option>
                   <option value="2">Depósito Bancário</option>
                 </select>
-                <label for="floatingSelect">Tipo pagamento <span class="text-danger small pt-1 fw-bold">*</span></label>
+                <label for="floatingSelect">Tipo pagamento <span class="text-danger small pt-1 fw-bold"> * </span></label>
               </div>
 
               <div class="row" id="tipopagamentoBancos" style="display: <?php if (!empty($idRateio)) {
@@ -118,7 +140,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                     }
                     ?>
                   </select>
-                  <label for="floatingSelect">Banco <span class="text-danger small pt-1 fw-bold">*</span></label>
+                  <label for="floatingSelect">Banco <span class="text-danger small pt-1 fw-bold"> * </span></label>
                 </div>
 
                 <div class="col-md-2">
@@ -128,7 +150,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                                                                                                                                     echo 'value="' . $agencia . '"';
                                                                                                                                   }
                                                                                                                                 } ?>>
-                    <label for="floatingName">Agência <span class="text-danger small pt-1 fw-bold">*</span></label>
+                    <label for="floatingName">Agência <span class="text-danger small pt-1 fw-bold"> * </span></label>
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -138,7 +160,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                                                                                                                               echo 'value="' . $conta . '"';
                                                                                                                             }
                                                                                                                           } ?>>
-                    <label for="floatingName">Conta <span class="text-danger small pt-1 fw-bold">*</span></label>
+                    <label for="floatingName">Conta <span class="text-danger small pt-1 fw-bold"> * </span></label>
                   </div>
                 </div>
                 <div class="col-md-2">
@@ -148,7 +170,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                                                                                                                                 echo 'value="' . $digito . '"';
                                                                                                                               }
                                                                                                                             } ?>>
-                    <label for="floatingName">Dígito <span class="text-danger small pt-1 fw-bold">*</span></label>
+                    <label for="floatingName">Dígito <span class="text-danger small pt-1 fw-bold"> * </span></label>
                   </div>
                 </div>
 
@@ -161,7 +183,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   <input type="text" class="form-control" id="cnpjVet" maxlength="15" placeholder="CNPJ / CPF Fornecedor" name="cpfCnpjFor" <?php if (!empty($idRateio)) {
                                                                                                                                               echo 'value="' . $cpfcnpjFornecedor . '"';
                                                                                                                                             } ?> required>
-                  <label for="cpfCnpjFor">CNPJ / CPF Fornecedor <span class="text-danger small pt-1 fw-bold">*</span></label>
+                  <label for="cpfCnpjFor">CNPJ / CPF Fornecedor <span class="text-danger small pt-1 fw-bold"> * </span></label>
                 </div>
               </div>
 
@@ -170,7 +192,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   <input type="text" class="form-control" id="NomeFornecedor" placeholder="Fornecedor" name="NomeFornecedor" maxlength="100" <?php if (!empty($idRateio)) {
                                                                                                                                                 echo 'value="' . $fornecedorNome . '"';
                                                                                                                                               } ?> readonly>
-                  <label for="NomeFornecedor">Nome fornecedor <span class="text-danger small pt-1 fw-bold">*</span></label>
+                  <label for="NomeFornecedor">Nome fornecedor <span class="text-danger small pt-1 fw-bold"> * </span></label>
                 </div>
               </div>
 
@@ -201,7 +223,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   }
                   ?>
                 </select>
-                <label for="floatingSelect">Tipo de Despesa <span class="text-danger small pt-1 fw-bold">*</span></label>
+                <label for="floatingSelect">Tipo de Despesa <span class="text-danger small pt-1 fw-bold"> * </span></label>
               </div>
 
               <div id="divNomeFornecedor" class="col-md-4">
@@ -231,7 +253,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   }
                   ?>
                 </select>
-                <label for="departamentoAuditoria">Nota do Departamento de Auditoria? <span class="text-danger small pt-1 fw-bold">*</span></label>
+                <label for="departamentoAuditoria">Nota do Departamento de Auditoria? <span class="text-danger small pt-1 fw-bold"> * </span></label>
               </div>
 
               <div class="form-floating mb-3 col-md-4">
@@ -251,7 +273,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   }
                   ?>
                 </select>
-                <label for="notasGrupo">Nota de Obras do Grupo Servopa? <span class="text-danger small pt-1 fw-bold">*</span></label>
+                <label for="notasGrupo">Nota de Obras do Grupo Servopa? <span class="text-danger small pt-1 fw-bold"> * </span></label>
               </div>
 
               <div class="form-floating mb-3 col-md-4">
@@ -271,7 +293,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   }
                   ?>
                 </select>
-                <label for="notasMarketing">Nota do Depart. de Marketing? <span class="text-danger small pt-1 fw-bold">*</span></label>
+                <label for="notasMarketing">Nota do Depart. de Marketing? <span class="text-danger small pt-1 fw-bold"> * </span></label>
               </div>
 
               <div class="form-floating col-md-4">
@@ -294,7 +316,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   <option value="2">Somatório</option>
                   <option value="3">Fixo</option>
                 </select>
-                <label for="vencimento">Vencimento <span class="text-danger small pt-1 fw-bold">*</span></label>
+                <label for="vencimento">Vencimento <span class="text-danger small pt-1 fw-bold"> * </span></label>
               </div>
 
               <div class="col-md-4" id="diasCorridos" style="display: <?php if (!empty($idRateio)) {
@@ -310,7 +332,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   <input type="text" class="form-control" maxlength="3" name="diasCorridos" id="inputDiascorridos" <?php if (!empty($idRateio)) {
                                                                                                                       echo 'value="' . $vencimento . '"';
                                                                                                                     } ?>>
-                  <label for="diasCorridos">Dias Corridos <span class="text-danger small pt-1 fw-bold">*</span></label>
+                  <label for="diasCorridos">Dias Corridos <span class="text-danger small pt-1 fw-bold"> * </span></label>
                 </div>
               </div>
 
@@ -327,7 +349,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   <input type="text" class="form-control" id="diasInput" maxlength="2" name="dias" onblur="diasMaximos()" <?php if (!empty($idRateio)) {
                                                                                                                             echo 'value="' . $vencimento . '"';
                                                                                                                           } ?>>
-                  <label for="dias">Dia <span class="text-danger small pt-1 fw-bold">*</span></label>
+                  <label for="dias">Dia <span class="text-danger small pt-1 fw-bold"> * </span></label>
                 </div>
               </div>
 
@@ -338,7 +360,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   <textarea class="form-control" placeholder="Address" id="observacao" style="height: 100px;" name="observacao" required=""><?php if (!empty($idRateio)) {
                                                                                                                                               echo  $observacao;
                                                                                                                                             } ?></textarea>
-                  <label for="observacao">Observação <span class="text-danger small pt-1 fw-bold">*</span></label>
+                  <label for="observacao">Observação <span class="text-danger small pt-1 fw-bold"> * </span></label>
                 </div>
               </div>
               <?php

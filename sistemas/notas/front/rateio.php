@@ -1,6 +1,30 @@
 <?php
-$buscaRateio = "SELECT * FROM cad_rateiocentrocusto WHERE ID_RATEIOFORNECEDOR = " . $_GET['idRateioFornecedor'];
-$aplicaBuscaRateio = $connNOTAS->query($buscaRateio);
+
+if ($sistema == 1) { //fluig
+
+  $buscaRateio = 'SELECT 
+                    CR.ID_RATEIOCENTROCUSTO AS ID,
+                    CC.descDpto AS centrocusto,
+                    CR.percentual
+                  FROM
+                    cad_rateiocentrocusto CR
+                  LEFT JOIN
+                    cad_centrocusto CC ON (CR.ID_CENTROCUSTO = CC.ID_CENTROCUSTO)
+                  WHERE
+                    CR.ID_RATEIOFORNECEDOR = '.$_GET['idRateioFornecedor'];
+} else {
+
+  $buscaRateio = 'SELECT 
+                    CR.ID_RATEIOCENTROCUSTO AS ID,
+                    UBND.NOME_DEPARTAMENTO AS centrocusto,
+                    CR.percentual
+                  FROM
+                    cad_rateiocentrocusto CR
+                  LEFT JOIN
+                    unico.bpm_nf_departamento UBND ON (CR.ID_CENTROCUSTO_BPM = UBND.ID_DEPARTAMENTO)
+                  WHERE
+                    CR.ID_RATEIOFORNECEDOR = '.$_GET['idRateioFornecedor'];
+}
 
 //contagem de porcento
 $queryPorcentual = "SELECT SUM(PERCENTUAL) AS porcentual FROM cad_rateiocentrocusto WHERE ID_RATEIOFORNECEDOR = " . $_GET['idRateioFornecedor'] . " GROUP BY ID_RATEIOFORNECEDOR";
@@ -22,9 +46,37 @@ if ($porcentual['porcentual'] < '100') {
   <select class="form-select" id="floatingSelect" name="centroCusto">
     <option value="">-----------------</option>
     <?php
-    $queryCentroCusto = "SELECT * FROM notas_centro_custo WHERE ID_EMPRESA = '" . $filial . "' ORDER BY NOME_DEPARTAMENTO ASC";
-    $resutadoCentro = $conn->query($queryCentroCusto);
+    if ($sistema == 1) { //FLUIG
+      $queryFilial = "SELECT 
+                          CCC.ID_CENTROCUSTO AS ID_DEPARTAMENTO,
+                          CCC.descDpto AS NOME_DEPARTAMENTO 
+                      FROM
+                          dbnotas_hom.cad_centrocusto CCC
+                      WHERE
+                          CCC.ID_FILIAL = (SELECT 
+                                  CF.ID_FILIAL
+                              FROM
+                                  dbnotas_hom.cad_filial CF
+                              WHERE
+                                  CF.cnpj = (SELECT 
+                                          UBE.CNPJ
+                                      FROM
+                                          unico.bpm_empresas UBE
+                                      WHERE
+                                          UBE.ID_EMPRESA = '" . $filial . "'))";
+    } else {
+      $queryFilial = "SELECT 
+                          D.ID_DEPARTAMENTO,
+                          D.NOME_DEPARTAMENTO
+                      FROM
+                          unico.bpm_nf_emp_dep ED
+                      LEFT JOIN
+                        unico.bpm_nf_departamento D ON (ED.ID_DEPARTAMENTO = D.ID_DEPARTAMENTO)
+                      WHERE
+                          ED.ID_EMPRESA = '" . $filial . "' AND ED.SITUACAO = 'A' AND ED.LANCA_NOTAS = 'S'";
+    }
 
+    $resutadoCentro = $connNOTAS->query($queryFilial);
     while ($centroCusto = $resutadoCentro->fetch_assoc()) {
       echo '<option value="' . $centroCusto['ID_DEPARTAMENTO'] . '">' . $centroCusto['NOME_DEPARTAMENTO'] . '</option>';
     }
@@ -52,7 +104,8 @@ if ($porcentual['porcentual'] < '100') {
 
 
 
-<div class="card" id="rateioFornecedor"><h5 class="card-title">Tabela centro de custo</h5>
+<div class="card" id="rateioFornecedor">
+  <h5 class="card-title">Tabela centro de custo</h5>
   <div class="card-body">
     <table class="table table-bordered">
       <thead>
@@ -64,18 +117,20 @@ if ($porcentual['porcentual'] < '100') {
       </thead>
       <tbody>
         <?php
+        $aplicaBuscaRateio = $connNOTAS->query($buscaRateio);
+
         while ($rateio = $aplicaBuscaRateio->fetch_assoc()) {
           echo '<tr>
-                    <td>' . $rateio['ID_CENTROCUSTO'] . '</td>
-                    <td>' . $rateio['PERCENTUAL'] . '</td>
+                    <td>' . $rateio['centrocusto'] . '</td>
+                    <td>' . $rateio['percentual'] . '</td>
                     <td>
-                      <a href="../inc/deletarCentroCusto.php?idCentroCusto=' . $rateio['ID'] . '&idRateioFornecedor='.$_GET['idRateioFornecedor'].'" title="Excluir" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                      <a href="../inc/deletarCentroCusto.php?idCentroCusto=' . $rateio['ID'] . '" title="Excluir" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                   </td>
                 </tr>';
         }
         ?>
       </tbody>
     </table>
-    <span class="text-danger small pt-1 fw-bold">Total: <?=$porcentual['porcentual']?> %</span>
+    <span class="text-danger small pt-1 fw-bold">Total: <?= $porcentual['porcentual'] ?> %</span>
   </div>
 </div>

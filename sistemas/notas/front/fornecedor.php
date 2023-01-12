@@ -43,8 +43,8 @@ require_once('../../bpm/inc/apiRecebeTabela.php');//EMPRESAS
                   <th scope="col">CNPJ&emsp;</th>
                   <th scope="col">FORNECEDOR&emsp;</th>
                   <th scope="col">FILIAL&emsp;</th>
-                  <th scope="col">OBSERVAÇÃO</th>
-                  <th scope="col">ação&emsp;</th>
+                  <th scope="col">SISTEMA&emsp;</th>
+                  <th scope="col">AÇÃO&emsp;</th>
                 </tr>
               </thead>
               <tbody>
@@ -62,7 +62,7 @@ require_once('../../bpm/inc/apiRecebeTabela.php');//EMPRESAS
                             <td>' . $fornecedor['cpfcnpj_fornecedor'] . '</td>
                             <td>' . $fornecedor['fornecedor'] . '</td>
                             <td>' . $nomeEmpresa['NOME_EMPRESA'] . '</td>
-                            <td>' . $fornecedor['observacao'] . '</td>
+                            <td>'; echo $fornecedor['sistema'] == 1 ? 'FLUIG' : 'SMARTSHARE'; echo '</td>
                             <td>
                               <a href="rateioFornecedor.php?idRateioFornecedor='.$fornecedor['ID_RATEIOFORNECEDOR'].'" title="Editar" class="btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
                               <a href="../inc/deletarFornecedor.php?idRateioFornecedor='.$fornecedor['ID_RATEIOFORNECEDOR'].'" title="Desativar" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>

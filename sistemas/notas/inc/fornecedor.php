@@ -19,6 +19,7 @@ $aplicarBusca = $connNOTAS->query($buscaFornecedor);
 if ($fornecedor = $aplicarBusca->fetch_assoc()) {
 
     $filial = $fornecedor['ID_FILIAL'];
+    $sistema = $fornecedor['sistema'];
     $nomeFilial = $fornecedor['nome_empresa'];
     $fornecedorNome = $fornecedor['fornecedor'];
     $cpfcnpjFornecedor = $fornecedor['cpfcnpj_fornecedor'];
