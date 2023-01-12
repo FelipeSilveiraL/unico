@@ -68,12 +68,12 @@ if (!$coressistema = $resultado->fetch_assoc()) {
         </li>
         <!-- End Charts Nav -->
 
-        <li class="nav-item">
+       <!--  <li class="nav-item">
             <a class="nav-link collapsed" href="../../../../notas/fun/validation.php?idUsuario=<?= $_SESSION['id_usuario'] ?>&usuario=<?= $_SESSION['usuario'] ?>&email=<?= $_SESSION['email'] ?>&senha=<?= $_SESSION['senha'] ?>&admin=<?= $_SESSION['administrador'] ?>&cpf=<?= $_SESSION['cpf'] ?>&nome=<?= $_SESSION['nome_usuario'] ?>" target="_blank">
                 <i class="bi bi-signpost-split"></i>
                 <span>Versão Anterior (FLUIG)</span>
             </a>
-        </li>
+        </li> -->
 
         <li class="nav-item">
             <a class="nav-link  <?= $_GET['pg'] == 5 ?: "collapsed" ?>" href="ajuda.php?pg=<?= $_GET['pg'] ?>">
