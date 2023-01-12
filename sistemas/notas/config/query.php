@@ -73,4 +73,17 @@ $queryFornecedor = "SELECT * FROM cad_rateiofornecedor";
 
 $querytipodespesa = "SELECT * FROM cad_periodicidade CP";
 
+//Verificando se tem nota com centro de custo incompleto
+$queryCentroDeCustoIncompleto = "SELECT centro_custo_completo from cad_rateiofornecedor WHERE centro_custo_completo = 1";
+$aplicaQueryIncompleto = $connNOTAS->query($queryCentroDeCustoIncompleto);
+$incompletoCentroCusto = $aplicaQueryIncompleto->fetch_assoc();
+
+echo $queryCentroDeCustoIncompleto;
+
+if(!empty($incompletoCentroCusto['centro_custo_completo'])){
+    $mostraAlert = "style= 'display: block'";
+}else{
+    $mostraAlert = "style= 'display: none'";
+}
+
 ?>

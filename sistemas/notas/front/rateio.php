@@ -33,8 +33,17 @@ $porcentual = $aplicarPorcentual->fetch_assoc();
 
 if ($porcentual['porcentual'] < '100') {
   $addPorcentual = 'style="display: block"';
+  $required = 'required';
+  //incompleto
+  $updateIncompleto = "UPDATE cad_rateiofornecedor SET centro_custo_completo = '1' WHERE `ID_RATEIOFORNECEDOR`= ".$_GET['idRateioFornecedor'];
+  $aplicaIncompleto = $connNOTAS->query($updateIncompleto);
+
 } else {
   $addPorcentual = 'style="display: none"';
+  $required = '';
+  //completo
+  $updateCompleto = "UPDATE cad_rateiofornecedor SET centro_custo_completo = '2' WHERE `ID_RATEIOFORNECEDOR`= ".$_GET['idRateioFornecedor'];
+  $aplicaCompleto = $connNOTAS->query($updateCompleto);
 }
 
 ?>
@@ -43,7 +52,7 @@ if ($porcentual['porcentual'] < '100') {
 <h5 class="card-title">Rateio Departamentos</h5>
 
 <div class="form-floating col-md-6" <?= $addPorcentual ?>>
-  <select class="form-select" id="floatingSelect" name="centroCusto">
+  <select class="form-select" id="floatingSelect" name="centroCusto" <?= $required ?> >
     <option value="">-----------------</option>
     <?php
     if ($sistema == 1) { //FLUIG
@@ -124,7 +133,7 @@ if ($porcentual['porcentual'] < '100') {
                     <td>' . $rateio['centrocusto'] . '</td>
                     <td>' . $rateio['percentual'] . '</td>
                     <td>
-                      <a href="../inc/deletarCentroCusto.php?idCentroCusto=' . $rateio['ID'] . '" title="Excluir" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                      <a href="../inc/deletarCentroCusto.php?idCentroCusto=' . $rateio['ID'] . '&idRateioFornecedor='.$_GET['idRateioFornecedor'].'" title="Excluir" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                   </td>
                 </tr>';
         }

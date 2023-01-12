@@ -2,32 +2,12 @@
 session_start();
 
 require_once('../config/query.php');
+require_once('../function/caracteres.php');
 
 //checando campos
 !empty($_POST['NomeFornecedor']) ?: header('Location: ../front/rateioFornecedor.php?msn=10&erro=5');
 
-//remoção caracter
-function seo_friendly_url($string)
-{
-    $string = str_replace(array('[\', \']'), '', $string);
-    $string = preg_replace('/\[.*\]/U', '', $string);
-    $string = preg_replace('/&(amp;)?#?[a-z0-9]+;/i', '-', $string);
-    $string = htmlentities($string, ENT_COMPAT, 'utf-8');
-    $string = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $string);
-    $string = preg_replace(array('/[^a-z0-9]/i', '/[-]+/'), '-', $string);
-    $string = str_replace('-', ' ', $string);
-
-    return strtoupper(trim($string, '-'));
-}
-
-function pontuacao($stingPontuacao)
-{
-    $stingPontuacao = str_replace(',', '.', $stingPontuacao);
-
-    return $stingPontuacao;
-}
-
-
+//checando os dias
 if (!empty($_POST['dias'])) {
     $dias = $_POST['dias'];
 } elseif (!empty($_POST['diasCorridos'])) {
@@ -46,7 +26,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     fornecedor,
     cpfcnpj_fornecedor,
     ID_TIPOPAGAMENTO,
-    ID_TIPODESPESA,
+    ID_PERIODICIDADE,
     auditoria,
     obra,
     marketing,
@@ -54,7 +34,8 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     vencimento_tipo,
     vencimento,
     telefone,
-    tipo_serv) VALUES
+    tipo_serv,
+    sistema) VALUES
     
     (" . $_SESSION['id_usuario'] . ",
     '" . $_POST['filial'] . "',
@@ -69,7 +50,8 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     '" . $_POST['vencimento'] . "',
     '" . $dias . "',
     '" . $_POST['telefone'] . "',
-    '" . seo_friendly_url($_POST['tipoServico']) . "')";
+    '" . seo_friendly_url($_POST['tipoServico']) . "',
+    '" . $_POST['sistema'] . "')";
 
     if ($aplicarInsert = $connNOTAS->query($insertFornecedor)) {
 
@@ -109,7 +91,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     }
 } else { //cadastro centro de custo ou editando o fornecedor
 
-    //editar formulario
+    //EDITANDO FORNECEDOR
     $updateFornecedor = "UPDATE cad_rateiofornecedor
     SET
     `ID_FILIAL` = '" . $_POST['filial'] . "',
@@ -124,12 +106,34 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     `vencimento_tipo` = '" . $_POST['vencimento'] . "',
     `vencimento` = '" . $dias . "',
     `telefone` = '" . seo_friendly_url($_POST['telefone']) . "',
-    `tipo_serv` = '" . seo_friendly_url($_POST['tipoServico']) . "'
+    `tipo_serv` = '" . seo_friendly_url($_POST['tipoServico']) . "',
+    `sistema` = '" . $_POST['sistema'] . "'
     WHERE `ID_RATEIOFORNECEDOR` = " . $_GET['idRateioFornecedor'];
 
-    $resultadoUpdate = $connNOTAS->query($updateFornecedor);
+    //VEFIRICANDO SE HOUVE ALTERAÇÃO DO SISTEMA
+    $buscaSistema = "SELECT sistema, ID_FILIAL, cpfcnpj_fornecedor FROM cad_rateiofornecedor WHERE `ID_RATEIOFORNECEDOR` = " . $_GET['idRateioFornecedor'];
+    $aplicaBusca = $connNOTAS->query($buscaSistema);
+    $sistema = $aplicaBusca->fetch_assoc();
 
+    if ($sistema['sistema'] != $_POST['sistema'] OR $sistema['ID_FILIAL'] != $_POST['filial'] OR $sistema['cpfcnpj_fornecedor'] != $_POST['cpfCnpjFor']) { //houve alteração então
+        //deleta os centro de custo
+        $deletaCentro = "DELETE FROM cad_rateiocentrocusto WHERE `ID_RATEIOFORNECEDOR` = " . $_GET['idRateioFornecedor'];
+        $aplicaBuscadeletaCentro = $connNOTAS->query($deletaCentro);
+
+        $resultadoUpdate = $connNOTAS->query($updateFornecedor);
+
+        //envia para salvar o rateio
+        header('Location: ../front/rateioFornecedor.php?idRateioFornecedor=' . $_GET['idRateioFornecedor'] . '#rateioFornecedor');
+        exit;
+    } else {
+        $resultadoUpdate = $connNOTAS->query($updateFornecedor);
+    }
+
+    //CENTRO DE CUSTO
+
+    //trabalhando em cima do centro de custo
     if ($_POST['centroCusto'] != null) {
+
         //antes de salvar verificar se não passou dos 100%
         $queryPorcentual = "SELECT SUM(percentual) AS porcentual FROM cad_rateiocentrocusto WHERE ID_RATEIOFORNECEDOR = " . $_GET['idRateioFornecedor'] . " GROUP BY ID_RATEIOFORNECEDOR";
         $aplicarPorcentual = $connNOTAS->query($queryPorcentual);
@@ -138,19 +142,26 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
         $porcentoFormulario = pontuacao($_POST['porcentual']);
         $somatorio = $porcentoFormulario + $porcentual['porcentual'];
 
-        if ($somatorio > 100) {
+        if ($somatorio > 100) { //ultrapassou os 100%
             header('Location: ../front/rateioFornecedor.php?idRateioFornecedor=' . $_GET['idRateioFornecedor'] . '&msn=10&erro=8');
         } else {
-            $queryDuplicado = "SELECT ID_CENTROCUSTO FROM cad_rateiocentrocusto WHERE ID_CENTROCUSTO = '" . $_POST['centroCusto'] . "' AND id_rateiofornecedor = " . $_GET['idRateioFornecedor'];
+
+            if ($_POST['sistema'] == 1) { //FLUIG
+                $idCentroCusto = 'ID_CENTROCUSTO';
+            } else {
+                $idCentroCusto = 'ID_CENTROCUSTO_BPM';
+            }
+
+            $queryDuplicado = "SELECT " . $idCentroCusto . " AS id_centrocusto FROM cad_rateiocentrocusto WHERE " . $idCentroCusto . " = '" . $_POST['centroCusto'] . "' AND id_rateiofornecedor = " . $_GET['idRateioFornecedor'];
             $aplicarDuplicado = $connNOTAS->query($queryDuplicado);
             $duplicado = $aplicarDuplicado->fetch_assoc();
 
             if ($duplicado['id_centrocusto'] == NULL) {
                 //inserindo novo centro custo
                 $insertCentroCusto = "INSERT INTO cad_rateiocentrocusto
-                                (`ID_RATEIOFORNECEDOR`,
-                                `ID_CENTROCUSTO`,
-                                `PERCENTUAL`)
+                                (ID_RATEIOFORNECEDOR,
+                                " . $idCentroCusto . ",
+                                percentual)
                                 VALUES
                                 (" . $_GET['idRateioFornecedor'] . ",
                                 '" . $_POST['centroCusto'] . "',
@@ -163,10 +174,9 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
                 header('Location: ../front/rateioFornecedor.php?idRateioFornecedor=' . $_GET['idRateioFornecedor'] . '&msn=10&erro=9');
             }
         }
-    }else{
+    } else {
         header('Location: ../front/fornecedor.php');
     }
 }
-
 
 $connNOTAS->close();

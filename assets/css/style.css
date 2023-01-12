@@ -34,6 +34,36 @@ select[readonly] {
   touch-action: none;
 }
 
+.destacar{
+  background   : #ed3c0d;
+  color: white;
+}
+
+.pulsar::before, .pulsar::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: -2px;
+  bottom: -2px;
+  border: 2px solid red;
+  animation: animar 1.5s linear infinite;
+}
+@keyframes animar{
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform:  scale(1.2);
+    opacity: 0;
+  }
+}
+
 .capitalize {
   text-transform: capitalize;
 }
@@ -41,6 +71,7 @@ select[readonly] {
 .mb-6 {
   margin-top: 6%;
 }
+
 
 .button-rigth-espelho {
   margin-left: 94%;

@@ -21,6 +21,16 @@ require_once('../config/query.php'); //SISTEMA NOTAS
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
 
+                <li class="nav-item dropdown" <?= $mostraAlert ?> >
+                    <a class="nav-link nav-icon" href="fornecedor.php?fornecedorIncompleto=1" title="Centro de Custo incompleto" style="color: red;">
+
+                        <div class="pulsar">
+                            <i class="bi bi-shield-fill-exclamation"></i>
+
+                        </div>
+                    </a><!-- End Notification Icon -->
+                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-paint-bucket"></i>
