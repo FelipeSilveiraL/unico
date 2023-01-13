@@ -106,29 +106,10 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     `vencimento_tipo` = '" . $_POST['vencimento'] . "',
     `vencimento` = '" . $dias . "',
     `telefone` = '" . seo_friendly_url($_POST['telefone']) . "',
-    `tipo_serv` = '" . seo_friendly_url($_POST['tipoServico']) . "',
-    `sistema` = '" . $_POST['sistema'] . "'
+    `tipo_serv` = '" . seo_friendly_url($_POST['tipoServico']) . "'
     WHERE `ID_RATEIOFORNECEDOR` = " . $_GET['idRateioFornecedor'];
-
-    //VEFIRICANDO SE HOUVE ALTERAÇÃO DO SISTEMA
-    $buscaSistema = "SELECT sistema, ID_FILIAL, cpfcnpj_fornecedor FROM cad_rateiofornecedor WHERE `ID_RATEIOFORNECEDOR` = " . $_GET['idRateioFornecedor'];
-    $aplicaBusca = $connNOTAS->query($buscaSistema);
-    $sistema = $aplicaBusca->fetch_assoc();
-
-    if ($sistema['sistema'] != $_POST['sistema'] OR $sistema['ID_FILIAL'] != $_POST['filial'] OR $sistema['cpfcnpj_fornecedor'] != $_POST['cpfCnpjFor']) { //houve alteração então
-        //deleta os centro de custo
-        $deletaCentro = "DELETE FROM cad_rateiocentrocusto WHERE `ID_RATEIOFORNECEDOR` = " . $_GET['idRateioFornecedor'];
-        $aplicaBuscadeletaCentro = $connNOTAS->query($deletaCentro);
-
-        $resultadoUpdate = $connNOTAS->query($updateFornecedor);
-
-        //envia para salvar o rateio
-        header('Location: ../front/rateioFornecedor.php?idRateioFornecedor=' . $_GET['idRateioFornecedor'] . '#rateioFornecedor');
-        exit;
-    } else {
-        $resultadoUpdate = $connNOTAS->query($updateFornecedor);
-    }
-
+    
+    $resultadoUpdate = $connNOTAS->query($updateFornecedor);
     //CENTRO DE CUSTO
 
     //trabalhando em cima do centro de custo
@@ -146,13 +127,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
             header('Location: ../front/rateioFornecedor.php?idRateioFornecedor=' . $_GET['idRateioFornecedor'] . '&msn=10&erro=8');
         } else {
 
-            if ($_POST['sistema'] == 1) { //FLUIG
-                $idCentroCusto = 'ID_CENTROCUSTO';
-            } else {
-                $idCentroCusto = 'ID_CENTROCUSTO_BPM';
-            }
-
-            $queryDuplicado = "SELECT " . $idCentroCusto . " AS id_centrocusto FROM cad_rateiocentrocusto WHERE " . $idCentroCusto . " = '" . $_POST['centroCusto'] . "' AND id_rateiofornecedor = " . $_GET['idRateioFornecedor'];
+            $queryDuplicado = "SELECT ID_CENTROCUSTO_BPM AS id_centrocusto FROM cad_rateiocentrocusto WHERE ID_CENTROCUSTO_BPM = '" . $_POST['centroCusto'] . "' AND id_rateiofornecedor = " . $_GET['idRateioFornecedor'];
             $aplicarDuplicado = $connNOTAS->query($queryDuplicado);
             $duplicado = $aplicarDuplicado->fetch_assoc();
 
@@ -160,7 +135,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
                 //inserindo novo centro custo
                 $insertCentroCusto = "INSERT INTO cad_rateiocentrocusto
                                 (ID_RATEIOFORNECEDOR,
-                                " . $idCentroCusto . ",
+                                ID_CENTROCUSTO_BPM,
                                 percentual)
                                 VALUES
                                 (" . $_GET['idRateioFornecedor'] . ",

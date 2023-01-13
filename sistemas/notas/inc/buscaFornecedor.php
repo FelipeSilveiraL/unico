@@ -80,20 +80,16 @@ if ($_POST['tipo'] == 1) { //lancarnotas.php
 
         echo $fornecedorLancar['observacao'] . '-'; //8
 
-        echo '<option value="' . $fornecedorLancar['sistema'] . '">';
-        echo $fornecedorLancar['sistema'] == 1 ? "FLUIG" : "SMARTSHARE";
-        echo '</option>-'; //9
-
         //banco
         if ($fornecedorLancar['ID_TIPOPAGAMENTO'] == 2) {
             $querybancos = "SELECT * FROM cad_rateiobanco WHERE id_rateiofornecedor = " . $fornecedorLancar['ID_RATEIOFORNECEDOR'];
             $aplicaQueryBanco = $connNOTAS->query($querybancos);
             $banco = $aplicaQueryBanco->fetch_assoc();
 
-            echo '<option value="' . $banco['nome_banco'] . '">' . $banco['nome_banco'] . '</option>-'; //10
-            echo $banco['agencia'] . '-'; //11
-            echo $banco['conta'] . '-'; //12
-            echo $banco['digito'] . '-'; //13
+            echo '<option value="' . $banco['nome_banco'] . '">' . $banco['nome_banco'] . '</option>-'; //9
+            echo $banco['agencia'] . '-'; //10
+            echo $banco['conta'] . '-'; //11
+            echo $banco['digito'] . '-'; //12
 
         }
     }

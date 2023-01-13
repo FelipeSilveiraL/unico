@@ -36,16 +36,6 @@ require_once('../api/centroCusto.php');
           <div class="card-body">
             <form class="row g-3" action="../inc/lancamento.php" method="post" enctype="multipart/form-data">
 
-              <!--SISTEMA -->
-             
-              <!--SISTEMA -->
-              <h5 class="card-title">Sistema responsável para receber as notas</h5>
-              <div class="form-floating mb-3 col-md-12">
-                <select class="form-select" id="sistemas" name="sistema"  readonly="readonly">
-                </select>
-                <label for="floatingSelect">Sistema lançamento notas<span class="text-danger small pt-1 fw-bold"> * </span></label>
-              </div>
-
               <!--DADOS PRINCIPAIS -->
               <h5 class="card-title">Dados Principais</h5>
 
@@ -422,11 +412,10 @@ require_once('footer.php'); //Javascript e configurações afins
           $("#notasGrupoObra").html(dados[6]);
           $("#notasMarketing").html(dados[7]);
           $("#observacao").html(dados[8]);
-          $("#sistemas").html(dados[9]);
-          $("#nomeBanco").html(dados[10]);
-          $("#numAgencia").val(dados[11]);
-          $("#numConta").val(dados[12]);
-          $("#numDigito").val(dados[13]);
+          $("#nomeBanco").html(dados[9]);
+          $("#numAgencia").val(dados[10]);
+          $("#numConta").val(dados[11]);
+          $("#numDigito").val(dados[12]);
 
 
           $("#enviarNota").attr("disabled", false);

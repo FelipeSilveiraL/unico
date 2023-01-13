@@ -42,28 +42,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
         <div class="card">
           <div class="card-body">
             <form class="row g-3" action="../inc/rateioFornecedor.php?idRateioFornecedor=<?= $idRateio ?>" method="post">
-              <!--SISTEMA -->
-              <h5 class="card-title">Sistema responsável para receber as notas</h5>
-              <div class="form-floating mb-3 col-md-12">
-                <select class="form-select" name="sistema" required>
-                  <?php if (!empty($idRateio)) {
-                    switch ($sistema) {
-                      case '1':
-                        echo '<option value="1">FLUIG</option>';
-                        break;
-
-                      case '2':
-                        echo '<option value="2">SMARTSHARE</option>';
-                        break;
-                    }
-                  } ?>
-                  <option value="">-----------------</option>
-                  <option value="1">FLUIG</option>
-                  <option value="2">SMARTSHARE</option>
-                </select>
-                <label for="floatingSelect">Sistema lançamento notas<span class="text-danger small pt-1 fw-bold"> * </span></label>
-              </div>
-
+            
               <!--DADOS PRINCIPAIS -->
               <h5 class="card-title">Dados Principais</h5>
 
