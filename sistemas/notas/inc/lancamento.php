@@ -1,5 +1,5 @@
 <?php
-require_once('../config/query.php');
+require_once('../../../config/databases.php');
 
 //SALVANDO NOTA PARA LANÇAMENTO
 $carimbar = $_POST['carimbar'] == NULL ? 0 : 1;
@@ -7,7 +7,7 @@ $carimbar = $_POST['carimbar'] == NULL ? 0 : 1;
 $insertNota = "INSERT INTO cad_lancarnotas
 (`ID_FILIAL`,
 `ID_USUARIO`,
-`ID_TIPODESPESA`,
+`ID_PERIODICIDADE`,
 `ID_TIPOPAGAMENTO`,
 `CNPJ`,
 `nome_fornecedor`,
@@ -23,8 +23,7 @@ $insertNota = "INSERT INTO cad_lancarnotas
 `status_desc`,
 `date_create`,
 `telefone`,
-`carimbar`,
-`tipo_serv`)
+`carimbar`)
 VALUES
 ('" . $_POST['filial'] . "',
 '" . $_POST['usuarioResponsavel'] . "',
@@ -44,8 +43,7 @@ VALUES
 1,
 '" . date('Y-m-d') . "',
 '" . $_POST['telefone'] . "',
-'" . $carimbar . "',
-'" . strtoupper($_POST['tipoServico']) . "')";
+'" . $carimbar . "')";
 
 $aplicarInsertNota = $connNOTAS->query($insertNota);
 
@@ -53,25 +51,6 @@ $aplicarInsertNota = $connNOTAS->query($insertNota);
 $queryUltimoLancamento = "SELECT MAX(ID_LANCARNOTAS) AS id_lancarnotas FROM cad_lancarnotas";
 $aplicarUltimo = $connNOTAS->query($queryUltimoLancamento);
 $ultimo = $aplicarUltimo->fetch_assoc();
-
-//SALVANDO VALOR DA NOTA COM O RATEIO
-$cont = 0;
-
-while ($_POST['valorRateado' . $cont] != NULL) {
-    $insertValorCentro = "INSERT INTO cad_lancarnotas_centrocusto
-                            (`ID_LANCARNOTAS`,
-                            `ID_CENTROCUSTO`,
-                            `valor`,
-                            `percentual`)
-                            VALUES
-                            (" . $ultimo['id_lancarnotas'] . ",
-                            '" . $_POST['centroCusto' . $cont] . "',
-                            '" . $_POST['valorRateado' . $cont] . "',
-                            '" . $_POST['percentual' . $cont] . "')";
-    $cont++;
-
-    $aplicaValorCentro = $connNOTAS->query($insertValorCentro);
-}
 
 //SALVANDO O ARQUIVO DA NOTA/BOLETO
 

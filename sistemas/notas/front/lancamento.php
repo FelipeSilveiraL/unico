@@ -129,14 +129,7 @@ require_once('../api/centroCusto.php');
 
               <h5 class="card-title">Dados Nota Fiscal</h5>
 
-              <div class="mb-3 col-md-4">
-                <div class="form-floating">
-                  <input type="text" class="form-control" id="tipoServicoInput" name="tipoServico" maxlength="100" readonly>
-                  <label for="tipoServicoInput">Tipo de Serviço</label>
-                </div>
-              </div>
-
-              <div class="form-floating col-md-4">
+              <div class="form-floating col-md-6">
                 <select class="form-select" id="tipoDespesaSelect" name="tipodespesa" readonly="readonly">
                   <option value="">-----------------</option>
                   <option value="AVULSA">Avulsa</option>
@@ -150,7 +143,7 @@ require_once('../api/centroCusto.php');
                 <label for="tipoDespesaSelect">Tipo de Despesa <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
-              <div id="divNomeFornecedor" class="col-md-4">
+              <div id="divNomeFornecedor" class="col-md-6">
                 <div class="form-floating">
                   <input type="text" class="form-control" id="telefone" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" title="Caso seja nota de telefonia" name="telefone" readonly>
                   <label for="telefone">Telefone</label>
@@ -194,7 +187,7 @@ require_once('../api/centroCusto.php');
                 <label for="serie">Série <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
               <div class="form-floating col-md-4">
-                <input type="text" class="form-control" id="valorNota" name="valor" maxlength="12" onKeyUp="mascaraMoeda(this, event)" required>
+                <input type="text" class="form-control dinheiro" id="valorNota" name="valor" maxlength="12" required>
                 <label for="valor">Valor <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
@@ -360,7 +353,7 @@ require_once('footer.php'); //Javascript e configurações afins
 
         $("#tableCusto").empty();
         $("#tableCusto").empty(data);
-        $("#tableCusto").append(data);
+        $("#tableCusto").append(data);        
       }
     })
   });
@@ -429,4 +422,6 @@ require_once('footer.php'); //Javascript e configurações afins
 
     });
   });
+
+  $(".dinheiro").mask('#.##0,00', {reverse: true});
 </script>

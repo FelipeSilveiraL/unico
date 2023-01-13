@@ -27,9 +27,9 @@ if ($_POST['tipo'] == 1) { //lancarnotas.php
 
         //dados
         if ($fornecedorLancar['ID_TIPOPAGAMENTO'] == 1) {
-            echo '<option>Boleto</option>-';
+            echo '<option value="1">Boleto</option>-';
         } else {
-            echo '<option>Deposito</option>-';
+            echo '<option value="2">Depósito Bancário</option>-';
         } //1
 
         echo $fornecedorLancar['tipo_serv'] . '-'; //2

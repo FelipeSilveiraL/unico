@@ -14,8 +14,9 @@ function seo_friendly_url($string)
 
 function pontuacao($stingPontuacao)
 {
+    $stingPontuacao = str_replace('.', '', $stingPontuacao);
     $stingPontuacao = str_replace(',', '.', $stingPontuacao);
 
-    return $stingPontuacao;
+    return trim($stingPontuacao);
 }
 ?>

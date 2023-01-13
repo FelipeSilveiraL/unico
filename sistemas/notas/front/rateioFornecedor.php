@@ -179,16 +179,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
 
               <h5 class="card-title">Dados Nota Fiscal</h5>
 
-              <div class="mb-3 col-md-4">
-                <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingName" placeholder="Tipo de Serviço" name="tipoServico" maxlength="100" <?php if (!empty($idRateio)) {
-                                                                                                                                                echo 'value="' . $tipoServ . '"';
-                                                                                                                                              } ?>>
-                  <label for="floatingName">Tipo de Serviço</label>
-                </div>
-              </div>
-
-              <div class="form-floating col-md-4">
+              <div class="form-floating col-md-6">
                 <select class="form-select" id="floatingSelect" name="tipodespesa" required="">
                   <?php if (!empty($idRateio)) {
                     echo '<option value="' . $idPeriodicidade . '">' . $tipoPeriodicidade . '</option>';
@@ -205,7 +196,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                 <label for="floatingSelect">Tipo de Despesa <span class="text-danger small pt-1 fw-bold"> * </span></label>
               </div>
 
-              <div id="divNomeFornecedor" class="col-md-4">
+              <div id="divNomeFornecedor" class="col-md-6">
                 <div class="form-floating">
                   <input type="text" class="form-control" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" title="Caso seja nota de telefonia" name="telefone" <?php if (!empty($idRateio)) {
                                                                                                                                                                               echo 'value="' . $telefone . '"';
@@ -275,7 +266,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                 <label for="notasMarketing">Nota do Depart. de Marketing? <span class="text-danger small pt-1 fw-bold"> * </span></label>
               </div>
 
-              <div class="form-floating col-md-4">
+              <div class="form-floating col-md-6">
                 <select class="form-select" id="vencimento" name="vencimento" onchange="tipoVencimento()" required="">
                   <?php if (!empty($idRateio)) {
                     switch ($vencimentoTipo) {
@@ -298,7 +289,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                 <label for="vencimento">Vencimento <span class="text-danger small pt-1 fw-bold"> * </span></label>
               </div>
 
-              <div class="col-md-4" id="diasCorridos" style="display: <?php if (!empty($idRateio)) {
+              <div class="col-md-6" id="diasCorridos" style="display: <?php if (!empty($idRateio)) {
                                                                         if ($vencimentoTipo == 2) {
                                                                           echo 'block';
                                                                         } else {
@@ -315,7 +306,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                 </div>
               </div>
 
-              <div class="col-md-4" id="dias" style="display: <?php if (!empty($idRateio)) {
+              <div class="col-md-6" id="dias" style="display: <?php if (!empty($idRateio)) {
                                                                 if ($vencimentoTipo == 3) {
                                                                   echo 'block';
                                                                 } else {

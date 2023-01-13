@@ -1,17 +1,20 @@
 <?php
 session_start();
 require_once('../config/query.php');
-
-
-//procurando o fornecedor
-
-$queryFornecedor = "SELECT * FROM cad_rateiofornecedor WHERE filial = '" . $_POST['idFilial'] . "' AND cpfcnpj_fornecedor = '" . $_POST['id'] . "' AND id_usuario = '" . $_SESSION['id_usuario'] . "'";
-$aplicaquery = $connNOTAS->query($queryFornecedor);
-$fornecedorLancar = $aplicaquery->fetch_assoc();
-
+require_once('../function/caracteres.php');
+require_once('../function/calculos.php');
 
 //bucasndo o rateio
-$queryRateio = "SELECT * FROM cad_rateiocentrocusto WHERE id_rateiofornecedor = " . $fornecedorLancar['id'];
+$queryRateio = "SELECT 
+                  CRC.ID_CENTROCUSTO_BPM AS centrocusto,
+                  CRC.percentual AS porcento
+                FROM
+                  cad_rateiocentrocusto CRC
+                LEFT JOIN
+                  cad_rateiofornecedor CRF ON (CRC.ID_RATEIOFORNECEDOR = CRF.ID_RATEIOFORNECEDOR)
+                WHERE
+                  CRF.ID_FILIAL = " . $_POST['idFilial'] . " AND CRF.cpfcnpj_fornecedor = '" . $_POST['id'] . "' AND CRF.ID_USUARIO = ".$_SESSION['id_usuario'];
+
 $aplicarqueryrateio = $connNOTAS->query($queryRateio);
 
 echo '<thead>
@@ -21,30 +24,19 @@ echo '<thead>
   <th scope="col">Valor</th>
 </tr>
 </thead>';
-
 echo  '<tbody>';
 
-$cont = 0;
-
 while ($rateio = $aplicarqueryrateio->fetch_assoc()) {
+  
+  //trabalhando a porcentagem
+  $valorCalculado = porcentagem_nx(pontuacao($_POST['valor']), pontuacao($rateio['porcento']));
+
   echo '<tr>';
-  echo '<td><input class="money" value="' . $rateio['ID_CENTROCUSTO'] . '" name="centroCusto' . $cont . '" readonly></td>';
-  echo '<td><input class="money" value="' . $rateio['PERCENTUAL'] . '" name="percentual' . $cont . '" readonly></td>';
-
-  $total = $_POST['valor'];
-  $pctm = $rateio['PERCENTUAL'];
-  $calculo = $total / 100 * $pctm;
-
-  if ($calculo == $total) {
-    $valor_descontado = $_POST['valor'];
-  } else {
-    $valor_descontado = $total - $total;
-  }
-
-  echo  '<td><input class="money" value="' . $valor_descontado . '" name="valorRateado' . $cont . '" readonly></td>';
+  echo '<td>' . $rateio['centrocusto'] . '</td>';
+  echo '<td>' . $rateio['porcento'] . '</td>';
+  echo  '<td class="dinheiro">R$ ' . round($valorCalculado, 2)  . '</td>';
   echo '</tr>';
 
-  $cont++;
 }
 
 echo '</tbody>';

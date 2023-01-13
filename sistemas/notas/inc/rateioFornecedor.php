@@ -33,9 +33,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     observacao,
     vencimento_tipo,
     vencimento,
-    telefone,
-    tipo_serv,
-    sistema) VALUES
+    telefone) VALUES
     
     (" . $_SESSION['id_usuario'] . ",
     '" . $_POST['filial'] . "',
@@ -49,9 +47,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     '" . seo_friendly_url($_POST['observacao']) . "',
     '" . $_POST['vencimento'] . "',
     '" . $dias . "',
-    '" . $_POST['telefone'] . "',
-    '" . seo_friendly_url($_POST['tipoServico']) . "',
-    '" . $_POST['sistema'] . "')";
+    '" . $_POST['telefone'] . "')";
 
     if ($aplicarInsert = $connNOTAS->query($insertFornecedor)) {
 
@@ -105,8 +101,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     `observacao` = '" . seo_friendly_url($_POST['observacao']) . "',
     `vencimento_tipo` = '" . $_POST['vencimento'] . "',
     `vencimento` = '" . $dias . "',
-    `telefone` = '" . seo_friendly_url($_POST['telefone']) . "',
-    `tipo_serv` = '" . seo_friendly_url($_POST['tipoServico']) . "'
+    `telefone` = '" . seo_friendly_url($_POST['telefone']) . "'
     WHERE `ID_RATEIOFORNECEDOR` = " . $_GET['idRateioFornecedor'];
     
     $resultadoUpdate = $connNOTAS->query($updateFornecedor);
