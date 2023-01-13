@@ -1,15 +1,26 @@
 <?php
 
-$queryNotas = "SELECT * FROM cad_lancarnotas WHERE ID_USUARIO = '" . $_SESSION['nome_usuario'] . "' AND ID_LANCARNOTAS = " . $_GET['id'];
+require_once('../function/periodicidade.php');
+
+$queryNotas = "SELECT 
+                CL.*,
+                UBE.NOME_EMPRESA
+            FROM
+                cad_lancarnotas CL
+            LEFT JOIN
+                unico.bpm_empresas UBE ON (CL.ID_FILIAL = UBE.ID_EMPRESA)
+            WHERE ID_LANCARNOTAS = " . $_GET['id'];
 $aplicaquery = $connNOTAS->query($queryNotas);
 
 if ($notasLancar = $aplicaquery->fetch_assoc()) {
 
     $filial = $notasLancar['ID_FILIAL'];
+    $nomeFilial = $notasLancar['NOME_EMPRESA'];
     $fornecedorNome = $notasLancar['nome_fornecedor'];
     $cpfcnpjFornecedor = $notasLancar['CNPJ'];
     $tipopagamento = $notasLancar['ID_TIPOPAGAMENTO'];
     $tipodespesa = $notasLancar['ID_PERIODICIDADE'];
+    $tipodespesaNome = periodicidade($notasLancar['ID_PERIODICIDADE']);
     $auditoria = $notasLancar['auditoria'];
     $obra = $notasLancar['obra'];
     $marketing = $notasLancar['marketing'];
@@ -23,7 +34,7 @@ if ($notasLancar = $aplicaquery->fetch_assoc()) {
     $valor = $notasLancar['valor_nota'];
 
 
-    if ($tipopagamento == '2') {//deposito bancario
+    if ($tipopagamento == '2') { //deposito bancario
         $buscaBancos = "SELECT  
                             CB.nome_banco, 
                             CB.agencia, 
@@ -31,7 +42,7 @@ if ($notasLancar = $aplicaquery->fetch_assoc()) {
                             CB.digito
                         FROM
                             cad_rateiobanco CB
-                        WHERE ID_RATEIOFORNECEDOR = (SELECT ID_RATEIOFORNECEDOR FROM cad_rateiofornecedor WHERE cpfcnpj_fornecedor = '".$cpfcnpjFornecedor."' AND id_usuario = ".$_SESSION['id_usuario'].");";
+                        WHERE ID_RATEIOFORNECEDOR = (SELECT ID_RATEIOFORNECEDOR FROM cad_rateiofornecedor WHERE cpfcnpj_fornecedor = '" . $cpfcnpjFornecedor . "' AND id_usuario = " . $_SESSION['id_usuario'] . ");";
         $aplicarBancos = $connNOTAS->query($buscaBancos);
         $bancos = $aplicarBancos->fetch_assoc();
 

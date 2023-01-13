@@ -43,18 +43,19 @@ require_once('../inc/dadoslancarnota.php');
               <h5 class="card-title">Dados Principais</h5>
 
               <div class="form-floating mb-3 col-md-6">
-                <input type="text" class="form-control" name="usuarioResponsavel" value="<?= $_SESSION['nome_usuario'] ?>" readonly>
+                <input type="text" class="form-control" value="<?= $_SESSION['nome_usuario'] ?>" readonly>
+                <input type="text" class="form-control" name="usuarioResponsavel" value="<?= $_SESSION['id_usuario'] ?>" style="display: none;">
                 <label for="floatingSelect" class="capitalize">Usuario responsável </label>
               </div>
 
               <div id="divFilial" class="form-floating mb-3 col-md-6">
                 <select class="form-select" id="selectFilial" name="filial" required>
-                  <?= '<option value="' . $filial . '">' . $filial . '</option>' ?>
+                  <?= '<option value="' . $filial . '">' . $nomeFilial . '</option>' ?>
                   <option value="">-----------------</option>
                   <?php
                   $resultFilialLista = $conn->query($queryFilial);
                   while ($filialLista = $resultFilialLista->fetch_assoc()) {
-                    echo '<option value="' . $filialLista['NOME_EMPRESA'] . '">' . $filialLista['NOME_EMPRESA'] . '</option> ';
+                    echo '<option value="' . $filialLista['ID_EMPRESA'] . '">' . $filialLista['NOME_EMPRESA'] . '</option> ';
                   }
                   ?>
                 </select>
@@ -87,7 +88,7 @@ require_once('../inc/dadoslancarnota.php');
               <div class="form-floating mb-3 col-md-12">
                 <select readonly="readonly" class="form-select" id="tipoPagamento" name="tipoPagamento" onchange="bancos()">
                   <?php
-                  if ($tipopagamento == 'Deposito') {
+                  if ($tipopagamento == 2) {
                     echo '<option value="' . $tipopagamento . '">Depósito Bancário</option>';
                   } else {
                     echo '<option value="' . $tipopagamento . '">Boleto</option>';
@@ -97,7 +98,7 @@ require_once('../inc/dadoslancarnota.php');
                 <label for="floatingSelect">Tipo pagamento <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
-              <div class="row" id="tipopagamentoBancos" style="display: <?= ($tipopagamento == 'Deposito') ? 'contents' : 'none' ?>">
+              <div class="row" id="tipopagamentoBancos" style="display: <?= ($tipopagamento == 2) ? 'contents' : 'none' ?>">
 
                 <div class="form-floating mb-3 col-md-5">
                   <select class="form-select" id="nomeBanco" name="banco" readonly="readonly">
@@ -129,21 +130,14 @@ require_once('../inc/dadoslancarnota.php');
 
               <h5 class="card-title">Dados Nota Fiscal</h5>
 
-              <div class="mb-3 col-md-4">
-                <div class="form-floating">
-                  <input type="text" class="form-control" id="tipoServicoInput" name="tipoServico" <?= 'value="' . $tipoServ . '"' ?> maxlength="100" readonly>
-                  <label for="tipoServicoInput">Tipo de Serviço</label>
-                </div>
-              </div>
-
-              <div class="form-floating col-md-4">
+              <div class="form-floating col-md-6">
                 <select class="form-select" id="tipoDespesaSelect" name="tipodespesa" readonly="readonly">
-                  <?= '<option value="' . $tipodespesa . '">' . $tipodespesa . '</option>' ?>
+                  <?= '<option value="' . $tipodespesa . '">' . $tipodespesaNome . '</option>' ?>
                 </select>
                 <label for="tipoDespesaSelect">Tipo de Despesa <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
-              <div id="divNomeFornecedor" class="col-md-4">
+              <div id="divNomeFornecedor" class="col-md-6">
                 <div class="form-floating">
                   <input type="text" class="form-control" id="telefone" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" title="Caso seja nota de telefonia" name="telefone" <?= 'value="' . $telefone . '"' ?> readonly>
                   <label for="telefone">Telefone</label>
@@ -152,21 +146,21 @@ require_once('../inc/dadoslancarnota.php');
 
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="departamentoAuditoria" name="departamentoAuditoria" readonly="readonly">
-                  <?= '<option value="' . $auditoria . '">' . $auditoria . '</option>' ?>
+                  <?php echo '<option value="' . $auditoria . '">'; echo $auditoria == 0 ? "NÂO" : 'SIM'; echo '</option>' ?>
                 </select>
                 <label for="departamentoAuditoria">Depart. de Auditoria? <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="notasGrupoObra" name="notasGrupo" readonly="readonly">
-                  <?= '<option value="' . $obra . '">' . $obra . '</option>' ?>
+                  <?php echo '<option value="' . $obra . '">'; echo $obra == 0 ? "NÂO" : 'SIM'; echo '</option>' ?>
                 </select>
                 <label for="notasGrupoObra">Obras do G. Servopa? <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="notasMarketing" name="notasMarketing" readonly="readonly">
-                  <?= '<option value="' . $marketing . '">' . $marketing . '</option>' ?>
+                  <?php echo '<option value="' . $marketing . '">'; echo $marketing == 0 ? "NÂO" : 'SIM'; echo '</option>' ?>
                 </select>
                 <label for="notasMarketing">Depart. de Marketing? <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
@@ -181,7 +175,7 @@ require_once('../inc/dadoslancarnota.php');
                 <label for="serie">Série <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
               <div class="form-floating col-md-4">
-                <input type="text" class="form-control" id="valorNota" <?= 'value="' . $valor . '"' ?> name="valor" maxlength="12" onKeyUp="mascaraMoeda(this, event)" autofocus>
+                <input type="text" class="form-control dinheiro" id="valorNota" <?= 'value="' . $valor . '"' ?> name="valor" maxlength="12" autofocus>
                 <label for="valor">Valor <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
@@ -403,7 +397,6 @@ require_once('footer.php'); //Javascript e configurações afins
     })
   });
 
-
   $("#cnpjVet").on("blur", function() {
     var cpfCNPJ = $("#cnpjVet").val();
     var nomefilial = $("#selectFilial").val();
@@ -466,4 +459,6 @@ require_once('footer.php'); //Javascript e configurações afins
 
     });
   });
+
+  $(".dinheiro").mask('#.##0,00', {reverse: true});
 </script>

@@ -1,7 +1,5 @@
 <?php
-session_start();
-
-require_once('../config/query.php');
+require_once('../../../config/databases.php'); //banco de dados
 
 //ALTUALIZAR OS DADOS
 $carimbar = $_POST['carimbar'] == NULL ? 0 : 1;
@@ -9,8 +7,8 @@ $carimbar = $_POST['carimbar'] == NULL ? 0 : 1;
 $updateLancarNota = "UPDATE cad_lancarnotas
 SET
 `ID_FILIAL` = '" . $_POST['filial'] . "',
-`ID_USUARIO` = '" . $_SESSION['nome_usuario'] . "',
-`ID_TIPODESPESA` = '" . $_POST['tipodespesa'] . "',
+`ID_USUARIO` = '" . $_POST['usuarioResponsavel'] . "',
+`ID_PERIODICIDADE` = '" . $_POST['tipodespesa'] . "',
 `ID_TIPOPAGAMENTO` = '" . $_POST['tipoPagamento'] . "',
 `CNPJ` = '" . $_POST['cpfCnpjFor'] . "',
 `nome_fornecedor` = '" . $_POST['NomeFornecedor'] . "',
@@ -25,40 +23,12 @@ SET
 `valor_nota` = '" . $_POST['valor'] . "',
 `status_desc` = '1',
 `telefone` = '" . $_POST['telefone'] . "',
-`carimbar` = '" . $carimbar . "',
-`tipo_serv` = '" . $_POST['tipoServico'] . "'
+`carimbar` = '" . $carimbar . "'
 WHERE `ID_LANCARNOTAS` = " . $_GET['id'];
 
 $aplicarUpdate = $connNOTAS->query($updateLancarNota);
 
-//ATUALIZAR CENTRO DE CUSTO
-
-//deleta
-$limpar = "DELETE FROM cad_lancarnotas_centrocusto WHERE `ID_LANCARNOTAS`= " . $_GET['id'];
-$aplicarLImpar = $connNOTAS->query($limpar);
-
-//insere
-$cont = 0;
-
-while ($_POST['valorRateado' . $cont] != NULL) {
-    $insertValorCentro = "INSERT INTO cad_lancarnotas_centrocusto
-                            (`ID_LANCARNOTAS`,
-                            `ID_CENTROCUSTO`,
-                            `valor`,
-                            `percentual`)
-                            VALUES
-                            (" . $_GET['id'] . ",
-                            '" . $_POST['centroCusto' . $cont] . "',
-                            '" . $_POST['valorRateado' . $cont] . "',
-                            '" . $_POST['percentual' . $cont] . "')";
-    $cont++;
-
-    $aplicaValorCentro = $connNOTAS->query($insertValorCentro);
-}
-
-
 //SALVAR ANEXOS
-
 $extPDF = 'application/pdf'; //PDF
 $caminhoNota = "/var/www/html/unico/sistemas/notas/documentos/notas/";
 $caminhoBoleto = "/var/www/html/unico/sistemas/notas/documentos/boletos/";
@@ -112,4 +82,4 @@ if ($_FILES['fileboleto']["type"] != NULL) {
     }
 }
 
-header('Location: ../front/index.php?pg=1&msn=4');//editado com sucesso!
+header('Location: ../front/editLancarnota.php?id='.$_GET['id'].'&msn=4');//editado com sucesso!

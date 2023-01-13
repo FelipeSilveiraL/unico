@@ -1,5 +1,5 @@
 <?php
-require_once('../config/query.php');
+require_once('../../../config/databases.php'); //banco de dados
 
 //deletar arquivo no banco
 

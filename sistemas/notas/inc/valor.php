@@ -7,11 +7,14 @@ require_once('../function/calculos.php');
 //bucasndo o rateio
 $queryRateio = "SELECT 
                   CRC.ID_CENTROCUSTO_BPM AS centrocusto,
-                  CRC.percentual AS porcento
+                  CRC.percentual AS porcento,
+                  UBNFD.NOME_DEPARTAMENTO
                 FROM
                   cad_rateiocentrocusto CRC
                 LEFT JOIN
                   cad_rateiofornecedor CRF ON (CRC.ID_RATEIOFORNECEDOR = CRF.ID_RATEIOFORNECEDOR)
+                LEFT JOIN
+                  unico.bpm_nf_departamento UBNFD ON (CRC.ID_CENTROCUSTO_BPM = UBNFD.ID_DEPARTAMENTO)
                 WHERE
                   CRF.ID_FILIAL = " . $_POST['idFilial'] . " AND CRF.cpfcnpj_fornecedor = '" . $_POST['id'] . "' AND CRF.ID_USUARIO = ".$_SESSION['id_usuario'];
 
@@ -32,7 +35,7 @@ while ($rateio = $aplicarqueryrateio->fetch_assoc()) {
   $valorCalculado = porcentagem_nx(pontuacao($_POST['valor']), pontuacao($rateio['porcento']));
 
   echo '<tr>';
-  echo '<td>' . $rateio['centrocusto'] . '</td>';
+  echo '<td>' . $rateio['NOME_DEPARTAMENTO'] . '</td>';
   echo '<td>' . $rateio['porcento'] . '</td>';
   echo  '<td class="dinheiro">R$ ' . round($valorCalculado, 2)  . '</td>';
   echo '</tr>';

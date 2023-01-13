@@ -3,6 +3,7 @@ session_start();
 
 require_once('../../../config/config.php');
 require_once('../config/query.php');
+require_once('../function/periodicidade.php');
 
 $url = "http://" . $_SESSION['servidorOracle'] . "/" . $_SESSION['smartshare'] . "/inc/fornecedorApi.php?cpfCNPJ=" . $_POST['id'];
 
@@ -35,32 +36,7 @@ if ($_POST['tipo'] == 1) { //lancarnotas.php
         echo $fornecedorLancar['tipo_serv'] . '-'; //2
         echo '<option value="' . $fornecedorLancar['ID_PERIODICIDADE'] . '">';
 
-        switch ($fornecedorLancar['ID_PERIODICIDADE']) {
-            case '1':
-                echo 'AVULSA';
-                break;
-
-            case '5':
-                echo 'ANUAL';
-                break;
-            case '7':
-                echo 'AVULSA FUNILARIA';
-                break;
-
-            case '3':
-                echo 'BIMESTRAL';
-                break;
-            case '2':
-                echo 'MENSAL';
-                break;
-
-            case '4':
-                echo 'SEMESTRAL';
-                break;
-            case '6':
-                echo 'TRIAGEM';
-                break;
-        }
+        echo periodicidade($fornecedorLancar['ID_PERIODICIDADE']);
 
         echo '</option>-'; //3
 
