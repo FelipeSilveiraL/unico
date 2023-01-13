@@ -60,23 +60,33 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
 
         if ($_POST['tipoPagamento'] == '2') {
 
-            $insertbanco = "INSERT INTO cad_rateiobanco
-            (ID_RATEIOFORNECEDOR,
-            nome_banco,
-            agencia,
-            conta,
-            digito)
-            VALUES
-            (" . $idForncedor['id_fornecedor'] . ",
-            '" . $_POST['banco'] . "',
-            '" . seo_friendly_url($_POST['agencia']) . "',
-            '" . seo_friendly_url($_POST['conta']) . "',
-            '" . seo_friendly_url($_POST['digito']) . "')";
+            //verificar se já nao tem banco cadastrado anteriormente
+            $queryVerificarBanco = "SELECT ID_RATEIOFORNECEDOR FROM cad_rateiobanco where ID_RATEIOFORNECEDOR = " . $_GET['idRateioFornecedor'];
+            $aplicaVerificacao = $connNOTAS->query($queryVerificarBanco);
+            $bancoVerificado = $aplicaVerificacao->fetch_assoc();
 
-            if (!$aplicarBanco = $connNOTAS->query($insertbanco)) {
-                echo $insertbanco . "<br />";
-                echo ("Error description [2]: " . $connNOTAS->error);
-                exit;
+            if (!empty($bancoVerificado['ID_RATEIOFORNECEDOR'])) {
+                $deletaBancos = "DELETE FROM cad_rateiobanco WHERE ID_RATEIOBANCO = " . $_GET['idRateioFornecedor'];
+                $aplicaDeletarBancos = $connNOTAS->query($deletaBancos);
+            } else {
+                $insertbanco = "INSERT INTO cad_rateiobanco
+                (ID_RATEIOFORNECEDOR,
+                nome_banco,
+                agencia,
+                conta,
+                digito)
+                VALUES
+                (" . $idForncedor['id_fornecedor'] . ",
+                '" . $_POST['banco'] . "',
+                '" . seo_friendly_url($_POST['agencia']) . "',
+                '" . seo_friendly_url($_POST['conta']) . "',
+                '" . seo_friendly_url($_POST['digito']) . "')";
+
+                if (!$aplicarBanco = $connNOTAS->query($insertbanco)) {
+                    echo $insertbanco . "<br />";
+                    echo ("Error description [2]: " . $connNOTAS->error);
+                    exit;
+                }
             }
         }
         //voltar para cadastrar o rateio
@@ -103,9 +113,44 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
     `vencimento` = '" . $dias . "',
     `telefone` = '" . seo_friendly_url($_POST['telefone']) . "'
     WHERE `ID_RATEIOFORNECEDOR` = " . $_GET['idRateioFornecedor'];
-    
+
     $resultadoUpdate = $connNOTAS->query($updateFornecedor);
-    //CENTRO DE CUSTO
+
+    //salvando dados do banco caso haja.
+
+    if ($_POST['tipoPagamento'] == '2') {
+
+        //verificar se já nao tem banco cadastrado anteriormente
+        $queryVerificarBanco = "SELECT ID_RATEIOFORNECEDOR FROM cad_rateiobanco where ID_RATEIOFORNECEDOR = " . $_GET['idRateioFornecedor'];
+        $aplicaVerificacao = $connNOTAS->query($queryVerificarBanco);
+        $bancoVerificado = $aplicaVerificacao->fetch_assoc();
+
+        if (!empty($bancoVerificado['ID_RATEIOFORNECEDOR'])) {
+
+            $deletaBancos = "DELETE FROM cad_rateiobanco WHERE ID_RATEIOFORNECEDOR = " . $_GET['idRateioFornecedor'];
+            $aplicaDeletarBancos = $connNOTAS->query($deletaBancos);
+        }
+
+        $insertbanco = "INSERT INTO cad_rateiobanco
+            (ID_RATEIOFORNECEDOR,
+            nome_banco,
+            agencia,
+            conta,
+            digito)
+            VALUES
+            (" . $_GET['idRateioFornecedor'] . ",
+            '" . $_POST['banco'] . "',
+            '" . seo_friendly_url($_POST['agencia']) . "',
+            '" . seo_friendly_url($_POST['conta']) . "',
+            '" . seo_friendly_url($_POST['digito']) . "')";
+
+        if (!$aplicarBanco = $connNOTAS->query($insertbanco)) {
+            echo $insertbanco . "<br />";
+            echo ("Error description [2]: " . $connNOTAS->error);
+            exit;
+        }
+            
+    }
 
     //trabalhando em cima do centro de custo
     if ($_POST['centroCusto'] != null) {
@@ -145,7 +190,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
             }
         }
     } else {
-        header('Location: ../front/fornecedor.php');
+        header('Location: ../front/rateioFornecedor.php?idRateioFornecedor=' . $_GET['idRateioFornecedor'] . '');
     }
 }
 

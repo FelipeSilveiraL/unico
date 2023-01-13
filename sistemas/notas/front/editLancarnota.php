@@ -7,7 +7,6 @@ require_once('menu.php'); //menu lateral da pagina
 
 //API
 require_once('../../bpm/inc/apiRecebeTabela.php'); //Empresas
-require_once('../api/centroCusto.php');
 
 //DADOS DA NOTA
 require_once('../inc/dadoslancarnota.php');
@@ -432,7 +431,7 @@ require_once('footer.php'); //Javascript e configurações afins
           $("#tipoPagamento").html(tipoPagamento);
 
 
-          if (tipoPagamento == '<option>Deposito</option>') {
+          if (tipoPagamento == '<option value="2">Depósito Bancário</option>') {
             $('#tipopagamentoBancos').css('display', 'contents');
           }
 

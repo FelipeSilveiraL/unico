@@ -7,7 +7,6 @@ require_once('menu.php'); //menu lateral da pagina
 
 //API
 require_once('../../bpm/inc/apiRecebeTabela.php'); //Empresas
-require_once('../api/centroCusto.php');
 ?>
 
 <main id="main" class="main">
@@ -82,10 +81,7 @@ require_once('../api/centroCusto.php');
               <h5 class="card-title">Dados Pagamento</h5>
 
               <div class="form-floating mb-3 col-md-12">
-                <select readonly="readonly" class="form-select" id="tipoPagamento" name="tipoPagamento" onchange="bancos()">
-                  <option>-----------------</option>
-                  <option value="1">Boleto</option>
-                  <option value="2">Depósito Bancário</option>
+                <select readonly="readonly" class="form-select" id="tipoPagamento" name="tipoPagamento" onchange="bancos()">                 
                 </select>
                 <label for="floatingSelect">Tipo pagamento <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
@@ -93,15 +89,7 @@ require_once('../api/centroCusto.php');
               <div class="row" id="tipopagamentoBancos" style="display: none">
 
                 <div class="form-floating mb-3 col-md-5">
-                  <select class="form-select" id="nomeBanco" name="banco" readonly="readonly">
-                    <option value="">-----------------</option>
-                    <?php
-                    $queryBancos .= " order by banco ASC";
-                    $resultBancos = $conn->query($queryBancos);
-                    while ($bancos = $resultBancos->fetch_assoc()) {
-                      echo '<option value="' . $bancos['banco'] . '">' . $bancos['banco'] . '</option> ';
-                    }
-                    ?>
+                  <select class="form-select" id="nomeBanco" name="banco" readonly="readonly">                    
                   </select>
                   <label for="floatingSelect">Banco <span class="text-danger small pt-1 fw-bold">*</span></label>
                 </div>
@@ -130,15 +118,7 @@ require_once('../api/centroCusto.php');
               <h5 class="card-title">Dados Nota Fiscal</h5>
 
               <div class="form-floating col-md-6">
-                <select class="form-select" id="tipoDespesaSelect" name="tipodespesa" readonly="readonly">
-                  <option value="">-----------------</option>
-                  <option value="AVULSA">Avulsa</option>
-                  <option value="AVULSA FUNILARIA">Avulsa Funilaria</option>
-                  <option value="MENSAL">Mensal</option>
-                  <option value="TRIAGEM">Triagem</option>
-                  <option value="BIMESTRAL">Bimestral</option>
-                  <option value="SEMESTRAL">Semestral</option>
-                  <option value="ANUAL">Anual</option>
+                <select class="form-select" id="tipoDespesaSelect" name="tipodespesa" readonly="readonly">                 
                 </select>
                 <label for="tipoDespesaSelect">Tipo de Despesa <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
@@ -152,27 +132,18 @@ require_once('../api/centroCusto.php');
 
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="departamentoAuditoria" name="departamentoAuditoria" readonly="readonly">
-                  <option>-----------------</option>
-                  <option value="SIM">SIM</option>
-                  <option value="NAO">NÃO</option>
                 </select>
                 <label for="departamentoAuditoria">Depart. de Auditoria? <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="notasGrupoObra" name="notasGrupo" readonly="readonly">
-                  <option>-----------------</option>
-                  <option value="SIM">SIM</option>
-                  <option value="NAO">NÃO</option>
                 </select>
                 <label for="notasGrupoObra">Obras do G. Servopa? <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="notasMarketing" name="notasMarketing" readonly="readonly">
-                  <option>-----------------</option>
-                  <option value="SIM">SIM</option>
-                  <option value="NAO">NÃO</option>
                 </select>
                 <label for="notasMarketing">Depart. de Marketing? <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
@@ -394,7 +365,7 @@ require_once('footer.php'); //Javascript e configurações afins
           $("#tipoPagamento").html(tipoPagamento);
 
 
-          if (tipoPagamento == '<option>Deposito</option>') {
+          if (tipoPagamento == '<option value="2">Depósito Bancário</option>') {
             $('#tipopagamentoBancos').css('display', 'contents');
           }
 
