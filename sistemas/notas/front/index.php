@@ -2,6 +2,7 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login
 require_once('menu.php'); //menu lateral da pagina
+require_once('../inc/contagemStatus.php');
 ?>
 <main id="main" class="main">
   <div class="pagetitle">
@@ -18,10 +19,18 @@ require_once('menu.php'); //menu lateral da pagina
   require_once('../../../inc/mensagens.php'); //Alertas
   require_once('../inc/senhaBPM.php'); //validar se possui senha cadastrada 
   ?>
-  <!-- Alertas -->
 
   <section>
-
+    <!-- Alertas -->
+    <div class="row">
+      <div id="divSistemas" class="form-floating mb-2 col-lg-12">
+        <select class="form-select" id="selectSistema" name="sistema" onblur="sistemas()">
+          <option value="1">FLUIG</option>
+          <option value="2">SMARTSHARE</option>
+        </select>
+        <label for="selectSistema">&emsp;Sistema Lançamento</label>
+      </div>
+    </div>
     <div class="row">
       <div class="col-lg-3 py-2">
         <a href="index.php?pg=<?= $_GET['pg'] ?>&status=1" class="list-group-item-action" title="Mostrar notas com este status">
@@ -157,3 +166,15 @@ require_once('menu.php'); //menu lateral da pagina
 <?php
 require_once('footer.php'); //Javascript e configurações afins
 ?>
+
+<script>
+  function sistemas() {
+    var value = document.getElementById('selectSistema').value;
+
+    if (value == 1) { //FLUIG
+      window.location.replace("index.php?pg=1&sistema=1");
+    } else {
+      window.location.replace("index.php?pg=1&sistema=2");
+    }
+  }
+</script>

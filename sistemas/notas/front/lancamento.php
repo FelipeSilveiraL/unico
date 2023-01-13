@@ -36,6 +36,16 @@ require_once('../api/centroCusto.php');
           <div class="card-body">
             <form class="row g-3" action="../inc/lancamento.php" method="post" enctype="multipart/form-data">
 
+              <!--SISTEMA -->
+             
+              <!--SISTEMA -->
+              <h5 class="card-title">Sistema responsável para receber as notas</h5>
+              <div class="form-floating mb-3 col-md-12">
+                <select class="form-select" id="sistemas" name="sistema"  readonly="readonly">
+                </select>
+                <label for="floatingSelect">Sistema lançamento notas<span class="text-danger small pt-1 fw-bold"> * </span></label>
+              </div>
+
               <!--DADOS PRINCIPAIS -->
               <h5 class="card-title">Dados Principais</h5>
 
@@ -51,7 +61,7 @@ require_once('../api/centroCusto.php');
                   <?php
                   $resultFilialLista = $conn->query($queryFilial);
                   while ($filialLista = $resultFilialLista->fetch_assoc()) {
-                    echo '<option value="' . $filialLista['NOME_EMPRESA'] . '">' . $filialLista['NOME_EMPRESA'] . '</option> ';
+                    echo '<option value="' . $filialLista['ID_EMPRESA'] . '">' . $filialLista['NOME_EMPRESA'] . '</option> ';
                   }
                   ?>
                 </select>
@@ -194,7 +204,7 @@ require_once('../api/centroCusto.php');
                 <label for="serie">Série <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
               <div class="form-floating col-md-4">
-                <input type="text" class="form-control" id="valorNota" name="valor" maxlength="12" onKeyUp="mascaraMoeda(this, event)" required> 
+                <input type="text" class="form-control" id="valorNota" name="valor" maxlength="12" onKeyUp="mascaraMoeda(this, event)" required>
                 <label for="valor">Valor <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
@@ -412,10 +422,12 @@ require_once('footer.php'); //Javascript e configurações afins
           $("#notasGrupoObra").html(dados[6]);
           $("#notasMarketing").html(dados[7]);
           $("#observacao").html(dados[8]);
-          $("#nomeBanco").html(dados[9]);
-          $("#numAgencia").val(dados[10]);
-          $("#numConta").val(dados[11]);
-          $("#numDigito").val(dados[12]);
+          $("#sistemas").html(dados[9]);
+          $("#nomeBanco").html(dados[10]);
+          $("#numAgencia").val(dados[11]);
+          $("#numConta").val(dados[12]);
+          $("#numDigito").val(dados[13]);
+
 
           $("#enviarNota").attr("disabled", false);
 
