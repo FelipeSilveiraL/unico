@@ -12,6 +12,7 @@ $senha = mysqli_real_escape_string($conn, $_POST['password']);
 $queryUsuarios .= "WHERE U.usuario = '" . $usuario . "'";
 $resultadoUsuario = $conn->query($queryUsuarios);
 $usuario = $resultadoUsuario->fetch_assoc();
+
 if ($usuario['deletar'] == 1) {
 
     header('Location: ../front/login.php?pg='.$_GET['pg'].'&msn=1');//usuario desativado

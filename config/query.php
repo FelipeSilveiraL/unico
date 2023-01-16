@@ -4,6 +4,7 @@ require_once('databases.php');
 
 //-------------------------//
 $queryUsuarios = "SELECT
+BPM.usuario AS bpm_usuario,
 U.id_usuario, 
 U.nome AS nome_usuario,
 U.cpf,
@@ -21,7 +22,8 @@ U.deletar
 FROM
 usuarios U
 LEFT JOIN cad_empresa CE ON (U.empresa = CE.id)
-LEFT JOIN cad_depto CD ON (U.depto = CD.id) ";
+LEFT JOIN cad_depto CD ON (U.depto = CD.id)
+LEFT JOIN dbnotas_hom.cad_senhaBPM BPM ON (U.id_usuario = BPM.id_usuario) ";
 
 //-------------------------//
 $queryEmpresa = "SELECT * FROM cad_empresa WHERE deletar = 0 ";

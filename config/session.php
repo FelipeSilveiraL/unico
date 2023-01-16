@@ -15,5 +15,6 @@ $_SESSION['senha'] = $usuario['senha'];
 $_SESSION['administrador'] = $usuario['admin'];
 $_SESSION['alterar_senha_login'] = $usuario['alterar_senha_login'];            
 $_SESSION['deletar'] = $usuario['deletar'];
+$_SESSION['bpm_usuario'] = $usuario['bpm_usuario'];
 
 ?>

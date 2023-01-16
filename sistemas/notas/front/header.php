@@ -212,7 +212,7 @@ require_once('../config/query.php'); //SISTEMA NOTAS
                         <div class="row mb-3">
                             <label for="usuario" class="col-md-4 col-lg-3 col-form-label">Usuário</label>
                             <div class="col-md-8 col-lg-9">
-                                <input name="usuarioSmart" type="text" class="form-control" id="usuario" value="<?= $_SESSION['usuario'] ?>" required>
+                                <input name="usuarioSmart" type="text" class="form-control" id="usuario" value="<?= $_SESSION['bpm_usuario'] ?>" required>
                             </div>
                         </div>
 
