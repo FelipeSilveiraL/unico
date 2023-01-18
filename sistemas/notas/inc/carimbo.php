@@ -1,22 +1,30 @@
 <?php
-
-require_once('../config/query.php');
+require_once('../../../config/databases.php');
 
 $queryRateio = "SELECT 
-ID_CENTROCUSTO,
-PERCENTUAL
-FROM
-    cad_rateiocentrocusto
-WHERE
-    ID_RATEIOFORNECEDOR = (SELECT 
-        id
-    FROM
-        cad_rateiofornecedor
-    WHERE
-        cpfcnpj_fornecedor = '" . $_GET['cnpj'] . "'
-            AND filial = '1.1 SERVOPA MATRIZ'
-            AND id_usuario = '3')";
+                    CR.percentual,
+                    DNF.NOME_DEPARTAMENTO
+                FROM
+                    cad_rateiocentrocusto CR
+                LEFT JOIN
+                    unico.bpm_nf_departamento DNF ON (CR.ID_CENTROCUSTO_BPM = DNF.ID_DEPARTAMENTO) 
+                WHERE
+                CR.ID_RATEIOFORNECEDOR = (SELECT 
+                        ID_RATEIOFORNECEDOR
+                    FROM
+                        cad_rateiofornecedor
+                    WHERE
+                        cpfcnpj_fornecedor = '" . $_GET['idFornecedor'] . "' AND 
+                        ID_USUARIO = (SELECT 
+                                id_usuario
+                            FROM
+                                unico.usuarios
+                            WHERE
+                                email = '" . $_GET['email'] . "') AND
+                        ID_FILIAL = (SELECT ID_EMPRESA FROM unico.bpm_empresas WHERE CNPJ = '" . $_GET['filial'] . "' LIMIT 1)        
+                                LIMIT 1)";
 
+$result = $connNOTAS->query($queryRateio);
 ?>
 
 <table>
@@ -28,8 +36,8 @@ WHERE
 
     while ($custoCentro = $result->fetch_assoc()) {
         echo '<tr>
-                    <td style="border: solid 1px; padding: 5px; ">' . $custoCentro['ID_CENTROCUSTO'] . '</td>
-                    <td style="border: solid 1px; padding: 5px; ">' . $custoCentro['PERCENTUAL'] . '%</td>
+                    <td style="border: solid 1px; padding: 5px; ">' . $custoCentro['NOME_DEPARTAMENTO'] . '</td>
+                    <td style="border: solid 1px; padding: 5px; ">' . $custoCentro['percentual'] . '%</td>
                 </tr>';
     }
     ?>
