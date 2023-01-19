@@ -11,10 +11,13 @@ $aplicar = $connNOTAS->query($deletar);
 $queryAnexo = "SELECT url_nota FROM cad_anexos WHERE ID_LANCARNOTA = " . $_GET['id'];
 $aplicaquery = $connNOTAS->query($queryAnexo);
 
-$caminhoNota = "/var/www/html/unico/sistemas/notas/";
 
-while ($anexo = $aplicaquery->fetch_assoc()) {    
-    unlink($caminhoNota . $anexo['url_nota']);
+
+while ($anexo = $aplicaquery->fetch_assoc()) {  
+
+    $caminhoNota = "/var/www/html/unico/sistemas/notas/" . substr($anexo['url_nota'], 3);
+     
+    unlink($caminhoNota);
 }
 
 $deletarAnexo = "DELETE FROM cad_anexos WHERE `ID_LANCARNOTA` = " . $_GET['id'];

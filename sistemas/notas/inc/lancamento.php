@@ -37,8 +37,8 @@ VALUES
 '" . $_POST['observacao'] . "',
 '" . $_POST['numeroNota'] . "',
 '" . strtoupper($_POST['serie']) . "',
-'" . $_POST['emissao'] . "',
-'" . $_POST['vencimento'] . "',
+'" . date('d/m/Y', strtotime($_POST['emissao'])) . "',
+'" . date('d/m/Y', strtotime($_POST['vencimento'])) . "',
 '" . $_POST['valor'] . "',
 1,
 '" . date('Y-m-d') . "',
@@ -72,7 +72,7 @@ if ($_FILES['filenota']["type"] === $extPDF) {
         `url_nota`)
         VALUES
         (" . $ultimo['id_lancarnotas'] . ",
-        'documentos/notas/" . $nomeArquivo . "')";
+        '../documentos/notas/" . $nomeArquivo . "')";
 
         $aplicarAnexo = $connNOTAS->query($insertAnexo);
     } else {
@@ -95,7 +95,7 @@ if ($_FILES['fileboleto']["type"] != NULL) {
             `url_nota`)
             VALUES
             (" . $ultimo['id_lancarnotas'] . ",
-            'documentos/boletos/" . $nomeArquivoBoleto . "')";
+            '../documentos/boletos/" . $nomeArquivoBoleto . "')";
 
             $aplicarAnexo = $connNOTAS->query($insertAnexo);
         } else {

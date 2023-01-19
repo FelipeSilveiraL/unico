@@ -80,8 +80,7 @@ if ($_GET['back'] != 1) { //lançamento da nota
         //salvando
         $insert = "INSERT INTO cad_lancarnotas 
                     (ID_FILIAL, 
-                    ID_USUARIO,
-                    ID_TIPODESPESA, 
+                    ID_USUARIO, 
                     ID_TIPOPAGAMENTO,
                     ID_PERIODICIDADE,
                     nome_fornecedor, 
@@ -103,7 +102,6 @@ if ($_GET['back'] != 1) { //lançamento da nota
                 VALUES 
                     ('" . $rowIdFilial['ID_FILIAL'] . "', 
                     '" . $rowIdUsuario['ID_USUARIO'] . "', 
-                    '" . $row['ID_TIPODESPESA'] . "', 
                     '" . $row['ID_TIPOPAGAMENTO'] . "',
                     '" . $row['ID_PERIODICIDADE'] . "',   
                     '" . $row['fornecedor'] . "', 
@@ -142,7 +140,7 @@ if ($_GET['back'] != 1) { //lançamento da nota
     }
 } else {
     //lançando o boleto, ai é apenas o robo que irá trabalhar!
-    $idNota = $_GET['id_nota'];
+    $idNota = $_GET['idNota'];
 }
 ?>
 

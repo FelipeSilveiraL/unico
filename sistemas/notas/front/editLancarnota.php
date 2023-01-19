@@ -223,12 +223,12 @@ require_once('../inc/dadoslancarnota.php');
 
                       while ($anexos = $aplicaAnexos->fetch_assoc()) {
 
-                        $tipo = substr($anexos['url_nota'], 11, 1);
+                        $tipo = substr($anexos['url_nota'], 14, 1);
 
                         if ($tipo == 'n') {
                           echo '<tr>
                                   <td>
-                                    <a href="../' . $anexos['url_nota'] . '" target="_blank" rel="noopener noreferrer">' . substr($anexos['url_nota'], 29) . '</a>
+                                    <a href="' . $anexos['url_nota'] . '" target="_blank" rel="noopener noreferrer">' . substr($anexos['url_nota'], 32) . '</a>
                                   </td>
                                   <td>NOTA FISCAL</td>
                                   <td>
@@ -238,7 +238,7 @@ require_once('../inc/dadoslancarnota.php');
                         } else {
                           echo '<tr>
                                 <td>
-                                  <a href="../' . $anexos['url_nota'] . '" target="_blank" rel="noopener noreferrer">' . substr($anexos['url_nota'], 31) . '</a>
+                                  <a href="' . $anexos['url_nota'] . '" target="_blank" rel="noopener noreferrer">' . substr($anexos['url_nota'], 34) . '</a>
                                 </td>
                                 <td>BOLETO</td>
                                 <td>

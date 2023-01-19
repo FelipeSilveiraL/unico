@@ -19,4 +19,13 @@ function pontuacao($stingPontuacao)
 
     return trim($stingPontuacao);
 }
+
+function formatarData($dataAlterar){ 
+
+    $dia = substr($dataAlterar, 0, 2);
+    $mes = substr($dataAlterar, 3, 2);
+    $ano = substr($dataAlterar, 6, 4);
+
+    return $dataAlterar = $ano."-".$mes."-".$dia;//Y-m-d
+}
 ?>

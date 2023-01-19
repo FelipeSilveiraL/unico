@@ -90,26 +90,26 @@ require_once('../inc/contagemStatus.php');
                 while ($notas = $resultado->fetch_assoc()) {
                   $value = array_search($notas['id_status'], $color);
                   echo '<tr>                          
-                            <td>' . $notas['empresa'] . '</td>
-                            <td>' . $notas['fornecedor'] . '</td>
-                            <td>R$ ' . $notas['valor_nota'] . '</td>
-                            <td>' . date('d/m/y', strtotime($notas['emissao'])) . '</td>
-                            <td>' . date('d/m/y', strtotime($notas['vencimento'])) . '</td>
-                            <td><a target="_blank" href="https://gruposervopa.fluig.com/portal/p/1/pageworkflowview?app_ecm_workflowview_detailsProcessInstanceID=' . $notas['numero_fluig'] . '">' . $notas['numero_fluig'] . '</a></td>
+                            <td>'.$notas['empresa'].'</td>
+                            <td>'.$notas['fornecedor'].'</td>
+                            <td>R$ '.$notas['valor_nota'].'</td>
+                            <td>'.$notas['emissao'].'</td>
+                            <td>'.$notas['vencimento'].'</td>
+                            <td><a target="_blank" href="https://gruposervopa.fluig.com/portal/p/1/pageworkflowview?app_ecm_workflowview_detailsProcessInstanceID='.$notas['numero_fluig'].'">'.$notas['numero_fluig'].'</a></td>
                             <td><span class="badge ';
                   echo empty($value) ? "bg-danger" : $value;
-                  echo '">' . $notas['status'] . '</span></td>
+                  echo '">'.$notas['status'].'</span></td>
                             <td>
-                              <a href="editLancarnota.php?id=' . $notas['id_lancarnotas'] . '" title="Editar" class="btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
+                              <a href="editLancarnota.php?id='.$notas['id_lancarnotas'].'" title="Editar" class="btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
 
-                              <a href="javascript:" title="Anexos" class="btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#smallModal' . $notas['id_lancarnotas'] . '"><i class="bi bi-file-earmark-pdf"></i></a>
+                              <a href="javascript:" title="Anexos" class="btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#smallModal'.$notas['id_lancarnotas'].'"><i class="bi bi-file-earmark-pdf"></i></a>
                               
-                              <a href="../inc/deletarLancamento.php?id=' . $notas['id_lancarnotas'] . '" title="Excluir" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                              <a href="../inc/deletarLancamento.php?id='.$notas['id_lancarnotas'].'" title="Excluir" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                             </td>
                           </tr>
 
                           <!-- Small Modal-->
-                          <div class="modal fade" id="smallModal' . $notas['id_lancarnotas'] . '" tabindex="-1">
+                          <div class="modal fade" id="smallModal'.$notas['id_lancarnotas'].'" tabindex="-1">
                           <div class="modal-dialog modal-sm">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -119,18 +119,18 @@ require_once('../inc/contagemStatus.php');
                               <div class="modal-body">                                
                                 ';
 
-                  $queryAnexos = "SELECT * FROM cad_anexos WHERE ID_LANCARNOTA = " . $notas['id_lancarnotas'];
+                  $queryAnexos = "SELECT * FROM cad_anexos WHERE ID_LANCARNOTA = ".$notas['id_lancarnotas'];
                   $aplicaAnexos = $connNOTAS->query($queryAnexos);
                   while ($anexos = $aplicaAnexos->fetch_assoc()) {
 
-                    $tipo = substr($anexos['url_nota'], 11, 1);
+                    $tipo = substr($anexos['url_nota'], 14, 1);
 
                     if ($tipo == 'n') {
 
-                      echo '<p><code><u>Nota Fiscal:</u></code> <a href="../' . $anexos['url_nota'] . '" target="_blank">' . substr($anexos['url_nota'], 29) . '</a></p>';
+                      echo '<p><code><u>Nota Fiscal:</u></code> <a href="'.$anexos['url_nota'].'" target="_blank">'.substr($anexos['url_nota'], 32).'</a></p>';
                     } else {
 
-                      echo '<p><code><u>Boleto:</u></code> <a href="../' . $anexos['url_nota'] . '" target="_blank">' . substr($anexos['url_nota'], 31) . '</a></p>';
+                      echo '<p><code><u>Boleto:</u></code> <a href="'.$anexos['url_nota'].'" target="_blank">'.substr($anexos['url_nota'], 34).'</a></p>';
                     }
                   }
                   echo '</div>

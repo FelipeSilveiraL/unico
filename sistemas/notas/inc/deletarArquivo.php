@@ -6,10 +6,11 @@ require_once('../../../config/databases.php'); //banco de dados
 $queryAnexo = "SELECT url_nota FROM cad_anexos WHERE ID = " . $_GET['idAnexo'];
 $aplicaquery = $connNOTAS->query($queryAnexo);
 
-$caminhoNota = "/var/www/html/unico/sistemas/notas/";
+while ($anexo = $aplicaquery->fetch_assoc()) {   
+    
+    $caminhoNota = "/var/www/html/unico/sistemas/notas/". substr($anexo['url_nota'], 3);
 
-while ($anexo = $aplicaquery->fetch_assoc()) {    
-    unlink($caminhoNota . $anexo['url_nota']);
+    unlink($caminhoNota);
 }
 
 $deletarAnexo = "DELETE FROM cad_anexos WHERE ID = " . $_GET['idAnexo'];

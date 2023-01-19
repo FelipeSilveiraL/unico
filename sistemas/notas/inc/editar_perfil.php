@@ -29,10 +29,10 @@ if($resultUpdate = $conn->query($update)){
     $procurar = $resultProcurar->fetch_assoc();
 
     if(!empty($procurar['id_usuario'])){
-        $updateUsuario = "UPDATE cad_senhaBPM SET usuario = '".$_POST['usuarioSmart']."', senha = '".md5($_POST['senhaSmart'])."' WHERE id_usuario = ".$_GET['id_usuario'];
+        $updateUsuario = "UPDATE cad_senhaBPM SET usuario = '".$_POST['usuarioSmart']."', senha = '".$_POST['senhaSmart']."' WHERE id_usuario = ".$_GET['id_usuario'];
         $resultUsuario = $connNOTAS->query($updateUsuario);
     }else{
-        $insertUsuario = "INSERT INTO cad_senhaBPM (id_usuario, usuario, senha) VALUES (".$_GET['id_usuario'].", '".$_POST['usuarioSmart']."', '".md5($_POST['senhaSmart'])."')";        
+        $insertUsuario = "INSERT INTO cad_senhaBPM (id_usuario, usuario, senha) VALUES (".$_GET['id_usuario'].", '".$_POST['usuarioSmart']."', '".$_POST['senhaSmart']."')";        
         $resultUsuario = $connNOTAS->query($insertUsuario);
     }
     

@@ -1,6 +1,7 @@
 <?php
 
 require_once('../function/periodicidade.php');
+require_once('../function/caracteres.php');
 
 $queryNotas = "SELECT 
                 CL.*,
@@ -25,14 +26,13 @@ if ($notasLancar = $aplicaquery->fetch_assoc()) {
     $obra = $notasLancar['obra'];
     $marketing = $notasLancar['marketing'];
     $observacao = $notasLancar['observacao'];
-    $vencimento = $notasLancar['vencimento'];
+    $vencimento = formatarData($notasLancar['vencimento']);
     $telefone = $notasLancar['telefone'];
     $carimbar = $notasLancar['carimbar'];
     $numeroNota = $notasLancar['numero_nota'];
     $serie = $notasLancar['serie_nota'];
-    $emissao = $notasLancar['emissao'];
+    $emissao = formatarData($notasLancar['emissao']);
     $valor = $notasLancar['valor_nota'];
-
 
     if ($tipopagamento == '2') { //deposito bancario
         $buscaBancos = "SELECT  

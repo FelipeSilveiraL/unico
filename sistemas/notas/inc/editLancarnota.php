@@ -18,8 +18,8 @@ SET
 `observacao` = '" . $_POST['observacao'] . "',
 `numero_nota` = '" . $_POST['numeroNota'] . "',
 `serie_nota` = '" . $_POST['serie'] . "',
-`emissao` = '" . $_POST['emissao'] . "',
-`vencimento` = '" . $_POST['vencimento'] . "',
+`emissao` = '" . date('d/m/Y', strtotime($_POST['emissao'])) . "',
+`vencimento` = '" . date('d/m/Y', strtotime($_POST['vencimento'])) . "',
 `valor_nota` = '" . $_POST['valor'] . "',
 `status_desc` = '1',
 `telefone` = '" . $_POST['telefone'] . "',
@@ -47,7 +47,7 @@ if ($_FILES['filenota']["type"] != NULL) {
         `url_nota`)
         VALUES
         (" . $_GET['id'] . ",
-        'documentos/notas/" . $nomeArquivo . "')";
+        '../documentos/notas/" . $nomeArquivo . "')";
 
             $aplicarAnexo = $connNOTAS->query($insertAnexo);
         } else {
@@ -71,7 +71,7 @@ if ($_FILES['fileboleto']["type"] != NULL) {
             `url_nota`)
             VALUES
             (" . $_GET['id'] . ",
-            'documentos/boletos/" . $nomeArquivoBoleto . "')";
+            '../documentos/boletos/" . $nomeArquivoBoleto . "')";
 
             $aplicarAnexo = $connNOTAS->query($insertAnexo);
         } else {
