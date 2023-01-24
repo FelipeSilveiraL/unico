@@ -43,7 +43,7 @@ require_once('../inc/apiEmpDepNF.php');
                   <th scope="col" class="capitalize">EMPRESA</th>
                   <th scope="col" class="capitalize">DEPARTAMENTO</th>
                   <th scope="col" class="capitalize">GERENTE APROVA</th>
-                  <th scope="col" class="capitalize">SUPERINTENDENTE APROVA</th>
+                  <th scope="col" class="capitalize">SUPERINTENDENTE<br>APROVA</th>
                   <th scope="col" class="capitalize">SITUAÇÃO</th>
                   <th scope="col" class="capitalize" <?= $usuarioFuncao ?>>AÇÃO</th>
                 </tr>
@@ -51,53 +51,56 @@ require_once('../inc/apiEmpDepNF.php');
               <tbody>
                 <?php
                 
-                  $empDep = "SELECT * FROM bpm_nf_emp_dep ORDER BY NOME_EMPRESA ASC";
-
-                  $sucesso = $conn->query($empDep);
+                  $empDepNF = "SELECT * FROM bpm_nf_emp_dep ORDER BY ID_EMPDEP ASC";
+                  
+                  $sucesso = $conn->query($empDepNF);
 
                   while($row = $sucesso->fetch_assoc()){
-                    $situacao = $row['SITUACAO'];
-                    $gerente = $row['GERENTE_APROVA'];
-                    $super = $row['SUPERINTENDENTE_APROVA'];
 
-                    $pesquisa = "SELECT * FROM bpm_nf_departamento WHERE ID_DEPARTAMENTO = ".$row['ID_DEPARTAMENTO']."";
-                    $sucesso = $conn->query($pesquisa);
+                    $nomeEmp = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = ".$row['ID_EMPRESA']."";
 
-                    if($situacao == 'A'){
-                      $situacao = 'ATIVO';
-                    }else{
-                      $situacao = 'DESATIVADO';
-                    }
+                    $a = $conn->query($nomeEmp);
 
-                    if($gerente == 'S'){
-                      $gerente = 'SIM';
-                    }else{
-                      $gerente = 'NÃO';
-                    }
+                      while($exibeNome = $a->fetch_assoc()){
+                        $nome = $exibeNome['NOME_EMPRESA'];
+                      }
 
-                    if($super == 'S'){
-                      $super = 'SIM';
-                    }else{
-                      $super = 'NÃO';
-                    }
+                      $nomeDep = "SELECT NOME_DEPARTAMENTO FROM bpm_nf_departamento WHERE ID_DEPARTAMENTO = ".$row['ID_DEPARTAMENTO']."";
 
-                    echo '<tr>
-                    <td>'.$row['ID_EMPDEP'].'</td>
-                    <td>'.$row['NOME_EMPRESA'].'</td>';
-                    while($row2 = $sucesso->fetch_assoc()){
-                      echo' <td>'.$row2['NOME_DEPARTAMENTO'].'" </td>';
-                    }echo'
-                    <td>'.$gerente.'</td>
-                    <td>'.$super.'</td>
-                    <td>'.$situacao.'</td>
-                    <td ' . $usuarioFuncao . '><a href="editEmpDepNF.php?pg=' . $_GET["pg"] . '&id=' . $row["ID_EMPDEP"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
+                        $b = $conn->query($nomeDep);
+
+                          while($nomeDep = $b->fetch_assoc()){
+                            $dep = $nomeDep['NOME_DEPARTAMENTO'];
+                          }
+                          if($row['SITUACAO'] == "A"){
+                            $situacao = "ATIVO";
+                          }else{
+                            $situacao = "DESATIVADO";
+                          }
+                          if($row['GERENTE_APROVA'] == "N"){
+                            $gerente = "NÃO";
+                          }else{
+                            $gerente = "SIM";
+                          }
+                          if($row['SUPERINTENDENTE_APROVA'] == "N"){
+                            $super = "NÃO";
+                          }else{
+                            $super = "SIM";
+                          }
+                    echo '<tr>';
+                    echo '<td>'.$row['ID_EMPDEP'].'</td>';
+                    echo '<td>'.$nome.'</td>';
+                    echo '<td>'.$dep.'</td>';
+                    echo '<td>'.$gerente.'</td>';
+                    echo '<td>'.$super.'</td>';
+                    echo '<td>'.$situacao.'</td>';
+                    echo '<td ' . $usuarioFuncao . '><a href="editEmpDepNF.php?pg=' . $_GET["pg"] . '&id=' . $row["ID_EMPDEP"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
                             
                     <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarEmpDepNF.php?pg='.$_GET['pg'].'&id=' . $row["ID_EMPDEP"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a>
-                    </td> 
-                 
-                    </tr>';
-                    
+                    </td>';
+                    echo '</tr>';
                   }
+                  $conn->close();
 
                 ?>
               </tbody>

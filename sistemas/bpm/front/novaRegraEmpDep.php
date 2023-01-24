@@ -34,7 +34,7 @@ require_once('../../../config/query.php');
             <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraEmpDep.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6" id="empresa">
-                <select type="text" name="depto" class="form-select" required>
+                <select type="text" name="empresa" class="form-select" required>
                   <option value="">------------</option>
                   <?php 
                     $sucesso = $conn->query($relatorioExcel);

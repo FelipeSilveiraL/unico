@@ -44,6 +44,7 @@ require_once('../config/query.php');
 
               $idEmpresa = $row['ID_EMPRESA'];
               $nomeEmpresa = $row['NOME_EMPRESA'];
+              
               $tipoCusto = $row['TIPO_CUSTO'];
               $anoReferencia = $row['ANO_REFERENCIA'];
               $custoERP = $row['CODIGO_CUSTO_ERP'];
@@ -65,46 +66,28 @@ require_once('../config/query.php');
           
         echo' 
               <div class="form-floating mt-4 col-md-6" id="NOME_EMPRESA">
-                <select class="form-select" name="empresa" id="empresa" readonly>
-                  <option value="'.$idEmpresa.'"> '.$nomeEmpresa.' </option>
-                </select>
+                  <input class="form-control" value=" '.$nomeEmpresa.'" readonly>
+                  <input type="hidden" name="empresa" id="empresa" value="'.$idEmpresa.'"> 
+                
                <label for="NOME_EMPRESA">NOME EMPRESA:<span style="color: red;">*</span></label>
               </div>
 
-              <div class="form-floating mt-4 col-md-6" id="estados">
+              <div class="form-floating mt-4 col-md-6">
                 <select class="form-control" name="tipo_custo" readonly>
                       <option value="'.$tipoCusto.'">'.$tipoCustoNome.'</option>
                 </select>
                 <label for="estados">TIPO DE CUSTO:<span style="color: red;">*</span></label>
               </div>
 
-              <div class="form-floating mt-4 col-md-6" id="referencia">
-                  <input type="text" class="form-control" id="exampleFormControlInput1" name="ano" onkeydown="javascript: fMasc(this, numero);" maxlength="4" value="'.$anoReferencia.'" readonly>
-                  <label for="referencia" class="col-sm-6 col-form-label">ANO REFERENCIA:</label>
-              </div>
               <div class="form-floating mt-4 col-md-6" id="custo">
-                <select class="form-control" name="erp" id="erp">';
-                     
-                  $queryEdit = "SELECT DES_DESPESA, DESPESA FROM bpm_vei_despesa WHERE DESPESA = ".$custoERP."";
-                          
-                  $resultadoEdit = $conn->query($queryEdit);
-
-                  if($empresaEdit = $resultadoEdit->fetch_assoc() ) {
-                      echo '<option value="'. $empresaEdit['DESPESA'] .'">' . $empresaEdit['DES_DESPESA'] . ' [ '. $empresaEdit['DESPESA'] .' ]</option>';
-                  }
-
-                  echo '<option>---------</option>';    
-
-                  $queryApollo = "SELECT DES_DESPESA, DESPESA FROM bpm_vei_despesa ORDER BY DES_DESPESA ASC";
-                          
-                  $resultadoAPollo = $conn->query($queryApollo);
-
-                  while($empresaAPollo = $resultadoAPollo->fetch_assoc() ) {
-                      echo '<option value="'. $empresaAPollo['DESPESA'] .'">' . $empresaAPollo['DES_DESPESA'] . ' [ '. $empresaAPollo['DESPESA'] .' ]</option>';
-                  }
-                }
-
-                ?>
+                <select class="form-select" name="erp" id="erp">'; 
+                
+              
+                echo'
+                ';
+              } 
+              
+                  ?>
                 </select>
                 <label for="custo" class="col-sm-6 col-form-label">CUSTO ERP:</label>
               </div>
@@ -127,3 +110,27 @@ require_once('../config/query.php');
 <?php
 require_once('footer.php'); //Javascript e configurações afins
 ?>
+ <script>
+        $("#empresa").val(function() {
+            var idEmpresa = $("#empresa").val();
+
+            $.ajax({
+              url: '../inc/coletandoDados.php',
+                type: 'POST',
+                data: {
+                    id: idEmpresa
+                },
+                beforeSend: function(data) {
+                    $("#erp").html('<option value="">Carregando...</option>');
+                },
+                success: function(data) {
+                    $("#erp").html(data);
+                },
+                error: function(data) {
+                    $("#erp").html('<option value="">Erro ao carregar...</option>');
+                }
+
+            });
+
+        });
+    </script>

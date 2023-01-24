@@ -56,4 +56,3 @@ if($usuario != NULL){
 }
 
 ?>
-$conn->close();

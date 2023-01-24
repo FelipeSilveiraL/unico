@@ -54,5 +54,4 @@ $arquivo = 'departamentos_nf.xls';
         header("Content-Description: PHP Generated Data");
         // Envia o conteÃºdo do arquivo
         echo $html;
-        $conn->close();
 ?>

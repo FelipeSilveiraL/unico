@@ -36,7 +36,7 @@ require_once('../../../config/query.php');
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" name="empresa" id="empresa" required>
                   <?php
-                    $empNew = 'SELECT * FROM bpm_empresas WHERE ID_EMPRESA NOT IN(302,208,261,101) ORDER BY NOME_EMPRESA ASC ';
+                    $empNew = 'SELECT * FROM bpm_empresas WHERE ID_EMPRESA NOT IN(208,382) ORDER BY NOME_EMPRESA ASC ';
 
                     echo '<option value="">-----------------</option>';
 
@@ -55,7 +55,7 @@ require_once('../../../config/query.php');
                 <select class="form-select" name="depto" required>
                   <option value="">-----------------</option>
                   <?php
-                  $dep = "SELECT * FROM bpm_rh_departamento";
+                  $dep = "SELECT * FROM bpm_nf_departamento";
 
                   $sucessoDep = $conn->query($dep);
 

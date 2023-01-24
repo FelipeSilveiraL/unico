@@ -54,5 +54,5 @@ if($usuario != NULL){
 }else{
     header('Location: ../front/gestorRH.php?pg='.$_GET['pg'].'&erro=1');
 }
-$conn->close();
+
 ?>

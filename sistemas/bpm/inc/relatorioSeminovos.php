@@ -62,5 +62,5 @@ $arquivo = 'fornecedores_seminovos.xls';
         header("Content-Description: PHP Generated Data");
         // Envia o conteúdo do arquivo
         echo $html;
-        $conn->close();
+
 ?>

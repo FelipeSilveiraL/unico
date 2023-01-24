@@ -48,8 +48,10 @@ require_once('menu.php'); //menu lateral da pagina
       document.getElementById("empresaNbs").style.display = "block";
       document.getElementById("empresaApollo").style.display = "none";
       document.getElementById("revendaApollo").style.display = "none";
-      document.getElementById("empApollo").value = "";
-      document.getElementById("revApollo").value = "";
+      document.getElementById("empApollo").value = " ";
+      document.getElementById("revApollo").value = " ";
+      document.getElementById("empApollo").required = false;
+      document.getElementById("revApollo").required = false;
     }
   }
 
@@ -114,6 +116,16 @@ function validarCNPJ(el){
     el.value = "";
   }
 }
+
+function onlyNumberKey(evt) { 
+              
+              // Only ASCII character in that range allowed 
+              var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
+              if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) 
+                  return false; 
+              return true; 
+          } 
+
 </script>
 <?php
   require_once('footer.php'); //Javascript e configurações afins

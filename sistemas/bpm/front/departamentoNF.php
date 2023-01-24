@@ -73,7 +73,7 @@ require_once('../inc/apiRecebeDepNF.php');
                     <td>'.$situacao.'</td>
                     <td ' . $usuarioFuncao . '><a href="editDepNF.php?pg=' . $_GET["pg"] . '&id_departamento=' . $row["ID_DEPARTAMENTO"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
                             
-                    <a href="'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarDepNF.php?pg='.$_GET['pg'].'&id=' . $row["ID_DEPARTAMENTO"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a>
+                    <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarDepNF.php?pg='.$_GET['pg'].'&id=' . $row["ID_DEPARTAMENTO"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a>
                     </td> 
                  
                     </tr>';

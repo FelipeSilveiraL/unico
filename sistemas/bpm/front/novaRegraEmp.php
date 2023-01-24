@@ -66,38 +66,43 @@ require_once('../../../config/config.php');
               </div>
 
               <div class="form-floating mt-4 col-md-6" id="empresaApollo">
-                <input class="form-control" name="empApollo" maxlength="2" onkeypress="onlynumber()" >
+                <input class="form-control" name="empApollo" maxlength="2" onkeypress="return onlyNumberKey(event)" >
                 <label for="floatingSelect">EMPRESA APOLLO:<span style="color: red;">*</span></label>
               </div>
 
               <div class="form-floating mt-4 col-md-6" id="revendaApollo">
-                <input class="form-control" name="revApollo" maxlength="2" onkeypress="onlynumber()" >
+                <input class="form-control" name="revApollo" maxlength="2" onkeypress="return onlyNumberKey(event)" >
                 <label for="revendaApollo">REVENDA APOLLO:<span style="color: red;">*</span></label>
               </div>
 
               <div class="form-floating mt-4 col-md-6" id="empresaNbs">
-                <input class="form-control" name="empnbs" id="empnbs" maxlength="2" onkeypress="onlynumber()" >
+                <input class="form-control" name="empnbs" id="empnbs" maxlength="2" onkeypress="return onlyNumberKey(event)" >
                 <label for="empresaNbs">EMPRESA NBS:<span style="color: red;">*</span></label>
               </div>
 
               <div class="form-floating mt-4 col-md-6" id="apelidoNbs">
-                <input class="form-control" name="apnbs" id="apnbs" maxlength="2" onkeypress="onlynumber()" >
+                <input class="form-control" name="apnbs" id="apnbs" maxlength="2">
                 <label for="apelidoNbs">APELIDO NBS:<span style="color: red;">*</span></label>
               </div>
 
               <div class="form-floating mt-4 col-md-6" id="orgsenior">
-                <input class="form-control" name="orgsenior" maxlength="2" onkeypress="onlynumber()" required>
+                <input class="form-control" name="orgsenior" maxlength="2" onkeypress="return onlyNumberKey(event)" required>
                 <label for="orgsenior">ORGANOGRAMA SENIOR:<span style="color: red;">*</span></label>
               </div>
 
               <div class="form-floating mt-4 col-md-6" id="empresasenior">
-                <input onkeypress="onlynumber()" class="form-control" name="empresasenior" maxlength="2" required>
+                <input onkeypress="return onlyNumberKey(event)" class="form-control" name="empresasenior" maxlength="2" required>
                 <label for="empresasenior">EMPRESA SENIOR:<span style="color: red;">*</span></label>
               </div>
 
               <div class="form-floating mt-4 col-md-6" id="filialsenior">
-                <input class="form-control" name="filialsenior" maxlength="2" onkeypress="onlynumber()" required>
+                <input  class="form-control" name="filialsenior" maxlength="2" onkeypress="return onlyNumberKey(event)" required>
                 <label for="filialsenior">FILIAL SENIOR:<span style="color: red;">*</span></label>
+              </div>
+
+              <div class="form-floating mt-4 col-md-6" id="limite_nota_diversa">
+                <input class="form-control" name="limite_nota_diversa" maxlength="12"  onkeypress="return onlyNumberKey(event)" required>
+                <label for="limite_nota_diversa">LIMITE NOTA DIVERSA:<span style="color: red;">*</span></label>
               </div>
 
               <div class="form-floating mt-4 col-md-6" id="consorcio">
@@ -131,24 +136,24 @@ require_once('../../../config/config.php');
                 </select>
                 <label for="estado">UF:<span style="color: red;">*</span></label>
               </div>
-
+              <div class="form-floating mt-4 col-md-6" id="revisaoNF">
+                <select class="form-select" name="revisaoNF" required>
+                  <option value="">-----------------</option>
+                  <option value="S">SIM</option>
+                  <option value="N">NÃO</option>
+                </select>
+                <label for="revisaoNF">REVISAO NF ADM:<span style="color: red;">*</span></label>
+              </div>      
               <div class="form-floating mt-4 col-md-6" id="numero_caixa">
-                <input onkeypress="onlynumber()" class="form-control" onblur="aprovador()" name="numero_caixa" maxlength="2" id=ncaixa required>
+                <input onkeypress="onlynumber()" class="form-control"  name="numero_caixa" maxlength="2" id=ncaixa required>
                 <label for="numero_caixa">NUMERO CAIXA:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6" id="empresaApollo">
-                <input class="form-control" name="empApollo" maxlength="2" onkeypress="onlynumber()" >
+              <div class="form-floating mt-4 col-md-6" id="bandeira">
+                <input class="form-control" name="bandeira">
                 <label for="floatingSelect">BANDEIRA:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6" style="display: <?= empty($_GET['APROVADOR_CAIXA']) ? 'none' : 'block' ?>;" id="liberarApro">
-                <select class="form-select" name="aproCaixa" required>
-                  <?php
-                  echo '<option value=""> ------------ </option>';
-                  echo $aprovador;
-                  ?>
-                </select>
-                <label for="aproCaixa">APROVADOR CAIXA:<span style="color: red;">*</span></label>
-              </div>
+             
+              
               <div class="text-left py-2">
                 <a href="http://<?=$_SERVER['SERVER_ADDR']?>/unico/sistemas/bpm/front/empresas.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
@@ -175,7 +180,8 @@ require_once('../../../config/config.php');
       document.getElementById("empresaApollo").required = true;
       document.getElementById("revendaApollo").style.display = "block";
       document.getElementById("revendaApollo").required = true;
-
+      document.getElementById("apelidoNbs").style.display = "none";
+      document.getElementById("apelidoNbs").required = false;
     } else {
       document.getElementById("empresaNbs").style.display = "block";
       document.getElementById("empresaNbs").required = true;
@@ -185,6 +191,7 @@ require_once('../../../config/config.php');
       document.getElementById("revendaApollo").required = false;
       document.getElementById("empApollo").value = "";
       document.getElementById("revApollo").value = "";
+      
     }
   }
 
@@ -192,17 +199,7 @@ require_once('../../../config/config.php');
 </script>
 
 <script>
-  function aprovador() {
-    var tela = document.getElementById("liberarApro").style.display;
-
-    if (tela == "none") {
-      document.getElementById("liberarApro").style.display = "block";
-      document.getElementById("aproCaixa").required = true;
-    } else {
-      document.getElementById("liberarApro").style.display = "none";
-      document.getElementById("aproCaixa").required = false;
-    }
-  }
+  
 
   function mascaraMutuario(o, f) {
     v_obj = o
@@ -213,6 +210,15 @@ require_once('../../../config/config.php');
   function execmascara() {
     v_obj.value = v_fun(v_obj.value)
   }
+
+  function onlyNumberKey(evt) { 
+              
+              // Only ASCII character in that range allowed 
+              var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
+              if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) 
+                  return false; 
+              return true; 
+          } 
 
   function cpfCnpj(v) {
 
@@ -300,7 +306,7 @@ require_once('../../../config/config.php');
   return true;
 
   }
-
+  
 function validarCNPJ(el){
   if( !_cnpj(el.value) ){
 

@@ -31,7 +31,7 @@ require_once('../../../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/editDep.php?pg=<?= $_GET['pg'] ?>id=<?= $_GET['id_departamento'] ?>" method="POST">
+            <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/editDep.php?pg=<?= $_GET['pg'] ?>&id=<?= $_GET['id_departamento'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6" id="depto">
                 <?php

@@ -51,7 +51,7 @@ require_once('../config/query.php');
               <!--DADOS PARA O LANÇAMENTO -->
 
               <div class="form-floating mt-4 col-md-6" id="NOME_EMPRESA">
-                <select class="form-select" name="empresa" id="empresa" readonly>
+                <select class="form-select" name="empresa" id="empresa">
                   <option value="">-----------</option>
                   <?php 
                    
@@ -77,7 +77,7 @@ require_once('../config/query.php');
                 <label for="estados">TIPO DE CUSTO:<span style="color: red;">*</span></label>
               </div>
               
-              <div class="form-floating mt-4 col-md-6" id="parcelaIPVA" style="display: none;">
+              <!-- <div class="form-floating mt-4 col-md-6" id="parcelaIPVA" style="display: none;">
                 <select class="form-control" name="parcela" id="parcelaValor" required>
                   <option value="">---------------------</option>
                   <option value="U">ÚNICA</option>
@@ -89,26 +89,15 @@ require_once('../config/query.php');
                   
                 </select>
                 <label for="parcelaIPVA" class="form-label">PARCELA: </label>
-            </div>
+              </div> -->
 
-              <div class="form-floating mt-4 col-md-6" id="referencia">
+              <!-- <div class="form-floating mt-4 col-md-6" id="referencia">
               <input type="text" class="form-control" id="exampleFormControlInput1" name="ano" onkeydown="javascript: fMasc(this, numero);" maxlength="4"  required>
                   <label for="referencia" class="col-sm-6 col-form-label">ANO REFERENCIA:</label>
-              </div>
+              </div> -->
               <div class="form-floating mt-4 col-md-6" id="custo">
-                  <select class="form-control" name="erp" id="erp">
+                  <select class="form-select" name="erp" id="erp">
                       <option value="">---------------------</option>
-                      <?php 
-                      
-                      $queryApollo = "SELECT DES_DESPESA, DESPESA FROM bpm_vei_despesa ORDER BY DES_DESPESA ASC";
-                          
-                      $resultadoAPollo = $conn->query($queryApollo);
-
-                      while($empresaAPollo = $resultadoAPollo->fetch_assoc() ) {
-                          echo '<option value="'. $empresaAPollo['DESPESA'] .'">' . $empresaAPollo['DES_DESPESA'] . ' [ '. $empresaAPollo['DESPESA'] .' ]</option>';
-                      }
-                      
-                      ?>
                   </select>
                 <label for="custo" class="col-sm-6 col-form-label">CUSTO ERP:</label>
               </div>
@@ -146,13 +135,15 @@ require_once('../config/query.php');
 
         }
     </script>
-
+<?php
+require_once('footer.php'); //Javascript e configurações afins
+?>
     <script>
         $("#empresa").on("change", function() {
             var idEmpresa = $("#empresa").val();
 
             $.ajax({
-              url: 'http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/coletandoDados.php',
+              url: '../inc/coletandoDados.php',
                 type: 'POST',
                 data: {
                     id: idEmpresa
@@ -172,6 +163,3 @@ require_once('../config/query.php');
         });
     </script>
 
-<?php
-require_once('footer.php'); //Javascript e configurações afins
-?>

@@ -14,6 +14,7 @@ $createTableCaixa = "CREATE TABLE `bpm_custo_especificos` (
     `DESCRICAO_CUSTO` VARCHAR(80) NULL,
     `CODIGO_CUSTO` VARCHAR(80) NULL,
     `COD_EMPRESA` VARCHAR(80) NULL,
+    `ATIVO` VARCHAR(1) NULL,
     PRIMARY KEY (`id`))";
 
 $execCreate = $conn->query($createTableCaixa);
@@ -32,12 +33,14 @@ foreach ($resultado->despesa as $custoEspec) {
     $queryCustos = "INSERT INTO bpm_custo_especificos 
                             (DESCRICAO_CUSTO,
                             CODIGO_CUSTO,
-                            COD_EMPRESA
+                            COD_EMPRESA,
+                            ATIVO
                             )
    
     VALUES ('" . $custoEspec->DESCRICAO_CUSTO ."',
             '" . $custoEspec->CODIGO_CUSTO . "',
-            '" . $custoEspec->COD_EMPRESA . "'
+            '" . $custoEspec->COD_EMPRESA . "',
+            '" . $custoEspec->ATIVO . "'
             )";
 
         

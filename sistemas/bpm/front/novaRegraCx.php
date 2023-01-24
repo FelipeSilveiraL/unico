@@ -46,6 +46,21 @@ require_once('../inc/apiRecebeSelbetti.php');
                           $result = $conn->query($relatorioExcel);
 
                           while($row = $result->fetch_assoc()){
+
+                            $idEmp = $row['ID_EMPRESA'];
+                             
+                            $queryCxEmp = "SELECT NOME_CAIXA FROM bpm_caixa_empresa WHERE ID_EMPRESA = ".$idEmp;
+                            
+                            $sucesso = $conn->query($queryCxEmp);
+
+                            if($a = $sucesso->fetch_assoc()){
+                              $idCxEmp = $a['NOME_CAIXA'];
+                              }else{
+                              $idCxEmp = '';                                
+                              }
+                              
+                            
+                            // echo '<option value="'.$row['ID_EMPRESA'].'">'.$row['NOME_EMPRESA'].' /  '.$idCxEmp.'</option>';
                             echo '<option value="'.$row['ID_EMPRESA'].'">'.$row['NOME_EMPRESA'].'</option>';
                           }
                           

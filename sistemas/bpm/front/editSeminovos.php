@@ -194,7 +194,7 @@ require_once('../config/query.php');
       case 'P':
       document.getElementById("SMARTSHARE_LOGIN").style.display = "none";
       document.getElementById("smartshareLogin").required = false;
-      document.getElementById("smartshareLogin").value = " ";
+      document.getElementById("smartshareLogin").value = "";
       break;
       
     }

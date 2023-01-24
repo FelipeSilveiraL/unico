@@ -10,16 +10,15 @@ $sucess = $conn->query($excluiTabela);
 
 $criaTabela = "CREATE TABLE `bpm_nf_emp_dep` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `ID_EMPDEP` VARCHAR(45) NULL,
-  `NOME_EMPRESA` VARCHAR(45) NULL,
-  `ID_DEPARTAMENTO` VARCHAR(45) NULL,
-  `SITUACAO` VARCHAR(45) NULL,
-  `GERENTE_APROVA` VARCHAR(45) NULL,
-  `SUPERINTENDENTE_APROVA` VARCHAR(45) NULL,
+  `ID_EMPDEP` int(10) NULL,
+  `ID_EMPRESA` int(10) NULL,
+  `ID_DEPARTAMENTO` int(10) NULL,
+  `SITUACAO` VARCHAR(1) NULL,
+  `GERENTE_APROVA` VARCHAR(1) NULL,
+  `SUPERINTENDENTE_APROVA` VARCHAR(1) NULL,
   `LANCA_MULTAS` VARCHAR(45) NULL,
   `GESTOR_AREA_APROVA_MULTAS` VARCHAR(45) NULL,
-  `REVISAO_ADM` VARCHAR(45) NULL,
-  `LOGIN_ADM` VARCHAR(45) NULL,
+  `LANCA_NOTAS` VARCHAR(45) NULL,
   PRIMARY KEY (`id`) )";
 
 $execTabela = $conn->query($criaTabela);
@@ -36,19 +35,18 @@ foreach ($resultado->empresaDep as $empdep) {
 
 
     $queryEmpDep = "INSERT INTO bpm_nf_emp_dep 
-                            (ID_EMPDEP,NOME_EMPRESA,ID_DEPARTAMENTO,SITUACAO,GERENTE_APROVA,
-                            SUPERINTENDENTE_APROVA,LANCA_MULTAS,GESTOR_AREA_APROVA_MULTAS,REVISAO_ADM,LOGIN_ADM) VALUES (
+                            (ID_EMPDEP,ID_EMPRESA,ID_DEPARTAMENTO,SITUACAO,GERENTE_APROVA,
+                            SUPERINTENDENTE_APROVA,LANCA_MULTAS,GESTOR_AREA_APROVA_MULTAS,LANCA_NOTAS) VALUES (
    
             '" . $empdep->ID_EMPDEP ."',
-            '" . $empdep->NOME_EMPRESA ."',
+            '" . $empdep->ID_EMPRESA ."',
             '" . $empdep->ID_DEPARTAMENTO ."',
             '" . $empdep->SITUACAO ."',
             '" . $empdep->GERENTE_APROVA ."',
             '" . $empdep->SUPERINTENDENTE_APROVA . "' ,
             '" . $empdep->LANCA_MULTAS . "' ,
-            '" . $empdep->GESTOR_AREA_APROVA_MULTAS . "' ,
-            '" . $empdep->REVISAO_ADM . "' ,
-            '" . $empdep->LOGIN_ADM . "' 
+            '" . $empdep->GESTOR_AREA_APROVA_MULTAS . "',
+            '" . $empdep->LANCA_NOTAS . "'
             )";
 
         

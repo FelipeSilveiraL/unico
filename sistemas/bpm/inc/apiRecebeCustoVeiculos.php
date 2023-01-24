@@ -74,11 +74,11 @@ $sucess = $conn->query($droptable);
 
 $createTableCaixa = "CREATE TABLE `bpm_vei_despesa` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `EMPRESA` VARCHAR(80) NULL,
-    `DESPESA` VARCHAR(80) NULL,
+    `EMPRESA` INT(5) NULL,
+    `DESPESA` INT(5) NULL,
     `DES_DESPESA` VARCHAR(80) NULL,
     `SINAL` VARCHAR(80) NULL,
-    `INATIVO_CONSULTAS` VARCHAR(80) NULL,
+    `INATIVO_CONSULTAS` VARCHAR(1) NULL,
     PRIMARY KEY (`id`))";
 
 $execCreate = $conn->query($createTableCaixa);

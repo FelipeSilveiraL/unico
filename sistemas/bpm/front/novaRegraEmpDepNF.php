@@ -53,7 +53,7 @@ require_once('../config/query.php');
                   <option value="">------------</option>
                   <?php 
                   
-                    $departamento = "SELECT * FROM bpm_rh_departamento";
+                    $departamento = "SELECT * FROM bpm_nf_departamento";
                     $sucesso = $conn->query($departamento);
 
                     while($row = $sucesso->fetch_assoc()){
@@ -83,8 +83,8 @@ require_once('../config/query.php');
               <div class="form-floating mt-4 col-md-6" id="situacao">
                 <select class="form-select" name="situacao" required>
                   <option value="">------------</option>
-                  <option value="S">ATIVO</option>
-                  <option value="N">DESATIVADO</option>
+                  <option value="A">ATIVO</option>
+                  <option value="D">DESATIVADO</option>
                 </select>
                 <label for="situacao">SITUAÇÃO:<span style="color: red;">*</span></label>
               </div>
@@ -104,32 +104,16 @@ require_once('../config/query.php');
                 </select>
                 <label for="gestorAprovaM">GESTOR ÁREA APROVA MULTAS:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6">
-                <select class="form-select" name="revisao_adm" id="revisao_adm" onchange="administrador()" required>
+              <div class="form-floating mt-4 col-md-6" id="gestorAprovaM">
+                <select class="form-select" name="lancaNotas" required>
                   <option value="">------------</option>
                   <option value="S">SIM</option>
                   <option value="N">NÃO</option>
                 </select>
-                <label for="revisao_adm">REVISÃO ADMINISTRADOR:<span style="color: red;">*</span></label>
+                <label for="gestorAprovaM">LANÇA NOTAS:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6" id="loginAdministrador" style="display: none;">
-                <select class="form-select" name="login_adm" type="text" id="login_adm" required>
-                    <option value=" ">---------------------</option>
-                    <?php 
-
-                        $query_users .= " WHERE id NOT IN (1)";
-
-                        $sucesso = $conn->query($query_users);
-
-                        while ($row2 = $sucesso->fetch_assoc()) {
-
-                        echo '<option value="' . $row2['DS_LOGIN'] . '"> ' . $row2['DS_USUARIO'] . ' / ' . $row2['DS_LOGIN'] . ' </option>';
-                        }
-
-                    ?>
-                </select>
-                <label for="loginAdministrador">LOGIN ADMINISTRADOR:<span style="color: red;">*</span></label>
-              </div>
+              
+              
 
 
               <div class="text-left py-2">
@@ -147,22 +131,7 @@ require_once('../config/query.php');
 
 </main><!-- End #main -->
 
-<script>
-        function administrador(){
-            var valueRevisao = document.getElementById("revisao_adm").value;            
-            switch(valueRevisao){
-              case 'S':
-                document.getElementById("loginAdministrador").style.display = "block";
-                break;
-              case 'N':
-                document.getElementById("loginAdministrador").style.display = "none";
-                document.getElementById('login_adm').value = '';
-                document.getElementById("login_adm").required = false;
-                break;
-            
-            }
-        }
-    </script>
+
 
 
 <?php

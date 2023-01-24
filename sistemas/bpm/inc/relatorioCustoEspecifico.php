@@ -68,7 +68,7 @@ $arquivo = 'CUSTO_VEICULO.xls';
             header("Content-Description: PHP Generated Data");
             // Envia o conteÃºdo do arquivo
             echo $html;
-            $conn->close();
+
 
 
 ?>

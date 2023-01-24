@@ -31,7 +31,7 @@ require_once('../../../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/editEmpDepNF.php?pg=<?= $_GET['pg'] ?>" method="POST">
+            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/editEmpDepNF.php?pg=<?= $_GET['pg'] ?>&id_empdep=<?= $_GET['id'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
                 <?php
                 $empDep = "SELECT * FROM bpm_nf_emp_dep WHERE ID_EMPDEP =" . $_GET['id'] . "";
@@ -45,7 +45,7 @@ require_once('../../../config/query.php');
                     $super = $row['SUPERINTENDENTE_APROVA'];
                     $lanca = $row['LANCA_MULTAS'];
                     $gestor = $row['GESTOR_AREA_APROVA_MULTAS'];
-                    $revisao = $row['REVISAO_ADM'];
+                    
                     
 
                     if($situacao == 'A'){
@@ -75,17 +75,22 @@ require_once('../../../config/query.php');
                     }else{
                       $gestor = 'NÃO';
                     }
-                    if($revisao = 'S'){
-                      $revisao = 'SIM';
-                    }else{
-                      $revisao = 'NÃO';
-                    }
+                    
 
+                    
+                 
 
-                  echo '
-                  <input type="hidden" value="'.$row['ID_EMPDEP'].'" name="id_empdep">
+                  $nomeEmpresa = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = ".$row['ID_EMPRESA']."";
+                    $a = $conn->query($nomeEmpresa);
+                    
+                    while($nome = $a->fetch_assoc()){
+                      $nomeEmp = $nome['NOME_EMPRESA'];
+                    } 
+
+                    echo'
+                  
               <div class="form-floating mt-4 col-md-6" id="empresa">
-                <input type="text" value="'.$row['NOME_EMPRESA'].'"class="form-control" disabled>
+                <input type="text" value="'.$nomeEmp.'" class="form-control" disabled>
                 <label for="empresa">EMPRESA:</label>
               </div>
 
@@ -119,7 +124,7 @@ require_once('../../../config/query.php');
                 <label for="super">SUPERINTENDENTE APROVA:<span style="color: red;">*</span></label>
               </div>
               <div class="form-floating mt-4 col-md-6" id="situacao">
-                <select class="form-select" name="situacao"  required>
+                <select class="form-select" name="situacao"  >
                   <option value="'.$row['SITUACAO'].'">'.$situacao.'</option>
                   <option>------------</option>
                   <option value="A">ATIVO</option>
@@ -128,16 +133,16 @@ require_once('../../../config/query.php');
                 <label for="situacao">SITUAÇÃO:<span style="color: red;">*</span></label>
               </div>
               <div class="form-floating mt-4 col-md-6" id="lancarMulta">
-              <select class="form-select" name="lancarMulta" required>
-                <option value="'.$row['LANCA_MULTAS'].'">'.$lanca.'</option>
-                <option value="">------------</option>
-                <option value="S">SIM</option>
-                <option value="N">NÃO</option>
-              </select>
-              <label for="lancarMulta">LANÇAR MULTAS:<span style="color: red;">*</span></label>
-            </div>
+                <select class="form-select" name="lancarMulta" >
+                  <option value="'.$row['LANCA_MULTAS'].'">'.$lanca.'</option>
+                  <option value="">------------</option>
+                  <option value="S">SIM</option>
+                  <option value="N">NÃO</option>
+                </select>
+                <label for="lancarMulta">LANÇAR MULTAS:<span style="color: red;">*</span></label>
+              </div>
             <div class="form-floating mt-4 col-md-6" id="gestorAprovaM">
-              <select class="form-select" name="gestorAprovaM" required>
+              <select class="form-select" name="gestorAprovaM" >
                 <option value="'.$row['GESTOR_AREA_APROVA_MULTAS'].'">'.$gestor.'</option>
                 <option value="">------------</option>
                 <option value="S">SIM</option>
@@ -145,31 +150,11 @@ require_once('../../../config/query.php');
               </select>
               <label for="gestorAprovaM">GESTOR ÁREA APROVA MULTAS:<span style="color: red;">*</span></label>
             </div>
-            <div class="form-floating mt-4 col-md-6">
-              <select class="form-select" name="revisao_adm" id="revisao_adm" onchange="administrador()" required>
-                <option value="'.$row['REVISAO_ADM'].'">'.$revisao.'</option>
-                <option value="">------------</option>
-                <option value="S">SIM</option>
-                <option value="N">NÃO</option>
-              </select>
-              <label for="revisao_adm">REVISÃO ADMINISTRADOR:<span style="color: red;">*</span></label>
-            </div>
-            <div class="form-floating mt-4 col-md-6" id="loginAdministrador"'; echo ($row['LOGIN_ADM'] != NULL)? 'style="display: block;"' : 'style="display: none;"'; echo '>
-              <select class="form-select" name="login_adm" type="text" id="login_adm" required>
-                  <option value="'.$row['LOGIN_ADM'].'">'.$row['LOGIN_ADM'].'</option>
-                  <option value=" ">---------------------</option>';
-                  $query_users .= " WHERE id NOT IN (1)";
-
-                  $sucesso = $conn->query($query_users);
-
-                  while ($row2 = $sucesso->fetch_assoc()) {
-
-                  echo '<option value="' . $row2['DS_LOGIN'] . '"> ' . $row2['DS_USUARIO'] . ' / ' . $row2['DS_LOGIN'] . ' </option>';
-                  }
-            echo'  </select>
-              <label for="loginAdministrador">LOGIN ADMINISTRADOR:<span style="color: red;">*</span></label>
-            </div>';
+             ';
+            
+            
                 }
+                $conn->close();
                 ?>
                 <div class="text-left py-2">
                   <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/nfEmpDep.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
