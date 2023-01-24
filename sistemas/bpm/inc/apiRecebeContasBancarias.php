@@ -11,7 +11,7 @@ $sucess = $conn->query($excluiTabela);
 $criaTabela = "CREATE TABLE `bpm_contas_bancarias` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `CNPJ_CPF` VARCHAR(19) NOT NULL,
-  `BANCO` VARCHAR(45) NULL,
+  `BANCO` VARCHAR(100) NULL,
   `NOME_EMPRESA` VARCHAR(80) NULL,
   `AGENCIA` VARCHAR(45) NULL,
   `CONTA` VARCHAR(45) NULL,
