@@ -31,7 +31,8 @@ if (move_uploaded_file($_FILES['anexo']['tmp_name'], $caminho . $nomeArquivo)) {
 e caso ele seja nullo ele vai realizar o envio do anexo e salvar no banco de dados*/
 
 if ($recebendoArquivo == NULL) {
-    
+
+
     $insert = "INSERT INTO cad_anexos (ID_LANCARNOTA, url_nota) VALUES ('" . $_GET['idNota'] . "', '" . $caminho . $nomeArquivo . "')";
 
     if (!$resultInsert = $connNOTAS->query($insert)) {
