@@ -11,7 +11,11 @@ $queryNotas = "SELECT
             LEFT JOIN
                 unico.bpm_empresas UBE ON (CL.ID_FILIAL = UBE.ID_EMPRESA)
             WHERE ID_LANCARNOTAS = " . $_GET['id'];
-$aplicaquery = $connNOTAS->query($queryNotas);
+
+if (!$aplicaquery = $connNOTAS->query($queryNotas)) {
+    echo ("Error description[1]: " . $connNOTAS->error);
+}
+
 
 if ($notasLancar = $aplicaquery->fetch_assoc()) {
 
@@ -42,8 +46,12 @@ if ($notasLancar = $aplicaquery->fetch_assoc()) {
                             CB.digito
                         FROM
                             cad_rateiobanco CB
-                        WHERE ID_RATEIOFORNECEDOR = (SELECT ID_RATEIOFORNECEDOR FROM cad_rateiofornecedor WHERE cpfcnpj_fornecedor = '" . $cpfcnpjFornecedor . "' AND id_usuario = " . $_SESSION['id_usuario'] . ");";
-        $aplicarBancos = $connNOTAS->query($buscaBancos);
+                        WHERE ID_RATEIOFORNECEDOR = (SELECT ID_RATEIOFORNECEDOR FROM cad_rateiofornecedor WHERE cpfcnpj_fornecedor = '" . $cpfcnpjFornecedor . "' AND id_usuario = " . $_SESSION['id_usuario'] . " AND id_filial = ".$notasLancar['ID_FILIAL'].")";
+
+        if (!$aplicarBancos = $connNOTAS->query($buscaBancos)) {
+            echo ("Error description[2]: " . $connNOTAS->error);
+        }
+
         $bancos = $aplicarBancos->fetch_assoc();
 
         $nomeBanco = $bancos['nome_banco'];
