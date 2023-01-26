@@ -67,49 +67,65 @@ require_once('../inc/contagemStatus.php');
       <div class="col-12">
         <div class="card recent-sales overflow-auto">
           <div class="card-body">
-            <h5 class="card-title"><?= $nomeTabela ?></h5>
+            <h5 class="card-title"><?= $nomeTabela //../inc/status ?></h5>
 
 
-            <table class="table table-borderless datatable">
+            <table class="table-sm table table-hover datatable">
               <thead>
                 <tr class="capitalize">
                   <th scope="col">empresa&emsp;</th>
                   <th scope="col">fornecedor&emsp;</th>
+                  <th scope="col">Número Nota&emsp;</th>
                   <th scope="col">valor&emsp;</th>
                   <th scope="col">emissao</th>
                   <th scope="col">vencimento&emsp;</th>
-                  <th scope="col">smartShare&emsp;</th>
-                  <th scope="col">status&emsp;</th>
-                  <th scope="col">ação&emsp;</th>
+                  <?php if ($_GET['status'] == 3 or $_GET['status'] == 'erro') {
+                    echo '<th scope="col">smartShare&emsp;</th>';
+                  } ?>
+                  <?php if ($_GET['status'] == 'erro') {
+                    echo '<th scope="col">status&emsp;</th>';
+                  } ?>                  
+                  <th scope="col" class="text-right">ação&emsp;</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
                 $color = array('bg-primary' => 1, 'bg-warning' => 2, 'bg-success' => 3);
 
-                while ($notas = $resultado->fetch_assoc()) {
+                while ($notas = $resultado->fetch_assoc()) {//inc/status.php
                   $value = array_search($notas['id_status'], $color);
-                  echo '<tr>                          
-                            <td>'.$notas['empresa'].'</td>
-                            <td>'.$notas['fornecedor'].'</td>
-                            <td>R$ '.$notas['valor_nota'].'</td>
-                            <td>'.$notas['emissao'].'</td>
-                            <td>'.$notas['vencimento'].'</td>
-                            <td>'.$notas['numero_fluig'].'</td>
-                            <td><span class="badge ';
-                  echo empty($value) ? "bg-danger" : $value;
-                  echo '">'.$notas['status'].'</span></td>
-                            <td>
-                              <a href="editLancarnota.php?id='.$notas['id_lancarnotas'].'" title="Editar" class="btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
 
-                              <a href="javascript:" title="Anexos" class="btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#smallModal'.$notas['id_lancarnotas'].'"><i class="bi bi-file-earmark-pdf"></i></a>
+                  $queryEmpresas = "SELECT NOME_EMPRESA FROM unico.bpm_empresas WHERE ID_EMPRESA = " . $notas['empresa'];
+                  $resultEmpresas = $connNOTAS->query($queryEmpresas);
+                  $empresas = $resultEmpresas->fetch_assoc();
+
+                  echo '<tr>                          
+                            <td>' . $empresas['NOME_EMPRESA'] . '</td>
+                            <td>' . $notas['fornecedor'] . '</td>
+                            <td>' . $notas['numero_nota'] . '</td>
+                            <td>R$ ' . $notas['valor_nota'] . '</td>
+                            <td>' . $notas['emissao'] . '</td>
+                            <td>' . $notas['vencimento'] . '</td>';
+                  if ($_GET['status'] == 3 or $_GET['status'] == 'erro') {
+                    echo '<td>' . $notas['numero_fluig'] . '</td>';
+                  }
+
+                  if ($_GET['status'] == 'erro') {
+                    echo '    <td><span class="badge ';
+                    echo empty($value) ? "bg-danger" : $value;
+                    echo '">' . $notas['status'] . '</span></td>';
+                  }
+                  echo '<td class="td-actions text-right">
+                              <a href="editLancarnota.php?id=' . $notas['id_lancarnotas'] . '" title="Editar" class="btn btn-primary btn-just-icon btn-sm"><i class="bi bi-pencil"></i></a>
+
+                              <a href="javascript:" title="Anexos" class="btn btn-success btn-just-icon btn-sm" data-bs-toggle="modal" data-bs-target="#smallModal' . $notas['id_lancarnotas'] . '"><i class="bi bi-file-earmark-pdf"></i></a>
                               
-                              <a href="../inc/deletarLancamento.php?id='.$notas['id_lancarnotas'].'" title="Excluir" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                              <a href="../inc/deletarLancamento.php?id=' . $notas['id_lancarnotas'] . '" title="Excluir" class="btn btn-danger btn-just-icon btn-sm"><i class="bi bi-trash"></i></a>
                             </td>
                           </tr>
 
                           <!-- Small Modal-->
-                          <div class="modal fade" id="smallModal'.$notas['id_lancarnotas'].'" tabindex="-1">
+                          <div class="modal fade" id="smallModal' . $notas['id_lancarnotas'] . '" tabindex="-1">
                           <div class="modal-dialog modal-sm">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -119,7 +135,7 @@ require_once('../inc/contagemStatus.php');
                               <div class="modal-body">                                
                                 ';
 
-                  $queryAnexos = "SELECT * FROM cad_anexos WHERE ID_LANCARNOTA = ".$notas['id_lancarnotas'];
+                  $queryAnexos = "SELECT * FROM cad_anexos WHERE ID_LANCARNOTA = " . $notas['id_lancarnotas'];
                   $aplicaAnexos = $connNOTAS->query($queryAnexos);
                   while ($anexos = $aplicaAnexos->fetch_assoc()) {
 
@@ -127,10 +143,10 @@ require_once('../inc/contagemStatus.php');
 
                     if ($tipo == 'n') {
 
-                      echo '<p><code><u>Nota Fiscal:</u></code> <a href="'.$anexos['url_nota'].'" target="_blank">'.substr($anexos['url_nota'], 32).'</a></p>';
+                      echo '<p><code><u>Nota Fiscal:</u></code> <a href="' . $anexos['url_nota'] . '" target="_blank">' . substr($anexos['url_nota'], 32) . '</a></p>';
                     } else {
 
-                      echo '<p><code><u>Boleto:</u></code> <a href="'.$anexos['url_nota'].'" target="_blank">'.substr($anexos['url_nota'], 34).'</a></p>';
+                      echo '<p><code><u>Boleto:</u></code> <a href="' . $anexos['url_nota'] . '" target="_blank">' . substr($anexos['url_nota'], 34) . '</a></p>';
                     }
                   }
                   echo '</div>

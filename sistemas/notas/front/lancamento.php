@@ -233,6 +233,7 @@ require_once('../../bpm/inc/apiRecebeTabela.php'); //Empresas
 require_once('footer.php'); //Javascript e configurações afins
 ?>
 
+<script>$('#valorNota').mask('#.##0,00', {reverse: true});</script>
 
 <script>
   function tipoVencimento() {
@@ -393,6 +394,4 @@ require_once('footer.php'); //Javascript e configurações afins
 
     });
   });
-
-  $(".dinheiro").mask('#.##0,00', {reverse: true});
 </script>

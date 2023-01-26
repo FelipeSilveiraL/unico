@@ -4,6 +4,7 @@ session_start();
 require_once('../../../config/config.php');
 require_once('../config/query.php');
 require_once('../function/periodicidade.php');
+require_once('../function/caracteres.php');
 
 $url = "http://" . $_SESSION['servidorOracle'] . "/" . $_SESSION['smartshare'] . "/inc/fornecedorApi.php?cpfCNPJ=" . $_POST['id'];
 
@@ -14,8 +15,7 @@ curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 $resultado = json_decode(curl_exec($ch));
 
 foreach ($resultado->nome_fornecedor as $nomefornecedor) {
-
-    echo $nomefornecedor->NOME_EMPRESA . "-"; //0
+    echo seo_friendly_url($nomefornecedor->NOME_EMPRESA) . "-"; //0
 }
 
 

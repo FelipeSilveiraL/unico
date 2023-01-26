@@ -458,6 +458,4 @@ require_once('footer.php'); //Javascript e configurações afins
 
     });
   });
-
-  $(".dinheiro").mask('#.##0,00', {reverse: true});
 </script>

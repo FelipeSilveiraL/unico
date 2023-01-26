@@ -37,9 +37,10 @@ while ($rateio = $aplicarqueryrateio->fetch_assoc()) {
   echo '<tr>';
   echo '<td>' . $rateio['NOME_DEPARTAMENTO'] . '</td>';
   echo '<td>' . $rateio['porcento'] . '</td>';
-  echo  '<td class="dinheiro">R$ ' . round($valorCalculado, 2)  . '</td>';
+  echo '<td>R$ <span class="dinheiro">' . round($valorCalculado, 2)  . '</span></td>';
   echo '</tr>';
 
 }
 
 echo '</tbody>';
+echo "<script>$('.dinheiro').mask('#.##0,00', {reverse: true});</script>";

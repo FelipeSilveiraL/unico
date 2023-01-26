@@ -32,7 +32,8 @@ CL.numero_fluig,
 CL.nome_fornecedor fornecedor,
 CL.ID_FILIAL empresa,
 CS.nome status,
-CS.id id_status
+CS.id id_status,
+CL.numero_nota
 FROM
 cad_lancarnotas AS CL
 LEFT JOIN
