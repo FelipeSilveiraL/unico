@@ -38,14 +38,14 @@ require_once('../../bpm/inc/apiRecebeTabela.php'); //EMPRESAS
             </h5>
             <span class="text-danger small pt-1 fw-bold" style="font-size: 12px;"><i class="bi bi-pin-fill"></i>Fornecedores em vermelho quer dizer que o centro de custo está incompleto, clique <a href="fornecedor.php?fornecedorIncompleto=1">AQUI</a> mostrar apenas esses fornecedores</span>
 
-            <table class="table table-borderless datatable">
+            <table class="table-sm table table-hover datatable">
               <thead>
                 <tr class="capitalize">
                   <th scope="col">CNPJ&emsp;</th>
                   <th scope="col">FORNECEDOR&emsp;</th>
                   <th scope="col">FILIAL&emsp;</th>
                   <th scope="col">OBSERVAÇÃO&emsp;</th>
-                  <th scope="col">AÇÃO&emsp;</th>
+                  <th scope="col" class="text-right">ação&emsp;</th>
                 </tr>
               </thead>
               <tbody>
@@ -70,9 +70,9 @@ require_once('../../bpm/inc/apiRecebeTabela.php'); //EMPRESAS
                             <td>' . $fornecedor['fornecedor'] . '</td>
                             <td>' . $nomeEmpresa['NOME_EMPRESA'] . '</td>
                             <td>' . $fornecedor['observacao'] . '</td>
-                            <td>
-                              <a href="rateioFornecedor.php?idRateioFornecedor=' . $fornecedor['ID_RATEIOFORNECEDOR'] . '" title="Editar" class="btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
-                              <a href="../inc/deletarFornecedor.php?idRateioFornecedor=' . $fornecedor['ID_RATEIOFORNECEDOR'] . '" title="Desativar" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                            <td class="td-actions text-right">
+                              <a href="rateioFornecedor.php?idRateioFornecedor=' . $fornecedor['ID_RATEIOFORNECEDOR'] . '" title="Editar" class="btn btn-primary btn-just-icon btn-sm"><i class="bi bi-pencil"></i></a>
+                              <a href="../inc/deletarFornecedor.php?idRateioFornecedor=' . $fornecedor['ID_RATEIOFORNECEDOR'] . '" title="Desativar" class="btn btn-danger btn-just-icon btn-sm"><i class="bi bi-trash"></i></a>
                             </td>
                           </tr>';
                 }
