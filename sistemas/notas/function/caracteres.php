@@ -1,5 +1,4 @@
 <?php
-
 function seo_friendly_url($string)
 {
     $string = str_replace(array('[\', \']'), '', $string);
@@ -12,7 +11,6 @@ function seo_friendly_url($string)
 
     return strtoupper(trim($string, '-'));
 }
-
 
 function pontuacao($stingPontuacao)
 {
