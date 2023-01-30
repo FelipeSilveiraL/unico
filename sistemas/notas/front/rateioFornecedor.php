@@ -53,7 +53,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
                   <option value="1">Fluig</option>
                   <option value="2">SmartShare</option>
                 </select>
-                <label for="selectFilial">Filial <span class="text-danger small pt-1 fw-bold"> * </span></label>
+                <label for="selectFilial">Escolha o sistema <span class="text-danger small pt-1 fw-bold"> * </span></label>
               </div>
 
               <!--DADOS PRINCIPAIS -->
