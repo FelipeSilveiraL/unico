@@ -45,6 +45,7 @@ require_once('../../bpm/inc/apiRecebeTabela.php'); //EMPRESAS
                   <th scope="col">FORNECEDOR&emsp;</th>
                   <th scope="col">FILIAL&emsp;</th>
                   <th scope="col">OBSERVAÇÃO&emsp;</th>
+                  <th scope="col">SISTEMA LANÇAMENTO&emsp;</th>
                   <th scope="col" class="text-right">ação&emsp;</th>
                 </tr>
               </thead>
@@ -70,6 +71,7 @@ require_once('../../bpm/inc/apiRecebeTabela.php'); //EMPRESAS
                             <td>' . $fornecedor['fornecedor'] . '</td>
                             <td>' . $nomeEmpresa['NOME_EMPRESA'] . '</td>
                             <td>' . $fornecedor['observacao'] . '</td>
+                            <td>'; echo $fornecedor['sistema'] == 1 ? 'Fluig' : 'SmartShare' ; echo '</td>
                             <td class="td-actions text-right">
                               <a href="rateioFornecedor.php?idRateioFornecedor=' . $fornecedor['ID_RATEIOFORNECEDOR'] . '" title="Editar" class="btn btn-primary btn-just-icon btn-sm"><i class="bi bi-pencil"></i></a>
                               <a href="../inc/deletarFornecedor.php?idRateioFornecedor=' . $fornecedor['ID_RATEIOFORNECEDOR'] . '" title="Desativar" class="btn btn-danger btn-just-icon btn-sm"><i class="bi bi-trash"></i></a>

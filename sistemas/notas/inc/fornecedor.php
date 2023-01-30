@@ -20,6 +20,16 @@ if ($fornecedor = $aplicarBusca->fetch_assoc()) {
 
     $filial = $fornecedor['ID_FILIAL'];
     $sistema = $fornecedor['sistema'];
+
+    switch ($sistema) {
+        case '1':
+            $nomeSistema = 'Fluig';
+            break;
+        
+        case '2':
+            $nomeSistema = 'SmartShare';
+            break;
+    }
     $nomeFilial = $fornecedor['nome_empresa'];
     $fornecedorNome = $fornecedor['fornecedor'];
     $cpfcnpjFornecedor = $fornecedor['cpfcnpj_fornecedor'];

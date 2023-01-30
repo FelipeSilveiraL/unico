@@ -42,7 +42,20 @@ if (!empty($_GET['idRateioFornecedor'])) {
         <div class="card">
           <div class="card-body">
             <form class="row g-3" action="../inc/rateioFornecedor.php?idRateioFornecedor=<?= $idRateio ?>" method="post">
-            
+
+              <h5 class="card-title">Sitema de Lançamento</h5>
+              <div id="divFilial" class="form-floating mb-3 col-md-12">
+                <select class="form-select" name="sistema" required>
+                  <?php if (!empty($idRateio)) {
+                    echo '<option value="' . $sistema . '">' . $nomeSistema . '</option>';
+                  } ?>
+                  <option value="">-----------------</option>
+                  <option value="1">Fluig</option>
+                  <option value="2">SmartShare</option>
+                </select>
+                <label for="selectFilial">Filial <span class="text-danger small pt-1 fw-bold"> * </span></label>
+              </div>
+
               <!--DADOS PRINCIPAIS -->
               <h5 class="card-title">Dados Principais</h5>
 
