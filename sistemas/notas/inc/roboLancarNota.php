@@ -64,17 +64,22 @@ if ($_GET['back'] != 1) { //lançamento da nota
         //resolvendo a data de vencimento
         if (empty($dataVencimento)) {
 
-            if ($row['vencimento_tipo'] == 0) {
+            if ($row['vencimento_tipo'] == 2) {//SOMATORIO
 
                 //limpando CNPJ da FILIAL
                 $str = str_replace('/', '-', $dataEmissao);
 
                 $vencimento =  date('d/m/Y', strtotime('+' . $row['vencimento'] . ' days', strtotime('' . $str . '')));
-            } else {
+
+            } elseif($row['vencimento_tipo'] == 3){// FIXO VEM DO BANCO DE DADOS
+
                 $vencimento = $row['vencimento'];
+
             }
-        } else {
+        } else {//VEM DA NOTA FISCAL
+
             $vencimento = $dataVencimento;
+            
         }
 
         //salvando
