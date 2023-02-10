@@ -73,6 +73,7 @@ require_once('../inc/contagemStatus.php');
             <table class="table-sm table table-hover datatable">
               <thead>
                 <tr class="capitalize">
+                  <th scope="col">ID&emsp;</th>
                   <th scope="col">empresa&emsp;</th>
                   <th scope="col">fornecedor&emsp;</th>
                   <th scope="col">Número Nota&emsp;</th>
@@ -99,7 +100,8 @@ require_once('../inc/contagemStatus.php');
                   $resultEmpresas = $connNOTAS->query($queryEmpresas);
                   $empresas = $resultEmpresas->fetch_assoc();
 
-                  echo '<tr>                          
+                  echo '<tr>     
+                            <td>' . $notas['id_lancarnotas'] . '</td>                     
                             <td>' . $empresas['NOME_EMPRESA'] . '</td>
                             <td>' . $notas['fornecedor'] . '</td>
                             <td>' . $notas['numero_nota'] . '</td>
