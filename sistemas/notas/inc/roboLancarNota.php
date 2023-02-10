@@ -107,8 +107,8 @@ if ($_GET['back'] != 1) { //lançamento da nota
                     '" . $row['fornecedor'] . "', 
                     '" . $cnpjFornecedor . "', 
                     '" . $row['auditoria'] . "', 
-                    '" . $row['obra'] . "',
-                    '" . $row['marketing'] . "',";
+                    '" . $row['obra'] . "',";
+        $insert .= empty($row['marketing'] ) ? "'0'," : "'" . $row['marketing'] . "',";
 
         $insert .= empty($row['relatorio_siscon']) ? "'0'," : "'" . $row['relatorio_siscon'] . "',";
 

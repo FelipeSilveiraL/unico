@@ -1,6 +1,14 @@
 <?php
 require_once('../../../config/databases.php');
 
+if($_GET['cnpj'] == 1){
+    $where = "cpfcnpj_fornecedor = '" . $_GET['idFornecedor'] . "' AND ";
+    $selec = "ID_FILIAL = (SELECT ID_EMPRESA FROM unico.bpm_empresas WHERE CNPJ = '" . $_GET['filial'] . "' LIMIT 1) ";
+}else{
+    $where = "id_fornecedor = '" . $_GET['idFornecedor'] . "' AND ";
+    $selec = "ID_FILIAL = (SELECT ID_FILIAL FROM cad_filial WHERE CNPJ = '" . $_GET['filial'] . "' LIMIT 1) ";
+}
+
 $queryRateio = "SELECT 
                     CR.percentual,
                     DNF.NOME_DEPARTAMENTO
@@ -14,17 +22,24 @@ $queryRateio = "SELECT
                     FROM
                         cad_rateiofornecedor
                     WHERE
-                        cpfcnpj_fornecedor = '" . $_GET['idFornecedor'] . "' AND 
+                        ";
+                        $queryRateio .= $where;
+                        
+                        $queryRateio .="
                         ID_USUARIO = (SELECT 
                                 id_usuario
                             FROM
                                 unico.usuarios
                             WHERE
                                 email = '" . $_GET['email'] . "') AND
-                        ID_FILIAL = (SELECT ID_EMPRESA FROM unico.bpm_empresas WHERE CNPJ = '" . $_GET['filial'] . "' LIMIT 1)        
+                        "; 
+                        $queryRateio .= $selec;
+                        
+                        $queryRateio .= "       
                                 LIMIT 1)";
 
 $result = $connNOTAS->query($queryRateio);
+
 ?>
 
 <table>
