@@ -3,7 +3,7 @@ require_once('../../../config/databases.php');
 
 if($_GET['cnpj'] == 1){
     $where = "cpfcnpj_fornecedor = '" . $_GET['idFornecedor'] . "' AND ";
-    $selec = "ID_FILIAL = (SELECT ID_EMPRESA FROM unico.bpm_empresas WHERE CNPJ = '" . $_GET['filial'] . "' LIMIT 1) ";
+    $selec = "ID_FILIAL = (SELECT ID_EMPRESA FROM unico.bpm_empresas WHERE CNPJ = '" . $_GET['filial'] . "' AND SITUACAO = 'A' LIMIT 1) ";
 }else{
     $where = "id_fornecedor = '" . $_GET['idFornecedor'] . "' AND ";
     $selec = "ID_FILIAL = (SELECT ID_FILIAL FROM cad_filial WHERE CNPJ = '" . $_GET['filial'] . "' LIMIT 1) ";
@@ -39,6 +39,8 @@ $queryRateio = "SELECT
                                 LIMIT 1)";
 
 $result = $connNOTAS->query($queryRateio);
+
+/* echo $queryRateio; */
 
 ?>
 

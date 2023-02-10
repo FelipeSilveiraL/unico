@@ -38,7 +38,7 @@ if ($_GET['back'] != 1) { //lançamento da nota
     }
 
     //buscando o ID da FILIAL
-    $queryFilial = "SELECT ID_EMPRESA AS ID_FILIAL FROM unico.bpm_empresas WHERE CNPJ = '" . $filial . "'";
+    $queryFilial = "SELECT ID_EMPRESA AS ID_FILIAL FROM unico.bpm_empresas WHERE CNPJ = '" . $filial . "' AND SITUACAO = 'A'";
     $resultadoFilial = $connNOTAS->query($queryFilial);
     $rowIdFilial = $resultadoFilial->fetch_assoc();
 
