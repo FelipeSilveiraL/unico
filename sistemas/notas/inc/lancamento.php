@@ -45,6 +45,9 @@ VALUES
 '" . $_POST['telefone'] . "',
 '" . $carimbar . "')";
 
+/* echo $insertNota;
+exit; */
+
 $aplicarInsertNota = $connNOTAS->query($insertNota);
 
 //PEGANDO A NOTA QUE ACABOU DE LANÇAR
