@@ -43,7 +43,7 @@ while ($rateioBusca = $aplicarBusca->fetch_assoc()) {
     '" . $rateioBusca['auditoria'] . "',
     '" . $rateioBusca['obra'] . "',
     '" . $rateioBusca['necessita_conferencia'] . "',
-    '" . $rateioBusca['relatorio_siscon'] . "',
+    "; $inserindoNovoRateio .= empty($rateioBusca['relatorio_siscon']) ? 'NULL' : $rateioBusca['relatorio_siscon']; $inserindoNovoRateio .= ",
     '" . $rateioBusca['motivo_siscon'] . "',
     '" . $rateioBusca['observacao'] . "',
     '" . $rateioBusca['vencimento_tipo'] . "',
@@ -53,9 +53,7 @@ while ($rateioBusca = $aplicarBusca->fetch_assoc()) {
     '" . $rateioBusca['fornecedor'] . "',
     '" . $rateioBusca['cpfcnpj_fornecedor'] . "',
     '" . $rateioBusca['marketing'] . "',
-    '" . $rateioBusca['sistema'] . "',
-    '" . $rateioBusca['centro_custo_completo'] . "'
-    )";
+    '" . $rateioBusca['sistema'] . "',1)";
     $aplicarNovoRateio = $connNOTAS->query($inserindoNovoRateio);
 
     //cad_rateiocentrocusto - pegando o que acabou de salvar acima
