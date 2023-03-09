@@ -56,6 +56,8 @@ while ($rateioBusca = $aplicarBusca->fetch_assoc()) {
     '" . $rateioBusca['sistema'] . "',1)";
     $aplicarNovoRateio = $connNOTAS->query($inserindoNovoRateio);
 
+    //echo $inserindoNovoRateio."<br />";
+
     //cad_rateiocentrocusto - pegando o que acabou de salvar acima
     $queryPegaForncedor = "SELECT MAX(ID_RATEIOFORNECEDOR) as id_fornecedor FROM cad_rateiofornecedor";
     $aplicaPega = $connNOTAS->query($queryPegaForncedor);

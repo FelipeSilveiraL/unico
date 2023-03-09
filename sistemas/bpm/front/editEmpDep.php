@@ -61,15 +61,27 @@ require_once('../../../config/query.php');
                     }else{
                       $super = 'NÃO';
                     }
+
+                    $empresaNome = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = '".$row['ID_EMPRESA']."'";
+                    $conexao = $conn->query($empresaNome);
+                    while($nomeEmpresa = $conexao->fetch_assoc()){
+                      $nome = $nomeEmpresa['NOME_EMPRESA'];
+                    }
+                    $depNome = "SELECT NOME_DEPARTAMENTO FROM bpm_rh_departamento WHERE ID_DEPARTAMENTO = '".$row['ID_DEPARTAMENTO']."'";
+                    $success = $conn->query($depNome);
+                    while($nomeDepartamento = $success->fetch_assoc()){
+                      $departamentoNome = $nomeDepartamento['NOME_DEPARTAMENTO'];
+                    }
+
                   echo '
                   <input type="hidden" value="'.$row['ID_EMPDEP'].'" name="id_empdep">
               <div class="form-floating mt-4 col-md-6" id="empresa">
-                <input type="text" value="'.$row['NOME_EMPRESA'].'"class="form-control" disabled>
+                <input type="text" value="'.$nome.'"class="form-control" disabled>
                 <label for="empresa">EMPRESA:</label>
               </div>
 
               <div class="form-floating mt-4 col-md-6" id="depto">
-                <input type="text" class="form-control" value="'.$row['NOME_DEPARTAMENTO'].'" disabled >
+                <input type="text" class="form-control" value="'.$departamentoNome.'" disabled >
                 <label for="depto">DEPARTAMENTO:</label>
               </div>
 

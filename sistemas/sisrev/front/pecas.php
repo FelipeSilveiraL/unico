@@ -42,18 +42,7 @@ require_once('menu.php'); //menu lateral da pagina
           </div>
         </a>
       </div>
-      <div class="col-sm-3">
-        <a href="telaComissoes.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Relatório Comissões</h5>
-            </div>
-          </div>
-        </a>
-      </div>
     </div>
-    </div>
-    
     
     
     

@@ -24,6 +24,8 @@
     $valueEmpNbs = ($edit["EMPRESA_NBS"] == 0) ? '' : $edit["EMPRESA_NBS"];
 
     $revisao = ($edit["REVISAO_NF_ADM"] == 'S') ? 'SIM' : 'NÃO';
+
+    $triagem = ($edit["INTEGRAR_TRIAGEM"] == 'S') ? 'SIM' : 'NÃO';
     echo '
     <section class="section">
     <div class="row">
@@ -69,6 +71,9 @@
                       case 'H':
                         echo '<option value="H">BANCO HARLEY</option>';
                         break;
+                      case 'C':
+                        echo '<option value="C">CONSÓRCIO</option>';
+                        break;
                       case '0':
                         echo '<option value="0">EMPRESA QUE NÃO USA SISTEMA ERP</option>';
                         break;
@@ -81,6 +86,7 @@
                   <option value="A">APOLLO</option>
                   <option value="N">BANCO NBS</option>
                   <option value="H">BANCO HARLEY</option>  
+                  <option value="C">CONSÓRCIO</option>
                   <option value="0">EMPRESA QUE NÃO USA SISTEMA ERP</option>     
                 </select>
                 <label for="sistema">SISTEMA:<span style="color: red;">*</span></label>
@@ -137,6 +143,16 @@
                   <option value="N">NÃO</option>
                 </select>
                 <label for="consorcio">CONSÓRCIO:<span style="color: red;">*</span></label>
+              </div>
+
+              <div class="form-floating mt-4 col-md-6" id="triagem">
+                <select class="form-select"  name="triagem" required>
+                  <option value="' . $edit['INTEGRAR_TRIAGEM'] . '">' . $triagem . '</option>
+                  <option value="">-----------------</option>
+                  <option value="S">SIM</option>
+                  <option value="N">NÃO</option>
+                </select>
+                <label for="triagem">INTEGRAR TRIAGEM:<span style="color: red;">*</span></label>
               </div>
 
               <div class="form-floating mt-4 col-md-6" id="situacao">

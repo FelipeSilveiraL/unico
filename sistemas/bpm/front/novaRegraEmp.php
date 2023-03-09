@@ -60,6 +60,7 @@ require_once('../../../config/config.php');
                   <option value="A">APOLLO</option>
                   <option value="N">APOLLO NBS</option>
                   <option value="H">BANCO HARLEY</option>
+                  <option value="C">CONSÓRCIO</option>
                   <option value="0">EMPRESA QUE NÃO USA SISTEMA ERP</option>
                 </select>
                 <label for="sistema">SISTEMA:<span style="color: red;">*</span></label>
@@ -121,6 +122,15 @@ require_once('../../../config/config.php');
                   <option value="D">DESATIVADO</option>
                 </select>
                 <label for="situacao">SITUAÇÃO:<span style="color: red;">*</span></label>
+              </div>
+
+              <div class="form-floating mt-4 col-md-6" id="triagem">
+                <select class="form-select" name="triagem" required>
+                  <option value="">-----------------</option>
+                  <option value="S">SIM</option>
+                  <option value="N">NÃO</option>
+                </select>
+                <label for="triagem">INTEGRAR TRIAGEM:<span style="color: red;">*</span></label>
               </div>
 
               <div class="form-floating mt-4 col-md-6" id="estado">

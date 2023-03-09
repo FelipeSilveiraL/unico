@@ -67,7 +67,7 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                   <label for="user">EMPRESA:</label>
                 </div>
                 <div class="form-floating mt-4 col-md-6" id="dep">
-                  <input type="text" class="form-select" value="' .
+                  <input type="text" class="form-control" value="' .
                     $row['NOME_DEPARTAMENTO'] .
                     '" name="dep" disabled>
                   <label for="dep">DEPARTAMENTO:</label>
@@ -93,7 +93,7 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                 echo '    
                     <option value="">-----------</option>';
 
-                $query = 'SELECT * FROM bpm_usuarios_smartshare';
+                $query = 'SELECT * FROM bpm_usuarios_smartshare ORDER BY DS_USUARIO ASC';
 
                 $sucesso = $conn->query($query);
 
@@ -155,7 +155,7 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                 echo '    
                     <option value="">-----------</option>';
 
-                $query2 = 'SELECT * FROM bpm_usuarios_smartshare';
+                $query2 = 'SELECT * FROM bpm_usuarios_smartshare ORDER BY DS_USUARIO ASC';
 
                 $sucesso2 = $conn->query($query2);
 
@@ -173,40 +173,7 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                   <label for="sistema">CIÊNCIA AREA:</label>
                 </div>
                   <div class="form-floating mt-4 col-md-5">
-                      <input class="form-control" id="limitA" value="';
-                $number = $row['LIMITE_AREA'];
-
-                $quantidade = strlen($number);
-
-                if ($quantidade <= 5) {
-                    $c = $quantidade - 2;
-                    $valorDepoisVirgula = substr($number, $c);
-                    $valorAntesVirgula = substr($number, 0, $c);
-
-                    if ($valorAntesVirgula != '') {
-                        echo $valorAntesVirgula . ',' . $valorDepoisVirgula;
-                    } else {
-                        echo $valorDepoisVirgula;
-                    }
-                } else {
-                    $numeroDepoisVirgula = $quantidade - 2;
-                    $valorDepoisVirgula = substr($number, $numeroDepoisVirgula);
-                    $valorAntesVirgula = substr(
-                        $number,
-                        0,
-                        $numeroDepoisVirgula
-                    );
-                    $ponto = $quantidade - 5;
-                    $valorAntesponto = substr($number, $ponto, 3);
-                    $valorDepoisponto = substr($number, 0, $ponto);
-                    echo $valorDepoisponto .
-                        '.' .
-                        $valorAntesponto .
-                        ',' .
-                        $valorDepoisVirgula;
-                }
-
-                echo '" name="limitA">
+                      <input class="form-control" id="limitA" value="'.$row['LIMITE_AREA'].',00" name="limitA">
                   <label for="limitA">LIMITE APROVAÇÃO:</label>
                   </div> 
                   <div class="form-floating col-md-1" style="font-size:25px;" title="Ilimitado!">
@@ -248,7 +215,7 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                 echo '    
                     <option value="">-----------</option>';
 
-                $query3 = 'SELECT * FROM bpm_usuarios_smartshare';
+                $query3 = 'SELECT * FROM bpm_usuarios_smartshare ORDER BY DS_USUARIO ASC';
 
                 $sucesso3 = $conn->query($query3);
 
@@ -267,40 +234,12 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                   </div>
                   <div class="form-floating mt-4 col-md-5">
                     <input class="form-control" id="limitM" value="';
-
-                $number = $row['LIMITE_MARCA'];
-
-                $quantidade = strlen($number);
-
-                if ($quantidade <= 5) {
-                    $c = $quantidade - 2;
-                    $valorDepoisVirgula = substr($number, $c);
-                    $valorAntesVirgula = substr($number, 0, $c);
-
-                    if ($valorAntesVirgula != '') {
-                        echo $valorAntesVirgula . ',' . $valorDepoisVirgula;
-                    } else {
-                        echo $valorDepoisVirgula;
+                    if(empty($row['LIMITE_MARCA'])){
+                      echo '0';
+                    }else{
+                      echo $row['LIMITE_MARCA'];
                     }
-                } else {
-                    $numeroDepoisVirgula = $quantidade - 2;
-                    $valorDepoisVirgula = substr($number, $numeroDepoisVirgula);
-                    $valorAntesVirgula = substr(
-                        $number,
-                        0,
-                        $numeroDepoisVirgula
-                    );
-                    $ponto = $quantidade - 5;
-                    $valorAntesponto = substr($number, $ponto, 3);
-                    $valorDepoisponto = substr($number, 0, $ponto);
-                    echo $valorDepoisponto .
-                        '.' .
-                        $valorAntesponto .
-                        ',' .
-                        $valorDepoisVirgula;
-                }
-
-                echo '" name="limitM">
+                    echo ',00" name="limitM">
                       <label for="limitM">LIMITE APROVAÇÃO:</label>
                   </div> 
                   <div class="form-floating col-md-1" style="font-size:25px;" title="Ilimitado!">
@@ -345,7 +284,7 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                 echo '    
                           <option value="">-----------</option>';
 
-                $query4 = 'SELECT * FROM bpm_usuarios_smartshare';
+                $query4 = 'SELECT * FROM bpm_usuarios_smartshare ORDER BY DS_USUARIO ASC';
 
                 $sucesso4 = $conn->query($query4);
 
@@ -358,45 +297,19 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                         $rowUser4['DS_LOGIN'] .
                         '</option>';
                 }
+                
                 echo ' </select>
                   <label for="gerente">GERENTE GERAL:</label>
                   </div>
                   <div class="form-floating mt-4 col-md-5">
-                      <input class="form-control" id="limiteG"  value="';
-
-                $number = $row['LIMITE_GERAL'];
-
-                $quantidade = strlen($number);
-
-                if ($quantidade <= 5) {
-                    $c = $quantidade - 2;
-                    $valorDepoisVirgula = substr($number, $c);
-                    $valorAntesVirgula = substr($number, 0, $c);
-
-                    if ($valorAntesVirgula != '') {
-                        echo $valorAntesVirgula . ',' . $valorDepoisVirgula;
-                    } else {
-                        echo $valorDepoisVirgula;
-                    }
-                } else {
-                    $numeroDepoisVirgula = $quantidade - 2;
-                    $valorDepoisVirgula = substr($number, $numeroDepoisVirgula);
-                    $valorAntesVirgula = substr(
-                        $number,
-                        0,
-                        $numeroDepoisVirgula
-                    );
-                    $ponto = $quantidade - 5;
-                    $valorAntesponto = substr($number, $ponto, 3);
-                    $valorDepoisponto = substr($number, 0, $ponto);
-                    echo $valorDepoisponto .
-                        '.' .
-                        $valorAntesponto .
-                        ',' .
-                        $valorDepoisVirgula;
-                }
-
-                echo '" name="limitG" >
+                      <input class="form-control" id="limiteG"  value="'; 
+                      if(empty($row['LIMITE_GERAL'])){
+                        echo '0';
+                      }else{
+                        echo $row['LIMITE_GERAL'];
+                      }
+                        
+                  echo',00" name="limitG" >
                   <label for="limitG">LIMITE APROVAÇÃO:</label>
                   </div> 
                   <div class="form-floating col-md-1" style="font-size:25px;" title="Ilimitado!">
@@ -438,7 +351,7 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                 echo '    
                             <option value="">-----------</option>';
 
-                $query5 = 'SELECT * FROM bpm_usuarios_smartshare';
+                $query5 = 'SELECT * FROM bpm_usuarios_smartshare ORDER BY DS_USUARIO ASC';
 
                 $sucesso5 = $conn->query($query5);
 
@@ -455,40 +368,7 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                   <label for="super">SUPERINTENDENTE:</label>
                   </div>
                   <div class="form-floating mt-4 col-md-5" >
-                    <input class="form-control" id="limiteSuper" value="';
-                      $number = $row['LIMITE_SUPERITENDENTE'];
-
-                      $quantidade = strlen($number);
-
-                      if ($quantidade <= 5) {
-                          $c = $quantidade - 2;
-                          $valorDepoisVirgula = substr($number, $c);
-                          $valorAntesVirgula = substr($number, 0, $c);
-
-                          if ($valorAntesVirgula != '') {
-                              echo $valorAntesVirgula . ',' . $valorDepoisVirgula;
-                          } else {
-                              echo $valorDepoisVirgula;
-                          }
-                      } else {
-                          $numeroDepoisVirgula = $quantidade - 2;
-                          $valorDepoisVirgula = substr($number, $numeroDepoisVirgula);
-                          $valorAntesVirgula = substr(
-                              $number,
-                              0,
-                              $numeroDepoisVirgula
-                          );
-                          $ponto = $quantidade - 5;
-                          $valorAntesponto = substr($number, $ponto, 3);
-                          $valorDepoisponto = substr($number, 0, $ponto);
-                          echo $valorDepoisponto .
-                              '.' .
-                              $valorAntesponto .
-                              ',' .
-                              $valorDepoisVirgula;
-                      }
-
-                      echo '" name="limitS">
+                    <input class="form-control" id="limiteSuper" value="'.$row['LIMITE_SUPERITENDENTE'].',00" name="limitS">
                   <label for="limiteSuper">LIMITE APROVAÇÃO:</label>
                   </div> 
                   <div class="form-floating col-md-1" style="font-size:25px;" title="Ilimitado!">

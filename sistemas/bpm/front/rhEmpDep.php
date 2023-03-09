@@ -51,7 +51,7 @@ require_once('../inc/apiEmpDep.php');
               <tbody>
                 <?php
                 
-                  $empDep = "SELECT * FROM bpm_rh_emp_dep ORDER BY NOME_EMPRESA ASC";
+                  $empDep = "SELECT * FROM bpm_rh_emp_dep ORDER BY ID_EMPDEP ASC";
 
                   $sucesso = $conn->query($empDep);
 
@@ -77,11 +77,20 @@ require_once('../inc/apiEmpDep.php');
                     }else{
                       $super = 'NÃO';
                     }
-
+                    $empresaNome = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = '".$row['ID_EMPRESA']."'";
+                    $conexao = $conn->query($empresaNome);
+                    while($nomeEmpresa = $conexao->fetch_assoc()){
+                      $nome = $nomeEmpresa['NOME_EMPRESA'];
+                    }
+                    $depNome = "SELECT NOME_DEPARTAMENTO FROM bpm_rh_departamento WHERE ID_DEPARTAMENTO = '".$row['ID_DEPARTAMENTO']."'";
+                    $success = $conn->query($depNome);
+                    while($nomeDepartamento = $success->fetch_assoc()){
+                      $departamentoNome = $nomeDepartamento['NOME_DEPARTAMENTO'];
+                    }
                     echo '<tr>
                     <td>'.$row['ID_EMPDEP'].'</td>
-                    <td>'.$row['NOME_EMPRESA'].'</td>
-                    <td>'.$row['NOME_DEPARTAMENTO'].'</td>
+                    <td>'.$nome.'</td>
+                    <td>'.$departamentoNome.'</td>
                     <td>'.$gerente.'</td>
                     <td>'.$super.'</td>
                     <td>'.$situacao.'</td>

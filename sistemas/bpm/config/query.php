@@ -107,3 +107,5 @@ $vendedoresQuery = "SELECT * FROM bpm_vendedores";
 $gerentesQuery = "SELECT * FROM bpm_gerentes";
 
 $depVendasQuery = "SELECT * FROM bpm_departamento_vendas";
+
+$queryCaixaEmpresa = "SELECT * FROM bpm_caixa_empresa";

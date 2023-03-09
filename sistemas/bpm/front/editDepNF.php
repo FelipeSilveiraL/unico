@@ -35,7 +35,7 @@ require_once('../../../config/query.php');
               <div class="form-floating mt-4 col-md-6" id="depto">
                 <?php
 
-                $departamento = "SELECT * FROM bpm_rh_departamento WHERE ID_DEPARTAMENTO =" . $_GET['id_departamento'] . "";
+                $departamento = "SELECT * FROM bpm_nf_departamento WHERE ID_DEPARTAMENTO =" . $_GET['id_departamento'] . "";
 
                 $sucesso = $conn->query($departamento);
 

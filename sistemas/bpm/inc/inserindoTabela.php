@@ -24,6 +24,9 @@ while ($row = $conSucesso->fetch_assoc()) {
     case " ":
       $sistemaMysql = "EMPRESA QUE NÃO USA SISTEMA ERP";
       break;
+    case "C":
+      $sistemaMysql = "CONSÓRCIO";
+      break;
     case "0":
       $sistemaMysql = "EMPRESA QUE NÃO USA SISTEMA ERP";
       break;

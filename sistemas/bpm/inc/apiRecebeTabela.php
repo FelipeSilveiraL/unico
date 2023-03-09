@@ -29,6 +29,7 @@ $createTableEmp = "CREATE TABLE `bpm_empresas` (
     `UF_GESTAO` VARCHAR(2) NULL,
     `BANDEIRA` VARCHAR(100) NULL,
     `LIMITE_NOTA_DIVERSA` VARCHAR(12) NULL,
+    `INTEGRAR_TRIAGEM` VARCHAR(1) NULL,
     PRIMARY KEY (`id`))";
 
 $execCreate = $conn->query($createTableEmp);
@@ -45,7 +46,7 @@ foreach ($resultado->empresaSmart as $empSmart) {
 
     $querySmart = "INSERT INTO bpm_empresas 
                             (NOME_EMPRESA,CNPJ,APELIDO_NBS,SISTEMA,UF_GESTAO,CONSORCIO,NUMERO_CAIXA,FILIAL_SENIOR,ID_EMPRESA,EMPRESA_SENIOR,
-                            ORGANOGRAMA_SENIOR,EMPRESA_APOLLO,REVENDA_APOLLO,SITUACAO,EMPRESA_NBS,BANDEIRA,LIMITE_NOTA_DIVERSA)
+                            ORGANOGRAMA_SENIOR,EMPRESA_APOLLO,REVENDA_APOLLO,SITUACAO,EMPRESA_NBS,BANDEIRA,LIMITE_NOTA_DIVERSA,INTEGRAR_TRIAGEM)
    
     VALUES ('" . $empSmart->NOME_EMPRESA ."',
             '" .str_pad($empSmart->CNPJ , 14 , '0' , STR_PAD_LEFT)."',
@@ -56,14 +57,15 @@ foreach ($resultado->empresaSmart as $empSmart) {
             '" . $empSmart->NUMERO_CAIXA ."',
             '" . $empSmart->FILIAL_SENIOR ."',
             '" . $empSmart->ID_EMPRESA ."',
-            '" . $empSmart->EMPRESA_SENIOR ."',
-            '" . $empSmart->ORGANOGRAMA_SENIOR ."',
-            '" . $empSmart->EMPRESA_APOLLO ."',
-            '" . $empSmart->REVENDA_APOLLO ."',
+            " . $empSmart->EMPRESA_SENIOR .",
+            " . $empSmart->ORGANOGRAMA_SENIOR .",
+            " . $empSmart->EMPRESA_APOLLO .",
+            " . $empSmart->REVENDA_APOLLO .",
             '" . $empSmart->SITUACAO . "',
             '" . $empSmart->EMPRESA_NBS ."',
             '" . $empSmart->BANDEIRA ."',
-            '" . $empSmart->LIMITE_NOTA_DIVERSA ."'
+            '" . $empSmart->LIMITE_NOTA_DIVERSA ."',
+            '" . $empSmart->INTEGRAR_TRIAGEM ."'
             )";
     
     if (!$execQuery = $conn->query($querySmart)) {

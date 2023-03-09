@@ -3,7 +3,7 @@ require_once('head.php'); //CSS e Departamentos HTML e session start
 require_once('header.php'); //logo e login
 require_once('menu.php'); //menu lateral da pagina
 switch($_GET['pg']){case '5': $_GET['pg'] = '4';break;case '6': $_GET['pg'] = '4';break;case '3':$_GET['pg'] = '4';break;
-case '7':$_GET['pg'] = '4';break;case '8':$_GET['pg'] = '4';break;}
+case '7':$_GET['pg'] = '4';break;case '8':$_GET['pg'] = '4';break;case '33':$_GET['pg'] = '4';break;case '31':$_GET['pg'] = '4';break;}
 
 ?>
 
@@ -114,6 +114,31 @@ case '7':$_GET['pg'] = '4';break;case '8':$_GET['pg'] = '4';break;}
                     </div>
                   </a>
                 </div>';
+          }
+          ?>
+
+        </div>
+        <div class="row">
+          
+          <?php
+          $queryModulosUser2 = array('2' => " WHERE SM.sub_modulo = 31 AND SM.deletar = 0 AND U.id_usuario = " . $_SESSION['id_usuario']);
+          $merge = array_merge($queryModulosUser, $queryModulosUser2);
+          $queryModulosM = $merge[0] . $merge[1];
+
+          $resultadoModulosM = $conn->query($queryModulosM);
+
+          while ($modulosM = $resultadoModulosM->fetch_assoc()) {
+            echo '<h4 style="text-align:center;">Auditoria</h4>';
+            echo '<div class="col-sm-3 mt-3">
+                  <a href="' . $modulosM['endereco'] . '?pg=' . $modulosM['sub_modulo'] . '" class="list-group-item list-group-item-action">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">' . $modulosM['nome_modulo'] . '</h5>
+                      </div>
+                    </div>
+                  </a>
+                </div>';
+                
           }
           ?>
 

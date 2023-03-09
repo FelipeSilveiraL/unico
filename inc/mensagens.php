@@ -153,7 +153,7 @@ if (!empty($_GET['msn'])) {
         case '16':
             echo '
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <span style="font-size: 12px">Já existe uma empresa com esse departamento cadastrado!</span>
+                    <span style="font-size: 12px">Esse vendedor ja está cadastrado nessa empresa e departamento!</span>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
             break;
@@ -182,6 +182,27 @@ if (!empty($_GET['msn'])) {
             echo '
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <span style="font-size: 12px">Já existem dados cadastrados</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
+            break;
+        case '21':
+            echo '
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span style="font-size: 12px">Nome de caixa já existe para essa empresa!</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
+            break;
+        case '22':
+            echo '
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span style="font-size: 12px">Vendedor já cadastrado nessa empresa!</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
+            break;
+        case '23':
+            echo '
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span style="font-size: 12px">USUARIO e NOME CAIXA já existentes nessa empresa!</span>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
             break;

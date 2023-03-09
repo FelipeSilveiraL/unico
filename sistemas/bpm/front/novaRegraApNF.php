@@ -36,7 +36,7 @@ require_once('../../../config/query.php');
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" name="empresa" id="empresa" required>
                   <?php
-                    $empNew = 'SELECT * FROM bpm_empresas WHERE ID_EMPRESA NOT IN(208,382) ORDER BY NOME_EMPRESA ASC ';
+                    $empNew = 'SELECT * FROM bpm_empresas WHERE ID_EMPRESA NOT IN(208,382) ORDER BY ID_EMPRESA ASC ';
 
                     echo '<option value="">-----------------</option>';
 
@@ -52,19 +52,9 @@ require_once('../../../config/query.php');
               </div>
 
               <div class="form-floating mt-4 col-md-6" id="depto">
-                <select class="form-select" name="depto" required>
+                <select class="form-select" name="depto" id="departamento" required>
                   <option value="">-----------------</option>
-                  <?php
-                  $dep = "SELECT * FROM bpm_nf_departamento";
-
-                  $sucessoDep = $conn->query($dep);
-
-                  while ($rowDep = $sucessoDep->fetch_assoc()) {
-
-                    echo '<option value="' . $rowDep['ID_DEPARTAMENTO'] . '"> ' . $rowDep['NOME_DEPARTAMENTO'] . ' </option>';
-                  }
-
-                  ?>
+                  
                 </select>
                 <label for="depto">DEPARTAMENTO:<span style="color: red;">*</span></label>
               </div>
@@ -74,7 +64,7 @@ require_once('../../../config/query.php');
                   <option value="">-----------------</option>
                   <?php
                   
-                  $selectEmp2 = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1)";
+                  $selectEmp2 = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1) ORDER BY DS_USUARIO ASC";
 
                   $sucesso = $conn->query($selectEmp2);
 
@@ -101,7 +91,7 @@ require_once('../../../config/query.php');
                 <select class="form-select" name="area" required>
                   <option value="">-----------------</option>
                   <?php
-                  $selectEmp = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1)";
+                  $selectEmp = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1) ORDER BY DS_USUARIO ASC";
 
                   $sucesso1 = $conn->query($selectEmp);
 
@@ -158,7 +148,7 @@ require_once('../../../config/query.php');
                 <select class="form-select" name="marca" required>
                   <option value="">-----------------</option>
                   <?php
-                  $selectEmp = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1)";
+                  $selectEmp = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1) ORDER BY DS_USUARIO ASC";
 
                   $sucesso = $conn->query($selectEmp);
 
@@ -216,7 +206,7 @@ require_once('../../../config/query.php');
                 <select class="form-select" name="gerente" required>
                   <option value="">-----------------</option>
                   <?php
-                  $selectEmp = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1)";
+                  $selectEmp = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1) ORDER BY DS_USUARIO ASC";
 
                   $sucesso = $conn->query($selectEmp);
 
@@ -274,7 +264,7 @@ require_once('../../../config/query.php');
                 <select class="form-select" name="super" required>
                   <option value="">-----------------</option>
                   <?php
-                  $selectEmp = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1)";
+                  $selectEmp = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1) ORDER BY DS_USUARIO ASC";
 
                   $sucesso = $conn->query($selectEmp);
 
@@ -342,12 +332,31 @@ require_once('../../../config/query.php');
 
 </main><!-- End #main -->
 
-
-<script>
-  
-</script>
-
-
 <?php
 require_once('footer.php'); //Javascript e configurações afins
 ?>
+
+<script>
+  $("#empresa").on("change", function() {
+
+    var idUsuario = $("#empresa").val();
+    
+    $.ajax({
+
+      url: '../inc/trazDepNF.php',
+      type: 'POST',
+        data:{id:idUsuario},
+        beforeSend:function(data){
+            $("#departamento").html('<option value="">Carregando...</option>');
+        },
+        success:function(data){
+            $("#departamento").html(data);
+        },
+        error:function(data){
+            $("#departamento").html('<option value="">Erro ao carregar...</option>');
+        }
+
+    });
+  });
+
+</script>

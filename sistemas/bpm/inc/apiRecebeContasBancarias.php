@@ -10,13 +10,14 @@ $sucess = $conn->query($excluiTabela);
 
 $criaTabela = "CREATE TABLE `bpm_contas_bancarias` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `CNPJ_CPF` VARCHAR(19) NOT NULL,
-  `BANCO` VARCHAR(100) NULL,
+  `CNPJ_CPF` VARCHAR(20) NOT NULL,
+  `BANCO` VARCHAR(120) NULL,
   `NOME_EMPRESA` VARCHAR(80) NULL,
-  `AGENCIA` VARCHAR(45) NULL,
-  `CONTA` VARCHAR(45) NULL,
-  `DIGITO` VARCHAR(45) NULL,
-  `ID_CONTA` VARCHAR(45) NULL,
+  `AGENCIA` VARCHAR(10) NULL,
+  `CONTA` VARCHAR(20) NULL,
+  `DIGITO` VARCHAR(5) NULL,
+  `ID_CONTA` VARCHAR(10) NULL,
+  `TIPO_CPF_CNPJ` VARCHAR(5) NULL,
   PRIMARY KEY (`id`) )";
 
 $execTabela = $conn->query($criaTabela);
@@ -33,7 +34,7 @@ foreach ($resultado->contas as $CB) {
 
 
     $queryCB = "INSERT INTO bpm_contas_bancarias 
-                            (CNPJ_CPF,BANCO,NOME_EMPRESA,AGENCIA,CONTA,DIGITO,ID_CONTA) VALUES (
+                            (CNPJ_CPF,BANCO,NOME_EMPRESA,AGENCIA,CONTA,DIGITO,ID_CONTA,TIPO_CPF_CNPJ) VALUES (
    
             '" . $CB->CNPJ_CPF ."',
             '" . $CB->BANCO ."',
@@ -41,7 +42,8 @@ foreach ($resultado->contas as $CB) {
             '" . $CB->AGENCIA ."',
             '" . $CB->CONTA ."',
             '" . $CB->DIGITO ."',
-            '" . $CB->ID_CONTA . "' 
+            " . $CB->ID_CONTA . ",
+            '" . $CB->TIPO_CPF_CNPJ ."'
             )";
 
         

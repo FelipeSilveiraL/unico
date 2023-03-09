@@ -29,65 +29,112 @@ require_once('../inc/apiRecebeSelbetti.php');
   <!--################# COLE section AQUI #################-->
 
   <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
+    <div class="row">
+      <div class="col-lg-12">
 
-          <div class="card">
-            <div class="card-body">
+        <div class="card">
+          <div class="card-body">
             <br>
-            <?php 
-              $id = $_GET['id'];
+            <?php
+            $id = $_GET['id'];
 
-              $consulta = "SELECT NOME_EMPRESA, USUARIO_CAIXA, ID_EMPRESA FROM bpm_caixa_nf WHERE id = ".$id."";
+            $consulta = "SELECT * FROM bpm_caixa_nf WHERE id = " . $id . "";
 
-              $resultado = $conn->query($consulta);
+            $resultado = $conn->query($consulta);
 
-              while($row = $resultado->fetch_assoc()){
+            while ($row = $resultado->fetch_assoc()) {
 
-                $id_empresa = $row['ID_EMPRESA'];
+              $id_empresa = $row['ID_EMPRESA'];
 
-                echo '
-                <form method="POST" action=" http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/editarCxUs.php?pg='.$_GET['pg'].'" >
+              //query que é só para exibir o nome do caixa referente ao dado cadastrado, por que só está dado numérico no db
+
+              $query = "SELECT NOME_CAIXA FROM bpm_caixa_empresa WHERE ID_CAIXA_EMPRESA = '".$row['ID_CAIXA_EMPRESA']."'";
+
+              $sucesso = $conn->query($query);
+
+              if($id = $sucesso->fetch_assoc()){
+                $dado = $id['NOME_CAIXA'];
+              }
+
+              //query pra procurar se foi cadastrado alguem caixa nessa empresa, se não foi ele exibe um botão para cadastrar.
+              $queryNomeCaixa = "SELECT NOME_CAIXA,ID_CAIXA_EMPRESA FROM bpm_caixa_empresa WHERE ID_EMPRESA = '" . $id_empresa . "'";
+
+                        $conexao = $conn->query($queryNomeCaixa);
+
+                        if($nome = $conexao->fetch_assoc()) {
+                          $display = "none;";
+                        }else{
+                          $display = "block;";
+                          $dado = 'Não existe caixa cadastrado!';
+                          $disabled = 'disabled';
+                        }
+
+              echo '
+                <form method="POST" action=" http://' . $_SESSION['servidorOracle'] . '/' . $_SESSION['smartshare'] . '/bd/editarCxUs.php?pg=' . $_GET['pg'] . '" >
                   <div class="row mb-3">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Nome Empresa</label>
+                    <label for="user" class="col-sm-2 col-form-label">Nome Empresa</label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control" id="user" name="nome_empresa" value ="'.$row['NOME_EMPRESA'].'" disabled>
-                      <input type="hidden" value="'.$row['USUARIO_CAIXA'].'" name="usuario_caixa">
-                      <input type="hidden" value="'.$row['ID_EMPRESA'].'" name="id_empresa">
+                      <input type="text" class="form-control" id="user" name="nome_empresa" value ="' . $row['NOME_EMPRESA'] . '" disabled>
+                      <input type="hidden" value="' . $row['USUARIO_CAIXA'] . '" name="usuario_caixa">
+                      <input type="hidden" value="' . $row['ID_EMPRESA'] . '" name="id_empresa" id="empresa">
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label for="sistema" class="col-sm-2 col-form-label" required>Usuário Caixa:</label>
+                    <label for="nomeCaixa" class="col-sm-2 col-form-label" required>Nome Caixa:</label>
                     <div class="col-md-6">
-                      <select class="form-select" name="userCaixa" required>
-                        <option value="'.$row['ID_EMPRESA'].'">'.$row['USUARIO_CAIXA'].'</option>
+                      <select class="form-select" name="nomeCaixa" id="nomeCaixa" required '.$disabled.'>
+                        <option value="'.$row['ID_CAIXA_EMPRESA'].'" >'.$dado.'</option>
+                        <option>-------</option>';
+                        
+                        //query que procura no bpm_caixa_empresa outros nomes cadastrados
+
+                        $queryNomeCaixa = "SELECT NOME_CAIXA,ID_CAIXA_EMPRESA FROM bpm_caixa_empresa WHERE ID_EMPRESA = '" . $id_empresa . "'";
+
+                          $conexao = $conn->query($queryNomeCaixa);
+
+                          while ($nome = $conexao->fetch_assoc()) {
+
+                            echo '<option value="' . $nome['ID_CAIXA_EMPRESA'] . '">' . $nome['NOME_CAIXA'] . '</option>';
+
+                          }
+
+              echo '</select>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="userCaixa" class="col-sm-2 col-form-label" required>Usuário Caixa:</label>
+                    <div class="col-md-6">
+                      <select class="form-select" name="userCaixa" id="userCaixa" required>
+                        <option value="' . $row['USUARIO_CAIXA'] . '">' . $row['USUARIO_CAIXA'] . '</option>
                           <option value=""> ------------ </option>
-                          '.$aprovador.';
+                          ' . $aprovador . ';
                       </select>
                     </div>
                   </div>
+                  
                   <br>
                   <div class="text-left">
-                    <button type="button" class="btn btn-primary"><a href="userCaixa.php?pg='.$_GET['pg'].'" style="color:white;">Voltar</a></button>
+                    <button type="button" class="btn btn-primary"><a href="userCaixa.php?pg=' . $_GET['pg'] . '" style="color:white;">Voltar</a></button>
                     <button type="submit" class="btn btn-success">Editar</button>
-                  </div><br>
+                    <button type="button" class="btn btn-primary" style="display:'.$display.'float:right;"><a href="novaRegraCxEmpresa.php?pg=' . $_GET['pg'] . '&id='.$id_empresa.'" style="color:white;">Cadastrar</a></button>
+                  </div>
+                  
+                  <br>
                 </form>';
+            }
 
-
-              }
-
-              $conn->close();
+            $conn->close();
             ?>
-            </div>
           </div>
-
-          
-
         </div>
 
-        
+
+
       </div>
-    </section>
+
+
+    </div>
+  </section>
 
   <!--################# section TERMINA AQUI #################-->
 

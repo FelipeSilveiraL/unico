@@ -4,6 +4,7 @@ require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 require_once('../../../config/config.php');
+require_once('../config/query.php');
 require_once('../inc/apiRecebeSelbetti.php');
 /* Essa opção descomentar após criar em telas_funcoes.php*/
 //echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
@@ -61,10 +62,18 @@ require_once('../inc/apiRecebeSelbetti.php');
                               
                             
                             // echo '<option value="'.$row['ID_EMPRESA'].'">'.$row['NOME_EMPRESA'].' /  '.$idCxEmp.'</option>';
-                            echo '<option value="'.$row['ID_EMPRESA'].'">'.$row['NOME_EMPRESA'].'</option>';
+                           echo '<option value="'.$row['ID_EMPRESA'].'">'.$row['NOME_EMPRESA'].'</option>';
                           }
                           
                           ?>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="nomeCaixa" class="col-sm-2 col-form-label">NOME CAIXA:<span style="color: red;">*</span></label>
+                    <div class="col-md-6">
+                      <select class="form-select" name="nomeCaixa" id="nomeCaixa" required>
+                       
                       </select>
                     </div>
                   </div>
@@ -74,7 +83,12 @@ require_once('../inc/apiRecebeSelbetti.php');
                       <select class="form-select" name="userCaixa" required>
                         <?php
                         echo '<option value=""> ------------ </option>';
-                        echo $aprovador;
+                        $query_users .= " WHERE CD_USUARIO NOT IN (1,19982) ORDER BY DS_USUARIO ASC";
+                       
+                        $sucesso = $conn->query($query_users);
+                        while($row = $sucesso->fetch_assoc()){
+                          echo '<option value="'.$row['DS_LOGIN'].'">'.$row['DS_USUARIO'].' / '.$row['DS_LOGIN'].'</option>';
+                        }
                         ?>
                       </select>
                     </div>
@@ -101,3 +115,25 @@ require_once('../inc/apiRecebeSelbetti.php');
 <?php
 require_once('footer.php'); //Javascript e configurações afins
 ?>
+<script>
+  $("#empresa").on("change", function(){
+    var idEstado = $("#empresa").val();
+    
+    $.ajax({
+        url: '../inc/trazNomeCaixa.php',
+        type: 'POST',
+        data:{id:idEstado},
+        beforeSend:function(data){
+            $("#nomeCaixa").html('<option value="">Carregando...</option>');
+        },
+        success:function(data){
+            $("#nomeCaixa").html(data);
+        },
+        error:function(data){
+            $("#nomeCaixa").html('<option value="">Erro ao carregar...</option>');
+        }
+
+    });
+
+});
+</script>

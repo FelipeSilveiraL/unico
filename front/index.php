@@ -35,9 +35,21 @@ $resultado = $conn->query($queryUserSistema);
           while ($sistemas = $resultado->fetch_assoc()) {
             echo '
                 <div class="col-lg-3 py-2">
-                  <a href="'.$sistemas['endereco_sistema'].'id_sistema='.$sistemas['id_sistema'].'&id_usuario='. $_SESSION['id_usuario'] .'';
+                  <a href="'.$sistemas['endereco_sistema'].'id_sistema='.$sistemas['id_sistema'].'&';
 
-                    
+                    $queryVariaveisSistema = "SELECT variavel FROM cad_variaveis_sistemas WHERE id_sistema = " . $sistemas['id_sistema'];
+                    $resultadoV = $conn->query($queryVariaveisSistema);
+
+                    while ($variavel = $resultadoV->fetch_assoc()) {
+
+                      $campoVariavel = $variavel['variavel'];
+
+                      $queryUsuario = "SELECT " . $campoVariavel . " FROM usuarios WHERE id_usuario = " . $_SESSION['id_usuario'];
+                      $resultadoUsuario = $conn->query($queryUsuario);
+                      $valor = $resultadoUsuario->fetch_assoc();
+
+                      echo $campoVariavel . "=" . str_replace(" ", "", $valor[''.$campoVariavel.''])."&";
+                    }
 
                     echo '" target="_blank" class="list-group-item list-group-item-action">
                     <div class="card">

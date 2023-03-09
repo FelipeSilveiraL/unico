@@ -4,8 +4,9 @@ $excluiTabela2 = "DROP TABLE IF EXISTS bpm_nf_departamento";
 $sucess = $conn->query($excluiTabela2);
 
 $criaTabela2 = "CREATE TABLE `bpm_nf_departamento` (
-  `ID_DEPARTAMENTO` INT NOT NULL,
-  `NOME_DEPARTAMENTO` VARCHAR(45) NULL,
+  
+  `ID_DEPARTAMENTO` INT(10) NOT NULL,
+  `NOME_DEPARTAMENTO` VARCHAR(100) NULL,
   `SITUACAO` VARCHAR(45) NULL,
   PRIMARY KEY (`ID_DEPARTAMENTO`) )";
 

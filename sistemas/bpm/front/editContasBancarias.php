@@ -102,8 +102,8 @@ require_once('../config/query.php');
                 </div>
               </div>
               <div class="form-floating mt-4 col-md-4" id="agencia">
-              <input type="text" onkeydown="javascript: fMasc(this, mnumero);" maxlength="10" class="form-control" id="inputEmail3" name="agencia" id="agencia" value="'.$row['AGENCIA'].'" required>
-              <label for="agencia">AGÊNCIA:<span style="color: red;">*</span></label>
+              <input type="number" " maxlength="10" class="form-control" id="inputEmail3" name="agencia" id="agencia" value="'.$row['AGENCIA'].'" >
+              <label for="agencia">AGÊNCIA:</label>
               <div class="modal fade" id="verticalycentered" tabindex="-1">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -119,12 +119,12 @@ require_once('../config/query.php');
             </div>
               </div>
               <div class="form-floating mt-4 col-md-4" id="conta">
-                <input type="text" onkeydown="javascript: fMasc(this, mnumero);" maxlength="20" class="form-control" id="inputEmail4" name="conta" id="conta" value="'.$row['CONTA'].'" required>
-                <label for="conta">CONTA:<span style="color: red;">*</span></label>
+                <input type="number" " maxlength="20" class="form-control" id="inputEmail4" name="conta" id="conta" value="'.$row['CONTA'].'" >
+                <label for="conta">CONTA:</label>
               </div>
               <div class="form-floating mt-4 col-md-4" id="digito">
-                <input type="text" value="'.$row['DIGITO'].'" class="form-control" onkeydown="javascript: fMasc(this, mnumero);" maxlength="5" name="digito "  required>
-                <label for="digito">DIGITO:<span style="color: red;">*</span></label>
+                <input type="number" value="'.$row['DIGITO'].'" class="form-control" " maxlength="5" name="digito">
+                <label for="digito">DIGITO:</label>
               </div>';
 
             }

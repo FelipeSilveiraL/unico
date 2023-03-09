@@ -34,7 +34,7 @@ require_once('../config/query.php');
           <div class="card">
               <div class="card-header">
                 <a href="novaRegraCx.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-success buttonAdd" title="Importar Usuários" <?= $usuarioFuncao ?> ><i class="bi bi-plus-lg"></i></a>
-                <a href="../inc/relatorioExcel.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
+                <a href="../inc/relatorioUsuarioCaixa.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
               </div><br>
             <div class="card-body">
 
@@ -42,32 +42,42 @@ require_once('../config/query.php');
               <table class="table table-striped datatable">
                 <thead>
                   <tr>
+                    <th scope="col" class="capitalize">#</th>
                     <th scope="col" class="capitalize">EMPRESA</th>
-                    <th scope="col" class="capitalize">CAIXA</th>
+                    <th scope="col" class="capitalize">NOME CAIXA</th>
                     <th scope="col" class="capitalize">USUÁRIO</th>
                     <th scope="col" class="capitalize" <?= $usuarioFuncao ?>>AÇÃO</th>
                   </tr>
                 </thead>
                 <tbody>
                  <?php 
-                 $mfp = "SELECT * FROM bpm_caixa_nf";
+                 $caixaNF = "SELECT 
+                 CNF.ID, CNF.NOME_EMPRESA, CNF.ID_EMPRESA, CNF.USUARIO_CAIXA, CNF.ID_CAIXA_EMPRESA, CE.nome_caixa
+                  FROM
+                      unico.bpm_caixa_nf CNF
+                  LEFT JOIN bpm_caixa_empresa CE ON (CNF.id_caixa_empresa = CE.id_caixa_empresa) ORDER BY CNF.ID ASC ";
+                  
+                  //   WHERE CNF.ID_EMPRESA NOT IN 
+                  // (1,19802,18782,20002,22389,27209,25909,25549,25670) 
+                  //   ORDER BY CNF.ID_EMPRESA ASC";
 
-                 $resultado = $conn->query($mfp);
+                 $resultado = $conn->query($caixaNF);
                  
                  while($row = $resultado->fetch_assoc()){
-
+                  $idCaixaEmpresa = $row['ID_CAIXA_EMPRESA'];
                   echo'<tr>
+                  <td>'.$row['ID'].'</td>
                   <td>'.$row["NOME_EMPRESA"].'</td>
-                  <td>'.$row["NUMERO_CAIXA"].'</td>
+                  <td>'.$row['nome_caixa'].'</td>
                   <td>'.$row["USUARIO_CAIXA"].'</td>
-                  <td><a href="editUserCx.php?pg=' . $_GET["pg"] . '&id='.$row['id'].'" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
+                  <td><a href="editUserCx.php?pg=' . $_GET["pg"] . '&id='.$row['ID'].'" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
                             
-                  <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarCxUs.php?pg='.$_GET['pg'].'&id_empresa=' . $row["ID_EMPRESA"] . '&usuario_caixa='.$row["USUARIO_CAIXA"].'" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
+                  <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarCxUs.php?pg='.$_GET['pg'].'&id_empresa=' . $row["ID_EMPRESA"] . '&usuario_caixa='.$row["USUARIO_CAIXA"].'&id_caixa_empresa='.$idCaixaEmpresa.'" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
                   </tr>';
                  }
                  
                  
-                 
+                 $conn->close();
                  ?>
                 </tbody>
               </table>

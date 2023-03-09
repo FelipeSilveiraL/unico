@@ -41,7 +41,7 @@ require_once('../config/query.php');
             <table class="table table-striped datatable">
               <thead>
                 <tr>
-                  <th scope="col" class="capitalize">#</th>
+                  <th scope="col" class="capitalize">ID CAIXA EMPRESA</th>
                   <th scope="col" class="capitalize">EMPRESA</th>
                   <th scope="col" class="capitalize">CAIXA</th>
                   <th scope="col" class="capitalize">NÚMERO CAIXA</th>
@@ -50,29 +50,30 @@ require_once('../config/query.php');
               </thead>
               <tbody>
                 <?php
-                $cxEmpresaQuery = "SELECT * FROM bpm_caixa_empresa";
+                $cxEmpresaQuery = "SELECT * FROM bpm_caixa_empresa ORDER BY ID_CAIXA_EMPRESA ASC";
 
                 $resultado = $conn->query($cxEmpresaQuery);
 
                 while ($row = $resultado->fetch_assoc()) {
                   $id = $row['ID_EMPRESA'];
-                  $dado = $row['ID_CAIXA_EMPRESA'];
+                  $dado = $row['id'];
+                  $caixaEmpresa = $row['ID_CAIXA_EMPRESA'];
                   $nomeCaixa = $row['NOME_CAIXA'];
                   $numeroCaixa = $row['NUMERO_CAIXA_SISTEMA'];
 
-                  $nomeEmpresa = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = " . $row['ID_EMPRESA'];
-                  $a = $conn->query($nomeEmpresa);
-                  if ($empresa = $a->fetch_assoc()) {
-                    $nomeEmpresa = $empresa['NOME_EMPRESA'];
-                  }
+                    $nomeEmpresa = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = " . $row['ID_EMPRESA'];
+                    $a = $conn->query($nomeEmpresa);
+                    if ($empresa = $a->fetch_assoc()) {
+                      $nomeEmpresa = $empresa['NOME_EMPRESA'];
+                    }
                   echo '<tr>
-                  <td>' . $dado . '</td>
+                  <td>' . $caixaEmpresa . '</td>
                   <td>' . $nomeEmpresa . '</td>
                   <td>' . $row["NOME_CAIXA"] . '</td>
                   <td>' . $numeroCaixa . '</td>
-                  <td><a href="editCxEmpresa.php?pg='.$_GET['pg'].'&id='.$dado.'"  title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
+                  <td><a href="editCxEmpresa.php?pg='.$_GET['pg'].'&id='.$caixaEmpresa.'"  title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
                             
-                  <a href="http://' . $_SESSION['servidorOracle'] . '/' . $_SESSION['smartshare'] . '/bd/deletarCxEmpresa.php?pg=' . $_GET['pg'] . '&id_empresa=' . $row["ID_CAIXA_EMPRESA"] . '" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>';
+                  <a href="http://' . $_SESSION['servidorOracle'] . '/' . $_SESSION['smartshare'] . '/bd/deletarCxEmpresa.php?pg=' . $_GET['pg'] . '&id_empresa=' . $id . '&nomeCaixa='.$nomeCaixa.'&id_caixa_empresa='.$dado.'" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>';
                   
                   echo '</tr>';
 

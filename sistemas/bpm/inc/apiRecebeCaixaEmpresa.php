@@ -12,8 +12,8 @@ $sucess = $conn->query($droptable);
 
 $createTableCaixa = "CREATE TABLE `bpm_caixa_empresa` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `ID_CAIXA_EMPRESA` VARCHAR(80) NULL,
-    `ID_EMPRESA` VARCHAR(80) NULL,
+    `ID_CAIXA_EMPRESA` INT(4) NULL,
+    `ID_EMPRESA` INT(4) NULL,
     `NOME_CAIXA` VARCHAR(80) NULL,
     `NUMERO_CAIXA_SISTEMA` VARCHAR(80) NULL,
     PRIMARY KEY (`id`))";

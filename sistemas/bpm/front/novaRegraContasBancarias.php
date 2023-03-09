@@ -99,16 +99,16 @@ require_once('../config/query.php');
               </div>
               <br>
               <div class="form-floating mt-4 col-md-4" id="agencia">
-                <input type="text"  class="form-control" name="agencia" onkeydown="javascript: fMasc(this, mnumero);" maxlength="10" required>
-                <label for="agencia">AGÊNCIA:<span style="color: red;">*</span></label>
+                <input type="text"  class="form-control" name="agencia" onkeydown="javascript: fMasc(this, mnumero);" maxlength="10">
+                <label for="agencia">AGÊNCIA:</label>
               </div>
               <div class="form-floating mt-4 col-md-4" id="conta">
-                <input type="text" onkeydown="javascript: fMasc(this, mnumero);" maxlength="20" class="form-control" name="conta" required>
-                <label for="conta">CONTA:<span style="color: red;">*</span></label>
+                <input type="text" onkeydown="javascript: fMasc(this, mnumero);" maxlength="20" class="form-control" name="conta">
+                <label for="conta">CONTA:</label>
               </div>
               <div class="form-floating mt-4 col-md-4" id="digito">
-                <input type="text" onkeydown="javascript: fMasc(this, mnumero);" maxlength="5" class="form-control" name="digito" required>
-                <label for="digito">DIGITO:<span style="color: red;">*</span></label>
+                <input type="text" onkeydown="javascript: fMasc(this, mnumero);" maxlength="5" class="form-control" name="digito">
+                <label for="digito">DIGITO:</label>
               </div>
               <div class="text-left py-2">
                 <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/contasBancarias.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>

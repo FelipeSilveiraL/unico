@@ -41,8 +41,25 @@ require_once('../inc/apiRecebeSelbetti.php');//recebe informações do oracle
                 <label for="user" class="col-sm-2 col-form-label">EMPRESA:<span style="color: red;">*</span></label>
                 <div class="col-md-6">
                   <select class="form-select" id="empresa" name="empresa" required>
+                    <?php
+                    
+                    if(!empty($_GET['id'])){
+                      $display = "block";
+                      $dado = "SELECT * FROM bpm_empresas WHERE ID_EMPRESA =  '".$_GET['id']."'";
+                      $conexao = $conn->query($dado);
+
+                       while($row2 = $conexao->fetch_assoc()){
+                        echo '<option value="' . $row2['ID_EMPRESA'] . '">' . $row2['NOME_EMPRESA'] . '</option>';
+                       }
+                      }else{
+                        $display = "none;";
+                      }
+                    
+                    ?>
+
                     <option value="">--------------</option>
                     <?php
+
                     $result = $conn->query($relatorioExcel);
                     //faz pesquisa no bd 
                     while ($row = $result->fetch_assoc()) {
@@ -66,8 +83,10 @@ require_once('../inc/apiRecebeSelbetti.php');//recebe informações do oracle
                     </div>
               </div>
               <div class="text-left">
-                <button type="button" class="btn btn-primary"><a href="caixaEmpresa.php?pg=<?= $_GET['pg'] ?>" style="color:white;">Voltar</a></button>
+                <button type="button" class="btn btn-primary"><a href="<?=(!empty($_GET['id']))?'userCaixa.php?pg='.$_GET['pg'].'' : 'caixaEmpresa.php?pg='.$_GET['pg'].'';?>"
+                style="color:white;">Voltar</a></button>
                 <button type="submit" class="btn btn-success">Salvar</button>
+
               </div>
             </form><br>
           </div>

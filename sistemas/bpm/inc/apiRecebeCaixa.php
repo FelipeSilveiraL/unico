@@ -12,10 +12,11 @@ $sucess = $conn->query($droptable);
 
 $createTableCaixa = "CREATE TABLE `bpm_caixa_nf` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `ID_EMPRESA` VARCHAR(80) NULL,
+    `ID_EMPRESA` int(3) NULL,
     `NOME_EMPRESA` VARCHAR(80) NULL,
-    `NUMERO_CAIXA` VARCHAR(80) NULL,
+    `NUMERO_CAIXA` VARCHAR(10) NULL,
     `USUARIO_CAIXA` VARCHAR(80) NULL,
+    `ID_CAIXA_EMPRESA` INT(10) NULL,
     PRIMARY KEY (`id`))";
 
 $execCreate = $conn->query($createTableCaixa);
@@ -32,12 +33,13 @@ foreach ($resultado->caixa as $caixaSmart) {
 
 
     $queryCaixa = "INSERT INTO bpm_caixa_nf 
-                            (ID_EMPRESA,NOME_EMPRESA,NUMERO_CAIXA,USUARIO_CAIXA)
+                            (ID_EMPRESA,NOME_EMPRESA,NUMERO_CAIXA,USUARIO_CAIXA,ID_CAIXA_EMPRESA)
    
-    VALUES ('" . $caixaSmart->ID_EMPRESA ."',
+    VALUES (" . $caixaSmart->ID_EMPRESA .",
             '" . $caixaSmart->NOME_EMPRESA . "',
             '" . $caixaSmart->NUMERO_CAIXA . "' ,
-            '" . $caixaSmart->USUARIO_CAIXA ."'
+            '" . $caixaSmart->USUARIO_CAIXA ."',
+            " . $caixaSmart->ID_CAIXA_EMPRESA ."
            
             )";
 
