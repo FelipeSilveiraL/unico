@@ -21,7 +21,18 @@ require_once('menu.php'); //menu lateral da pagina
 
   <!--################# COLE section AQUI #################-->
 
-  <h6>Inicio da section!</h6>
+  <section>
+    <div class="row">
+      <div class="col-sm-3">
+        <a href="limpeza.php?pg=2" class="list-group-item list-group-item-action">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Fluxo SmartShare</h5>
+            </div>
+          </div>
+        </a>
+      </div>
+  </section>
 
   <!--################# section TERMINA AQUI #################-->
 

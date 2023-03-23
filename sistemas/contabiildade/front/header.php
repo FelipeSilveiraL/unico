@@ -12,7 +12,7 @@ if ($_SESSION['id_usuario'] == NULL) {
 
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.php?pg=1" class="logo d-flex align-items-center">
-                <span class="d-none d-lg-block">Insira Nome<img src="../../../img/fd_logo.png" alt="" srcset=""></span>
+                <span class="d-none d-lg-block" style="font-size: 22px;">Contabilidade<img src="../../../img/fd_logo.png" style="margin-left: 13px;" srcset=""></span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
