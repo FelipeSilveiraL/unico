@@ -25,7 +25,7 @@
 <script src="../../../assets/js/mascaras.js"></script>
 <script src="../../../assets/js/jquery.js"></script>
 <script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
-<!-- <script src="../../../assets/js/seg.js"></script> -->
+<script src="../../../assets/js/seg.js"></script>
 
 <!-- Template Main JS File -->
 <script src="../../../assets/js/main.js"></script>
