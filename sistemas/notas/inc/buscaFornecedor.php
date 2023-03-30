@@ -6,17 +6,26 @@ require_once('../config/query.php');
 require_once('../function/periodicidade.php');
 require_once('../function/caracteres.php');
 
-$url = "http://" . $_SESSION['servidorOracle'] . "/" . $_SESSION['smartshare'] . "/inc/fornecedorApi.php?cpfCNPJ=" . $_POST['id'];
+$sqlForncedor = "SELECT  CAST(FPJ.CGC AS VARCHAR(14)) xcgccpf,
+    fc.nome as xnome_empresa,
+    'APOLLO' as xsistema,
+    fc.fantasia as xfantasia
+    from FAT_CLIENTE FC,
+    FAT_PESSOA_JURIDICA FPJ where FC.CLIENTE = FPJ.CLIENTE and  cast(FPJ.CGC as varchar(14)) = '" . $_POST['id'] . "'
+    and ((FC.INATIVO_CONSULTAS = 'N') or (FC.INATIVO_CONSULTAS is null)) AND
+    FPJ.CGC NOT IN (0) ";
 
-$ch = curl_init($url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-$resultado = json_decode(curl_exec($ch));
 
-foreach ($resultado->nome_fornecedor as $nomefornecedor) {
-    echo seo_friendly_url($nomefornecedor->NOME_EMPRESA) . "-"; //0
+$result = oci_parse($connApollo, $sqlForncedor);
+oci_execute($result);
+
+while ($fornecedor = oci_fetch_array($result, OCI_ASSOC)) {
+    echo $fornecedor['XNOME_EMPRESA']."-";
 }
+
+oci_free_statement($result);
+
+oci_close($connApollo);
 
 
 if ($_POST['tipo'] == 1) { //lancarnotas.php
@@ -70,5 +79,3 @@ if ($_POST['tipo'] == 1) { //lancarnotas.php
         }
     }
 }
-
-curl_close($ch);

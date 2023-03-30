@@ -4,12 +4,9 @@ require_once('../function/periodicidade.php');
 require_once('../function/caracteres.php');
 
 $queryNotas = "SELECT 
-                CL.*,
-                UBE.NOME_EMPRESA
+                CL.*
             FROM
                 cad_lancarnotas CL
-            LEFT JOIN
-                unico.bpm_empresas UBE ON (CL.ID_FILIAL = UBE.ID_EMPRESA)
             WHERE ID_LANCARNOTAS = " . $_GET['id'];
 
 if (!$aplicaquery = $connNOTAS->query($queryNotas)) {
@@ -20,7 +17,16 @@ if (!$aplicaquery = $connNOTAS->query($queryNotas)) {
 if ($notasLancar = $aplicaquery->fetch_assoc()) {
 
     $filial = $notasLancar['ID_FILIAL'];
-    $nomeFilial = $notasLancar['NOME_EMPRESA'];
+
+    //Buscar lá no bpm
+    $resultFilialBpm = oci_parse($connBpmgp, $queryFilial." AND ID_EMPRESA = ".$notasLancar['ID_FILIAL']);
+    oci_execute($resultFilialBpm);
+
+    while($filialBpm = oci_fetch_array($resultFilialBpm, OCI_ASSOC)){
+        $nomeFilial = $filialBpm['NOME_EMPRESA'];
+    }
+    oci_free_statement($resultFilialBpm);
+    
     $fornecedorNome = $notasLancar['nome_fornecedor'];
     $cpfcnpjFornecedor = $notasLancar['CNPJ'];
     $tipopagamento = $notasLancar['ID_TIPOPAGAMENTO'];

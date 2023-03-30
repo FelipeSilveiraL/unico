@@ -5,8 +5,6 @@ require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 
-//API
-require_once('../../bpm/inc/apiRecebeTabela.php'); //Empresas
 ?>
 
 <main id="main" class="main">
@@ -48,8 +46,10 @@ require_once('../../bpm/inc/apiRecebeTabela.php'); //Empresas
                 <select class="form-select" id="selectFilial" name="filial" required>
                   <option value="">-----------------</option>
                   <?php
-                  $resultFilialLista = $conn->query($queryFilial);
-                  while ($filialLista = $resultFilialLista->fetch_assoc()) {
+                  $resultFilialLista = oci_parse($connBpmgp, $queryFilial);
+                  oci_execute($resultFilialLista);
+
+                  while ($filialLista = oci_fetch_array($resultFilialLista, OCI_ASSOC)) {
                     echo '<option value="' . $filialLista['ID_EMPRESA'] . '">' . $filialLista['NOME_EMPRESA'] . '</option> ';
                   }
                   ?>
@@ -81,7 +81,7 @@ require_once('../../bpm/inc/apiRecebeTabela.php'); //Empresas
               <h5 class="card-title">Dados Pagamento</h5>
 
               <div class="form-floating mb-3 col-md-12">
-                <select readonly="readonly" class="form-select" id="tipoPagamento" name="tipoPagamento" onchange="bancos()">                 
+                <select readonly="readonly" class="form-select" id="tipoPagamento" name="tipoPagamento" onchange="bancos()">
                 </select>
                 <label for="floatingSelect">Tipo pagamento <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
@@ -89,7 +89,7 @@ require_once('../../bpm/inc/apiRecebeTabela.php'); //Empresas
               <div class="row" id="tipopagamentoBancos" style="display: none">
 
                 <div class="form-floating mb-3 col-md-5">
-                  <select class="form-select" id="nomeBanco" name="banco" readonly="readonly">                    
+                  <select class="form-select" id="nomeBanco" name="banco" readonly="readonly">
                   </select>
                   <label for="floatingSelect">Banco <span class="text-danger small pt-1 fw-bold">*</span></label>
                 </div>
@@ -118,7 +118,7 @@ require_once('../../bpm/inc/apiRecebeTabela.php'); //Empresas
               <h5 class="card-title">Dados Nota Fiscal</h5>
 
               <div class="form-floating col-md-6">
-                <select class="form-select" id="tipoDespesaSelect" name="tipodespesa" readonly="readonly">                 
+                <select class="form-select" id="tipoDespesaSelect" name="tipodespesa" readonly="readonly">
                 </select>
                 <label for="tipoDespesaSelect">Tipo de Despesa <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
@@ -233,7 +233,11 @@ require_once('../../bpm/inc/apiRecebeTabela.php'); //Empresas
 require_once('footer.php'); //Javascript e configurações afins
 ?>
 
-<script>$('#valorNota').mask('#.##0,00', {reverse: true});</script>
+<script>
+  $('#valorNota').mask('#.##0,00', {
+    reverse: true
+  });
+</script>
 
 <script>
   function tipoVencimento() {
@@ -260,8 +264,6 @@ require_once('footer.php'); //Javascript e configurações afins
     }
 
   }
-
-
   function diasMaximos() {
     var dias = document.getElementById("diasInput").value;
 
@@ -325,7 +327,7 @@ require_once('footer.php'); //Javascript e configurações afins
 
         $("#tableCusto").empty();
         $("#tableCusto").empty(data);
-        $("#tableCusto").append(data);        
+        $("#tableCusto").append(data);
       }
     })
   });

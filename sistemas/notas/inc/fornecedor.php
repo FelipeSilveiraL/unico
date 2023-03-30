@@ -3,13 +3,11 @@
 $idRateio = $_GET['idRateioFornecedor'];
 
 $buscaFornecedor = "SELECT 
-UBE.nome_empresa,
+/* UBE.nome_empresa, */
 CP.nome AS periodicidade,
 CR.*
 FROM
 cad_rateiofornecedor CR
-LEFT JOIN
-unico.bpm_empresas UBE ON (CR.id_filial = UBE.id_empresa)
 LEFT JOIN
 cad_periodicidade CP ON (CR.ID_PERIODICIDADE = CP.ID_PERIODICIDADE)
 WHERE ID_RATEIOFORNECEDOR =  " . $idRateio;
@@ -30,7 +28,16 @@ if ($fornecedor = $aplicarBusca->fetch_assoc()) {
             $nomeSistema = 'SmartShare';
             break;
     }
-    $nomeFilial = $fornecedor['nome_empresa'];
+    
+    //Buscar lá no bpm
+    $resultFilialBpm = oci_parse($connBpmgp, $queryFilial." AND ID_EMPRESA = ".$fornecedor['ID_FILIAL']);
+    oci_execute($resultFilialBpm);
+
+    while($filialBpm = oci_fetch_array($resultFilialBpm, OCI_ASSOC)){
+        $nomeFilial = $filialBpm['NOME_EMPRESA'];
+    }
+    oci_free_statement($resultFilialBpm);
+
     $fornecedorNome = $fornecedor['fornecedor'];
     $cpfcnpjFornecedor = $fornecedor['cpfcnpj_fornecedor'];
     $tipopagamento = $fornecedor['ID_TIPOPAGAMENTO'];

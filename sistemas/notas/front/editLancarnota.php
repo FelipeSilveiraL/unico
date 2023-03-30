@@ -5,9 +5,6 @@ require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 
-//API
-require_once('../../bpm/inc/apiRecebeTabela.php'); //Empresas
-
 //DADOS DA NOTA
 require_once('../inc/dadoslancarnota.php');
 ?>
@@ -52,8 +49,10 @@ require_once('../inc/dadoslancarnota.php');
                   <?= '<option value="' . $filial . '">' . $nomeFilial . '</option>' ?>
                   <option value="">-----------------</option>
                   <?php
-                  $resultFilialLista = $conn->query($queryFilial);
-                  while ($filialLista = $resultFilialLista->fetch_assoc()) {
+                  $resultFilialLista = oci_parse($connBpmgp, $queryFilial);
+                  oci_execute($resultFilialLista);
+
+                  while ($filialLista = oci_fetch_array($resultFilialLista, OCI_ASSOC)) {
                     echo '<option value="' . $filialLista['ID_EMPRESA'] . '">' . $filialLista['NOME_EMPRESA'] . '</option> ';
                   }
                   ?>
@@ -145,21 +144,27 @@ require_once('../inc/dadoslancarnota.php');
 
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="departamentoAuditoria" name="departamentoAuditoria" readonly="readonly">
-                  <?php echo '<option value="' . $auditoria . '">'; echo $auditoria == 0 ? "NÂO" : 'SIM'; echo '</option>' ?>
+                  <?php echo '<option value="' . $auditoria . '">';
+                  echo $auditoria == 0 ? "NÂO" : 'SIM';
+                  echo '</option>' ?>
                 </select>
                 <label for="departamentoAuditoria">Depart. de Auditoria? <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="notasGrupoObra" name="notasGrupo" readonly="readonly">
-                  <?php echo '<option value="' . $obra . '">'; echo $obra == 0 ? "NÂO" : 'SIM'; echo '</option>' ?>
+                  <?php echo '<option value="' . $obra . '">';
+                  echo $obra == 0 ? "NÂO" : 'SIM';
+                  echo '</option>' ?>
                 </select>
                 <label for="notasGrupoObra">Obras do G. Servopa? <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
 
               <div class="form-floating mb-3 col-md-4">
                 <select class="form-select" id="notasMarketing" name="notasMarketing" readonly="readonly">
-                  <?php echo '<option value="' . $marketing . '">'; echo $marketing == 0 ? "NÂO" : 'SIM'; echo '</option>' ?>
+                  <?php echo '<option value="' . $marketing . '">';
+                  echo $marketing == 0 ? "NÂO" : 'SIM';
+                  echo '</option>' ?>
                 </select>
                 <label for="notasMarketing">Depart. de Marketing? <span class="text-danger small pt-1 fw-bold">*</span></label>
               </div>
@@ -232,7 +237,7 @@ require_once('../inc/dadoslancarnota.php');
                                   </td>
                                   <td>NOTA FISCAL</td>
                                   <td>
-                                    <a href="../inc/deletarArquivo.php?idAnexo=' . $anexos['ID'] . '&id='.$_GET['id'].'" title="Excluir" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                                    <a href="../inc/deletarArquivo.php?idAnexo=' . $anexos['ID'] . '&id=' . $_GET['id'] . '" title="Excluir" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                                   </td>
                                 </tr>';
                         } else {
@@ -242,7 +247,7 @@ require_once('../inc/dadoslancarnota.php');
                                 </td>
                                 <td>BOLETO</td>
                                 <td>
-                                <a href="../inc/deletarArquivo.php?idAnexo=' . $anexos['ID']. '&id='.$_GET['id'].'" title="Excluir" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                                <a href="../inc/deletarArquivo.php?idAnexo=' . $anexos['ID'] . '&id=' . $_GET['id'] . '" title="Excluir" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                                 </td>
                               </tr>';
                         }
@@ -459,3 +464,7 @@ require_once('footer.php'); //Javascript e configurações afins
     });
   });
 </script>
+
+<?php
+oci_close($connBpmgp);
+?>

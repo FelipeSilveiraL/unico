@@ -41,7 +41,7 @@ cad_status CS ON (CL.status_desc = CS.id) ";
 
 /*===================================*/
 
-$queryFilial = "SELECT ID_EMPRESA, NOME_EMPRESA, SISTEMA FROM bpm_empresas WHERE SITUACAO = 'A'";
+$queryFilial = "SELECT ID_EMPRESA, NOME_EMPRESA, SISTEMA FROM empresa WHERE SITUACAO = 'A'";
 
 /*===================================*/
 

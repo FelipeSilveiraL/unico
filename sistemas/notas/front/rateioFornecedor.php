@@ -5,11 +5,6 @@ require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 
-//API
-require_once('../../bpm/inc/apiRecebeTabela.php'); //Empresas
-require_once('../../bpm/inc/apiRecebeDepNF.php'); //CentroCusto
-require_once('../../bpm/inc/apiEmpDepNF.php'); //CentroCustoEmpresa
-
 //DADOS FORNECEDOR
 if (!empty($_GET['idRateioFornecedor'])) {
   require_once('../inc/fornecedor.php');
@@ -71,9 +66,11 @@ if (!empty($_GET['idRateioFornecedor'])) {
                     echo '<option value="' . $filial . '">' . $nomeFilial . '</option>';
                   } ?>
                   <option value="">-----------------</option>
-                  <?php
-                  $resultFilialLista = $conn->query($queryFilial);
-                  while ($filialLista = $resultFilialLista->fetch_assoc()) {
+                  <?php                  
+                  $resultFilialLista = oci_parse($connBpmgp, $queryFilial);
+                  oci_execute($resultFilialLista);  
+
+                  while ($filialLista = oci_fetch_array($resultFilialLista, OCI_ASSOC)) {
                     echo '<option value="' . $filialLista['ID_EMPRESA'] . '">' . $filialLista['NOME_EMPRESA'] . '</option> ';
                   }
                   ?>
@@ -172,9 +169,7 @@ if (!empty($_GET['idRateioFornecedor'])) {
 
               <div id="divFornecedor" class="col-md-6">
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="cnpjVet" maxlength="15" placeholder="CNPJ / CPF Fornecedor" name="cpfCnpjFor" <?php if (!empty($idRateio)) {
-                                                                                                                                              echo 'value="' . $cpfcnpjFornecedor . '"';
-                                                                                                                                            } ?> required>
+                  <input type="text" class="form-control" id="cnpjVet" maxlength="15" placeholder="CNPJ / CPF Fornecedor" name="cpfCnpjFor" <?php if (!empty($idRateio)) {echo 'value="' . $cpfcnpjFornecedor . '"';} ?> required>
                   <label for="cpfCnpjFor">CNPJ / CPF Fornecedor <span class="text-danger small pt-1 fw-bold"> * </span></label>
                 </div>
               </div>
@@ -433,7 +428,6 @@ require_once('footer.php'); //Javascript e configurações afins
 
   }
 
-
   function diasMaximos() {
     var dias = document.getElementById("diasInput").value;
 
@@ -473,9 +467,7 @@ require_once('footer.php'); //Javascript e configurações afins
 
       url: '../inc/buscaFornecedor.php',
       type: 'POST',
-      data: {
-        id: cpfCNPJ
-      },
+      data: { id: cpfCNPJ },
 
       beforeSend: function(data) {
         $("#NomeFornecedor").val('Aguarde...');
@@ -499,3 +491,8 @@ require_once('footer.php'); //Javascript e configurações afins
     });
   });
 </script>
+
+<?php
+
+oci_free_statement($resultFilialLista);
+oci_close($connBpmgp);
