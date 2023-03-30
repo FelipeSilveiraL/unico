@@ -102,6 +102,12 @@ if (!empty($_GET['msn'])) {
                 case '10':
                     echo '<p class="mb-0"><i class="bi bi-pin"></i>Permissão negada.</p>';
                     break;
+                case '11':
+                    echo '<p class="mb-0"><i class="bi bi-pin"></i>Nota encontrada porém ela nao tem permissão para prosseguir. Entre em contato com o administrador</p>';
+                    break;
+                case '12':
+                    echo '<p class="mb-0"><i class="bi bi-pin"></i>Não foi possivel encontra essa solicitação</p>';
+                    break;
             }
             echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';

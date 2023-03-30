@@ -26,7 +26,7 @@ require_once('menu.php'); //menu lateral da pagina
 
     <div class="row">
 
-      <div class="col-lg-12">
+      <div class="col-lg-12" style="display: <?= $_GET['fluxo'] == true ? 'none' : 'block' ?>;">
 
         <div class="card">
           <div class="card-body">
@@ -49,6 +49,37 @@ require_once('menu.php'); //menu lateral da pagina
           </div>
         </div>
       </div>
+
+      <?php
+      if ($_GET['fluxo'] == true AND empty($_SESSION['cdFluxo'])) {
+        echo '<script>window.location.href = "limpeza.php?pg=2"</script>';
+        exit;
+      }
+      ?>
+      <div class="col-lg-12" style="display: <?= $_GET['fluxo'] == false ? 'none' : 'block' ?>;">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Localizado a Nota fiscal.</h5><br>
+            <p class="text-center text-danger"><i class="bi bi-exclamation-octagon-fill"></i> CUIDADO! <i class="bi bi-exclamation-octagon-fill"></i></p>
+            <p>Confirme os dados abaixo para ver se é realmente a nota fiscal que deseja excluir, porque após confirmar <span class="text-danger"> não terá mais como voltar</span>.</p>
+            <!-- Horizontal Form -->
+            <form class="row g-3">
+              <?php
+              require_once('../inc/notaFiscal.php');
+
+              unset($_SESSION['cdFluxo']);
+              ?>
+              <div class="col-12">
+                <button class="btn btn-success" type="submit">Cancelar</button>
+                <button class="btn btn-danger" type="submit">Confirmar</button>
+              </div>
+            </form><!-- End Horizontal Form -->
+
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
