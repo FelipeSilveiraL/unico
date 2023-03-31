@@ -103,7 +103,7 @@ if (!empty($_GET['msn'])) {
                     echo '<p class="mb-0"><i class="bi bi-pin"></i>Permissão negada.</p>';
                     break;
                 case '11':
-                    echo '<p class="mb-0"><i class="bi bi-pin"></i>Nota encontrada porém ela nao tem permissão para prosseguir. Entre em contato com o administrador</p>';
+                    echo '<p class="mb-0"><i class="bi bi-pin"></i>Fluxo localizado porém NÃO é de referente ao processo de NOTAS FISCAIS.</p>';
                     break;
                 case '12':
                     echo '<p class="mb-0"><i class="bi bi-pin"></i>Não foi possivel encontra essa solicitação</p>';
@@ -209,6 +209,14 @@ if (!empty($_GET['msn'])) {
             echo '
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <span style="font-size: 12px">USUARIO e NOME CAIXA já existentes nessa empresa!</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
+            break;
+
+        case '24':
+            echo '
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span style="font-size: 12px">Fluxo excluido com sucesso!</span>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
             break;

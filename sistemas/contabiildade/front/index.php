@@ -27,7 +27,7 @@ require_once('menu.php'); //menu lateral da pagina
         <a href="limpeza.php?pg=2" class="list-group-item list-group-item-action">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Fluxo SmartShare</h5>
+              <h5 class="card-title">Excluir Fluxo Finalizado</h5>
             </div>
           </div>
         </a>
