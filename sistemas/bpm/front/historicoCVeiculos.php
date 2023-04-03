@@ -50,6 +50,7 @@ require_once('../config/query.php');
         <div class="card">
           
           <div class="card-body">
+          <h5 class="card-title"> Registro alterados</h5>
             <!-- Table with stripped rows -->
             <table class="table table-striped datatable">
               <thead>

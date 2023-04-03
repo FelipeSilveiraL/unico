@@ -1,9 +1,8 @@
 <?php
-session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeDepRH.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -36,6 +35,7 @@ require_once('../inc/apiRecebeDepRH.php');
           </div>
           
           <div class="card-body">
+          <h5 class="card-title">Departamento rg </h5>
             <!-- Table with stripped rows -->
             <table class="table table-striped datatable">
               <thead>
@@ -48,12 +48,11 @@ require_once('../inc/apiRecebeDepRH.php');
               </thead>
               <tbody>
                 <?php
-                
-                  $departamento = "SELECT * FROM bpm_rh_departamento";
 
-                  $sucesso = $conn->query($departamento);
+                  $sucesso = oci_parse($connBpmgp, $departrh);
+                  oci_execute($sucesso);
 
-                  while($row = $sucesso->fetch_assoc()){
+                  while($row = oci_fetch_array($sucesso, OCI_ASSOC)){
                     
                     $situacao = $row['SITUACAO'];
 
@@ -69,12 +68,15 @@ require_once('../inc/apiRecebeDepRH.php');
                     <td>'.$situacao.'</td>
                     <td ' . $usuarioFuncao . '>
                     <a href="editDep.php?pg=' . $_GET["pg"] . '&id_departamento=' . $row["ID_DEPARTAMENTO"] . '" title="Editar" class="btn-primary btn-sm" > <i class="bi bi-pencil"></i></a>
-                    <a href="http://'.$_SESSION['servidorOracle'] .'/'.$_SESSION['smartshare'].'/bd/deletarDep.php?id=' . $row["ID_DEPARTAMENTO"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm"> <i class="bi bi-trash"></i></a>
+                    <a href="../inc/deletarDep.php?pg=' . $_GET["pg"] . '&id=' . $row["ID_DEPARTAMENTO"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm"> <i class="bi bi-trash"></i></a>
                     </td> 
                  
                     </tr>';
                     
                   }
+
+                  oci_free_statement($sucesso);
+                  oci_close($connBpmgp);
 
                 ?>
               </tbody>

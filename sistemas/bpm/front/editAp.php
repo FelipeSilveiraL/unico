@@ -33,6 +33,7 @@ require_once('../../../config/sqlSmart.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body"><br>
+          <h5 class="card-title">editar aprovadores </h5>
             <form method="POST" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/editAp.php?pg=<?= $_GET['pg'] ?>">
               <?php
 

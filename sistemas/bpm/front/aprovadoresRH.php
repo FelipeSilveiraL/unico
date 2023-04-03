@@ -55,6 +55,8 @@ require_once('menu.php'); //menu lateral da pagina
           </div>
 
           <div class="card-body">
+            
+          <h5 class="card-title">Aprovadores rh</h5>
             <!-- Table with stripped rows -->
             <table class="table table-striped datatable">
               <thead>

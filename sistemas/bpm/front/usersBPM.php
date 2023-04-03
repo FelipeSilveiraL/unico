@@ -40,7 +40,7 @@ require_once('../../../config/sqlSmart.php');
                 <a href="../inc/relatorioUserExcel.php" type="button" class="btn btn-success buttonAdd" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
               </div><br>
             <div class="card-body">
-              
+            <h5 class="card-title">Usuários smartshare </h5>
               <!-- Table with stripped rows -->
               <table class="table table-striped datatable">
                 <thead>

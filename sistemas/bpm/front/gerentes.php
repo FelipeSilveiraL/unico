@@ -41,7 +41,7 @@ require_once('../inc/apiRecebeGerente.php');
             <a href="../inc/relatorioGerentes.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
           </div>
             <div class="card-body">
-              <br>
+            <h5 class="card-title"> Gerentes</h5>
               <table class="table table-striped datatable">
                 <thead>
                   <tr>

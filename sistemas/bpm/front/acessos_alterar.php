@@ -35,6 +35,8 @@ require_once('menu.php'); //menu lateral da pagina
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
+            
+          <h5 class="card-title">Adicionar novo módulo</h5>
             <?php
             if ($_GET['id'] != NULL) {
 

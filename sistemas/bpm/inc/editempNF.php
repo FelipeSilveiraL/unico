@@ -29,6 +29,7 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
+          <h5 class="card-title">Editando empresa nf </h5>
           <form class="row g-3" action="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/editemp.php?id_empresa=' . $info . '&pg='.$_GET['pg'].'" method="POST">
               <div class="form-floating mt-4 col-md-12">
                 <select class="form-select" id="floatingSelect" name="usuarioBPM" disabled>

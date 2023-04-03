@@ -35,7 +35,7 @@ require_once('../inc/apiRecebeSelbetti.php');//recebe informações do oracle
 
         <div class="card">
           <div class="card-body">
-            <br><?php
+          <h5 class="card-title">Nova regra caixa empresa </h5><?php
             
             $id = $_GET['id'];
 

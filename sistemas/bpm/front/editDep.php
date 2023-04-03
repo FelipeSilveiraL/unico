@@ -3,8 +3,7 @@ session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../../../config/config.php');
-require_once('../../../config/query.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -31,18 +30,22 @@ require_once('../../../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/editDep.php?pg=<?= $_GET['pg'] ?>&id=<?= $_GET['id_departamento'] ?>" method="POST">
+            <h5 class="card-title">Editando departamento</h5>
+            <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="../inc/editDep.php?pg=<?= $_GET['pg'] ?>&id=<?= $_GET['id_departamento'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6" id="depto">
                 <?php
 
-                $departamento = "SELECT * FROM bpm_rh_departamento WHERE ID_DEPARTAMENTO =" . $_GET['id_departamento'] . "";
+                $departOriginal = $departrh;
+                $departrh .= " WHERE ID_DEPARTAMENTO = " . $_GET['id_departamento'];
 
-                $sucesso = $conn->query($departamento);
+                $sucesso = oci_parse($connBpmgp, $departrh);
+                oci_execute($sucesso);
 
-                while ($row = $sucesso->fetch_assoc()) {
-                  echo '<input type="text" value="'.$row['NOME_DEPARTAMENTO'].'" class="form-control" name="depto" id="depto" disabled>';
+                while ($row = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                  echo '<input type="text" value="' . $row['NOME_DEPARTAMENTO'] . '" class="form-control" name="depto" id="depto" disabled>';
                 }
+                oci_free_statement($sucesso);
                 ?>
                 <label for="depto">DEPARTAMENTO:<span style="color: red;">*</span></label>
               </div>
@@ -50,11 +53,14 @@ require_once('../../../config/query.php');
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" name="situacao" id="situacao" required>
                   <?php
-                  $departamento2 = "SELECT * FROM bpm_rh_departamento WHERE ID_DEPARTAMENTO =" . $_GET['id_departamento'] . "";
+                  $query = $departOriginal;
 
-                  $sucesso2 = $conn->query($departamento2);
+                  $query .= " WHERE ID_DEPARTAMENTO = " . $_GET['id_departamento'];
 
-                  while ($row2 = $sucesso2->fetch_assoc()) {
+                  $sucesso = oci_parse($connBpmgp, $query);
+                  oci_execute($sucesso);
+
+                  while ($row2 = oci_fetch_array($sucesso, OCI_ASSOC)) {
                     switch ($row2['SITUACAO']) {
                       case 'A':
                         $situacao = 'ATIVO';
@@ -62,9 +68,15 @@ require_once('../../../config/query.php');
                       case 'D':
                         $situacao = 'DESATIVADO';
                         break;
+                      default:
+                        $situacao = 'DESATIVADO';
+                        break;
                     }
                     echo '<option value="' . $row2['SITUACAO'] . '">' . $situacao . '</option>';
                   }
+
+                  oci_free_statement($sucesso);
+                  oci_close($connBpmgp);
                   ?>
                   <option>------------</option>
                   <option value="A">ATIVO</option>
@@ -74,7 +86,7 @@ require_once('../../../config/query.php');
               </div>
 
               <div class="text-left py-2">
-                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/departamentoRH.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="departamentoRH.php?pg=<?= $_GET['pg'] ?>" class="btn btn-primary">Voltar</a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                 <button type="submit" class="btn btn-success">Editar</button>
               </div>
@@ -87,16 +99,6 @@ require_once('../../../config/query.php');
   <!--################# section TERMINA AQUI #################-->
 
 </main><!-- End #main -->
-
-<!-- 
-<script>
-  function empresaSelect() {
-    document.novaRegraEmpresa.action = "novaRegraAp.php"
-    document.novaRegraEmpresa.method = "GET"
-    document.novaRegraEmpresa.submit();
-  }
-</script> -->
-
 
 <?php
 require_once('footer.php'); //Javascript e configurações afins

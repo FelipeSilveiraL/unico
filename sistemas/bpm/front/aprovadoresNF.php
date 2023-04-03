@@ -56,6 +56,8 @@ require_once('../inc/apiRecebeDepNF.php');
           </div>
           
           <div class="card-body">
+            
+          <h5 class="card-title">Aprovadores nf</h5>
             <!-- Table with stripped rows -->
             <table class="table table-striped datatable">
               <thead>

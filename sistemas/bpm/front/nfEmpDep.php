@@ -35,6 +35,7 @@ require_once('../inc/apiEmpDepNF.php');
           </div>
           
           <div class="card-body">
+          <h5 class="card-title"> Empresa x departamento nf</h5>
             <!-- Table with stripped rows -->
             <table class="table table-striped datatable">
               <thead>

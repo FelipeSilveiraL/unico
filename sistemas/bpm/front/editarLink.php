@@ -34,6 +34,7 @@ require_once('../../../config/sqlSmart.php');
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body"><br>
+            <h5 class="card-title">MFP WEB </h5>
             <form method="POST" class="row g-3" action="../inc/editLink.php?pg=<?= $_GET['pg'] ?>" >
                 
             <br>

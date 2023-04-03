@@ -34,7 +34,7 @@ require_once('../../../config/sqlSmart.php');
 
         <div class="card">
           <div class="card-body">
-            <br>
+          <h5 class="card-title">Usuário caixa </h5>
             <form method="POST" action="../inc/novaRegraCxUs.php?pg=<?= $_GET['pg'] ?>">
               <div class="row mb-3">
                 <label for="user" class="col-sm-2 col-form-label">EMPRESA:<span style="color: red;">*</span></label>

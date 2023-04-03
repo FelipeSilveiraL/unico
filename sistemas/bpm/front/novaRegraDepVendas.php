@@ -30,6 +30,7 @@ require_once('../../../config/config.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
+          <h5 class="card-title">Nova regra departamento vendas </h5>
           
             <form class="row g-3" action="http://<?= $_SESSION['servidorOracle']?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraDepVendas.php?pg=<?= $_GET['pg']?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->

@@ -31,7 +31,7 @@ while ($edit = oci_fetch_array($conSucesso,OCI_ASSOC)) {
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body"><h5 class="card-title">Editando empresa </h5>
           <form class="row g-3" action="../inc/editEmpresa.php?id_empresa=' . $info . '&pg='.$_GET['pg'].'" method="POST">
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" id="floatingSelect" name="usuarioBPM" disabled>

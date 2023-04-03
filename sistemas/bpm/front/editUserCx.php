@@ -33,7 +33,7 @@ require_once('../../../config/sqlSmart.php');
 
         <div class="card">
           <div class="card-body">
-            <br>
+          <h5 class="card-title"> Editando caixa usuário</h5>
             <?php
               $id = $_GET['id_caixa_empresa'];
               $user = $_GET['user'];

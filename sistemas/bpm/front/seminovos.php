@@ -34,6 +34,7 @@ require_once('../config/query.php');
           </div>
           
           <div class="card-body">
+          <h5 class="card-title"> Fornecedores triagem</h5>
             <!-- Table with stripped rows -->
             <table class="table table-striped datatable">
               <thead>

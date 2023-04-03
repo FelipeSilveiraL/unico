@@ -38,6 +38,7 @@ require_once('../inc/paginacao.php');
             <a href="../inc/relatorioExcel.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
           </div>
           <div class="card-body">
+          <h5 class="card-title">Empresa </h5>
             <!-- Table with stripped rows -->
             <table class="table table-striped datatable">
               <thead>

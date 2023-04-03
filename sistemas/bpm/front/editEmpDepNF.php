@@ -31,6 +31,7 @@ require_once('../../../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
+          <h5 class="card-title">Editar regra empresa x departamento nf </h5>
             <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/editEmpDepNF.php?pg=<?= $_GET['pg'] ?>&id_empdep=<?= $_GET['id'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
                 <?php

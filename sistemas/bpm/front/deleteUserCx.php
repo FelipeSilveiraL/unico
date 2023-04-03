@@ -35,6 +35,7 @@ require_once('../inc/apiRecebeSelbetti.php');
 
           <div class="card">
             <div class="card-body">
+            <h5 class="card-title">Usúario caixa </h5>
             <br>
             <?php 
               $id = $_GET['id'];

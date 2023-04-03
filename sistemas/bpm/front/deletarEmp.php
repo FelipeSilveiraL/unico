@@ -29,6 +29,7 @@ require_once('../../../config/config.php');
 
   <div class="card">
     <div class="card-body">
+    <h5 class="card-title">Empresa </h5>
       <h5 class="card-title">Informações</h5>
 
       <!-- Table with stripped rows -->

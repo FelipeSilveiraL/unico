@@ -36,7 +36,8 @@ require_once('../../../config/config.php');
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <br>
+              
+          <h5 class="card-title">Gestor nf</h5>
               <?php 
               $idGestor = $_SESSION['login'];
 

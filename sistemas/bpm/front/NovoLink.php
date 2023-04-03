@@ -36,7 +36,7 @@ require_once('../../../config/sqlSmart.php');
 
           <div class="card">
             <div class="card-body">
-            <br>
+            <h5 class="card-title">Novo MFP WEB </h5>
                 <form method="POST" action=" ../inc/novoLink.php?pg=<?= $_GET['pg'] ?>" >
                   <div class="row mb-3">
                     <label for="user" class="col-sm-2 col-form-label" >Link:<span style="color: red;">*</span></label>

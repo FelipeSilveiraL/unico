@@ -40,6 +40,7 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
 
         <div class="card">
           <div class="card-body">
+          <h5 class="card-title">Editar aprovadores nf </h5>
             <br>
             <?php
             $id = $_GET['id_aprovador'];

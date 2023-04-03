@@ -36,7 +36,7 @@ require_once('../inc/apiRecebeAprov.php');
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <br>
+            <h5 class="card-title"> Gestor rh</h5>
               <?php
                  
                   echo '

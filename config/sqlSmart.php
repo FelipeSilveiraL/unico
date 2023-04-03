@@ -74,7 +74,7 @@ $departrh = 'SELECT
         d.situacao,
         d.id_departamento
     FROM
-        departamento_rh d order by d.nome_departamento ASC';
+        departamento_rh d ';
 
 /* Select para a tela de Departmento RH */
 $departNF = 'SELECT

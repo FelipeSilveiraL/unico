@@ -31,6 +31,8 @@ require_once('menu.php'); //menu lateral da pagina
     <div class="card">
       <div class="row">
         <div class="card-body">
+          
+        <h5 class="card-title">Cadastro fornecedor</h5>
                   <form class="row g-3">
                     <div class="col-md-9"><br>
                       <input type="text" class="form-control" id = "razao" placeholder="RAZÃO SOCIAL">

@@ -37,6 +37,7 @@ require_once('../../../config/sqlSmart.php');
             <a href="../inc/relatorioUsuarioCaixa.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
           </div><br>
           <div class="card-body">
+          <h5 class="card-title">Usuários caixa </h5>
 
             <!-- Table with stripped rows -->
             <table class="table table-striped datatable">

@@ -45,7 +45,7 @@ if($row = $conexao->fetch_assoc()){
 ?>
           <div class="card">
             <div class="card-body">
-            <br>
+            <h5 class="card-title"> Manutenção auditoria</h5>
                 <form method="POST" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/manutencaoAuditoria.php?pg=<?= $_GET['pg'] ?>" >
                   <div class="row mb-3">
                     <label for="user" class="col-sm-2 col-form-label" >LIMITE NOTA DESPESA:<span style="color: red;">*</span></label>

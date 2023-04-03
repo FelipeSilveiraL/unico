@@ -22,7 +22,7 @@ require_once('menu.php'); //menu lateral da pagina
   <section class="section">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title"></h5>
+        <h5 class="card-title">Modelos e funções</h5>
         <!-- Default Tabs -->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">

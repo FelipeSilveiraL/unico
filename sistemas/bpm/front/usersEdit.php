@@ -35,7 +35,7 @@ require_once('../../../config/sqlSmart.php');
 
           <div class="card">
             <div class="card-body">
-            <br>
+            <h5 class="card-title">Editar usuários smartshare </h5>
             <?php 
               $id = $_GET['id'];
 

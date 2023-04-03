@@ -35,6 +35,7 @@ require_once('../../../config/sqlSmart.php');
                 <a href="NovoLink.php?pg=<?= $_GET['pg'] ?>" type="button" class="btn btn-success buttonAdd" title="Importar Usuários" <?= $usuarioFuncao ?> ><i class="bi bi-plus-lg"></i></a>
               </div><br>
             <div class="card-body">
+            <h5 class="card-title"> MFP WEB</h5>
 
               <!-- Table with stripped rows -->
               <table class="table table-stripeddatatable">
