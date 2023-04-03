@@ -3,8 +3,7 @@ session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../../../config/config.php');
-require_once('../../../config/query.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -31,95 +30,64 @@ require_once('../../../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-          <h5 class="card-title">Editar regra empresa x departamento </h5>
-            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/editEmpDep.php?pg=<?= $_GET['pg'] ?>" method="POST">
+            <h5 class="card-title">Editar regra empresa x departamento </h5>
+            <form class="row g-3" action="../inc/editEmpDep.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
-                <?php
-                $empDep = "SELECT * FROM bpm_rh_emp_dep WHERE ID_EMPDEP =" . $_GET['id'] . "";
+              <?php
 
-                $sucesso = $conn->query($empDep);
 
-                while ($row = $sucesso->fetch_assoc()) {
+              $empdep .= ' WHERE e.id_empdep = ' . $_GET['id'];
+              $sucesso = oci_parse($connBpmgp, $empdep);
+              oci_execute($sucesso);
 
-                    $situacao = $row['SITUACAO'];
-                    $gerente = $row['GERENTE_APROVA'];
-                    $super = $row['SUPERINTENDENTE_APROVA'];
+              while ($row = oci_fetch_array($sucesso, OCI_ASSOC)) {
 
-                    if($situacao == 'A'){
-                      $situacao = 'ATIVO';
-                    }else{
-                      $situacao = 'DESATIVADO';
-                    }
-
-                    if($gerente == 'S'){
-                      $gerente = 'SIM';
-                    }else{
-                      $gerente = 'NÃO';
-                    }
-
-                    if($super == 'S'){
-                      $super = 'SIM';
-                    }else{
-                      $super = 'NÃO';
-                    }
-
-                    $empresaNome = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = '".$row['ID_EMPRESA']."'";
-                    $conexao = $conn->query($empresaNome);
-                    while($nomeEmpresa = $conexao->fetch_assoc()){
-                      $nome = $nomeEmpresa['NOME_EMPRESA'];
-                    }
-                    $depNome = "SELECT NOME_DEPARTAMENTO FROM bpm_rh_departamento WHERE ID_DEPARTAMENTO = '".$row['ID_DEPARTAMENTO']."'";
-                    $success = $conn->query($depNome);
-                    while($nomeDepartamento = $success->fetch_assoc()){
-                      $departamentoNome = $nomeDepartamento['NOME_DEPARTAMENTO'];
-                    }
-
-                  echo '
-                  <input type="hidden" value="'.$row['ID_EMPDEP'].'" name="id_empdep">
-              <div class="form-floating mt-4 col-md-6" id="empresa">
-                <input type="text" value="'.$nome.'"class="form-control" disabled>
+                echo '
+                <input type="hidden" value="' . $row['ID_EMPDEP'] . '" name="id_empdep">
+                <div class="form-floating mt-4 col-md-6" id="empresa">
+                <input type="text" value="' . $row['NOME_EMPRESA'] . '"class="form-control" disabled>
                 <label for="empresa">EMPRESA:</label>
-              </div>
+                </div>
 
-              <div class="form-floating mt-4 col-md-6" id="depto">
-                <input type="text" class="form-control" value="'.$departamentoNome.'" disabled >
+                <div class="form-floating mt-4 col-md-6" id="depto">
+                <input type="text" class="form-control" value="' . $row['NOME_DEPARTAMENTO']  . '" disabled >
                 <label for="depto">DEPARTAMENTO:</label>
-              </div>
+                </div>
 
-              <div class="form-floating mt-4 col-md-6" id="gerente">
+                <div class="form-floating mt-4 col-md-6" id="gerente">
                 <select class="form-select" name="gerap"  required>
-                  <option value="'.$row['GERENTE_APROVA'].'">'.$gerente.'</option>
-                  <option>------------</option>
-                  <option value="S">SIM</option>
-                  <option value="N">NÃO</option>
+                <option value="' . $row['GERENTE_APROVA'] . '">'; echo $row['GERENTE_APROVA'] == 'N' ? 'NÃO' : 'SIM'; echo '</option>
+                <option>------------</option>
+                <option value="S">SIM</option>
+                <option value="N">NÃO</option>
                 </select>
                 <label for="gerente">GERENTE APROVA:<span style="color: red;">*</span></label>
-              </div>
-              <div class="form-floating mt-4 col-md-6" id="super">
+                </div>
+                <div class="form-floating mt-4 col-md-6" id="super">
                 <select class="form-select" name="supap"  required>
-                  <option value="'.$row['SUPERINTENDENTE_APROVA'].'">'.$super.'</option>
-                  <option>------------</option>
-                  <option value="S">SIM</option>
-                  <option value="N">NÃO</option>
+                <option value="' . $row['SUPERINTENDENTE_APROVA'] . '">'; echo $row['SUPERINTENDENTE_APROVA'] == 'N' ? 'NÃO' : 'SIM'; echo '</option>
+                <option>------------</option>
+                <option value="S">SIM</option>
+                <option value="N">NÃO</option>
                 </select>
                 <label for="super">SUPERINTENDENTE APROVA:<span style="color: red;">*</span></label>
-              </div>
-              <div class="form-floating mt-4 col-md-6" id="situacao">
+                </div>
+                <div class="form-floating mt-4 col-md-6" id="situacao">
                 <select class="form-select" name="situacao"  required>
-                  <option value="'.$row['SITUACAO'].'">'.$situacao.'</option>
-                  <option>------------</option>
-                  <option value="A">ATIVO</option>
-                  <option value="D">DESATIVADO</option>
+                <option value="' . $row['SITUACAO'] . '">'; echo $row['SITUACAO'] == 'D' ? 'DESATIVADO' : 'ATIVADO'; echo '</option>
+                <option>------------</option>
+                <option value="A">ATIVO</option>
+                <option value="D">DESATIVADO</option>
                 </select>
                 <label for="situacao">SITUAÇÃO:<span style="color: red;">*</span></label>
-              </div>';
-                }
-                ?>
-                <div class="text-left py-2">
-                  <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/rhEmpDep.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
-                  <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
-                  <button type="submit" class="btn btn-success">Salvar</button>
-                </div>
+                </div>';
+              }
+              ?>
+              <div class="text-left py-2">
+                <a href="rhEmpDep.php?pg=<?= $_GET['pg'] ?>" class="btn btn-primary">Voltar</a>
+                <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
+                <button type="submit" class="btn btn-success">Salvar</button>
+              </div>
             </form><!-- FIM Form -->
           </div><!-- FIM card-body -->
         </div><!-- FIM card -->
@@ -129,16 +97,6 @@ require_once('../../../config/query.php');
   <!--################# section TERMINA AQUI #################-->
 
 </main><!-- End #main -->
-
-<!-- 
-<script>
-  function empresaSelect() {
-    document.novaRegraEmpresa.action = "novaRegraAp.php"
-    document.novaRegraEmpresa.method = "GET"
-    document.novaRegraEmpresa.submit();
-  }
-</script> -->
-
 
 <?php
 require_once('footer.php'); //Javascript e configurações afins

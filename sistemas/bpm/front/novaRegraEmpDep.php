@@ -3,8 +3,7 @@ session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../../../config/config.php');
-require_once('../../../config/query.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -30,18 +29,21 @@ require_once('../../../config/query.php');
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-body"><h5 class="card-title">Nova regra empresa x departamento </h5>
-            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraEmpDep.php?pg=<?= $_GET['pg'] ?>" method="POST">
+          <div class="card-body">
+            <h5 class="card-title">Nova regra empresa x departamento </h5>
+            <form class="row g-3" action="../inc/novaRegraEmpDep.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6" id="empresa">
                 <select type="text" name="empresa" class="form-select" required>
                   <option value="">------------</option>
-                  <?php 
-                    $sucesso = $conn->query($relatorioExcel);
+                  <?php
+                  $sucesso = oci_parse($connBpmgp, $relatorioExcel);
+                  oci_execute($sucesso);
 
-                    while($row = $sucesso->fetch_assoc()){
-                      echo '<option value="'.$row['ID_EMPRESA'].'">'.$row['NOME_EMPRESA'].'</option>';
-                    }
+                  while ($row = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                    echo '<option value="' . $row['ID_EMPRESA'] . '">' . $row['NOME_EMPRESA'] . '</option>';
+                  }
+                  oci_free_statement($sucesso);
                   ?>
                 </select>
                 <label for="empresa">EMPRESA:<span style="color: red;">*</span></label>
@@ -50,20 +52,19 @@ require_once('../../../config/query.php');
               <div class="form-floating mt-4 col-md-6" id="depto">
                 <select type="text" name="depto" class="form-select" required>
                   <option value="">------------</option>
-                  <?php 
-                  
-                    $departamento = "SELECT * FROM bpm_rh_departamento";
-                    $sucesso = $conn->query($departamento);
+                  <?php
+                  $sucesso = oci_parse($connBpmgp, $departrh);
+                  oci_execute($sucesso);
 
-                    while($row = $sucesso->fetch_assoc()){
-                      echo '<option value="'.$row['ID_DEPARTAMENTO'].'">'.$row['NOME_DEPARTAMENTO'].'</option>';
-                    }
+                  while ($row = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                    echo '<option value="' . $row['ID_DEPARTAMENTO'] . '">' . $row['NOME_DEPARTAMENTO'] . '</option>';
+                  }
                   ?>
                 </select>
                 <label for="depto">DEPARTAMENTO:<span style="color: red;">*</span></label>
               </div>
 
-              <div class="form-floating mt-4 col-md-6" id="gerente">
+              <div class="form-floating mt-4 col-md-4" id="gerente">
                 <select class="form-select" name="gerap" required>
                   <option value="">------------</option>
                   <option value="S">SIM</option>
@@ -71,7 +72,7 @@ require_once('../../../config/query.php');
                 </select>
                 <label for="gerente">GERENTE APROVA:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6" id="super">
+              <div class="form-floating mt-4 col-md-4" id="super">
                 <select class="form-select" name="supap" required>
                   <option value="">------------</option>
                   <option value="S">SIM</option>
@@ -79,7 +80,7 @@ require_once('../../../config/query.php');
                 </select>
                 <label for="super">SUPERINTENDENTE APROVA:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6" id="situacao">
+              <div class="form-floating mt-4 col-md-4" id="situacao">
                 <select class="form-select" name="situacao" required>
                   <option value="">------------</option>
                   <option value="A">ATIVO</option>
@@ -90,7 +91,7 @@ require_once('../../../config/query.php');
 
 
               <div class="text-left py-2">
-                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/rhEmpDep.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="../front/rhEmpDep.php?pg=<?= $_GET['pg'] ?>" class="btn btn-primary">Voltar</a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                 <button type="submit" class="btn btn-success">Salvar</button>
               </div>
@@ -103,16 +104,6 @@ require_once('../../../config/query.php');
   <!--################# section TERMINA AQUI #################-->
 
 </main><!-- End #main -->
-
-<!-- 
-<script>
-  function empresaSelect() {
-    document.novaRegraEmpresa.action = "novaRegraAp.php"
-    document.novaRegraEmpresa.method = "GET"
-    document.novaRegraEmpresa.submit();
-  }
-</script> -->
-
 
 <?php
 require_once('footer.php'); //Javascript e configurações afins

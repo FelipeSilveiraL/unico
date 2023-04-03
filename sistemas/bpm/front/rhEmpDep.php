@@ -2,7 +2,7 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiEmpDep.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -16,7 +16,7 @@ require_once('../inc/apiEmpDep.php');
       </ol>
     </nav>
   </div><!-- End Navegação -->
-  
+
   </style>
   <?php
   require_once('../../../inc/mensagens.php'); //Alertas
@@ -33,9 +33,9 @@ require_once('../inc/apiEmpDep.php');
 
             <a href="../inc/relatorioEmpDep.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
           </div>
-          
+
           <div class="card-body">
-          <h5 class="card-title">Empresa x departamento rh </h5>
+            <h5 class="card-title">Empresa x departamento rh </h5>
             <!-- Table with stripped rows -->
             <table class="table table-striped datatable">
               <thead>
@@ -46,63 +46,34 @@ require_once('../inc/apiEmpDep.php');
                   <th scope="col" class="capitalize">GERENTE APROVA</th>
                   <th scope="col" class="capitalize">SUPERINTENDENTE APROVA</th>
                   <th scope="col" class="capitalize">SITUAÇÃO</th>
-                  <th scope="col" class="capitalize" <?= $usuarioFuncao ?> >AÇÃO</th>
+                  <th scope="col" class="capitalize" <?= $usuarioFuncao ?>>AÇÃO</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
-                
-                  $empDep = "SELECT * FROM bpm_rh_emp_dep ORDER BY ID_EMPDEP ASC";
 
-                  $sucesso = $conn->query($empDep);
+                $sucesso = oci_parse($connBpmgp, $empdep);
+                oci_execute($sucesso);
 
-                  while($row = $sucesso->fetch_assoc()){
-                    $situacao = $row['SITUACAO'];
-                    $gerente = $row['GERENTE_APROVA'];
-                    $super = $row['SUPERINTENDENTE_APROVA'];
+                while ($row = oci_fetch_array($sucesso, OCI_ASSOC)) {
 
-                    if($situacao == 'A'){
-                      $situacao = 'ATIVO';
-                    }else{
-                      $situacao = 'DESATIVADO';
-                    }
-
-                    if($gerente == 'S'){
-                      $gerente = 'SIM';
-                    }else{
-                      $gerente = 'NÃO';
-                    }
-
-                    if($super == 'S'){
-                      $super = 'SIM';
-                    }else{
-                      $super = 'NÃO';
-                    }
-                    $empresaNome = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = '".$row['ID_EMPRESA']."'";
-                    $conexao = $conn->query($empresaNome);
-                    while($nomeEmpresa = $conexao->fetch_assoc()){
-                      $nome = $nomeEmpresa['NOME_EMPRESA'];
-                    }
-                    $depNome = "SELECT NOME_DEPARTAMENTO FROM bpm_rh_departamento WHERE ID_DEPARTAMENTO = '".$row['ID_DEPARTAMENTO']."'";
-                    $success = $conn->query($depNome);
-                    while($nomeDepartamento = $success->fetch_assoc()){
-                      $departamentoNome = $nomeDepartamento['NOME_DEPARTAMENTO'];
-                    }
-                    echo '<tr>
-                    <td>'.$row['ID_EMPDEP'].'</td>
-                    <td>'.$nome.'</td>
-                    <td>'.$departamentoNome.'</td>
-                    <td>'.$gerente.'</td>
-                    <td>'.$super.'</td>
-                    <td>'.$situacao.'</td>
-                    <td ' . $usuarioFuncao . ' ><a href="editEmpDep.php?pg=' . $_GET["pg"] . '&id=' . $row["ID_EMPDEP"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
+                  echo '<tr>
+                    <td>' . $row['ID_EMPDEP'] . '</td>
+                    <td>' . $row['NOME_EMPRESA'] . '</td>
+                    <td>' . $row['NOME_DEPARTAMENTO'] . '</td>
+                    <td>'; echo $row['GERENTE_APROVA'] == 'S' ? 'SIM' : 'NÂO' ; echo '</td>
+                    <td>'; echo $row['SUPERINTENDENTE_APROVA'] == 'S' ? 'SIM' : 'NÂO' ; echo '</td>
+                    <td>'; echo $row['SITUACAO'] == 'A' ? 'ATIVADO' : 'DESATIVADO' ; echo '</td>
+                    <td><a href="editEmpDep.php?pg=' . $_GET["pg"] . '&id=' . $row["ID_EMPDEP"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
                             
-                    <a href="http://'.$_SESSION['smartshare'].'/'.$_SESSION['smartshare'].'/bd/deletarEmpDep.php?pg='.$_GET['pg'].'id=' . $row["ID_EMPDEP"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                    <a href="../inc/deletarEmpDep.php?pg=' . $_GET['pg'] . '&id=' . $row["ID_EMPDEP"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                     </td> 
                  
                     </tr>';
-                    
-                  }
+                }
+
+                oci_free_statement($sucesso);
+                oci_close($connBpmgp);
 
                 ?>
               </tbody>
