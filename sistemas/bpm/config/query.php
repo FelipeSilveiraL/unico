@@ -61,21 +61,21 @@ $relatorioExcel = "SELECT * FROM bpm_empresas where ID_EMPRESA NOT IN(208,382) "
 $query_users = "SELECT * FROM bpm_usuarios_smartshare";
 
 $aprovadoresQuery = "SELECT
-a.APROVADOR_FILIAL,
-a.APROVADOR_AREA,
-a.APROVADOR_MARCA,
-a.APROVADOR_SUPERINTENDENTE,
-a.ID_EMPRESA,
-a.ID_DEPARTAMENTO,
-a.APROVADOR_GERENTE,
-e.NOME_EMPRESA,
-d.NOME_DEPARTAMENTO,
-a.SITUACAO, 
+a.aprovador_filial,
+a.aprovador_area,
+a.aprovador_marca,
+a.aprovador_superintendente,
+a.id_empresa,
+a.id_departamento,
+a.aprovador_gerente,
+e.nome_empresa,
+d.nome_departamento,
+a.situacao, 
 a.*
 FROM
-bpm_rh_aprovadores as a
-INNER JOIN bpm_empresas as e ON a.ID_EMPRESA = e.ID_EMPRESA
-INNER JOIN bpm_rh_departamento as d ON a.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO";
+aprovadores_rh a
+INNER JOIN empresa e ON a.id_empresa = e.id_empresa
+INNER JOIN departamento_rh d ON a.id_departamento = d.id_departamento";
 
 $aprovNF = "SELECT 
 AP.ID_APROVADOR, AP.APROVADOR_FILIAL, AP.APROVADOR_AREA, AP.APROVADOR_MARCA, AP.APROVADOR_GERENTE, AP.APROVADOR_SUPERINTENDENTE, AP.SITUACAO, AP.TIPO_REGISTRO, AP.APROVADOR_GESTOR, AP.LIMITE_AREA, AP.LIMITE_MARCA, AP.LIMITE_GERAL,AP.LIMITE_SUPERITENDENTE,

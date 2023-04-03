@@ -3,8 +3,7 @@ session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../../../config/config.php');
-require_once('../../../config/query.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -31,21 +30,23 @@ require_once('../../../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraAp.php?pg=<?= $_GET['pg'] ?>" method="POST">
+            <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="../inc/novaRegraAp.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" name="empresa" id="empresa" required>
                   <?php
-                    $empNew = 'SELECT * FROM bpm_empresas WHERE ID_EMPRESA NOT IN(302,208,261,101) ORDER BY NOME_EMPRESA ASC ';
+                  $queryEmpresa .= ' WHERE ID_EMPRESA NOT IN(302,208,261,101) ORDER BY NOME_EMPRESA ASC ';
 
-                    echo '<option value="">-----------------</option>';
+                  echo '<option value="">-----------------</option>';
 
-                    $sucesso2 = $conn->query($empNew);
+                  $sucesso = oci_parse($connBpmgp, $queryEmpresa);
+                  oci_execute($sucesso);
 
-                    while ($row2 = $sucesso2->fetch_assoc()) {
-                      echo '<option value="' . $row2['ID_EMPRESA'] . '">' . $row2['NOME_EMPRESA'] . '</option>';
-                    }
-                  
+                  while ($row2 = oci_fetch_array($sucesso)) {
+                    echo '<option value="' . $row2['ID_EMPRESA'] . '">' . $row2['NOME_EMPRESA'] . '</option>';
+                  }
+                  oci_free_statement($sucesso);
+
                   ?>
                 </select>
                 <label for="empresa">EMPRESA:<span style="color: red;">*</span></label>
@@ -55,11 +56,11 @@ require_once('../../../config/query.php');
                 <select class="form-select" name="depto" required>
                   <option value="">-----------------</option>
                   <?php
-                  $dep = "SELECT * FROM bpm_rh_departamento";
 
-                  $sucessoDep = $conn->query($dep);
+                  $sucessoDep = oci_parse($connBpmgp, $departrh);
+                  oci_execute($sucessoDep);
 
-                  while ($rowDep = $sucessoDep->fetch_assoc()) {
+                  while ($rowDep = oci_fetch_array($sucessoDep, OCI_ASSOC)) {
 
                     echo '<option value="' . $rowDep['ID_DEPARTAMENTO'] . '"> ' . $rowDep['NOME_DEPARTAMENTO'] . ' </option>';
                   }
@@ -73,15 +74,20 @@ require_once('../../../config/query.php');
                 <select class="form-select" name="filial" required>
                   <option value="">-----------------</option>
                   <?php
+                  $usuarioOriginal = $queryUserApi;
+
+                  $query = $usuarioOriginal;
+
+                  $query .= "WHERE U.cd_usuario not in (1) ORDER BY U.ds_usuario ASC  ";
                   
-                  $selectEmp2 = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1)";
+                  $sucesso = oci_parse($connSelbetti, $query);
+                  oci_execute($sucesso);
 
-                  $sucesso = $conn->query($selectEmp2);
+                  while ($rowUser = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                    echo '<option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
+                  };
 
-                  while ($row2 = $sucesso->fetch_assoc()) {
-
-                    echo '<option value="' . $row2['DS_LOGIN'] . '"> ' . $row2['DS_USUARIO'] . ' / ' . $row2['DS_LOGIN'] . ' </option>';
-                  }
+                  oci_free_statement($sucesso);
 
                   ?>
                 </select>
@@ -92,14 +98,14 @@ require_once('../../../config/query.php');
                 <select class="form-select" name="area" required>
                   <option value="">-----------------</option>
                   <?php
-                  $selectEmp = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1)";
+                  $sucesso = oci_parse($connSelbetti, $query);
+                  oci_execute($sucesso);
 
-                  $sucesso1 = $conn->query($selectEmp);
+                  while ($rowUser = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                    echo '<option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
+                  };
 
-                  while ($row1 = $sucesso1->fetch_assoc()) {
-
-                    echo '<option value="' . $row1['DS_LOGIN'] . '"> ' . $row1['DS_USUARIO'] . ' / ' . $row1['DS_LOGIN'] . ' </option>';
-                  }
+                  oci_free_statement($sucesso);
 
                   ?>
                 </select>
@@ -110,14 +116,14 @@ require_once('../../../config/query.php');
                 <select class="form-select" name="marca" required>
                   <option value="">-----------------</option>
                   <?php
-                  $selectEmp = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1)";
+                  $sucesso = oci_parse($connSelbetti, $query);
+                  oci_execute($sucesso);
 
-                  $sucesso = $conn->query($selectEmp);
+                  while ($rowUser = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                    echo '<option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
+                  };
 
-                  while ($row = $sucesso->fetch_assoc()) {
-
-                    echo '<option value="' . $row['DS_LOGIN'] . '"> ' . $row['DS_USUARIO'] . ' / ' . $row['DS_LOGIN'] . ' </option>';
-                  }
+                  oci_free_statement($sucesso);
 
                   ?>
                 </select>
@@ -128,14 +134,14 @@ require_once('../../../config/query.php');
                 <select class="form-select" name="gerente" required>
                   <option value="">-----------------</option>
                   <?php
-                  $selectEmp = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1)";
+                  $sucesso = oci_parse($connSelbetti, $query);
+                  oci_execute($sucesso);
 
-                  $sucesso = $conn->query($selectEmp);
+                  while ($rowUser = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                    echo '<option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
+                  };
 
-                  while ($row = $sucesso->fetch_assoc()) {
-
-                    echo '<option value="' . $row['DS_LOGIN'] . '"> ' . $row['DS_USUARIO'] . ' / ' . $row['DS_LOGIN'] . ' </option>';
-                  }
+                  oci_free_statement($sucesso);
 
                   ?>
                 </select>
@@ -146,15 +152,17 @@ require_once('../../../config/query.php');
                 <select class="form-select" name="super" required>
                   <option value="">-----------------</option>
                   <?php
-                  $selectEmp = "SELECT * FROM bpm_usuarios_smartshare WHERE id NOT IN (1)";
+                  $sucesso = oci_parse($connSelbetti, $query);
+                  oci_execute($sucesso);
 
-                  $sucesso = $conn->query($selectEmp);
+                  while ($rowUser = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                    echo '<option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
+                  };
 
-                  while ($row = $sucesso->fetch_assoc()) {
+                  oci_free_statement($sucesso);
 
-                    echo '<option value="' . $row['DS_LOGIN'] . '"> ' . $row['DS_USUARIO'] . ' / ' . $row['DS_LOGIN'] . ' </option>';
-                  }
-
+                  oci_close($connBpmgp);
+                  oci_close($connSelbetti);
                   ?>
                 </select>
                 <label for="super">SUPERINTENDENTE:<span style="color: red;">*</span></label>
@@ -170,7 +178,7 @@ require_once('../../../config/query.php');
               </div>
 
               <div class="text-left py-2">
-                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/aprovadoresRH.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="aprovadoresRH.php?pg=<?= $_GET['pg'] ?>" class="btn btn-primary">Voltar</a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                 <button type="submit" class="btn btn-success">Salvar</button>
               </div>

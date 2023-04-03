@@ -74,7 +74,7 @@ $departrh = 'SELECT
         d.situacao,
         d.id_departamento
     FROM
-        departamento_rh d';
+        departamento_rh d order by d.nome_departamento ASC';
 
 /* Select para a tela de Departmento RH */
 $departNF = 'SELECT
@@ -220,7 +220,7 @@ P.DS_PAPEL
 FROM
 usuario U
 LEFT JOIN 
-papel P ON (U.CD_PAPEL_PRINCIPAL = P.CD_PAPEL ) ";
+papel P ON (U.CD_PAPEL_PRINCIPAL = P.CD_PAPEL) ";
 
 $queryfornecedoresSeminovos = "SELECT FS.* FROM fornecedores_seminovos FS";
 
@@ -342,4 +342,4 @@ $itemEstoque = "SELECT EMPRESA,
         GRUPO , 
         ITEM_EDICAO
         FROM PEC_ITEM_ESTOQUE";
-
+?>

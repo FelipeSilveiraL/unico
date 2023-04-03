@@ -2,7 +2,6 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeAprov.php');
 ?>
 
 <main id="main" class="main">
@@ -18,25 +17,26 @@ require_once('../inc/apiRecebeAprov.php');
   </div><!-- End Navegação -->
   <style>
     .status-circle-off {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background-color: grey;
-  border: 2px solid white;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-}
-.status-circle-on {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background-color: greenyellow;
-  border: 2px solid white;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-}
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: grey;
+      border: 2px solid white;
+      bottom: 0;
+      right: 0;
+      position: absolute;
+    }
+
+    .status-circle-on {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: greenyellow;
+      border: 2px solid white;
+      bottom: 0;
+      right: 0;
+      position: absolute;
+    }
   </style>
   <?php
   require_once('../../../inc/mensagens.php'); //Alertas
@@ -53,7 +53,7 @@ require_once('../inc/apiRecebeAprov.php');
 
             <a href="../inc/relatorioAprovadoresRH.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
           </div>
-          
+
           <div class="card-body">
             <!-- Table with stripped rows -->
             <table class="table table-striped datatable">
@@ -66,7 +66,7 @@ require_once('../inc/apiRecebeAprov.php');
                   <th scope="col" class="capitalize">AREA</th>
                   <th scope="col" class="capitalize">MARCA</th>
                   <th scope="col" class="capitalize">GERENTE GERAL</th>
-                  <th scope="col" class="capitalize">SUPER INTEN.</th>                  
+                  <th scope="col" class="capitalize">SUPER INTEN.</th>
                   <th scope="col" width="200" class="capitalize text-right">Ação</th>
 
                 </tr>
