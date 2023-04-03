@@ -65,7 +65,7 @@ require_once('menu.php'); //menu lateral da pagina
                 </tr>
               </thead>
               <tbody>
-                <?php                
+                <?php
                 $resultLog = $conn->query($queryLog);
 
                 while ($log = $resultLog->fetch_assoc()) {
@@ -103,7 +103,7 @@ require_once('menu.php'); //menu lateral da pagina
               unset($_SESSION['cdFluxo']);
               ?>
               <div class="col-12">
-                <button class="btn btn-success" type="submit">Cancelar</button>
+                <a href="limpeza.php?pg=<?= $_GET['pg'] ?>" class="btn btn-success">Cancelar</a>
                 <button class="btn btn-danger" type="submit">Confirmar</button>
               </div>
             </form><!-- End Horizontal Form -->
