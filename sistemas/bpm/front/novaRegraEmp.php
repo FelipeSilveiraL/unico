@@ -2,8 +2,8 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeSelbetti.php');
-require_once('../../../config/config.php');
+require_once('../../../config/databases.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -31,7 +31,7 @@ require_once('../../../config/config.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle']?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraEmp.php?pg=<?= $_GET['pg']?>" method="POST">
+            <form class="row g-3" action="../inc/novaRegraEmp.php?pg=<?= $_GET['pg']?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6">
                 <input class="form-control" id="empresa" name="empresa" required>

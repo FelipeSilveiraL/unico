@@ -3,9 +3,8 @@ session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../../../config/config.php');
-require_once('../config/query.php');
-require_once('../inc/apiRecebeSelbetti.php');
+require_once('../../../config/databases.php');
+require_once('../../../config/sqlSmart.php');
 /* Essa opção descomentar após criar em telas_funcoes.php*/
 //echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
@@ -37,29 +36,32 @@ require_once('../inc/apiRecebeSelbetti.php');
           <div class="card">
             <div class="card-body">
             <br>
-                <form method="POST" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraCxUs.php?pg=<?= $_GET['pg'] ?>" >
+                <form method="POST" action="../inc/novaRegraCxUs.php?pg=<?= $_GET['pg'] ?>" >
                   <div class="row mb-3">
                     <label for="user" class="col-sm-2 col-form-label" >EMPRESA:<span style="color: red;">*</span></label>
                     <div class="col-md-6">
                       <select class="form-select" id="empresa" name="empresa" required>
                         <option value="">--------------</option>
                           <?php 
-                          $result = $conn->query($relatorioExcel);
+                          $queryEmpresa .= " ORDER BY ID_EMPRESA ASC";
+                          $result = oci_parse($connBpmgp, $queryEmpresa);
+                          oci_execute($result,OCI_COMMIT_ON_SUCCESS);
 
-                          while($row = $result->fetch_assoc()){
+                          while (($row = oci_fetch_array($result, OCI_ASSOC)) != false) {
 
                             $idEmp = $row['ID_EMPRESA'];
                              
-                            $queryCxEmp = "SELECT NOME_CAIXA FROM bpm_caixa_empresa WHERE ID_EMPRESA = ".$idEmp;
+                          //   $queryCxEmp = "SELECT NOME_CAIXA FROM caixa_empresa WHERE ID_EMPRESA = ".$idEmp;
                             
-                            $sucesso = $conn->query($queryCxEmp);
+                          //   $result2 = oci_parse($connBpmgp, $queryCxEmp);
+                          //   oci_execute($result2,OCI_COMMIT_ON_SUCCESS);
 
-                            if($a = $sucesso->fetch_assoc()){
-                              $idCxEmp = $a['NOME_CAIXA'];
-                              }else{
-                              $idCxEmp = '';                                
-                              }
-                              
+                          // if (($a = oci_fetch_assoc($result2, OCI_ASSOC)) != false) {
+                          //     $idCxEmp = $a['NOME_CAIXA'];
+                          //   }else{
+                          //   $idCxEmp = '';                                
+                          //   }
+                            
                             
                             // echo '<option value="'.$row['ID_EMPRESA'].'">'.$row['NOME_EMPRESA'].' /  '.$idCxEmp.'</option>';
                            echo '<option value="'.$row['ID_EMPRESA'].'">'.$row['NOME_EMPRESA'].'</option>';
@@ -83,11 +85,13 @@ require_once('../inc/apiRecebeSelbetti.php');
                       <select class="form-select" name="userCaixa" required>
                         <?php
                         echo '<option value=""> ------------ </option>';
-                        $query_users .= " WHERE CD_USUARIO NOT IN (1,19982) ORDER BY DS_USUARIO ASC";
                        
-                        $sucesso = $conn->query($query_users);
-                        while($row = $sucesso->fetch_assoc()){
-                          echo '<option value="'.$row['DS_LOGIN'].'">'.$row['DS_USUARIO'].' / '.$row['DS_LOGIN'].'</option>';
+                       
+                        $userConexao = oci_parse($connSelbetti, $query_user);
+                        oci_execute($userConexao,OCI_COMMIT_ON_SUCCESS);
+
+                          while (($selbettiQuery = oci_fetch_array($userConexao, OCI_ASSOC)) != false) {
+                          echo '<option value="'.$selbettiQuery['DS_LOGIN'].'">'.$selbettiQuery['DS_USUARIO'].' / '.$selbettiQuery['DS_LOGIN'].'</option>';
                         }
                         ?>
                       </select>

@@ -2,9 +2,9 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/inserindoUsers.php'); //excluindo a tabela, criando a tabela e populando a mesma
 require_once('../config/query.php');
 require_once('../../../config/config.php');
+require_once('../../../config/sqlSmart.php');
 
 /* Essa opção descomentar após criar em telas_funcoes.php*/
 //echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
@@ -56,10 +56,12 @@ require_once('../../../config/config.php');
                 </thead>
                 <tbody>
                  <?php 
-                  $query_users .= ' ORDER BY cd_usuario ASC';
-                  $exec = $conn->query($query_users);
+                  $queryUserApi  .= ' ORDER BY cd_usuario ASC';
 
-                  while($row = $exec->fetch_assoc()){
+                  $execSmartUser = oci_parse($connSelbetti, $queryUserApi );
+                  oci_execute($execSmartUser,OCI_COMMIT_ON_SUCCESS);
+
+                  while($row = oci_fetch_array($execSmartUser, OCI_ASSOC)){
 
                     $ativo = $row['ST_ATIVO'];
 
@@ -79,12 +81,12 @@ require_once('../../../config/config.php');
                     <td>'.$row["DS_LOGIN"].'</td>
                     <td>'.$row["DS_EMAIL"].'</td>
                     <td>'.$ativo.'</td>
-                    <td><a href="usersEdit.php?pg='.$_GET['pg'].'&id='.$row['id'].'" class="btn-primary btn-sm" '.$usuarioFuncao.'><span style="color: white;"><i class="bi bi-pencil"></i></span></a></td>
+                    <td><a href="usersEdit.php?pg='.$_GET['pg'].'&id='.$row['CD_USUARIO'].'" class="btn-primary btn-sm" '.$usuarioFuncao.'><span style="color: white;"><i class="bi bi-pencil"></i></span></a></td>
                     </tr>';
 
                    
                   }
-                  $conn->close();
+                  oci_close($connSelbetti);
                  ?>
                 </tbody>
               </table>

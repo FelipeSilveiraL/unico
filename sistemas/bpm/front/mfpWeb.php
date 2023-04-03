@@ -2,8 +2,8 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/recebeMFP.php');//recebe os dados da api e insere no banco de dados
-
+require_once('../../../config/databases.php');
+require_once('../../../config/sqlSmart.php');
 /* Essa opção descomentar após criar em telas_funcoes.php*/
 //echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
@@ -50,34 +50,27 @@ require_once('../inc/recebeMFP.php');//recebe os dados da api e insere no banco 
                 </thead>
                 <tbody>
                  <?php 
-                 $mfp = "SELECT * FROM bpm_mfp_web";
+               
 
-                 $resultado = $conn->query($mfp);
-                 
-                 while($row = $resultado->fetch_assoc()){
+                 $resultMFP = oci_parse($connBpmgp, $mfpConsulta);
+                 oci_execute($resultMFP, OCI_COMMIT_ON_SUCCESS);
 
-                    $erro = $row["perfil"];
+                while($row = oci_fetch_array($resultMFP, OCI_ASSOC)){
 
-                    switch($erro){
-                      case 'Area Padr?o':
-                        $erro = 'Area Padrão';
-                      break;
-                      case 'Centro Padr?o':
-                        $erro = 'Centro Padrão';
-                      break;
-                    }
                   echo'<tr>
-                  <td>'.$row["link"].'</td>
-                  <td>'.$row["id_perfil"].'</td>
-                  <td>'.$erro.'</td>
-                  <td>'.$row["descricao"].'</td>
-                  <td><a href="editarLink.php?pg=' . $_GET["pg"] . '&id_link='.$row['id_link'].'" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
+                  <td>'.$row["LINK"].'</td>
+                  <td>'.$row["CD_PERFIL"].'</td>
+                  <td>'.$row["DS_PERFIL"].'</td>
+                  <td>'.$row["DESCRICAO"].'</td>
+                  <td><a href="editarLink.php?pg=' . $_GET["pg"] . '&id_link='.$row['ID_LINK'].'" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
                             
-                  <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarLinkUnico.php?pg='.$_GET['pg'].'&id_link=' . $row["id_link"] . '" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
+                  <a href="../inc/deletarLinkUnico.php?pg='.$_GET['pg'].'&id_link='.$row["ID_LINK"].'" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
                   </tr>';
+
                  }
                  
-                 
+                //  oci_close($connBpmgp);
+                //  oci_free_statement($resultMFP);
                  
                  ?>
                 </tbody>

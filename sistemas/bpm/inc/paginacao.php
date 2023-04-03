@@ -73,7 +73,7 @@ $count = strlen($queryFuncaoUser);
 $sub = substr($queryFuncaoUser, 0, $count - 1);
 $sub .= ")";
 
-$resultadoFuncao = $conn->query($sub);
+// $resultadoFuncao = $conn->query($sub);
 
 
 if ($resultadoFuncao != false) {
@@ -81,3 +81,4 @@ if ($resultadoFuncao != false) {
         $usuarioFuncao = 'style= "display: none"';
     }
 }
+

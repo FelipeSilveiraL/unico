@@ -3,7 +3,7 @@ session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/deletaremp.php');
+require_once('../inc/deletarEmp.php');
 require_once('../../../config/config.php');
 
 ?>
@@ -79,7 +79,7 @@ require_once('../../../config/config.php');
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <a href="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/deletarEmp.php?pg=<?= $_GET['pg'] ?>&id=<?= $ID_EMPRESA ?>" class="btn btn-danger">Deletar</a>
+        <a href="../inc/deletarEmpresa.php?pg=<?= $_GET['pg'] ?>&id=<?= $idEmpresa ?>" class="btn btn-danger">Deletar</a>
       </div>
     </div>
   </div>

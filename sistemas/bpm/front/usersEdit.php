@@ -3,7 +3,8 @@ require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 require_once('../../../config/config.php');
-
+require_once('../../../config/databases.php');
+require_once('../../../config/sqlSmart.php');
 /* Essa opção descomentar após criar em telas_funcoes.php*/
 //echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
@@ -38,16 +39,17 @@ require_once('../../../config/config.php');
             <?php 
               $id = $_GET['id'];
 
-              $consulta = "SELECT DS_USUARIO,DS_LOGIN,DS_EMAIL,CD_USUARIO  FROM bpm_usuarios_smartshare WHERE id = ".$id."";
+              $queryUserApi .= " WHERE CD_USUARIO = ".$id;
+              
+              $execSmartUser = oci_parse($connSelbetti, $queryUserApi );
+                oci_execute($execSmartUser,OCI_COMMIT_ON_SUCCESS);
 
-              $resultado = $conn->query($consulta);
-
-              while($row = $resultado->fetch_assoc()){
+                while($row = oci_fetch_array($execSmartUser, OCI_ASSOC)){
 
                 $cd = $row['CD_USUARIO'];
 
                 echo '
-                <form method="POST" action=" http://'.$_SESSION['servidorOracle'].'/smartshare/bd/editUserApi.php" >
+                <form method="POST" action=" ../inc/editUser.php?pg='.$_GET['pg'].'" >
                   <div class="row mb-3">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Nome Usuário</label>
                     <div class="col-sm-5">
@@ -68,7 +70,7 @@ require_once('../../../config/config.php');
                   </div>
                   <input type="hidden" value="'.$row['CD_USUARIO'].'" name="inputCd">
                   <div class="text-left">
-                    <button type="button" class="btn btn-primary"><a href="usersBPM.php?pg='.$_GET['pg'].'" style="color:white;">voltar</a></button>
+                    <button type="button" class="btn btn-primary"><a href="../front/usersBPM.php?pg='.$_GET['pg'].'" style="color:white;">voltar</a></button>
                     <button type="submit" class="btn btn-success">Editar</button>
                   </div>
                 </form>';

@@ -1,12 +1,14 @@
 <?php
-require_once('../config/query.php');
+require_once('../../../config/databases.php');
+require_once('../../../config/sqlSmart.php');
 
 $queryCaixaEmpresa .= ' WHERE ID_EMPRESA = "'.$_POST['id'].'"';
 
-$resultadoCxEmpresa = $conn->query($queryCaixaEmpresa);
+$userConexao = oci_parse($connBpmgp, $queryCaixaEmpresa);
+oci_execute($userConexao,OCI_COMMIT_ON_SUCCESS);
 
-while ($caixaEmpresa = $resultadoCxEmpresa->fetch_assoc()) {
-    echo '<option value="' . $caixaEmpresa['ID_CAIXA_EMPRESA'] . '">' . $caixaEmpresa['NOME_CAIXA'].'</option>';
+while (($selbettiQuery = oci_fetch_array($userConexao, OCI_ASSOC)) != false) {
+    echo '<option value="' . $selbettiQuery['ID_CAIXA_EMPRESA'] . '">' . $selbettiQuery['NOME_CAIXA'].'</option>';
 }
 
-$conn->close();
+oci_close($connBpmgp);

@@ -2,9 +2,13 @@
 
 //chamando o banco
 require_once('../config/query.php');
+require_once('../../../config/databases.php');
+require_once('../../../config/sqlSmart.php');
 
-$query_users .= " ORDER BY DS_USUARIO ASC";
-$resultado = $conn->query($query_users);
+$queryUserApi .= " ORDER BY DS_USUARIO ASC";
+$execSmartUser = oci_parse($connSelbetti, $queryUserApi );
+oci_execute($execSmartUser,OCI_COMMIT_ON_SUCCESS);
+
 
 $arquivo = 'usuario_smartshare.xls';
 
@@ -30,7 +34,7 @@ $html = "
             </thead>
             <tbody>";
 
-while (($row_relatorio = $resultado->fetch_assoc()) != FAlSE) {
+while($row_relatorio = oci_fetch_array($execSmartUser, OCI_ASSOC)){
     $html .= "
                             <tr>";
     $html .=  empty($row_relatorio['CD_USUARIO']) ? '<td>----------</td>' : '<td>' . $row_relatorio['CD_USUARIO'] . '</td>';

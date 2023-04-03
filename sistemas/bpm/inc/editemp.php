@@ -1,17 +1,17 @@
 
   <?php
   session_start();
-  require_once("../config/query.php");
   require_once('../../../config/databases.php');
-  require_once('../../../config/config.php');
-  require_once('../inc/apiRecebeSelbetti.php');
+  require_once('../../../config/sqlSmart.php');
 
   $info = $_GET['ID'];
 
-  $editarTabela .= " WHERE ID_EMPRESA = $info";
-  $resultado = $conn->query($editarTabela);
+  $emp .= " WHERE ID_EMPRESA = ".$info;
 
-  while ($edit = $resultado->fetch_assoc()) {
+  $conSucesso = oci_parse($connBpmgp,$emp);
+  oci_execute($conSucesso,OCI_COMMIT_ON_SUCCESS);
+
+while ($edit = oci_fetch_array($conSucesso,OCI_ASSOC)) {
 
     $consorcio = ($edit["CONSORCIO"] == 'S') ? 'SIM' : 'NÃO';
 
@@ -32,7 +32,7 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-          <form class="row g-3" action="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/editemp.php?id_empresa=' . $info . '&pg='.$_GET['pg'].'" method="POST">
+          <form class="row g-3" action="../inc/editEmpresa.php?id_empresa=' . $info . '&pg='.$_GET['pg'].'" method="POST">
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" id="floatingSelect" name="usuarioBPM" disabled>
                   <option value="1" >' . $edit["NOME_EMPRESA"] . '</option>

@@ -4,8 +4,8 @@ require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 require_once('../../../config/config.php');
-require_once('../inc/apiRecebePerfil.php');
-
+require_once('../../../config/databases.php');
+require_once('../../../config/sqlSmart.php');
 /* Essa opção descomentar após criar em telas_funcoes.php*/
 //echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
@@ -37,7 +37,7 @@ require_once('../inc/apiRecebePerfil.php');
           <div class="card">
             <div class="card-body">
             <br>
-                <form method="POST" action=" http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novoLink.php?pg=<?= $_GET['pg'] ?>" >
+                <form method="POST" action=" ../inc/novoLink.php?pg=<?= $_GET['pg'] ?>" >
                   <div class="row mb-3">
                     <label for="user" class="col-sm-2 col-form-label" >Link:<span style="color: red;">*</span></label>
                     <div class="col-md-6">
@@ -49,7 +49,28 @@ require_once('../inc/apiRecebePerfil.php');
                     <div class="col-md-6">
                       <select class="form-control" id="sistema" name="cdPerfil" required>
                         <option value="">--------------</option>
-                        <?= $mostra ?>
+                        <?php
+                        
+                        $queryPerfil .= " WHERE st_ativo = 1";
+                        $resultadoPerfil = oci_parse($connSelbetti, $queryPerfil);
+                        oci_execute($resultadoPerfil);
+
+                        while($row = oci_fetch_array($resultadoPerfil, OCI_ASSOC)){
+                          $erro = $row['DS_PERFIL'];
+
+                          switch($erro){
+                            case 'Area Padr?o':
+                              $erro = 'Area Padrão';
+                            break;
+                            case 'Centro Padr?o':
+                              $erro = 'Centro Padrão';
+                            break;
+                          }
+                          echo '<option value="'.$row['CD_PERFIL'].'">'.$row['CD_PERFIL'].' - '.$erro.' 
+                          </option>';
+                        }
+
+                        ?>
                       </select> 
                     </div>
                   </div>

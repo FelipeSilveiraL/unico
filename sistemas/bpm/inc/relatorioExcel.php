@@ -1,10 +1,15 @@
 <?php
 
 //chamando o banco
-require_once('../config/query.php');
+require_once('../../../config/databases.php');
+require_once('../../../config/sqlSmart.php');
 
-$relatorioExcel .= "ORDER BY NOME_EMPRESA ASC";
-$resultado = $conn->query($relatorioExcel);
+$emp .= " ORDER BY ID_EMPRESA ASC";
+
+$conSucesso = oci_parse($connBpmgp,$emp);
+
+oci_execute($conSucesso,OCI_COMMIT_ON_SUCCESS);
+
 $arquivo = 'empresas.xls';
 
 // Criamos uma tabela HTML com o formato da planilha
@@ -32,7 +37,7 @@ $html = "
             </tr>
         </thead>
         <tbody>";
-        while (($row_relatorio = $resultado->fetch_assoc()) != FAlSE) {
+        while ($row_relatorio = oci_fetch_array($conSucesso,OCI_ASSOC)) {
             
             $situacao = ($row_relatorio['SITUACAO'] == 'A') ? 'ATIVO' : 'DESATIVADO';
             $consorcio = ($row_relatorio['CONSORCIO'] == 'S') ? 'SIM' : 'NAO';

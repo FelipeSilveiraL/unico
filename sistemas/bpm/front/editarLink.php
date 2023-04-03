@@ -4,7 +4,7 @@ require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 require_once('../../../config/config.php');
-require_once('../inc/apiRecebePerfil.php');
+require_once('../../../config/sqlSmart.php');
 /* Essa opção descomentar após criar em telas_funcoes.php*/
 //echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
@@ -34,38 +34,60 @@ require_once('../inc/apiRecebePerfil.php');
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body"><br>
-            <form method="POST" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare']?>/bd/editLink.php?pg=<?= $_GET['pg'] ?>" >
+            <form method="POST" class="row g-3" action="../inc/editLink.php?pg=<?= $_GET['pg'] ?>" >
                 
             <br>
             <?php
             $id_link = $_GET['id_link'];
 
-            $mfpConsulta = "SELECT * FROM bpm_mfp_web WHERE id_link = ".$id_link."";
+            $mfpConsulta .= " WHERE ID_LINK = ".$id_link;
 
-            $result = $conn->query($mfpConsulta);
+            $resultMFP = oci_parse($connBpmgp, $mfpConsulta);
+            oci_execute($resultMFP, OCI_COMMIT_ON_SUCCESS);
 
-            while($row = $result->fetch_assoc()){
+            while($row = oci_fetch_array($resultMFP, OCI_ASSOC)){
 
-      echo'     <div class="form-floating mt-4 col-md-6" id="link">
-                  <input value="'.$row['link'].'" class="form-control" name="link">
+                    $erro = $row['DS_PERFIL'];
+
+                    switch($erro){
+                      case 'Area Padr?o':
+                        $erro = 'Area Padrão';
+                      break;
+                      case 'Centro Padr?o':
+                        $erro = 'Centro Padrão';
+                      break;
+                    }
+
+           echo'<div class="form-floating mt-4 col-md-6" id="link">
+                  <input value="'.$row['LINK'].'" class="form-control" name="link">
                   <label for="link" >LINK:<code>*</code></label>
                 </div>
                 <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" id="sistema" name="cdPerfil">
-                  <option value="'.$row['id_perfil'].'">'.$row['id_perfil'].' - '.$erro.' </option>
+                  <option value="'.$row['CD_PERFIL'].'">'.$row['CD_PERFIL'].' - '.$erro.' </option>
                   <option value="">-----------</option>
-                  '.$mostra.' 
+                  ';
+                  $queryPerfil .= " WHERE st_ativo = 1";
+                  $resultadoPerfil = oci_parse($connSelbetti, $queryPerfil);
+                  oci_execute($resultadoPerfil);
+
+                  while($row2 = oci_fetch_array($resultadoPerfil, OCI_ASSOC)){
+                    
+                    echo '<option value="'.$row2['CD_PERFIL'].'">'.$row2['CD_PERFIL'].' - '.$erro.' 
+                    </option>';
+                  }
+                  echo' 
                   </select>
                   <label for="sistema">Código perfil:<code>*</code></label>
                 </div>
                 <div class="form-floating mt-4 col-md-6" id="descricao">
-                  <input type="text" class="form-control" value="'.$row['descricao'].'" name="descricao" required> 
+                  <input type="text" class="form-control" value="'.$row['DESCRICAO'].'" name="descricao" required> 
                   <label for="descricao" >DESCRIÇÃO:<code>*</code></label>
                 </div>';
             }
             ?>
                 <div class="text-left">
-                  <button type="button" class="btn btn-primary"><a href="mfpWeb.php?pg= '.$_GET['pg'].' " style="color:white;">Voltar</a></button>
+                  <button type="button" class="btn btn-primary"><a href="mfpWeb.php?pg=<?= $_GET['pg'] ?>" style="color:white;">Voltar</a></button>
                   <button type="submit" class="btn btn-success">Editar</button>
                 </div>
               </form>

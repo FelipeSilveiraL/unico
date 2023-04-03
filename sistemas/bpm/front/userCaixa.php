@@ -2,8 +2,9 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeCaixa.php');//recebe os dados da api e insere no banco de dados
 require_once('../config/query.php');
+require_once('../../../config/databases.php');
+require_once('../../../config/sqlSmart.php');
 /* Essa opção descomentar após criar em telas_funcoes.php*/
 //echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
@@ -51,33 +52,26 @@ require_once('../config/query.php');
                 </thead>
                 <tbody>
                  <?php 
-                 $caixaNF = "SELECT 
-                 CNF.ID, CNF.NOME_EMPRESA, CNF.ID_EMPRESA, CNF.USUARIO_CAIXA, CNF.ID_CAIXA_EMPRESA, CE.nome_caixa
-                  FROM
-                      unico.bpm_caixa_nf CNF
-                  LEFT JOIN bpm_caixa_empresa CE ON (CNF.id_caixa_empresa = CE.id_caixa_empresa) ORDER BY CNF.ID ASC ";
                   
-                  //   WHERE CNF.ID_EMPRESA NOT IN 
-                  // (1,19802,18782,20002,22389,27209,25909,25549,25670) 
-                  //   ORDER BY CNF.ID_EMPRESA ASC";
+                  $result = oci_parse($connBpmgp, $query_caixa);
+                  oci_execute($result);
+                  
+                  while (($rowCaixa = oci_fetch_assoc($result)) != false) {
 
-                 $resultado = $conn->query($caixaNF);
-                 
-                 while($row = $resultado->fetch_assoc()){
-                  $idCaixaEmpresa = $row['ID_CAIXA_EMPRESA'];
+                  $idCaixaEmpresa = $rowCaixa['ID_CAIXA_EMPRESA'];
                   echo'<tr>
-                  <td>'.$row['ID'].'</td>
-                  <td>'.$row["NOME_EMPRESA"].'</td>
-                  <td>'.$row['nome_caixa'].'</td>
-                  <td>'.$row["USUARIO_CAIXA"].'</td>
-                  <td><a href="editUserCx.php?pg=' . $_GET["pg"] . '&id='.$row['ID'].'" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
+                  <td>'.$rowCaixa['id'].'</td>
+                  <td>'.$rowCaixa['NOME_EMPRESA'].'</td>
+                  <td>'.$rowCaixa['NOME_CAIXA'].'</td>
+                  <td>'.$rowCaixa["USUARIO_CAIXA"].'</td>
+                  <td><a href="editUserCx.php?pg=' . $_GET["pg"] . '&id='.$idCaixaEmpresa.'&user='.$rowCaixa["USUARIO_CAIXA"].'" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
                             
-                  <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarCxUs.php?pg='.$_GET['pg'].'&id_empresa=' . $row["ID_EMPRESA"] . '&usuario_caixa='.$row["USUARIO_CAIXA"].'&id_caixa_empresa='.$idCaixaEmpresa.'" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
+                  <a href="../inc/deletarCxUs.php?pg='.$_GET['pg'].'&id_empresa=' . $rowCaixa["ID_EMPRESA"] . '&usuario_caixa='.$rowCaixa["USUARIO_CAIXA"].'&id_caixa_empresa='.$idCaixaEmpresa.'" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
                   </tr>';
                  }
                  
                  
-                 $conn->close();
+                 oci_close($connBpmgp);
                  ?>
                 </tbody>
               </table>

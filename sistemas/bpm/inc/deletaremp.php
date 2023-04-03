@@ -1,14 +1,15 @@
 <?php 
+session_start();
+require_once('../../../config/databases.php');
+require_once('../../../config/sqlSmart.php');
 
-require_once('../config/query.php');
+$idEmpresa = ''.$_GET["ID"].'';
+$emp .= ' WHERE ID_EMPRESA= '.$idEmpresa;
 
-$ID_EMPRESA = ''.$_GET["ID"].'';
-$deletar .= 'WHERE ID_EMPRESA= '.$_GET["ID"].' ';
-
-$resultado = $conn->query($deletar);
-
-
-    while($row = $resultado->fetch_assoc()){
+$resultEmp = oci_parse($connBpmgp, $emp);
+oci_execute($resultEmp);
+    
+while ($row = oci_fetch_array($resultEmp,OCI_ASSOC)) {
 
         
         $consorcio = ($row["CONSORCIO"] == 'S') ? 'SIM' : 'NÃO';
