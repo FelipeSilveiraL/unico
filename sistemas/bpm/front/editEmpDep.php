@@ -54,7 +54,7 @@ require_once('../../../config/sqlSmart.php');
                 <label for="depto">DEPARTAMENTO:</label>
                 </div>
 
-                <div class="form-floating mt-4 col-md-6" id="gerente">
+                <div class="form-floating mt-4 col-md-4" id="gerente">
                 <select class="form-select" name="gerap"  required>
                 <option value="' . $row['GERENTE_APROVA'] . '">'; echo $row['GERENTE_APROVA'] == 'N' ? 'NÃO' : 'SIM'; echo '</option>
                 <option>------------</option>
@@ -63,7 +63,7 @@ require_once('../../../config/sqlSmart.php');
                 </select>
                 <label for="gerente">GERENTE APROVA:<span style="color: red;">*</span></label>
                 </div>
-                <div class="form-floating mt-4 col-md-6" id="super">
+                <div class="form-floating mt-4 col-md-4" id="super">
                 <select class="form-select" name="supap"  required>
                 <option value="' . $row['SUPERINTENDENTE_APROVA'] . '">'; echo $row['SUPERINTENDENTE_APROVA'] == 'N' ? 'NÃO' : 'SIM'; echo '</option>
                 <option>------------</option>
@@ -72,7 +72,7 @@ require_once('../../../config/sqlSmart.php');
                 </select>
                 <label for="super">SUPERINTENDENTE APROVA:<span style="color: red;">*</span></label>
                 </div>
-                <div class="form-floating mt-4 col-md-6" id="situacao">
+                <div class="form-floating mt-4 col-md-4" id="situacao">
                 <select class="form-select" name="situacao"  required>
                 <option value="' . $row['SITUACAO'] . '">'; echo $row['SITUACAO'] == 'D' ? 'DESATIVADO' : 'ATIVADO'; echo '</option>
                 <option>------------</option>
