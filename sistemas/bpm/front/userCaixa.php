@@ -63,7 +63,7 @@ require_once('../../../config/sqlSmart.php');
                           <td>' . $rowCaixa['NOME_EMPRESA'] . '</td>
                           <td>' . $rowCaixa['NOME_CAIXA'] . '</td>
                           <td>' . $rowCaixa["USUARIO_CAIXA"] . '</td>
-                          <td><a href="editUserCx.php?pg=' . $_GET["pg"] . '&id=' . $idCaixaEmpresa . '&user=' . $rowCaixa["USUARIO_CAIXA"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
+                          <td><a href="editUserCx.php?pg=' . $_GET["pg"] . '&id_caixa_empresa=' . $idCaixaEmpresa . '&user=' . $rowCaixa["USUARIO_CAIXA"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
                                     
                           <a href="../inc/deletarCxUs.php?pg=' . $_GET['pg'] . '&id_empresa=' . $rowCaixa["ID_EMPRESA"] . '&usuario_caixa=' . $rowCaixa["USUARIO_CAIXA"] . '&id_caixa_empresa=' . $idCaixaEmpresa . '" title="Desativar" class="btn-danger btn-sm" ' . $usuarioFuncao . '><i class="bi bi-trash"></i></a></td>
                         </tr>';

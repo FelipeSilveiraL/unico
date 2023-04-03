@@ -35,15 +35,12 @@ require_once('../../../config/sqlSmart.php');
           <div class="card-body">
             <br>
             <?php
-              $id = $_GET['idCaixaEmpresa'];
+              $id = $_GET['id_caixa_empresa'];
               $user = $_GET['user'];
 
               $consulta .= " WHERE ID_CAIXA_EMPRESA = " . $id . " AND USUARIO_CAIXA = '" . $user . "' ";
-              /* $result = oci_parse($connBpmgp, $consulta);
-              oci_execute($result); */
-
-              echo $consulta;
-              exit;
+              $result = oci_parse($connBpmgp, $consulta);
+              oci_execute($result);
 
               while (($row = oci_fetch_assoc($result)) != false) {
 
