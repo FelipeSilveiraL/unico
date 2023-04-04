@@ -1,9 +1,8 @@
 <?php
-session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeDepNF.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -17,7 +16,7 @@ require_once('../inc/apiRecebeDepNF.php');
       </ol>
     </nav>
   </div><!-- End Navegação -->
-  
+
   </style>
   <?php
   require_once('../../../inc/mensagens.php'); //Alertas
@@ -34,9 +33,9 @@ require_once('../inc/apiRecebeDepNF.php');
 
             <a href="../inc/relatorioDepartamentoNF.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
           </div>
-          
+
           <div class="card-body">
-          <h5 class="card-title">Departamento nf </h5>
+            <h5 class="card-title">Departamento nf </h5>
             <!-- Table with stripped rows -->
             <table class="table table-striped datatable">
               <thead>
@@ -49,37 +48,33 @@ require_once('../inc/apiRecebeDepNF.php');
               </thead>
               <tbody>
                 <?php
-                
-                  $departamento = "SELECT
-                  d.NOME_DEPARTAMENTO,
-                  d.SITUACAO,
-                  d.ID_DEPARTAMENTO
-              FROM
-                  bpm_nf_departamento d";
 
-                  $sucesso = $conn->query($departamento);
+                $sucesso = oci_parse($connBpmgp, $departNF);
+                oci_execute($sucesso);
 
-                  while($row = $sucesso->fetch_assoc()){
-                    $situacao = $row['SITUACAO'];
+                while ($row = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                  $situacao = $row['SITUACAO'];
 
-                    if($situacao == 'A'){
-                      $situacao = 'Ativo';
-                    }else{
-                      $situacao = 'Desativado';
-                    }
+                  if ($situacao == 'A') {
+                    $situacao = 'Ativo';
+                  } else {
+                    $situacao = 'Desativado';
+                  }
 
-                    echo '<tr>
-                    <td>'.$row['ID_DEPARTAMENTO'].'</td>
-                    <td>'.$row['NOME_DEPARTAMENTO'].'</td>
-                    <td>'.$situacao.'</td>
+                  echo '<tr>
+                    <td>' . $row['ID_DEPARTAMENTO'] . '</td>
+                    <td>' . $row['NOME_DEPARTAMENTO'] . '</td>
+                    <td>' . $situacao . '</td>
                     <td ' . $usuarioFuncao . '><a href="editDepNF.php?pg=' . $_GET["pg"] . '&id_departamento=' . $row["ID_DEPARTAMENTO"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
                             
-                    <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarDepNF.php?pg='.$_GET['pg'].'&id=' . $row["ID_DEPARTAMENTO"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a>
+                    <a href="../inc/deletarDepNF.php?pg=' . $_GET['pg'] . '&id=' . $row["ID_DEPARTAMENTO"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a>
                     </td> 
                  
                     </tr>';
-                    
-                  }
+                }
+
+                oci_free_statement($sucesso);
+                oci_close($connBpmgp);
 
                 ?>
               </tbody>
