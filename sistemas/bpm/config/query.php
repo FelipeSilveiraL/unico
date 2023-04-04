@@ -75,17 +75,6 @@ aprovadores_rh a
 INNER JOIN empresa e ON a.id_empresa = e.id_empresa
 INNER JOIN departamento_rh d ON a.id_departamento = d.id_departamento";
 
-$aprovNF = "SELECT 
-AP.ID_APROVADOR, AP.APROVADOR_FILIAL, AP.APROVADOR_AREA, AP.APROVADOR_MARCA, AP.APROVADOR_GERENTE, AP.APROVADOR_SUPERINTENDENTE, AP.SITUACAO, AP.TIPO_REGISTRO, AP.APROVADOR_GESTOR, AP.LIMITE_AREA, AP.LIMITE_MARCA, AP.LIMITE_GERAL,AP.LIMITE_SUPERITENDENTE,
-E.NOME_EMPRESA,
-D.NOME_DEPARTAMENTO
-FROM
-bpm_nf_aprovadores AP
-LEFT JOIN 
-bpm_empresas E ON (AP.ID_EMPRESA = E.ID_EMPRESA)
-LEFT JOIN 
-bpm_nf_departamento D ON (AP.ID_DEPARTAMENTO = D.ID_DEPARTAMENTO)";
-
 $tabelaSeminovos = "SELECT * FROM bpm_seminovos";
 
 $queryEstados = "SELECT * FROM estados";

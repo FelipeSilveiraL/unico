@@ -1,13 +1,11 @@
 <?php
 session_start();
-require_once 'head.php'; //CSS e configurações HTML e session start
-require_once 'header.php'; //logo e login e banco de dados
-require_once 'menu.php'; //menu lateral da pagina
-require_once '../../../config/config.php';
-require_once '../config/query.php';
-
+require_once('head.php'); //CSS e configurações HTML e session start
+require_once('header.php'); //logo e login e banco de dados
+require_once('menu.php'); //menu lateral da pagina
+require_once('../../../config/sqlSmart.php');
 /* Essa opção descomentar após criar em telas_funcoes.php*/
-echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
+//echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
 
 <main id="main" class="main">
@@ -17,20 +15,16 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET[
-            'pg'
-        ] ?>">DEPARTAMENTOS</a></li>
-        <li class="breadcrumb-item"><a href="aprovadoresNF.php?pg=<?= $_GET[
-            'pg'
-        ] ?>">APROVADORES NF</a></li>
+        <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">DEPARTAMENTOS</a></li>
+        <li class="breadcrumb-item"><a href="aprovadoresNF.php?pg=<?= $_GET['pg'] ?>">APROVADORES NF</a></li>
         <li class="breadcrumb-item">EDIÇÃO REGRA APROVADORES</li>
       </ol>
     </nav>
   </div><!-- End Navegação -->
 
   <?php require_once '../../../inc/mensagens.php';
-//Alertas
-?>
+  //Alertas
+  ?>
 
   <!--################# COLE section AQUI #################-->
 
@@ -40,141 +34,121 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
 
         <div class="card">
           <div class="card-body">
-          <h5 class="card-title">Editar aprovadores nf </h5>
+            <h5 class="card-title">Editar aprovadores nf </h5>
             <br>
             <?php
+            //salvando o conteudo original
+            $usuarioOriginal = $queryUserApi;
+
+            $aprovNF .= " AND a.id_aprovador = " . $_GET['id_aprovador'] . "";
             $id = $_GET['id_aprovador'];
-            $aprovNF .= ' WHERE AP.ID_APROVADOR = ' . $id . '';
-            $result = $conn->query($aprovNF);
+            $result = oci_parse($connBpmgp, $aprovNF);
+            oci_execute($result);
 
-            while ($row = $result->fetch_assoc()) {
+            while ($row = oci_fetch_array($result, OCI_ASSOC)) {
 
-                echo '<form method="POST" class="row g-3" action="http://' .
-                    $_SESSION['servidorOracle'] .
-                    '/' .
-                    $_SESSION['smartshare'] .
-                    '/bd/editApNF.php?pg=' .
-                    $_GET['pg'] .
-                    '&id_aprovador=' .
-                    $id .
-                    '" >
+              echo '<form method="POST" class="row g-3" action="../inc/editApNF.php?pg=' . $_GET['pg'] . '&id_aprovador=' . $id . '" >
                 <div class="form-floating mt-4 col-md-6" id="user">
                   <input type="hidden" value="' .
-                    $id .
-                    '" name = "id_aprovador">
+                $id .
+                '" name = "id_aprovador">
                   <input type="text" class="form-select" value="' .
-                    $row['NOME_EMPRESA'] .
-                    '" disabled>
+                $row['NOME_EMPRESA'] .
+                '" disabled>
                   <label for="user">EMPRESA:</label>
                 </div>
                 <div class="form-floating mt-4 col-md-6" id="dep">
                   <input type="text" class="form-control" value="' .
-                    $row['NOME_DEPARTAMENTO'] .
-                    '" name="dep" disabled>
+                $row['NOME_DEPARTAMENTO'] .
+                '" name="dep" disabled>
                   <label for="dep">DEPARTAMENTO:</label>
                 </div>';
-                $query_users .=
-                    " WHERE ds_login='" . $row['APROVADOR_FILIAL'] . "' ";
+              $queryUserApi .= " WHERE U.ds_login='" . $row['APROVADOR_FILIAL'] . "' ";
 
-                $conexao = $conn->query($query_users);
+              $conexao = oci_parse($connSelbetti, $queryUserApi);
+              oci_execute($conexao);
 
-                echo '<div class="form-floating mt-4 col-md-6" id="sistema">
-                  <select class="form-select"  name="filial" required>';
+              echo '<div class="form-floating mt-4 col-md-6" id="filial" id="sistema">
+                  <select class="form-select" name="filial" required>';
 
-                while ($rowCifU = $conexao->fetch_assoc()) {
-                    echo '<option value="' .
-                        $row['APROVADOR_FILIAL'] .
-                        '">' .
-                        $rowCifU['DS_USUARIO'] .
-                        ' / ' .
-                        $rowCifU['DS_LOGIN'] .
-                        '</option>';
-                }
+              while ($rowCifU = oci_fetch_array($conexao, OCI_ASSOC)) {
+                echo '<option value="' . $row['APROVADOR_FILIAL'] . '">' . $rowCifU['DS_USUARIO'] . ' / ' . $rowCifU['DS_LOGIN'] . '</option>';
+              };
+              oci_free_statement($conexao);
 
-                echo '    
+              echo '    
                     <option value="">-----------</option>';
 
-                $query = 'SELECT * FROM bpm_usuarios_smartshare ORDER BY DS_USUARIO ASC';
+              $sucesso = oci_parse($connSelbetti, $usuarioOriginal);
+              oci_execute($sucesso);
 
-                $sucesso = $conn->query($query);
-
-                while ($rowUser = $sucesso->fetch_assoc()) {
-                    echo '<option value="' .
-                        $rowUser['DS_LOGIN'] .
-                        '">' .
-                        $rowUser['DS_USUARIO'] .
-                        ' / ' .
-                        $rowUser['DS_LOGIN'] .
-                        '</option>';
-                }
-                echo '
+              while ($rowUser = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                echo '<option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
+              };
+              oci_free_statement($sucesso);
+              echo '
                     </select> 
                     <label for="sistema">CIÊNCIA FILIAL:</label>
                 </div>
                 <div class="form-floating mt-4 col-md-6" id="situacao">
                     <select class="form-select"  style="width: 440px;margin-left: 4px;" name="situacao" required>';
-                if ($row['SITUACAO'] == 'A') {
-                    $situacao = 'ATIVO';
-                } else {
-                    $situacao = 'DESATIVADO';
-                }
+              if ($row['SITUACAO'] == 'A') {
+                $situacao = 'ATIVO';
+              } else {
+                $situacao = 'DESATIVADO';
+              }
 
-                echo '
+              echo '
                       <option value="' .
-                    $row['SITUACAO'] .
-                    '">' .
-                    $situacao .
-                    '</option>';
-                echo '    
+                $row['SITUACAO'] .
+                '">' .
+                $situacao .
+                '</option>';
+              echo '    
                       <option value="">-----------</option>
                       <option value="A">ATIVO</option>
                       <option value="D">DESATIVADO</option>';
 
-                echo ' </select>
+              echo ' </select>
                   <label for="situacao">SITUAÇÃO:</label>
                 </div>
                 <div class="form-floating mt-4 col-md-6" id="sistema">
                   <select class="form-select" name="area" required>';
 
-                $query_users2 =
-                    "SELECT * FROM bpm_usuarios_smartshare WHERE ds_login='" .
-                    $row['APROVADOR_AREA'] .
-                    "' ";
+              $query = $usuarioOriginal;
 
-                $oxi = $conn->query($query_users2);
+              $query .= " WHERE U.ds_login='" . $row['APROVADOR_AREA'] . "' ";
 
-                while ($seila = $oxi->fetch_assoc()) {
-                    echo '
-                    <option value="' .
-                        $row['APROVADOR_AREA'] .
-                        '">' .
-                        $seila['DS_USUARIO'] .
-                        ' / ' .
-                        $seila['DS_LOGIN'] .
-                        '</option>';
-                }
-                echo '    
+              $sucesso = oci_parse($connSelbetti, $query);
+              oci_execute($sucesso);
+
+              while ($rowUser = oci_fetch_array($sucesso, OCI_ASSOC)) {
+
+                echo '
+                      <option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
+              }
+
+              oci_free_statement($sucesso);
+
+              echo '    
                     <option value="">-----------</option>';
 
-                $query2 = 'SELECT * FROM bpm_usuarios_smartshare ORDER BY DS_USUARIO ASC';
+              $sucesso = oci_parse($connSelbetti, $usuarioOriginal);
+              oci_execute($sucesso);
 
-                $sucesso2 = $conn->query($query2);
+              while ($rowUser = oci_fetch_array($sucesso, OCI_ASSOC)) {
 
-                while ($rowUser2 = $sucesso2->fetch_assoc()) {
-                    echo '<option value="' .
-                        $rowUser2['DS_LOGIN'] .
-                        '">' .
-                        $rowUser2['DS_USUARIO'] .
-                        ' / ' .
-                        $rowUser2['DS_LOGIN'] .
-                        '</option>';
-                }
+                echo '
+                            <option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
+              }
 
-                echo '</select>
+              oci_free_statement($sucesso);
+
+              echo '</select>
                   <label for="sistema">CIÊNCIA AREA:</label>
                 </div>
                   <div class="form-floating mt-4 col-md-5">
-                      <input class="form-control" id="limitA" value="'.$row['LIMITE_AREA'].',00" name="limitA">
+                      <input class="form-control" id="limitA" value="' . $row['LIMITE_AREA'] . ',00" name="limitA">
                   <label for="limitA">LIMITE APROVAÇÃO:</label>
                   </div> 
                   <div class="form-floating col-md-1" style="font-size:25px;" title="Ilimitado!">
@@ -189,58 +163,51 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                             }else{
                                 document.getElementById("limitA").disabled = true;
                                 document.getElementById("limitA").value = 0;
-                            }
-
-                            
+                            }                            
                         }
                     </script>
                   </div>
                 <div class="form-floating mt-4 col-md-6">
                     <select class="form-select" id="marca" name="marca" required>';
-                $query_users3 =
-                    "SELECT * FROM bpm_usuarios_smartshare WHERE ds_login='" .
-                    $row['APROVADOR_MARCA'] .
-                    "' ";
 
-                $conecção = $conn->query($query_users3);
-                while ($fila = $conecção->fetch_assoc()) {
-                    echo '
-                      <option value="' .
-                        $row['APROVADOR_MARCA'] .
-                        '">' .
-                        $fila['DS_USUARIO'] .
-                        ' / ' .
-                        $fila['DS_LOGIN'] .
-                        '</option>';
-                }
-                echo '    
+              $query = $usuarioOriginal;
+
+              $query .= " WHERE U.ds_login='" . $row['APROVADOR_MARCA'] . "' ";
+
+              $sucesso = oci_parse($connSelbetti, $query);
+              oci_execute($sucesso);
+
+              while ($rowUser = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                echo '
+                      <option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
+              }
+
+              oci_free_statement($sucesso);
+              echo '    
                     <option value="">-----------</option>';
 
-                $query3 = 'SELECT * FROM bpm_usuarios_smartshare ORDER BY DS_USUARIO ASC';
+              $sucesso = oci_parse($connSelbetti, $usuarioOriginal);
+              oci_execute($sucesso);
 
-                $sucesso3 = $conn->query($query3);
+              while ($rowUser = oci_fetch_array($sucesso, OCI_ASSOC)) {
 
-                while ($rowUser3 = $sucesso3->fetch_assoc()) {
-                    echo '<option value="' .
-                        $rowUser3['DS_LOGIN'] .
-                        '">' .
-                        $rowUser3['DS_USUARIO'] .
-                        ' / ' .
-                        $rowUser3['DS_LOGIN'] .
-                        '</option>';
-                }
                 echo '
+                                  <option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
+              }
+
+              oci_free_statement($sucesso);
+              echo '
                     </select>
                     <label for="marca">CIÊNCIA MARCA:</label>
                   </div>
                   <div class="form-floating mt-4 col-md-5">
                     <input class="form-control" id="limitM" value="';
-                    if(empty($row['LIMITE_MARCA'])){
-                      echo '0';
-                    }else{
-                      echo $row['LIMITE_MARCA'];
-                    }
-                    echo ',00" name="limitM">
+              if (empty($row['LIMITE_MARCA'])) {
+                echo '0';
+              } else {
+                echo $row['LIMITE_MARCA'];
+              }
+              echo ',00" name="limitM">
                       <label for="limitM">LIMITE APROVAÇÃO:</label>
                   </div> 
                   <div class="form-floating col-md-1" style="font-size:25px;" title="Ilimitado!">
@@ -264,53 +231,44 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
 
                 <div class="form-floating mt-4 col-md-6" id="gerente">
                     <select class="form-select" name="gerente" required>';
-                $query_users4 =
-                    "SELECT * FROM bpm_usuarios_smartshare WHERE ds_login = '" .
-                    $row['APROVADOR_GERENTE'] .
-                    "' ";
+              $query = $usuarioOriginal;
 
-                    echo $query_users4;
+              $query .= " WHERE U.ds_login='" . $row['APROVADOR_GERENTE'] . "' ";
 
-                $conecção4 = $conn->query($query_users4);
-                while ($fila4 = $conecção4->fetch_assoc()) {
-                    echo '
-                            <option value="' .
-                        $row['APROVADOR_GERENTE'] .
-                        '">' .
-                        $fila4['DS_USUARIO'] .
-                        ' / ' .
-                        $fila4['DS_LOGIN'] .
-                        '</option>';
-                }
-                echo '    
-                          <option value="">-----------</option>';
+              $sucesso = oci_parse($connSelbetti, $query);
+              oci_execute($sucesso);
 
-                $query4 = 'SELECT * FROM bpm_usuarios_smartshare ORDER BY DS_USUARIO ASC';
+              while ($rowUser = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                echo '
+                          <option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
+              }
 
-                $sucesso4 = $conn->query($query4);
+              oci_free_statement($sucesso);
 
-                while ($rowUser4 = $sucesso4->fetch_assoc()) {
-                    echo '<option value="' .
-                        $rowUser4['DS_LOGIN'] .
-                        '">' .
-                        $rowUser4['DS_USUARIO'] .
-                        ' / ' .
-                        $rowUser4['DS_LOGIN'] .
-                        '</option>';
-                }
-                
-                echo ' </select>
+              echo '    
+                        <option value="">-----------</option>';
+
+              $sucesso = oci_parse($connSelbetti, $usuarioOriginal);
+              oci_execute($sucesso);
+
+              while ($rowUser = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                echo '<option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
+              };
+
+              oci_free_statement($sucesso);
+
+              echo ' </select>
                   <label for="gerente">GERENTE GERAL:</label>
                   </div>
                   <div class="form-floating mt-4 col-md-5">
-                      <input class="form-control" id="limiteG"  value="'; 
-                      if(empty($row['LIMITE_GERAL'])){
-                        echo '0';
-                      }else{
-                        echo $row['LIMITE_GERAL'];
-                      }
-                        
-                  echo',00" name="limitG" >
+                      <input class="form-control" id="limiteG"  value="';
+              if (empty($row['LIMITE_GERAL'])) {
+                echo '0';
+              } else {
+                echo $row['LIMITE_GERAL'];
+              }
+
+              echo ',00" name="limitG" >
                   <label for="limitG">LIMITE APROVAÇÃO:</label>
                   </div> 
                   <div class="form-floating col-md-1" style="font-size:25px;" title="Ilimitado!">
@@ -333,43 +291,36 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                 </div>
                 <div class="form-floating mt-4 col-md-6" id="super">
                     <select class="form-select"  name="super" required>';
-                $query_users5 =
-                    "SELECT * FROM bpm_usuarios_smartshare WHERE ds_login='" .
-                    $row['APROVADOR_SUPERINTENDENTE'] .
-                    "' ";
+              $query = $usuarioOriginal;
 
-                $conecção5 = $conn->query($query_users5);
-                while ($fila = $conecção5->fetch_assoc()) {
-                    echo '
-                              <option value="' .
-                        $row['APROVADOR_SUPERINTENDENTE'] .
-                        '">' .
-                        $fila['DS_USUARIO'] .
-                        ' / ' .
-                        $fila['DS_LOGIN'] .
-                        '</option>';
-                }
-                echo '    
-                            <option value="">-----------</option>';
+              $query .= " WHERE U.ds_login='" . $row['APROVADOR_SUPERINTENDENTE'] . "' ";
 
-                $query5 = 'SELECT * FROM bpm_usuarios_smartshare ORDER BY DS_USUARIO ASC';
+              $sucesso = oci_parse($connSelbetti, $query);
+              oci_execute($sucesso);
 
-                $sucesso5 = $conn->query($query5);
+              while ($rowUser = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                echo '
+                          <option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
+              }
 
-                while ($rowUser5 = $sucesso5->fetch_assoc()) {
-                    echo '<option value="' .
-                        $rowUser5['DS_LOGIN'] .
-                        '">' .
-                        $rowUser5['DS_USUARIO'] .
-                        ' / ' .
-                        $rowUser5['DS_LOGIN'] .
-                        '</option>';
-                }
-                echo ' </select>
+              oci_free_statement($sucesso);
+
+              echo '    
+                        <option value="">-----------</option>';
+
+              $sucesso = oci_parse($connSelbetti, $usuarioOriginal);
+              oci_execute($sucesso);
+
+              while ($rowUser = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                echo '<option value="' . $rowUser['DS_LOGIN'] . '">' . $rowUser['DS_USUARIO'] . ' / ' . $rowUser['DS_LOGIN'] . '</option>';
+              };
+
+              oci_free_statement($sucesso);
+              echo ' </select>
                   <label for="super">SUPERINTENDENTE:</label>
                   </div>
                   <div class="form-floating mt-4 col-md-5" >
-                    <input class="form-control" id="limiteSuper" value="'.$row['LIMITE_SUPERITENDENTE'].',00" name="limitS">
+                    <input class="form-control" id="limiteSuper" value="' . $row['LIMITE_SUPERITENDENTE'] . ',00" name="limitS">
                   <label for="limiteSuper">LIMITE APROVAÇÃO:</label>
                   </div> 
                   <div class="form-floating col-md-1" style="font-size:25px;" title="Ilimitado!">
@@ -392,19 +343,22 @@ echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</scri
                 </div>
                 <div class="text-left">
                   <button type="button" class="btn btn-primary"><a href="aprovadoresNF.php?pg= ' .
-                    $_GET['pg'] .
-                    ' " style="color:white;">Voltar</a></button>
+                $_GET['pg'] .
+                ' " style="color:white;">Voltar</a></button>
                   <button type="submit" class="btn btn-success">Editar</button>
                 </div>
               </form>';
             }
+
+
+            oci_free_statement($result);
+            oci_close($connBpmgp);
+            oci_close($connSelbetti);
+
             ?>
             <br>
           </div>
         </div>
-
-
-
       </div>
 
 

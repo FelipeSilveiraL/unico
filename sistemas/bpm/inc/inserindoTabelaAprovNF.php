@@ -1,10 +1,10 @@
 <?php
-session_start();
 require_once('../config/query.php');
 
-$conexao = $conn->query($aprovNF);
+$conexao = oci_parse($connBpmgp, $aprovNF);
+oci_execute($conexao);
 
-while ($rowaprov = $conexao->fetch_assoc()) {
+while ($rowaprov = oci_fetch_array($conexao, OCI_ASSOC)) {
 
   switch ($rowaprov['SITUACAO']) {
     case 'A':
@@ -29,9 +29,10 @@ while ($rowaprov = $conexao->fetch_assoc()) {
   // echo '<td>' . $situacao . '</td>';
   echo '<td ' . $usuarioFuncao . '><a href="editApNF.php?pg=' . $_GET["pg"] . '&id_aprovador=' . $rowaprov["ID_APROVADOR"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
                             
-<a href= "http://' . $_SESSION['servidorOracle'] . '/' . $_SESSION['smartshare'] . '/bd/deletar.php?pg=' . $_GET['pg'] . '&id=' . $rowaprov['ID_APROVADOR'] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+<a href= "../inc/deletar.php?pg=' . $_GET['pg'] . '&id=' . $rowaprov['ID_APROVADOR'] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a>
 </td> 
 </tr>
 ';
 }
-$conn->close();
+oci_free_statement($conexao);
+oci_close($connBpmgp);
