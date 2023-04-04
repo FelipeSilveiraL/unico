@@ -2,8 +2,7 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeContasBancarias.php');
-require_once('../config/query.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -33,9 +32,9 @@ require_once('../config/query.php');
 
             <a href="../inc/relatorioContasBancarias.php" type="button" class="btn btn-success" style="float: right;" title="Exportar excel"><i class="ri-file-excel-2-fill"></i></A>
           </div>
-          
+
           <div class="card-body">
-          <h5 class="card-title">Contas bancárias </h5>
+            <h5 class="card-title">Contas bancárias </h5>
             <!-- Table with stripped rows -->
             <table class="table table-striped datatable">
               <thead>
@@ -52,10 +51,10 @@ require_once('../config/query.php');
               <tbody>
                 <?php
 
+                $conexao = oci_parse($connBpmgp, $contasBancarias);
+                oci_execute($conexao);
 
-                $conexao = $conn->query($contasBancarias);
-
-                while (($contaBancariasFornecedor = $conexao->fetch_assoc()) != FAlSE) {
+                while ($contaBancariasFornecedor = oci_fetch_array($conexao, OCI_ASSOC)) {
 
                   echo '<tr>';
                   echo '<td>' . $contaBancariasFornecedor['CNPJ_CPF'] . '</td>';
@@ -65,9 +64,11 @@ require_once('../config/query.php');
                   echo '<td>' . $contaBancariasFornecedor['CONTA'] . '</td>';
                   echo '<td>' . $contaBancariasFornecedor['DIGITO'] . '</td>';
                   echo '<td ' . $usuarioFuncao . '><a href="editContasBancarias.php?pg=' . $_GET["pg"] . '&id_conta=' . $contaBancariasFornecedor["ID_CONTA"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
-                  <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarCont.php?pg='.$_GET['pg'].'&id_conta=' . $contaBancariasFornecedor["ID_CONTA"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a></td>
+                  <a href="../inc/deletarCont.php?pg=' . $_GET['pg'] . '&id_conta=' . $contaBancariasFornecedor["ID_CONTA"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a></td>
                  </tr>';
-              }
+                }
+                oci_free_statement($conexao);
+                oci_close($connBpmgp);
                 ?>
               </tbody>
             </table>

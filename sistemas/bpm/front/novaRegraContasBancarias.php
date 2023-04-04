@@ -1,10 +1,7 @@
 <?php
-session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../../../config/config.php');
-require_once('../config/query.php');
 ?>
 
 <main id="main" class="main">
@@ -32,13 +29,13 @@ require_once('../config/query.php');
         <div class="card">
           <div class="card-body"><br>
           <h5 class="card-title">Nova regra contas bancárias </h5>
-            <form  class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?=$_SESSION['smartshare']?>/bd/novaRegraCBancarias.php?pg=<?= $_GET['pg'] ?>" method="POST">
+            <form  class="row g-3" action="../inc/novaRegraCBancarias.php?pg=<?= $_GET['pg'] ?>" method="POST">
 
 
               <div class="mb-3" style="text-align: center;" id="inlineRadio">
                 <label for="exampleFormControlInput2" class="form-label">TIPO DE DOCUMENTO: </label><br>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="documento" id="inlineRadio1" value="1" onclick="cpfDisplay()">
+                    <input class="form-check-input" type="radio" name="documento" id="inlineRadio1" value="1" onclick="cpfDisplay()" checked>
                     <label class="form-check-label" for="inlineRadio1">CPF</label>
                 </div>
                 <div class="form-check form-check-inline">

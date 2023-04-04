@@ -79,7 +79,7 @@ $tabelaSeminovos = "SELECT * FROM bpm_seminovos";
 
 $queryEstados = "SELECT * FROM estados";
 
-$contasBancarias = "SELECT * FROM bpm_contas_bancarias";
+$contasBancarias = "SELECT * FROM contas_bancarias_fornecedor";
 
 $queryCustoVeiculo = "SELECT * FROM bpm_custo_veiculo";
 
