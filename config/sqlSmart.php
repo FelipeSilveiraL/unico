@@ -113,7 +113,8 @@ e.superintendente_aprova,
 d.nome_departamento,
 e.GESTOR_AREA_APROVA_MULTAS,
 e.REVISAO_ADM,
-e.LOGIN_ADM
+e.LOGIN_ADM,
+e.LANCA_NOTAS
 FROM
 empresa_departamento_nf e
 INNER JOIN departamento_nf d ON d.id_departamento = e.id_departamento
@@ -241,7 +242,7 @@ $aprovadores = "SELECT * FROM APROVADORES_RH";
 
 /* Select para a tela de tela_comissões */
 
-$sqlEmpresa = "SELECT * FROM EMPRESA";
+$sqlEmpresa = $queryEmpresa;
 
 $searchVendedor = "SELECT * FROM FAT_VENDEDOR";
 

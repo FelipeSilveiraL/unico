@@ -1,10 +1,8 @@
 <?php
-session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../../../config/config.php');
-require_once('../../../config/query.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -31,137 +29,104 @@ require_once('../../../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-          <h5 class="card-title">Editar regra empresa x departamento nf </h5>
-            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/editEmpDepNF.php?pg=<?= $_GET['pg'] ?>&id_empdep=<?= $_GET['id'] ?>" method="POST">
+            <h5 class="card-title">Editar regra empresa x departamento nf </h5>
+            <form class="row g-3" action="../inc/editEmpDepNF.php?pg=<?= $_GET['pg'] ?>&id_empdep=<?= $_GET['id'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
-                <?php
-                $empDep = "SELECT * FROM bpm_nf_emp_dep WHERE ID_EMPDEP =" . $_GET['id'] . "";
+              <?php
+              $empdepNF .= " WHERE e.ID_EMPDEP =" . $_GET['id'];
+              $sucesso = oci_parse($connBpmgp, $empdepNF);
+              oci_execute($sucesso);
 
-                $sucesso = $conn->query($empDep);
+              while ($row = oci_fetch_array($sucesso, OCI_ASSOC)) {
 
-                while ($row = $sucesso->fetch_assoc()) {
+                $situacao = $row['SITUACAO'];
+                $gerente = $row['GERENTE_APROVA'];
+                $super = $row['SUPERINTENDENTE_APROVA'];
+                $lanca = $row['LANCA_MULTAS'];
+                $gestor = $row['GESTOR_AREA_APROVA_MULTAS'];
+                $lancarNotas = $row['LANCA_NOTAS'];
 
-                    $situacao = $row['SITUACAO'];
-                    $gerente = $row['GERENTE_APROVA'];
-                    $super = $row['SUPERINTENDENTE_APROVA'];
-                    $lanca = $row['LANCA_MULTAS'];
-                    $gestor = $row['GESTOR_AREA_APROVA_MULTAS'];
-                    
-                    
 
-                    if($situacao == 'A'){
-                      $situacao = 'ATIVO';
-                    }else{
-                      $situacao = 'DESATIVADO';
-                    }
+                $situacao = $situacao == 'A' ? 'ATIVO' : 'DESATIVADO';
+                $gerente = $gerente == 'S' ? 'SIM' : 'NÃO';
+                $super = $super == 'S' ? 'SIM' : 'NÃO';
+                $lanca = $lanca == 'S' ? 'SIM' : 'NÃO';
+                $gestor = $gestor == 'S' ? 'SIM' : 'NÃO';
+                $lancarNotas = $lancarNotas == 'S' ? 'SIM' : 'NÃO';
 
-                    if($gerente == 'S'){
-                      $gerente = 'SIM';
-                    }else{
-                      $gerente = 'NÃO';
-                    }
+                echo '<div class="form-floating mt-4 col-md-6" id="empresa">
+                          <input type="text" value="' . $row['NOME_EMPRESA'] . '" class="form-control" disabled>
+                          <label for="empresa">EMPRESA:</label>
+                        </div>
 
-                    if($super == 'S'){
-                      $super = 'SIM';
-                    }else{
-                      $super = 'NÃO';
-                    }
-                    if($lanca = 'S'){
-                      $lanca = 'SIM';
-                    }else{
-                      $lanca = 'NÃO';
-                    }
-                    if($gestor = 'S'){
-                      $gestor = 'SIM';
-                    }else{
-                      $gestor = 'NÃO';
-                    }
-                    
+                        <div class="form-floating mt-4 col-md-6" id="depto">
+                          <input type="text" class="form-control" value="' . $row['NOME_DEPARTAMENTO'] . '" disabled >
+                          <label for="depto">DEPARTAMENTO:</label>
+                        </div>
 
-                    
-                 
-
-                  $nomeEmpresa = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = ".$row['ID_EMPRESA']."";
-                    $a = $conn->query($nomeEmpresa);
-                    
-                    while($nome = $a->fetch_assoc()){
-                      $nomeEmp = $nome['NOME_EMPRESA'];
-                    } 
-
-                    echo'
-                  
-              <div class="form-floating mt-4 col-md-6" id="empresa">
-                <input type="text" value="'.$nomeEmp.'" class="form-control" disabled>
-                <label for="empresa">EMPRESA:</label>
-              </div>
-
-              <div class="form-floating mt-4 col-md-6" id="depto">';
-              $pesquisa = "SELECT * FROM bpm_nf_departamento WHERE ID_DEPARTAMENTO = ".$row['ID_DEPARTAMENTO']."";
-              $sucesso = $conn->query($pesquisa);
-              
-              while($row2 = $sucesso->fetch_assoc()){
-                echo' <input type="text" class="form-control" value="'.$row2['NOME_DEPARTAMENTO'].'" disabled >';
+                        <div class="form-floating mt-4 col-md-6" id="gerente">
+                          <select class="form-select" name="gerap"  required>
+                            <option value="' . $row['GERENTE_APROVA'] . '">' . $gerente . '</option>
+                            <option>------------</option>
+                            <option value="S">SIM</option>
+                            <option value="N">NÃO</option>
+                          </select>
+                          <label for="gerente">GERENTE APROVA:<span style="color: red;">*</span></label>
+                        </div>
+                        <div class="form-floating mt-4 col-md-6" id="super">
+                          <select class="form-select" name="supap"  required>
+                            <option value="' . $row['SUPERINTENDENTE_APROVA'] . '">' . $super . '</option>
+                            <option>------------</option>
+                            <option value="S">SIM</option>
+                            <option value="N">NÃO</option>
+                          </select>
+                          <label for="super">SUPERINTENDENTE APROVA:<span style="color: red;">*</span></label>
+                        </div>
+                        <div class="form-floating mt-4 col-md-6" id="situacao">
+                          <select class="form-select" name="situacao"  >
+                            <option value="' . $row['SITUACAO'] . '">' . $situacao . '</option>
+                            <option>------------</option>
+                            <option value="A">ATIVO</option>
+                            <option value="D">DESATIVADO</option>
+                          </select>
+                          <label for="situacao">SITUAÇÃO:<span style="color: red;">*</span></label>
+                        </div>
+                        <div class="form-floating mt-4 col-md-6" id="lancarMulta">
+                          <select class="form-select" name="lancarMulta" >
+                            <option value="' . $row['LANCA_MULTAS'] . '">' . $lanca . '</option>
+                            <option value="">------------</option>
+                            <option value="S">SIM</option>
+                            <option value="N">NÃO</option>
+                          </select>
+                          <label for="lancarMulta">LANÇAR MULTAS:<span style="color: red;">*</span></label>
+                        </div>
+                      <div class="form-floating mt-4 col-md-6" id="gestorAprovaM">
+                        <select class="form-select" name="gestorAprovaM" >
+                          <option value="' . $row['GESTOR_AREA_APROVA_MULTAS'] . '">' . $gestor . '</option>
+                          <option value="">------------</option>
+                          <option value="S">SIM</option>
+                          <option value="N">NÃO</option>
+                        </select>
+                        <label for="gestorAprovaM">GESTOR ÁREA APROVA MULTAS:<span style="color: red;">*</span></label>
+                      </div>
+                      <div class="form-floating mt-4 col-md-6" id="lancarNotaM">
+                        <select class="form-select" name="lancarNotaM" >
+                          <option value="' . $row['LANCA_NOTAS'] . '">' . $lancarNotas . '</option>
+                          <option value="">------------</option>
+                          <option value="S">SIM</option>
+                          <option value="N">NÃO</option>
+                        </select>
+                        <label for="lancarNotaM">LANÇAR:<span style="color: red;">*</span></label>
+                      </div>';
               }
-              
-              echo'<label for="depto">DEPARTAMENTO:</label>
+              oci_free_statement($sucesso);
+              oci_close($connBpmgp);
+              ?>
+              <div class="text-left py-2">
+                <a href="nfEmpDep.php?pg=<?= $_GET['pg'] ?>" class="btn btn-primary">Voltar</a>
+                <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
+                <button type="submit" class="btn btn-success">Editar</button>
               </div>
-
-              <div class="form-floating mt-4 col-md-6" id="gerente">
-                <select class="form-select" name="gerap"  required>
-                  <option value="'.$row['GERENTE_APROVA'].'">'.$gerente.'</option>
-                  <option>------------</option>
-                  <option value="S">SIM</option>
-                  <option value="N">NÃO</option>
-                </select>
-                <label for="gerente">GERENTE APROVA:<span style="color: red;">*</span></label>
-              </div>
-              <div class="form-floating mt-4 col-md-6" id="super">
-                <select class="form-select" name="supap"  required>
-                  <option value="'.$row['SUPERINTENDENTE_APROVA'].'">'.$super.'</option>
-                  <option>------------</option>
-                  <option value="S">SIM</option>
-                  <option value="N">NÃO</option>
-                </select>
-                <label for="super">SUPERINTENDENTE APROVA:<span style="color: red;">*</span></label>
-              </div>
-              <div class="form-floating mt-4 col-md-6" id="situacao">
-                <select class="form-select" name="situacao"  >
-                  <option value="'.$row['SITUACAO'].'">'.$situacao.'</option>
-                  <option>------------</option>
-                  <option value="A">ATIVO</option>
-                  <option value="D">DESATIVADO</option>
-                </select>
-                <label for="situacao">SITUAÇÃO:<span style="color: red;">*</span></label>
-              </div>
-              <div class="form-floating mt-4 col-md-6" id="lancarMulta">
-                <select class="form-select" name="lancarMulta" >
-                  <option value="'.$row['LANCA_MULTAS'].'">'.$lanca.'</option>
-                  <option value="">------------</option>
-                  <option value="S">SIM</option>
-                  <option value="N">NÃO</option>
-                </select>
-                <label for="lancarMulta">LANÇAR MULTAS:<span style="color: red;">*</span></label>
-              </div>
-            <div class="form-floating mt-4 col-md-6" id="gestorAprovaM">
-              <select class="form-select" name="gestorAprovaM" >
-                <option value="'.$row['GESTOR_AREA_APROVA_MULTAS'].'">'.$gestor.'</option>
-                <option value="">------------</option>
-                <option value="S">SIM</option>
-                <option value="N">NÃO</option>
-              </select>
-              <label for="gestorAprovaM">GESTOR ÁREA APROVA MULTAS:<span style="color: red;">*</span></label>
-            </div>
-             ';
-            
-            
-                }
-                $conn->close();
-                ?>
-                <div class="text-left py-2">
-                  <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/nfEmpDep.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
-                  <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
-                  <button type="submit" class="btn btn-success">Editar</button>
-                </div>
             </form><!-- FIM Form -->
           </div><!-- FIM card-body -->
         </div><!-- FIM card -->
@@ -171,16 +136,6 @@ require_once('../../../config/query.php');
   <!--################# section TERMINA AQUI #################-->
 
 </main><!-- End #main -->
-
-<!-- 
-<script>
-  function empresaSelect() {
-    document.novaRegraEmpresa.action = "novaRegraAp.php"
-    document.novaRegraEmpresa.method = "GET"
-    document.novaRegraEmpresa.submit();
-  }
-</script> -->
-
 
 <?php
 require_once('footer.php'); //Javascript e configurações afins
