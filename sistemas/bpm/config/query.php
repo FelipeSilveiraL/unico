@@ -58,8 +58,6 @@ $editarTabela = "SELECT * FROM bpm_empresas ";
 
 $relatorioExcel = "SELECT * FROM empresa where ID_EMPRESA NOT IN(208,382) ";
 
-$query_users = "SELECT * FROM bpm_usuarios_smartshare";
-
 $aprovadoresQuery = "SELECT
 a.aprovador_filial,
 a.aprovador_area,

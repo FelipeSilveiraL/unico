@@ -3,11 +3,10 @@ session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeSelbetti.php');
-require_once('../config/query.php');
-require_once('../inc/apiRecebeAprov.php');
-/* Essa opção descomentar após criar em telas_funcoes.php*/
-//echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
+require_once('../../../config/sqlSmart.php');
+
+$_SESSION['usuario'] = $_GET['usuario'];
+$_SESSION['login'] = $_GET['login'];
 ?>
 
 <main id="main" class="main">
@@ -30,74 +29,73 @@ require_once('../inc/apiRecebeAprov.php');
   <!--################# COLE section AQUI #################-->
 
   <section class="section">
-      <div class="row">
-        
+    <div class="row">
 
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body">
+
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
             <h5 class="card-title"> Gestor rh</h5>
-              <?php
-                 
-                  echo '
-                  <form class="row g-3" action="../inc/localizaGestor.php?pg='.$_GET['pg'].'" method="POST" style="display:'; echo  empty($_GET['dado'])? 'block;' : 'none;'; echo' ">
-                      <div class="mt-4 col-md-6" style="margin-left: 25%;" id="depto">
-                      <label for="depto">Localizar gestor:</label>
-                        <input type="text" class="form-control" name="nomeGestor" style="text-transform: uppercase;" placeholder="LOGIN/CPF" required>  
-                      </div>
-                      '; 
-                      $alert = $_GET['erro'];
-                      if($alert == 1){
-                        echo '<p style="color: red;text-align:center;">Usuário não localizado!</p>';
-                      }
-                      echo '
-                    <div class="text-left">
-                      <a href="http://'.$_SERVER['SERVER_ADDR'].'/unico/sistemas/bpm/front/departamentos.php?pg='.$_GET['pg'].'"> <button type="button" class="btn btn-primary">Voltar</button></a>
-                      <button type="submit" class="btn btn-success">Buscar</button>
-                    </div>
-                  </form>';
+            <div style="display:<?= empty($_GET['dado']) ? 'block;' : 'none;'; ?>">
+              <form class="row g-3" action="../inc/localizaGestor.php?pg=<?= $_GET['pg'] ?>" method="POST">
+                <div class="mt-4 col-md-6" style="margin-left: 25%;" id="depto">
+                  <label for="depto">Localizar gestor:</label>
+                  <input type="text" class="form-control" name="nomeGestor" style="text-transform: uppercase;" placeholder="LOGIN/CPF" required>
+                </div>
 
-                 $_SESSION['usuario'] = $_GET['usuario'];
-                 $_SESSION['login'] = $_GET['login'];
-                 
-                  echo ' 
-                    <form class="row g-3" action="atualizandoGestor.php?pg='.$_GET['pg'].'" method="POST" style="display:'; echo  empty($_GET['dado'])? 'none;' : 'block;'; echo' ">
-                        <div class="form-floating mt-4 col-md-6" style="margin-left: 25%;" id="depto">
-                          <input type="text" class="form-control" value="  '.$_GET['login'].' / '.$_GET['usuario'].' " name="gestorVelho" disabled>  
-                          <label for="depto">Gestor atual localizado::</label>
-                        </div>
-                        <div class="form-floating mt-4 col-md-6" style="margin-left: 25%;" >
-                          <select class="form-select" name="gestorNovo" required >
-                            <option value=""> ------------ </option>';
+                <?php
+                if ($_GET['erro'] == 1) {
+                  echo '<p style="color: red;text-align:center;">Usuário não localizado!</p>';
+                }
+                ?>
 
-                            $query_users .= ' WHERE id NOT IN (1) ORDER BY DS_USUARIO ASC';
-                            $exec = $conn->query($query_users);
-
-                            while($row = $exec->fetch_assoc()){
-                              echo '<option value="'.$row['DS_LOGIN'].' / '.$row['DS_USUARIO'].'">'.$row['DS_USUARIO'].' / '.$row['DS_LOGIN'].'</option>
-                               ';
-                            }
-
-                            echo'
-                          </select>
-                          <label for="aproCaixa">Alterar para novo gestor:<span style="color: red;">*</span></label>
-                        </div>
-                      <div class="text-center">
-                        <a href="http://'.$_SERVER['SERVER_ADDR'].'/unico/sistemas/bpm/front/departamentos.php?pg='.$_GET['pg'].'"> <button type="button" class="btn btn-danger">Voltar</button></a>
-                        <button type="submit" class="btn btn-primary">Alterar</button>
-                      </div>
-                    </form><br>';
-
-                    
-              ?>
-              <!-- Vertical Form -->
-                
+                <div class="text-center">
+                  <a href="departamentos.php?pg=' . $_GET['pg'] . '" class="btn btn-primary">Voltar</a>
+                  <button type="submit" class="btn btn-success">Buscar</button>
+                </div>
+              </form>
             </div>
+
+            <div style="display:<?= empty($_GET['dado']) ? 'none;' : 'block;' ?>">
+              <form class="row g-3" action="atualizandoGestor.php?pg=<?= $_GET['pg'] ?>" method="POST">
+                <div class="form-floating mt-4 col-md-6" id="depto" style="margin-left: 25%">
+                  <input type="text" class="form-control" value="<?= $_GET['login'].' / '.$_GET['usuario']; ?>" name="gestorVelho" disabled>
+                  <label for="depto">Gestor atual localizado:</label>
+                </div>
+                <div class="form-floating mt-4 col-md-6" style="margin-left: 25%">
+                  <select class="form-select" name="gestorNovo" required>
+                    <option value=""> ------------ </option>
+                    <?php
+                      $query_user .= ' ORDER BY DS_USUARIO ASC';
+                      
+                      $exec = oci_parse($connSelbetti, $query_user);
+                      oci_execute($exec);
+
+                      while ($row = oci_fetch_array($exec, OCI_ASSOC)) {
+                        echo '<option value="' . $row['DS_LOGIN'] . ' / ' . $row['DS_USUARIO'] . '">' . $row['DS_USUARIO'] . ' / ' . $row['DS_LOGIN'] . '</option>';
+                      }
+
+                      oci_free_statement($exec);
+                      oci_close($connSelbetti);
+
+                    ?>
+                  </select>
+                  <label for="aproCaixa">Alterar para novo gestor:<span style="color: red;">*</span></label>
+                </div>
+                <div class="text-center">
+                  <a href="departamentos.php?pg=<?= $_GET['pg'] ?>" class="btn btn-danger">Voltar</a>
+                  <button type="submit" class="btn btn-primary">Alterar</button>
+                </div>
+              </form>
+            </div>
+            <!-- Vertical Form -->
+
           </div>
         </div>
       </div>
-    </section>
-  
+    </div>
+  </section>
+
   <!--################# section TERMINA AQUI #################-->
 
 </main><!-- End #main -->

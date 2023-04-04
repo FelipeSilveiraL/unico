@@ -16,20 +16,6 @@ $consulta = "SELECT * FROM caixas_nf";
 
 $queryEmpresa = "SELECT * FROM EMPRESA";
 
-$query_user = 'SELECT
-        ds_usuario,
-        ds_login,
-        cd_usuario
-    FROM
-        usuario
-    WHERE
-            st_ativo = 1
-    AND cd_usuario NOT IN ( 1, 23, 24, 22, 16681,
-                                18110, 18111, 18112, 18113, 18484,
-                                18485, 18486, 18529, 18340, 16680,
-                                18782 )
-    ORDER BY  ds_usuario ASC';
-
 /* Select para a tela Aprovadores RH */
 $aprov = 'SELECT
         a.aprovador_filial,
@@ -186,8 +172,7 @@ $query_user = 'SELECT
     AND cd_usuario NOT IN ( 1, 23, 24, 22, 16681,
                                 18110, 18111, 18112, 18113, 18484,
                                 18485, 18486, 18529, 18340, 16680,
-                                18782 )
-    ORDER BY  ds_usuario ASC';
+                                18782 )';//não colocar order by aqui. Coloque na sua tela !!!!
 
 $aprovsuper = 'SELECT
         aprovador_superintendente,
