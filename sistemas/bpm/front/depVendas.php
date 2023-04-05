@@ -1,11 +1,8 @@
 <?php
-session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeSelbetti.php');
-require_once('../config/query.php');
-require_once('../inc/apiDepVendas.php');
+require_once('../../../config/sqlSmart.php');
 /* Essa opção descomentar após criar em telas_funcoes.php*/
 //echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
@@ -54,21 +51,23 @@ require_once('../inc/apiDepVendas.php');
                 <tbody>
                  <?php 
                  
-                 $sucesso = $conn->query($depVendasQuery);
+                 $sucesso = oci_parse($connBpmgp, $depVendasQuery);
+                 oci_execute($sucesso);
 
-                 while($row = $sucesso->fetch_assoc()){
+                 while($row = oci_fetch_array($sucesso, OCI_ASSOC)){
                   
                   echo '<tr>';
-                  echo '<td>'.$row['ID_DEPARTAMENTO'].'</td>';
+                  echo '<td>'.$row['ID'].'</td>';
                   echo '<td>'.$row['NOME_DEPARTAMENTO'].'</td>';
-                  echo '<td><a href="editDepVendas.php?pg=' . $_GET["pg"] . '&id_dep=' . $row["ID_DEPARTAMENTO"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
+                  echo '<td><a href="editDepVendas.php?pg=' . $_GET["pg"] . '&id_dep=' . $row["ID"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
                             
-                    <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarDepVendas.php?pg='.$_GET['pg'].'&id='.$row['ID_DEPARTAMENTO'] .'" title="Desativar" '. $usuarioFuncao .' style="margin-top: 3px;color: white;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a>
+                    <a href="../inc/deletarDepVendas.php?pg='.$_GET['pg'].'&id='.$row['ID'] .'" title="Desativar" '. $usuarioFuncao .' style="margin-top: 3px;color: white;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a>
                     </td> ';
                   echo '</tr>';
                  }
-                 
-                 
+
+                 oci_free_statement($sucesso);
+                 oci_close($connBpmgp);                 
                  ?>
                 </tbody>
               </table>

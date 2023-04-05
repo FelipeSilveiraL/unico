@@ -2,8 +2,7 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeSelbetti.php');
-require_once('../../../config/config.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -32,7 +31,7 @@ require_once('../../../config/config.php');
           <div class="card-body">
           <h5 class="card-title">Nova regra departamento vendas </h5>
           
-            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle']?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraDepVendas.php?pg=<?= $_GET['pg']?>" method="POST">
+            <form class="row g-3" action="../inc/novaRegraDepVendas.php?pg=<?= $_GET['pg']?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6">
                 <input class="form-control" id="CNPJ" name="departamento" required>
@@ -40,7 +39,7 @@ require_once('../../../config/config.php');
               </div>
               
               <div class="text-left py-2">
-                <a href="http://<?=$_SERVER['SERVER_ADDR']?>/unico/sistemas/bpm/front/depVendas.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="depVendas.php?pg=<?= $_GET['pg'] ?>" class="btn btn-primary">Voltar</a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                 <button type="submit" class="btn btn-success">Salvar</button>
               </div>

@@ -2,9 +2,7 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeSelbetti.php');
-require_once('../../../config/config.php');
-require_once('../config/query.php');
+/* require_once('../../../config/sqlSmart.php'); */
 ?>
 
 <main id="main" class="main">
@@ -34,21 +32,23 @@ require_once('../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-          <h5 class="card-title">Nova regra vendedores </h5>
+            <h5 class="card-title">Nova regra vendedores </h5>
 
-            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraVendedores.php?pg=<?= $_GET['pg'] ?>" method="POST">
+            <form class="row g-3" action="../inc/novaRegraVendedores.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6">
+
                 <select class="form-select" name="empresa" id="empresa" required>
                   <option value="">Selecione a empresa</option>
                   <?php
 
-                  $sucesso = $conn->query($queryTabela);
-
-                  while ($row1 = $sucesso->fetch_assoc()) {
+                  $sucesso = oci_parse($connBpmgp, $queryTabela);
+                  oci_execute($sucesso);
+                  
+                  while ($row1 = oci_fetch_array($sucesso, OCI_ASSOC)) {
                     echo '<option value="' . $row1['ID_EMPRESA'] . '">' . $row1['NOME_EMPRESA'] . '</option>';
                   }
-
+                  oci_free_statement($sucesso);
                   ?>
                 </select>
                 <label for="empresa" class="capitalize">EMPRESA:<code>*</code></label>
@@ -59,11 +59,13 @@ require_once('../config/query.php');
                   <option value="">Selecione o departamento</option>
                   <?php
 
-                  $sucesso2 = $conn->query($depVendasQuery);
+                  $sucesso2 = oci_parse($connBpmgp, $depVendasQuery);
+                  oci_execute($sucesso2);
 
-                  while ($row2 = $sucesso2->fetch_assoc()) {
+                  while ($row2 = oci_fetch_array($sucesso2, OCI_ASSOC)) {
                     echo '<option value="' . $row2['ID_DEPARTAMENTO'] . '">' . $row2['NOME_DEPARTAMENTO'] . '</option>';
                   }
+                  oci_free_statement($sucesso2);
                   ?>
                 </select>
                 <label for="filial" class="capitalize">DEPARTAMENTO:<code>*</code></label>
@@ -73,14 +75,18 @@ require_once('../config/query.php');
                   <option value="">Selecione o nome</option>
                   <?php
 
-                  $mostraUsuario = "SELECT DS_USUARIO FROM bpm_usuarios_smartshare order by DS_USUARIO ASC";
+                  $mostraUsuario = "SELECT DS_USUARIO FROM USUARIO order by DS_USUARIO ASC";
 
-                  $sucesso3 = $conn->query($mostraUsuario);
+                  $sucesso3 = oci_parse($connSelbetti, $mostraUsuario);
+                  oci_execute($sucesso3);
 
-                  while ($row3 = $sucesso3->fetch_assoc()) {
+                  while ($row3 = oci_fetch_array($sucesso3, OCI_ASSOC)) {
                     echo '<option value="' . $row3['DS_USUARIO'] . '">' . $row3['DS_USUARIO'] . '</option>';
                   }
+                  oci_free_statement($sucesso3);
 
+                  oci_close($connSelbetti);
+                  oci_close($connBpmgp);
                   ?>
                 </select>
                 <label for="nome" class="capitalize">NOME:<code>*</code></label>
@@ -108,7 +114,7 @@ require_once('../config/query.php');
               </div>
 
               <div class="text-left py-2">
-                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/gerentes.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="gerentes.php?pg=<?= $_GET['pg'] ?>" class="btn btn-primary">Voltar</a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                 <button type="submit" class="btn btn-success">Salvar</button>
 

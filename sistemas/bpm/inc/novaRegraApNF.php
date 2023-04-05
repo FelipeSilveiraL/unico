@@ -9,7 +9,8 @@ $verifRegra = "SELECT
             FROM
                 aprovadores_nf
             WHERE
-                    id_empresa = '".$_POST['empresa']."' AND id_departamento = '".$_POST['depto']."'";
+                    id_empresa = '".$_POST['empresa']."'
+            AND id_departamento = '".$_POST['depto']."'";
 
 $resultVerif = oci_parse($connBpmgp, $verifRegra);
 oci_execute($resultVerif);

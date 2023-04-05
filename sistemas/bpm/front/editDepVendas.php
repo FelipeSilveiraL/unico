@@ -2,9 +2,7 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeSelbetti.php');
-require_once('../../../config/config.php');
-require_once('../config/query.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -32,24 +30,28 @@ require_once('../config/query.php');
         <div class="card">
           <div class="card-body">
           <h5 class="card-title">Editar departamento </h5>
-            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/editDepVendas.php?pg=<?= $_GET['pg'] ?>&id_dep=<?= $_GET['id_dep'] ?>" method="POST">
+            <form class="row g-3" action="../inc/editDepVendas.php?pg=<?= $_GET['pg'] ?>&id_dep=<?= $_GET['id_dep'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
 
               <?php
 
-              $depVendasQuery .= " WHERE ID_DEPARTAMENTO = ".$_GET['id_dep']."";
-              $sucesso = $conn->query($depVendasQuery);
+              $depVendasQuery .= " WHERE ID = ".$_GET['id_dep']."";
+              $sucesso = oci_parse($connBpmgp, $depVendasQuery);
+              oci_execute($sucesso);
 
-              while($row = $sucesso->fetch_assoc()){
+              while($row = oci_fetch_array($sucesso, OCI_ASSOC))
+              {
                   echo '
               <div class="form-floating mt-4 col-md-6">
                 <input class="form-control" id="dep" value="'.$row['NOME_DEPARTAMENTO'].'" name="departamento" required>
                 <label for="filial">DEPARTAMENTO:<code>*</code></label>
               </div>';
                   }
+                  oci_free_statement($sucesso);
+                  oci_close($connBpmgp);
                      ?>
               <div class="text-left py-2">
-                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/gerentes.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="gerentes.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                 <button type="submit" class="btn btn-success">Salvar</button>
               </div>

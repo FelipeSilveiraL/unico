@@ -67,7 +67,9 @@ $_SESSION['login'] = $_GET['login'];
                     <option value=""> ------------ </option>
                     <?php
                       $query_user .= ' ORDER BY DS_USUARIO ASC';
-                      
+
+                      echo $query_user;
+
                       $exec = oci_parse($connSelbetti, $query_user);
                       oci_execute($exec);
 

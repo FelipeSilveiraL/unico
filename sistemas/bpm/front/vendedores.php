@@ -3,9 +3,7 @@ session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeSelbetti.php');
-require_once('../config/query.php');
-require_once('../inc/apiRecebeVendedores.php');
+require_once('../../../config/sqlSmart.php');
 /* Essa opção descomentar após criar em telas_funcoes.php*/
 //echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
@@ -58,25 +56,10 @@ require_once('../inc/apiRecebeVendedores.php');
                 <tbody>
                   <?php 
                   
-                  $resultado = $conn->query($vendedoresQuery);
+                  $resultado = oci_parse($connBpmgp, $vendedoresQuery);
+                  oci_execute($resultado);
 
-                  while($row = $resultado->fetch_assoc()){
-                    
-                    $queryEmpresa = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = ".$row['EMPRESA']."";
-
-                    $sucesso = $conn->query($queryEmpresa);
-                    
-                    while($row1 = $sucesso->fetch_assoc()){
-                      $empresa = $row1['NOME_EMPRESA'];
-                    }
-
-                    $queryDep = "SELECT NOME_DEPARTAMENTO FROM bpm_departamento_vendas WHERE ID_DEPARTAMENTO = ".$row['DEPARTAMENTO']."";
-
-                    $success = $conn->query($queryDep);
-                    
-                    while($row2 = $success->fetch_assoc()){
-                      $departamento = $row2['NOME_DEPARTAMENTO'];
-                    }
+                  while($row = oci_fetch_array($resultado, OCI_ASSOC)){
 
                     if($row['SITUACAO'] == 'A'){
                       $situacao = 'ATIVO';
@@ -85,20 +68,21 @@ require_once('../inc/apiRecebeVendedores.php');
                     }
                     echo '<tr>';
                     echo '<td>'.$row['ID_VENDEDOR'].'</td>';
-                    echo '<td>'.$empresa.'</td>';
-                    echo '<td>'.$departamento.'</td>';
+                    echo '<td>'.$row['NOME_EMPRESA'].'</td>';
+                    echo '<td>'.$row['NOME_DEPARTAMENTO'].'</td>';
                     echo '<td>'.$row['NOME'].'</td>';
                     echo '<td>'.$row['LOGIN_SMARTSHARE'].'</td>';
                     echo '<td>'.$row['CODIGO_LOGIN_SMARTSHARE'].'</td>';
                     echo '<td>'.$situacao.'</td>';
                     echo '<td><a href="editVend.php?pg=' . $_GET["pg"] . '&id_vendedor=' . $row["ID_VENDEDOR"] . '" title="Editar" class="btn-primary btn-sm" ' . $usuarioFuncao . '><i class="bi bi-pencil"></i></a>
                             
-                    <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarVendedor.php?pg='.$_GET['pg'].'&id='.$row['ID_VENDEDOR'] .'" title="Desativar" '. $usuarioFuncao .' style="margin-top: 3px;color: white;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a>
+                    <a href="../inc/deletarVendedor.php?pg='.$_GET['pg'].'&id='.$row['ID_VENDEDOR'] .'" title="Desativar" '. $usuarioFuncao .' style="margin-top: 3px;color: white;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a>
                     </td> ';
                     echo '</tr>';
 
                   }
-                  $conn->close();
+                  oci_free_statement($resultado);
+                  oci_close($connBpmgp);
                   ?>
                 </tbody>
               </table>
