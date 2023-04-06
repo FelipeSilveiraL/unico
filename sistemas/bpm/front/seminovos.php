@@ -2,8 +2,7 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeSeminovos.php');
-require_once('../config/query.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -53,10 +52,10 @@ require_once('../config/query.php');
               </thead>
               <tbody>
                 <?php
+                $conexao = oci_parse($connBpmgp, $queryfornecedoresSeminovos);
+                oci_execute($conexao);
 
-                $conexao = $conn->query($tabelaSeminovos);
-
-                while (($fornecedoresSeminovos = $conexao->fetch_assoc()) != FAlSE) {
+                while ($fornecedoresSeminovos = oci_fetch_array($conexao, OCI_ASSOC)) {
                   
                   if($fornecedoresSeminovos['ATIVO'] == 'S'){
                     $ativo = 'SIM';
@@ -73,9 +72,11 @@ require_once('../config/query.php');
                   echo '<td>' . $fornecedoresSeminovos['NOME_RESPONSAVEL'] . '</td>';
                   echo '<td>' . $ativo . '</td>';
                   echo '<td ' . $usuarioFuncao . '><a href="editSeminovos.php?pg=' . $_GET["pg"] . '&id_semi=' . $fornecedoresSeminovos["ID_FORNECEDOR"] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
-                       <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarFor.php?pg='.$_GET['pg'].'&id_fornecedor=' . $fornecedoresSeminovos["ID_FORNECEDOR"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a></td>
+                       <a href="../inc/deletarFor.php?pg='.$_GET['pg'].'&id_fornecedor=' . $fornecedoresSeminovos["ID_FORNECEDOR"] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm"><i class="bi bi-trash"></i></a></td>
                       </tr>';
                   }
+                  oci_free_statement($conexao);
+                  oci_close($connBpmgp);
                 ?>
               </tbody>
             </table>

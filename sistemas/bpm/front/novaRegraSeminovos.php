@@ -3,8 +3,7 @@ session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../../../config/config.php');
-require_once('../config/query.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -32,7 +31,7 @@ require_once('../config/query.php');
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Nova regra fornecendor triagem </h5>
-            <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraSeminovos.php?pg=<?= $_GET['pg'] ?>" method="POST">
+            <form id="novaRegraEmpresa" class="row g-3" action="../inc/novaRegraSeminovos.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6" id="cnpj">
                 <input type="text" maxlength="18" onblur="validarCNPJ(this)" class="form-control" name="cnpj" onkeypress='mascaraMutuario(this,cpfCnpj)'>
@@ -60,14 +59,11 @@ require_once('../config/query.php');
                 <select class="form-select" name="estados" id="estados" required>
                   <option value="">-- Escolha um estado --</option>
                   <?php
-
                   $resultadoEstado = $conn->query($queryEstados);
 
                   while ($estados = $resultadoEstado->fetch_assoc()) {
                     $id = $estados['id'];
-
-                    echo '<option value="' . $estados['sigla'] . '">' . $estados['sigla'] . ' - ' . $estados['nome'] . '</option>
-                      ';
+                    echo '<option value="' . $estados['sigla'] . '">' . $estados['sigla'] . ' - ' . $estados['nome'] . '</option>';
                   }
                   ?>
 
@@ -112,7 +108,7 @@ require_once('../config/query.php');
                 <span style="font-size: small;color: red;">NOME e os 3 primeiro números do CPF (Ex.: Joao.094)</span>
               </div>
               <div class="text-left py-2">
-                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/seminovos.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="../inc/front/seminovos.php?pg=<?= $_GET['pg'] ?>" class="btn btn-primary">Voltar</a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                 <button type="submit" class="btn btn-success">Salvar</button>
               </div>
@@ -134,7 +130,7 @@ require_once('footer.php'); //Javascript e configurações afins
 <script type="text/javascript">
   function mostraDiv() {
     var valueRevisao = document.getElementById("utiliza").value;
-    
+
     switch (valueRevisao) {
       case 'S':
         document.getElementById("SMARTSHARE_LOGIN").style.display = "block";

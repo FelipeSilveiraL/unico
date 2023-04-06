@@ -3,18 +3,16 @@ session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../../../config/config.php');
-require_once('../config/query.php');
+require_once('../../../config/sqlSmart.php');
 
-
-$tabelaSeminovos .= " WHERE ID_FORNECEDOR = " . $_GET['id_semi'] . "";
+$queryfornecedoresSeminovos .= " WHERE FS.ID_FORNECEDOR = " . $_GET['id_semi'] . "";
 
 $id = $_GET['id_semi'];
 
-$sucesso = $conn->query($tabelaSeminovos);
+$sucesso = oci_parse($connBpmgp, $queryfornecedoresSeminovos);
+oci_execute($sucesso);
 
-if ($row = $sucesso->fetch_assoc()) {
-
+while($row = oci_fetch_array($sucesso, OCI_ASSOC)) {
   $email = $row['EMAIL'];
   $cidade = $row['CIDADE'];
   $uf = $row['UF'];
@@ -88,7 +86,7 @@ if ($row = $sucesso->fetch_assoc()) {
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Nova regra fornecendor triagem </h5>
-            <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/editarSeminovos.php?pg=<?= $_GET['pg'] ?>&id_fornecedor=<?= $_GET['id_semi'] ?>" method="POST">
+            <form id="novaRegraEmpresa" class="row g-3" action="../inc/editarSeminovos.php?pg=<?= $_GET['pg'] ?>&id_fornecedor=<?= $_GET['id_semi'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6" id="cnpj">
                 <input type="text" maxlength="18" onblur="validarCNPJ(this)" class="form-control" value="<?= $cnpj ?>" name="cnpj" onkeypress='mascaraMutuario(this,cpfCnpj)' readonly>
@@ -114,7 +112,7 @@ if ($row = $sucesso->fetch_assoc()) {
 
               <div class="form-floating mt-4 col-md-3">
                 <select class="form-select" name="estados" id="estados" required>
-                  <option value="<?= $row['UF'] ?> "><?= $row['UF'] ?></option>
+                  <option value="<?= $uf ?>"><?= $uf ?></option>
                   <option value="">-- Escolha um estado --</option>
                   <?php
 
@@ -132,7 +130,7 @@ if ($row = $sucesso->fetch_assoc()) {
               </div>
               <div class="form-floating mt-4 col-md-3">
                 <select class="form-select" name="cidade" id="cidade" required>
-                  <option value="<?= $row['CIDADE'] ?> "><?= $row['CIDADE'] ?></option>
+                  <option value="<?= $cidade ?>"><?= $cidade ?></option>
                   <option value="">------------</option>
                   <?php
                   $resultadoEstado = $conn->query($queryCidade);
@@ -157,7 +155,7 @@ if ($row = $sucesso->fetch_assoc()) {
               </div>
               <div class="form-floating mt-4 col-md-4" id="ativo">
                 <select class="form-select" name="ativo" required>
-                  <option value="<?= $row['ATIVO'] ?>"><?= $ativo ?></option>
+                  <option value="<?= $ativo == 'SIM' ? 'S' : 'N' ?>"><?= $ativo ?></option>
                   <option value="">------------</option>
                   <option value="S">SIM</option>
                   <option value="N">NÃO</option>
@@ -166,7 +164,7 @@ if ($row = $sucesso->fetch_assoc()) {
               </div>
               <div class="form-floating mt-4 col-md-4" id="utilizaSmartshare">
                 <select class="form-select" id="utiliza" name="utilizaSmartshare" onchange="mostraDiv()" required>
-                  <option value="<?= $row['SMARTSHARE'] ?>"><?= $smartshare ?></option>
+                  <option value="<?= $smartshare == 'SIM' ? 'S' : 'N' ?>"><?= $smartshare ?></option>
                   <option value="">------------</option>
                   <option value="S">SIM</option>
                   <option value="N">NÃO</option>
@@ -175,13 +173,13 @@ if ($row = $sucesso->fetch_assoc()) {
                 <label for="utilizaSmartshare">SMARTSHARE:<span style="color: red;">*</span></label>
               </div>
 
-              <div class="form-floating mt-4 col-md-6" id="SMARTSHARE_LOGIN" style="display: none;">
-                <input type="text" class="form-control" name="login" id="login" required>
+              <div class="form-floating mt-4 col-md-6" id="SMARTSHARE_LOGIN" style="display: <?= $smartshare == 'SIM' ? 'block' : 'none'  ?>;">
+                <input type="text" class="form-control" name="login" id="login" value="<?= $smartshare_login ?>">
                 <label for="SMARTSHARE_LOGIN">INFORME UM LOGIN:<span style="color: red;">*</span></label>
                 <span style="font-size: small;color: red;">NOME e os 3 primeiro números do CPF (Ex.: Joao.094)</span>
               </div>
               <div class="text-left py-2">
-                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/seminovos.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="seminovos.php?pg=<?= $_GET['pg'] ?>" class="btn btn-primary">Voltar</a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                 <button type="submit" class="btn btn-success">Salvar</button>
               </div>

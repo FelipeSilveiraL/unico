@@ -75,8 +75,6 @@ aprovadores_rh a
 INNER JOIN empresa e ON a.id_empresa = e.id_empresa
 INNER JOIN departamento_rh d ON a.id_departamento = d.id_departamento";
 
-$tabelaSeminovos = "SELECT * FROM bpm_seminovos";
-
 $queryEstados = "SELECT * FROM estados";
 
 $contasBancarias = "SELECT * FROM contas_bancarias_fornecedor";
