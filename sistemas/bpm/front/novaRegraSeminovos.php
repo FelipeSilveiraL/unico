@@ -106,6 +106,11 @@ require_once('../config/query.php');
                 </select>
                 <label for="utilizaSmartshare">SMARTSHARE:<span style="color: red;">*</span></label>
               </div>
+              <div class="form-floating mt-4 col-md-6" id="SMARTSHARE_LOGIN" style="display: none;">
+                <input type="text" class="form-control" name="login" id="login" required>
+                <label for="SMARTSHARE_LOGIN">INFORME UM LOGIN:<span style="color: red;">*</span></label>
+                <span style="font-size: small;color: red;">NOME e os 3 primeiro números do CPF (Ex.: Joao.094)</span>
+              </div>
               <div class="text-left py-2">
                 <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/seminovos.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
@@ -129,6 +134,7 @@ require_once('footer.php'); //Javascript e configurações afins
 <script type="text/javascript">
   function mostraDiv() {
     var valueRevisao = document.getElementById("utiliza").value;
+    
     switch (valueRevisao) {
       case 'S':
         document.getElementById("SMARTSHARE_LOGIN").style.display = "block";
