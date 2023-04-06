@@ -31,7 +31,7 @@ require_once('../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-          <h5 class="card-title">Nova regra fornecendor triagem </h5>
+            <h5 class="card-title">Nova regra fornecendor triagem </h5>
             <form id="novaRegraEmpresa" name="novaRegraEmpresa" class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraSeminovos.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6" id="cnpj">
@@ -85,11 +85,11 @@ require_once('../config/query.php');
                 <input type="email" class="form-control" name="email" required>
                 <label for="email">EMAIL:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6" id="nome_responsavel">
+              <div class="form-floating mt-4 col-md-4" id="nome_responsavel">
                 <input type="text" class="form-control" name="nome_responsavel" required>
                 <label for="nome_responsavel">NOME_RESPONSAVEL:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6" id="ativo">
+              <div class="form-floating mt-4 col-md-4" id="ativo">
                 <select class="form-select" name="ativo" required>
                   <option value="">------------</option>
                   <option value="S">SIM</option>
@@ -97,7 +97,7 @@ require_once('../config/query.php');
                 </select>
                 <label for="ativo">ATIVO:<span style="color: red;">*</span></label>
               </div>
-              <div class="form-floating mt-4 col-md-6" id="utilizaSmartshare">
+              <div class="form-floating mt-4 col-md-4" id="utilizaSmartshare">
                 <select class="form-select" id="utiliza" name="utilizaSmartshare" onchange="mostraDiv()" required>
                   <option value="">------------</option>
                   <option value="S">SIM</option>
@@ -129,7 +129,7 @@ require_once('footer.php'); //Javascript e configurações afins
 <script type="text/javascript">
   function mostraDiv() {
     var valueRevisao = document.getElementById("utiliza").value;
-    switch (valueRevisao) { 
+    switch (valueRevisao) {
       case 'S':
         document.getElementById("SMARTSHARE_LOGIN").style.display = "block";
         break;
@@ -139,10 +139,10 @@ require_once('footer.php'); //Javascript e configurações afins
         document.getElementById("login").required = false;
         break;
       case 'P':
-      document.getElementById("SMARTSHARE_LOGIN").style.display = "none";
-      document.getElementById('login').value = '';
-      document.getElementById("login").required = false;
-      break;
+        document.getElementById("SMARTSHARE_LOGIN").style.display = "none";
+        document.getElementById('login').value = '';
+        document.getElementById("login").required = false;
+        break;
 
     }
   }
@@ -194,93 +194,88 @@ require_once('footer.php'); //Javascript e configurações afins
     return v
   }
 
-function _cnpj(cnpj) {
+  function _cnpj(cnpj) {
 
-cnpj = cnpj.replace(/[^\d]+/g, '');
+    cnpj = cnpj.replace(/[^\d]+/g, '');
 
-if (cnpj == '') return false;
+    if (cnpj == '') return false;
 
-if (cnpj.length != 14)
-    return false;
-
-
-if (cnpj == "00000000000000" ||
-    cnpj == "11111111111111" ||
-    cnpj == "22222222222222" ||
-    cnpj == "33333333333333" ||
-    cnpj == "44444444444444" ||
-    cnpj == "55555555555555" ||
-    cnpj == "66666666666666" ||
-    cnpj == "77777777777777" ||
-    cnpj == "88888888888888" ||
-    cnpj == "99999999999999")
-    return false;
+    if (cnpj.length != 14)
+      return false;
 
 
-tamanho = cnpj.length - 2
-numeros = cnpj.substring(0, tamanho);
-digitos = cnpj.substring(tamanho);
-soma = 0;
-pos = tamanho - 7;
-for (i = tamanho; i >= 1; i--) {
-    soma += numeros.charAt(tamanho - i) * pos--;
-    if (pos < 2)
+    if (cnpj == "00000000000000" ||
+      cnpj == "11111111111111" ||
+      cnpj == "22222222222222" ||
+      cnpj == "33333333333333" ||
+      cnpj == "44444444444444" ||
+      cnpj == "55555555555555" ||
+      cnpj == "66666666666666" ||
+      cnpj == "77777777777777" ||
+      cnpj == "88888888888888" ||
+      cnpj == "99999999999999")
+      return false;
+
+
+    tamanho = cnpj.length - 2
+    numeros = cnpj.substring(0, tamanho);
+    digitos = cnpj.substring(tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+    for (i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2)
         pos = 9;
-}
-resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-if (resultado != digitos.charAt(0)) return false;
-tamanho = tamanho + 1;
-numeros = cnpj.substring(0, tamanho);
-soma = 0;
-pos = tamanho - 7;
-for (i = tamanho; i >= 1; i--) {
-    soma += numeros.charAt(tamanho - i) * pos--;
-    if (pos < 2)
+    }
+    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    if (resultado != digitos.charAt(0)) return false;
+    tamanho = tamanho + 1;
+    numeros = cnpj.substring(0, tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+    for (i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2)
         pos = 9;
-}
-resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-if (resultado != digitos.charAt(1))
-    return false;
+    }
+    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    if (resultado != digitos.charAt(1))
+      return false;
 
-return true;
+    return true;
 
-}
-
-function validarCNPJ(el){
-  if( !_cnpj(el.value) ){
-
-    $('#verticalycentered').modal('show')
-
-    // apaga o valor
-    el.value = "";
   }
-}
-  
-$("#estados").on("change", function(){
+
+  function validarCNPJ(el) {
+    if (!_cnpj(el.value)) {
+
+      $('#verticalycentered').modal('show')
+
+      // apaga o valor
+      el.value = "";
+    }
+  }
+
+  $("#estados").on("change", function() {
     var idEstado = $("#estados").val();
-    
+
     $.ajax({
-        url: '../inc/trazCidades.php',
-        type: 'POST',
-        data:{id:idEstado},
-        beforeSend:function(data){
-            $("#cidade").html('<option value="">Carregando...</option>');
-        },
-        success:function(data){
-            $("#cidade").html(data);
-        },
-        error:function(data){
-            $("#cidade").html('<option value="">Erro ao carregar...</option>');
-        }
+      url: '../inc/trazCidades.php',
+      type: 'POST',
+      data: {
+        id: idEstado
+      },
+      beforeSend: function(data) {
+        $("#cidade").html('<option value="">Carregando...</option>');
+      },
+      success: function(data) {
+        $("#cidade").html(data);
+      },
+      error: function(data) {
+        $("#cidade").html('<option value="">Erro ao carregar...</option>');
+      }
 
     });
 
-});
+  });
 </script>
-
-<script>
-
-
-
-</script>
-
