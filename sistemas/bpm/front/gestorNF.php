@@ -3,11 +3,7 @@ session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeSelbetti.php');
-require_once('../config/query.php');
-require_once('../inc/apiRecebeAprovNF.php');
-/* Essa opção descomentar após criar em telas_funcoes.php*/
-//echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -52,7 +48,7 @@ require_once('../inc/apiRecebeAprovNF.php');
                       }
                       echo '
                     <div class="text-left">
-                      <a href="http://'.$_SERVER['SERVER_ADDR'].'/unico/sistemas/bpm/front/departamentos.php?pg='.$_GET['pg'].'"> <button type="button" class="btn btn-primary">Voltar</button></a>
+                      <a href="departamentos.php?pg='.$_GET['pg'].'" class="btn btn-primary">Voltar</a>
                       <button type="submit" class="btn btn-success">Buscar</button>
                     </div>
                   </form>';
@@ -70,20 +66,23 @@ require_once('../inc/apiRecebeAprovNF.php');
                           <select class="form-select" name="gestorNovo" required >
                             <option value=""> ------------ </option>';
 
-                            $query_users .= ' WHERE id NOT IN (1)';
-                            $exec = $conn->query($query_users);
+                            $query_user .= " ORDER BY ds_usuario ASC";
 
-                            while($row = $exec->fetch_assoc()){
+                            $exec = oci_parse($connSelbetti, $query_user);
+                            oci_execute($exec);
+
+                            while($row = oci_fetch_array($exec, OCI_ASSOC)){
                               echo '<option value="'.$row['DS_LOGIN'].' / '.$row['DS_USUARIO'].'">'.$row['DS_USUARIO'].' / '.$row['DS_LOGIN'].'</option>
                                ';
                             }
+                            oci_free_statement($exec);
 
                             echo'
                           </select>
                           <label for="aproCaixa">Alterar para novo gestor:<span style="color: red;">*</span></label>
                         </div>
                       <div class="text-center">
-                        <a href="http://'.$_SERVER['SERVER_ADDR'].'/unico/sistemas/bpm/front/departamentos.php?pg='.$_GET['pg'].'"> <button type="button" class="btn btn-danger">Voltar</button></a>
+                        <a href="departamentos.php?pg='.$_GET['pg'].'" class="btn btn-danger">Voltar</a>
                         <button type="submit" class="btn btn-primary">Alterar</button>
                       </div>
                     </form><br>';

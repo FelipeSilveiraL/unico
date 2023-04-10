@@ -108,6 +108,9 @@ if (!empty($_GET['msn'])) {
                 case '12':
                     echo '<p class="mb-0"><i class="bi bi-pin"></i>Não foi possivel encontra essa solicitação</p>';
                     break;
+                case '13':
+                    echo '<p class="mb-0"><i class="bi bi-pin"></i>Empresa e Departamento já cadastrados.</p>';
+                    break;
             }
             echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
@@ -157,11 +160,7 @@ if (!empty($_GET['msn'])) {
                 </div>';
             break;
         case '16':
-            echo '
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <span style="font-size: 12px">Esse vendedor ja está cadastrado nessa empresa e departamento!</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>';
+            echo '';
             break;
         case '17':
             echo '

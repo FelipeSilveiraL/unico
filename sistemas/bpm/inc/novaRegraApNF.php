@@ -8,15 +8,13 @@ $verifRegra = "SELECT
                 id_departamento
             FROM
                 aprovadores_nf
-            WHERE
-                    id_empresa = '".$_POST['empresa']."'
-            AND id_departamento = '".$_POST['depto']."'";
+            WHERE id_empresa = ".$_POST['empresa']." AND id_departamento = ".$_POST['depto']."";
 
 $resultVerif = oci_parse($connBpmgp, $verifRegra);
 oci_execute($resultVerif);
 
 while ($rowverif = oci_fetch_array($resultVerif, OCI_ASSOC)) {
-    header('location: ../front/aprovadoresNF.php?pg='.$_GET['pg'].'&msn=16'); //Já existe uma empresa com esse departamento cadastrado!
+    header('location: ../front/aprovadoresNF.php?pg='.$_GET['pg'].'&msn=10&erro=13'); //Já existe uma empresa com esse departamento cadastrado!
 }
 
 if(oci_num_rows($resultVerif) == 0){
