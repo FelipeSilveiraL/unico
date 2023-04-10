@@ -13,7 +13,6 @@ require_once('../../../config/sqlSmart.php');
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item"><a href="departamentos.php?pg=<?= $_GET['pg'] ?>">Departamentos</a></li>
-        <li class="breadcrumb-item"><a href="manutencaoSmart.php?pg=<?= $_GET['pg'] ?>">Manutenção Smartshare</a></li>
         <li class="breadcrumb-item">NOVA REGRA DEPARTAMENTO VENDAS</li>
       </ol>
     </nav>
