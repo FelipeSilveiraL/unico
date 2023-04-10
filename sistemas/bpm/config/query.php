@@ -83,9 +83,20 @@ $queryUsuario = "SELECT numcpf FROM dbo.v_func";
 
 $departamentosQuery = "SELECT * FROM bpm_rh_departamento";
 
-$vendedoresQuery = "SELECT * FROM VENDEDORES v 
-LEFT OUTER JOIN EMPRESA e ON e.id_empresa = v.empresa
-LEFT OUTER JOIN DEPARTAMENTO_VENDAS dv ON dv.id = v.DEPARTAMENTO";
+$vendedoresQuery = "SELECT 
+v.id_vendedor,
+v.nome,
+v.cpf,
+v.login_smartshare,
+v.codigo_login_smartshare,
+v.situacao,
+e.nome_empresa,
+e.id_empresa,
+dv.nome_departamento,
+dv.id AS id_departamento
+FROM VENDEDORES v 
+LEFT JOIN EMPRESA e ON e.id_empresa = v.empresa
+LEFT JOIN DEPARTAMENTO_VENDAS dv ON dv.id = v.DEPARTAMENTO";
 
 $gerentesQuery = "SELECT 
 g.id_gerente,

@@ -2,9 +2,7 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeSelbetti.php');
-require_once('../../../config/config.php');
-require_once('../config/query.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -31,80 +29,75 @@ require_once('../config/query.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-          <h5 class="card-title">Editar vendedores </h5>
-            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/editVendedores.php?pg=<?= $_GET['pg'] ?>&id_vendedor=<?= $_GET['id_vendedor'] ?>" method="POST">
+            <h5 class="card-title">Editar vendedores </h5>
+            <form class="row g-3" action="../inc/editVendedores.php?pg=<?= $_GET['pg'] ?>&id_vendedor=<?= $_GET['id_vendedor'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
 
               <?php
-              $vendedoresQuery .= " WHERE ID_VENDEDOR = " . $_GET['id_vendedor'] . "";
-              
-              $sucesso = $conn->query($vendedoresQuery);
+              $vendedoresQuery .= " WHERE ID_VENDEDOR = " . $_GET['id_vendedor'];
 
-              while ($row3 = $sucesso->fetch_assoc()) {
+              $sucesso = oci_parse($connBpmgp, $vendedoresQuery);
+              oci_execute($sucesso);
+
+              while ($row3 = oci_fetch_array($sucesso, OCI_ASSOC)) {
 
                 if ($row3['SITUACAO'] == 'A') {
                   $situacao = 'ATIVO';
                 } else {
                   $situacao = 'DESATIVADO';
                 }
-                $resultado = $conn->query($vendedoresQuery);
 
-                while ($row = $resultado->fetch_assoc()) {
+                $empresa = $row3['NOME_EMPRESA'];
+                $departamento = $row3['NOME_DEPARTAMENTO'];
 
-                  $queryEmpresa = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = " . $row['EMPRESA'] . "";
 
-                  $sucesso = $conn->query($queryEmpresa);
-
-                  while ($row1 = $sucesso->fetch_assoc()) {
-                    $empresa = $row1['NOME_EMPRESA'];
-                  }
-
-                  $queryDep = "SELECT * FROM bpm_departamento_vendas WHERE ID_DEPARTAMENTO = '".$row3['DEPARTAMENTO']."'";
-
-                  $success = $conn->query($queryDep);
-
-                  while ($row2 = $success->fetch_assoc()) {
-                    $departamento = $row2['NOME_DEPARTAMENTO'];
-                  }
-                  echo '<div class="form-floating mt-4 col-md-6">
+                echo '<div class="form-floating mt-4 col-md-6">
                                 <select class="form-select" name="empresa" id="empresa" required>
                                 <option value="' . $row3['EMPRESA'] . '">' . $empresa . '</option>
-                                <option value="">Selecione a empresa</option>';
-                  $sucesso = $conn->query($queryTabela);
+                                <option value="">-----------------</option>';
 
-                  while ($row1 = $sucesso->fetch_assoc()) {
-                    echo '<option value="' . $row1['ID_EMPRESA'] . '">' . $row1['NOME_EMPRESA'] . '</option>';
-                  }
-                  echo '</select>
+                $queryTabela .= ' ORDER BY NOME_EMPRESA ASC';
+
+                $sucesso = oci_parse($connBpmgp, $queryTabela);
+                oci_execute($sucesso);
+
+                while ($row1 = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                  echo '<option value="' . $row1['ID_EMPRESA'] . '">' . $row1['NOME_EMPRESA'] . '</option>';
+                }
+                echo '</select>
                         <label for="empresa" class="capitalize">EMPRESA:<code>*</code></label>
                       </div>
         
                       <div class="form-floating mt-4 col-md-6">
                         <select class="form-select" name="departamento" id="departamento" required>
                         <option value="' . $row3['DEPARTAMENTO'] . '">' . $departamento . '</option>
-                          <option value="">Selecione o departamento</option>';
+                          <option value="">-----------------</option>';
 
-                            $sucesso2 = $conn->query($depVendasQuery);
+                $depVendasQuery .= ' ORDER BY NOME_DEPARTAMENTO ASC';
+                $sucesso = oci_parse($connBpmgp, $depVendasQuery);
+                oci_execute($sucesso);
 
-                            while ($row2 = $sucesso2->fetch_assoc()) {
-                              echo '<option value="' . $row2['ID_DEPARTAMENTO'] . '">' . $row2['NOME_DEPARTAMENTO'] . '</option>';
-                            }
-                  echo '</select>
+                while ($row2 = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                  echo '<option value="' . $row2['ID'] . '">' . $row2['NOME_DEPARTAMENTO'] . '</option>';
+                }
+                echo '</select>
                         <label for="filial" class="capitalize">DEPARTAMENTO:<code>*</code></label>
                     </div>
                     
                     <div class="form-floating mt-4 col-md-6">
                       <select class="form-select" name="nome" id="nome">
                       <option value="' . $row3['NOME'] . '">' . $row3['NOME'] . '</option>
-                      <option value="">Selecione o nome</option>';
-                  $mostraUsuario = "SELECT DS_USUARIO FROM bpm_usuarios_smartshare order by DS_USUARIO ASC";
+                      <option value="">-----------------</option>';
 
-                  $sucesso4 = $conn->query($mostraUsuario);
+                $queryUserApi .= " ORDER BY DS_USUARIO ASC";
 
-                  while ($row4 = $sucesso4->fetch_assoc()) {
-                    echo '<option value="' . $row4['DS_USUARIO'] . '">' . $row4['DS_USUARIO'] . '</option>';
-                  }
-                  echo '</select>
+                $sucesso = oci_parse($connSelbetti, $queryUserApi);
+                oci_execute($sucesso);
+
+                while ($row4 = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                  echo '<option value="' . $row4['DS_USUARIO'] . '">' . $row4['DS_USUARIO'] . '</option>';
+                }
+                echo '</select>
                       <label for="nome" class="capitalize">NOME:<code>*</code></label>
                     </div>
                     <div class="form-floating mt-4 col-md-6">
@@ -129,17 +122,13 @@ require_once('../config/query.php');
                       </select>
                       <label for="situacao">SITUAÇÃO:<code>*</code></label>
                     </div>';
-                }
               }
-
-
-
               ?>
 
 
 
               <div class="text-left py-2">
-                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/vendedores.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="vendedores.php?pg=<?= $_GET['pg'] ?>" class="btn btn-primary">Voltar</a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                 <button type="submit" class="btn btn-success">Salvar</button>
               </div>
@@ -164,7 +153,7 @@ require_once('footer.php'); //Javascript e configurações afins
       url: '../inc/trazUsuario.php',
       type: 'POST',
       data: {
-        id: idUsuario
+        id: idUsuario, edit: true
       },
       beforeSend: function(data) {
         $("#cpfVet").html('<option value="">Carregando...</option>');
@@ -182,7 +171,7 @@ require_once('footer.php'); //Javascript e configurações afins
       url: '../inc/trazLogin.php',
       type: 'POST',
       data: {
-        id: idUsuario
+        id: idUsuario, edit: true
       },
       beforeSend: function(data) {
         $("#login_smartshare").html('<option value="">Carregando...</option>');

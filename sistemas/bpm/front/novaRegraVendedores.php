@@ -2,7 +2,7 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-/* require_once('../../../config/sqlSmart.php'); */
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -63,7 +63,7 @@ require_once('menu.php'); //menu lateral da pagina
                   oci_execute($sucesso2);
 
                   while ($row2 = oci_fetch_array($sucesso2, OCI_ASSOC)) {
-                    echo '<option value="' . $row2['ID_DEPARTAMENTO'] . '">' . $row2['NOME_DEPARTAMENTO'] . '</option>';
+                    echo '<option value="' . $row2['ID'] . '">' . $row2['NOME_DEPARTAMENTO'] . '</option>';
                   }
                   oci_free_statement($sucesso2);
                   ?>
