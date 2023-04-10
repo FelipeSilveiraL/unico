@@ -2,9 +2,7 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeCustoVeiculos.php');
-require_once('../inc/apiRecebeCustoEspecificos.php');
-require_once('../config/query.php');
+require_once('../../../config/sqlSmart.php');
 
 ?>
 
@@ -70,33 +68,42 @@ require_once('../config/query.php');
               <tbody>
                 <?php
 
-                    $resultCustoVeiculo = $conn->query($queryCustoVeiculo);
+                    $resultCustoVeiculo = oci_parse($connBpmgp, $queryCustoVeiculo);
+                    oci_execute($resultCustoVeiculo);
 
-                    while (($custoVeiculo= $resultCustoVeiculo->fetch_assoc())) {
+                    while ($custoVeiculo = oci_fetch_array($resultCustoVeiculo, OCI_ASSOC)) {
+
+                      $descricaoCusto = '';
 
                       if ($custoVeiculo['SISTEMA'] == 'A') {
 
                           //######################### APOLLO #########################
 
-                          $queryApollo = "SELECT DES_DESPESA, DESPESA FROM bpm_vei_despesa WHERE empresa = " . $custoVeiculo['EMPRESA_APOLLO'] . " AND despesa = " . $custoVeiculo['CODIGO_CUSTO_ERP'];
+                          $queryApollo = "SELECT DES_DESPESA, DESPESA FROM vei_despesa WHERE empresa = " . $custoVeiculo['EMPRESA_APOLLO'] . " AND despesa = " . $custoVeiculo['CODIGO_CUSTO_ERP'];
                         
-                          $resultadoAPollo = $conn->query($queryApollo);
+                          $resultadoAPollo = oci_parse($connApollo, $queryApollo);
+                          oci_execute($resultadoAPollo);
 
-                          if ($empresaAPollo = $resultadoAPollo->fetch_assoc() ) {
-                              $descricaoCusto = '<td>' . $empresaAPollo['DES_DESPESA'] . ' [ '. $empresaAPollo['DESPESA'] .' ]</td>';
+                          while ($empresaAPollo = oci_fetch_array($resultadoAPollo, OCI_ASSOC) ) {
+                              $descricaoCusto .= '<td>' . $empresaAPollo['DES_DESPESA'] . ' [ '. $empresaAPollo['DESPESA'] .' ]</td>';
                           }
+                          oci_free_statement($resultadoAPollo);                 
                          
-                      } else {
+                      } 
+                      
+                      if($custoVeiculo['SISTEMA'] == 'N'){
 
                           //######################### NBS #########################
-
-                          $queryNBS = "SELECT DESCRICAO_CUSTO, CODIGO_CUSTO FROM bpm_custo_especificos WHERE COD_EMPRESA = " . $custoVeiculo['EMPRESA_NBS'] . " AND codigo_custo = " . $custoVeiculo['CODIGO_CUSTO_ERP'];
+                          $queryNBS = "SELECT DESCRICAO_CUSTO, CODIGO_CUSTO FROM custos_especificos WHERE codigo_custo = " . $custoVeiculo['CODIGO_CUSTO_ERP'];
                           
-                          $resultadoNBS = $conn->query($queryNBS);
+                          $resultadoNBS = oci_parse($connNbs, $queryNBS);
+                          oci_execute($resultadoNBS);
 
-                          if (($empresaNBS = $resultadoNBS->fetch_assoc() )) {
+                          while ($empresaNBS = oci_fetch_array($resultadoNBS, OCI_ASSOC)) {
                               $descricaoCusto = '<td>' . $empresaNBS['DESCRICAO_CUSTO'] . ' [ '. $empresaNBS['CODIGO_CUSTO'] .' ]</td>';
+                              
                           }
+                          oci_free_statement($resultadoNBS);
                       }
 
                       switch ($custoVeiculo['TIPO_CUSTO']) {
@@ -118,12 +125,16 @@ require_once('../config/query.php');
                       echo '<td>' . $custoVeiculo['ID_CODIGO_CUSTO_VEICULO'] . '</td>';
                       echo '<td>' . $custoVeiculo['NOME_EMPRESA'] . '</td>';
                       echo '<td>' . $tipoCusto . '</td>';
-                      echo '<td>' . $custoVeiculo['ANO_REFERENCIA'] . '</td>';
+                      echo '<td>'; echo !empty($custoVeiculo['ANO_REFERENCIA']) ? $custoVeiculo['ANO_REFERENCIA'] : '---' . '</td>';
                       echo $descricaoCusto;
                       echo '<td ' . $usuarioFuncao . '><a href="editCustoEspecifico.php?pg=' . $_GET["pg"] . '&id_conta=' . $custoVeiculo['ID_CODIGO_CUSTO_VEICULO'] . '" title="Editar" class="btn-primary btn-sm" ><i class="bi bi-pencil"></i></a>
-                      <a href="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'].'/bd/deletarCVeiculos.php?pg='.$_GET['pg'].'&id_codigo=' . $custoVeiculo['ID_CODIGO_CUSTO_VEICULO'] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a></td>
+                      <a href="../inc/deletarCVeiculos.php?pg='.$_GET['pg'].'&id_codigo=' . $custoVeiculo['ID_CODIGO_CUSTO_VEICULO'] . '" title="Desativar" style="margin-top: 3px;" class="btn-danger btn-sm" ><i class="bi bi-trash"></i></a></td>
                      </tr>';
-                    }
+                    }//end while
+
+                    oci_close($connApollo);
+                    oci_close($connNbs);
+                    oci_close($connBpmgp);
 
                 ?>
               </tbody>

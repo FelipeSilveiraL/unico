@@ -152,13 +152,6 @@ if (!empty($_GET['msn'])) {
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
             break;
-        case '15':
-            echo '
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <span style="font-size: 12px">Usuário já cadastrado!</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>';
-            break;
         case '16':
             echo '';
             break;

@@ -3,8 +3,7 @@ session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../../../config/config.php');
-require_once('../config/query.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -30,70 +29,62 @@ require_once('../config/query.php');
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          <div class="card-body"><h5 class="card-title">Editar custo veículo </h5>
-            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?=$_SESSION['smartshare']?>/bd/editCVeiculos.php?pg=<?= $_GET['pg'] ?>&id_codigo=<?= $_GET['id_conta'] ?>"  id="formularioVeiculos" method="POST">
+          <div class="card-body">
+            <h5 class="card-title">Editar custo veículo </h5>
+            <form class="row g-3" action="../inc/editCVeiculos.php?pg=<?= $_GET['pg'] ?>&id_codigo=<?= $_GET['id_conta'] ?>" id="formularioVeiculos" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
 
               <?php
               $idConta = $_GET['id_conta'];
-              $queryCustoVeiculo .= " WHERE ID_CODIGO_CUSTO_VEICULO = ".$idConta." ";
-              
-              $conexao = $conn->query($queryCustoVeiculo);
-              
-            while($row = $conexao->fetch_assoc()){
+              $queryCustoVeiculo .= " WHERE ID_CODIGO_CUSTO_VEICULO = " . $idConta;
+              $conexao = oci_parse($connBpmgp, $queryCustoVeiculo);
+              oci_execute($conexao);
 
-              $idEmpresa = $row['ID_EMPRESA'];
-              $nomeEmpresa = $row['NOME_EMPRESA'];
-              
-              $tipoCusto = $row['TIPO_CUSTO'];
-              $anoReferencia = $row['ANO_REFERENCIA'];
-              $custoERP = $row['CODIGO_CUSTO_ERP'];
-          
-              switch ($row['TIPO_CUSTO']) {
+              while ($row = oci_fetch_array($conexao, OCI_ASSOC)) {
+                $nomeEmpresa = $row['NOME_EMPRESA'];
+                $idEmpresas = $row['ID_EMPRESA'];
+                $tipoCusto = $row['TIPO_CUSTO'];
+                $anoReferencia = $row['ANO_REFERENCIA'];
+                $custoERP = $row['CODIGO_CUSTO_ERP'];
+
+                switch ($row['TIPO_CUSTO']) {
                   case 'L':
-                      $tipoCustoNome = 'Licenciamento';
-                      break;
+                    $tipoCustoNome = 'Licenciamento';
+                    break;
                   case 'M':
-                      $tipoCustoNome = 'Multa';
-                      break;
+                    $tipoCustoNome = 'Multa';
+                    break;
                   case 'T':
-                      $tipoCustoNome = 'Triagem';
-                      break;
+                    $tipoCustoNome = 'Triagem';
+                    break;
                   case 'I';
-                      $tipoCustoNome = "IPVA";
-                      break;
+                    $tipoCustoNome = "IPVA";
+                    break;
+                }
               }
-          
-        echo' 
-              <div class="form-floating mt-4 col-md-6" id="NOME_EMPRESA">
-                  <input class="form-control" value=" '.$nomeEmpresa.'" readonly>
-                  <input type="hidden" name="empresa" id="empresa" value="'.$idEmpresa.'"> 
-                
-               <label for="NOME_EMPRESA">NOME EMPRESA:<span style="color: red;">*</span></label>
+              ?>
+              <div class="form-floating mt-4 col-md-4" id="NOME_EMPRESA">
+                <input class="form-control" value="<?= $nomeEmpresa ?>" readonly>
+                <input type="text" name="id_empresa" id="idEmpresa" value="<?= $idEmpresas?>" style="display: none">
+
+                <label for="NOME_EMPRESA">NOME EMPRESA:<span style="color: red;">*</span></label>
               </div>
 
-              <div class="form-floating mt-4 col-md-6">
+              <div class="form-floating mt-4 col-md-4">
                 <select class="form-control" name="tipo_custo" readonly>
-                      <option value="'.$tipoCusto.'">'.$tipoCustoNome.'</option>
+                  <option value="<?= $tipoCusto ?>"><?= $tipoCustoNome ?></option>
                 </select>
                 <label for="estados">TIPO DE CUSTO:<span style="color: red;">*</span></label>
               </div>
-
-              <div class="form-floating mt-4 col-md-6" id="custo">
-                <select class="form-select" name="erp" id="erp">'; 
-                
-              
-                echo'
-                ';
-              } 
-              
-                  ?>
+              <div class="form-floating mt-4 col-md-4" id="custo">
+                <select class="form-select" name="erp" id="erp">
+                  <option value="<?= $custoERP ?>"><?= $custoERP ?></option>
                 </select>
                 <label for="custo" class="col-sm-6 col-form-label">CUSTO ERP:</label>
               </div>
-              
+
               <div class="text-left py-2">
-                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/custoVeiculos.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="custoVeiculos.php?pg=<?= $_GET['pg'] ?>" class="btn btn-primary">Voltar</a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                 <button type="submit" class="btn btn-success">Salvar</button>
               </div>
@@ -110,27 +101,26 @@ require_once('../config/query.php');
 <?php
 require_once('footer.php'); //Javascript e configurações afins
 ?>
- <script>
-        $("#empresa").val(function() {
-            var idEmpresa = $("#empresa").val();
+<script>
+  $(document).ready(function() {
+    var idErp = $("#erp").val();
+    var idEmpresa = $("#idEmpresa").val();
 
-            $.ajax({
-              url: '../inc/coletandoDados.php',
-                type: 'POST',
-                data: {
-                    id: idEmpresa
-                },
-                beforeSend: function(data) {
-                    $("#erp").html('<option value="">Carregando...</option>');
-                },
-                success: function(data) {
-                    $("#erp").html(data);
-                },
-                error: function(data) {
-                    $("#erp").html('<option value="">Erro ao carregar...</option>');
-                }
+    $.ajax({
+      url: '../inc/coletandoDados.php',
+      type: 'POST',
+      data: {idERP: idErp, idEMPRESA: idEmpresa},
+      beforeSend: function(data) {
+        $("#erp").html('<option value="">Carregando...</option>');
+      },
+      success: function(data) {
+        $("#erp").html(data);
+      },
+      error: function(data) {
+        $("#erp").html('<option value="">Erro ao carregar...</option>');
+      }
 
-            });
+    });
 
-        });
-    </script>
+  });
+</script>

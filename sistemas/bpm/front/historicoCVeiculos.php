@@ -2,9 +2,7 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeCustoVeiculos.php');
-require_once('../inc/apiRecebeCustoEspecificos.php');
-require_once('../config/query.php');
+require_once('../../../config/sqlSmart.php');
 
 ?>
 
@@ -26,19 +24,19 @@ require_once('../config/query.php');
 
   switch ($_GET['erro']) {
     case 1:
-        echo ' <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      echo ' <div class="alert alert-warning alert-dismissible fade show" role="alert">
                   <span style="font-size: 12px">Custo já existe. Por favor cadestre outro!</span>
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                </div>';
-        break;
+      break;
     case 2:
       echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
               <span style="font-size: 12px">CNPJ já cadastrado. Por favor informe outro</span>
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
-       
-        break;
-}
+
+      break;
+  }
 
   ?>
 
@@ -48,9 +46,9 @@ require_once('../config/query.php');
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
-          
+
           <div class="card-body">
-          <h5 class="card-title"> Registro alterados</h5>
+            <h5 class="card-title"> Registro alterados</h5>
             <!-- Table with stripped rows -->
             <table class="table table-striped datatable">
               <thead>
@@ -68,7 +66,7 @@ require_once('../config/query.php');
               <tbody style="text-transform: uppercase;">
                 <?php
 
-                    $queryLog = "SELECT 
+                $queryLog = "SELECT 
                     LCV.id,
                     LCV.id_usuario, 
                     LCV.id_codigo_custo_veiculo,
@@ -84,76 +82,86 @@ require_once('../config/query.php');
                     LEFT JOIN usuarios U ON (LCV.id_usuario = U.id_usuario)
                     LEFT JOIN cad_depto CD ON (U.depto = CD.id)
                     LEFT JOIN cad_empresa CE ON (U.empresa = CE.id) ORDER BY LCV.id_codigo_custo_veiculo DESC";
-                    
-                    $resulLog = $conn->query($queryLog);
 
-                    while ($log = $resulLog->fetch_assoc()) {
+                $resulLog = $conn->query($queryLog);
 
-                    $queryCustoVeiculo = "SELECT 
+                while ($log = $resulLog->fetch_assoc()) {
+
+                  $queryCustoVeiculo = "SELECT 
                                       ccv.ID_CODIGO_CUSTO_VEICULO,
                                       e.SISTEMA,
                                       e.EMPRESA_NBS,
                                       e.EMPRESA_APOLLO
-                      FROM bpm_codigo_custo_veiculo ccv
-                      LEFT JOIN bpm_empresas e on ccv.ID_EMPRESA = e.ID_EMPRESA WHERE ccv.ID_CODIGO_CUSTO_VEICULO = " . $log['id_codigo_custo_veiculo'];
-                   
-                      $resultCustoVeiculo = $conn->query($queryCustoVeiculo);
+                      FROM codigo_custo_veiculo ccv
+                      LEFT JOIN empresa e on ccv.ID_EMPRESA = e.ID_EMPRESA WHERE ccv.ID_CODIGO_CUSTO_VEICULO = " . $log['id_codigo_custo_veiculo'];
 
-                      while ($custoVeiculo = $resultCustoVeiculo->fetch_assoc()) {
+                  $resultCustoVeiculo = oci_parse($connBpmgp, $queryCustoVeiculo);
+                  oci_execute($resultCustoVeiculo);
 
-                          if ($custoVeiculo['SISTEMA'] == 'A') {
+                  while ($custoVeiculo = oci_fetch_array($resultCustoVeiculo, OCI_ASSOC)) {
 
-                              //######################### APOLLO #########################
+                    if ($custoVeiculo['SISTEMA'] == 'A') {
 
-                              //anterior
-                              $queryApolloAn = "SELECT DES_DESPESA, DESPESA FROM bpm_vei_despesa WHERE EMPRESA = " . $custoVeiculo['EMPRESA_APOLLO'] . " AND DESPESA = " . $log['custo_erp_anterior'];
-                            
-                              $resultadoAPolloAn = $conn->query($queryApolloAn);
+                      //######################### APOLLO #########################
 
-                              if ($empresaAPolloAN = $resultadoAPolloAn->fetch_assoc()) {
-                                  $descricaoCustoAnterior = $descricaoCusto = '<td>' . $empresaAPolloAN['DES_DESPESA'] . ' [ '. $empresaAPolloAN['DESPESA'] .' ]</td>';
-                              }
-                              //atual
-                              $queryApolloAt = "SELECT DES_DESPESA, DESPESA FROM bpm_vei_despesa WHERE EMPRESA = " . $custoVeiculo['EMPRESA_APOLLO'] . " AND DESPESA = " . $log['custo_erp_atual'];
-                              
-                              $resultadoAPolloAt = $conn->query($queryApolloAt);
+                      //anterior
+                      $queryApolloAn = "SELECT DES_DESPESA, DESPESA FROM vei_despesa WHERE EMPRESA = " . $custoVeiculo['EMPRESA_APOLLO'] . " AND DESPESA = " . $log['custo_erp_anterior'];
 
-                              if ($empresaAPolloAt = $resultadoAPolloAt->fetch_assoc()) {
-                                  $descricaoCustoAtual = $descricaoCusto = '<td>' . $empresaAPolloAt['DES_DESPESA'] . ' [ '. $empresaAPolloAt['DESPESA'] .' ]</td>';
-                              }
+                      $resultadoAPolloAn = oci_parse($connApollo, $queryApolloAn);
+                      oci_execute($resultadoAPolloAn);
+
+                      while ($empresaAPolloAN = oci_fetch_array($resultadoAPolloAn, OCI_ASSOC)) {
+                        $descricaoCustoAnterior = $descricaoCusto = '<td>' . $empresaAPolloAN['DES_DESPESA'] . ' [ ' . $empresaAPolloAN['DESPESA'] . ' ]</td>';
+                      }
+                      oci_free_statement($resultadoAPolloAn);
 
 
-                          } else {
+                      //atual
+                      $queryApolloAt = "SELECT DES_DESPESA, DESPESA FROM vei_despesa WHERE EMPRESA = " . $custoVeiculo['EMPRESA_APOLLO'] . " AND DESPESA = " . $log['custo_erp_atual'];
 
-                              //######################### NBS #########################
+                      $resultadoAPolloAt = oci_parse($connApollo, $queryApolloAt);
+                      oci_execute($resultadoAPolloAt);
 
-                              $queryNBS = "SELECT DESCRICAO_CUSTO, CODIGO_CUSTO FROM bpm_custo_especificos WHERE COD_EMPRESA = " . $custoVeiculo['EMPRESA_NBS'] . " AND CODIGO_CUSTO = " . $custoVeiculo['CODIGO_CUSTO_ERP'];
-                              
-                              $resultadoNBS = $conn->query($queryNBS);
+                      while ($empresaAPolloAt = oci_fetch_array($resultadoAPolloAt, OCI_ASSOC)) {
+                        $descricaoCustoAtual = $descricaoCusto = '<td>' . $empresaAPolloAt['DES_DESPESA'] . ' [ ' . $empresaAPolloAt['DESPESA'] . ' ]</td>';
+                      }
+                      oci_free_statement($resultadoAPolloAt);
+                    } else {
 
-                              if ($empresaNBS = $resultadoNBS->fetch_assoc()) {
-                                  $descricaoCusto = '<td>' . $empresaNBS['DESCRICAO_CUSTO'] . ' [ ' . $empresaNBS['CODIGO_CUSTO'] . ' ]</td>';
-                              }
-                          }
+                      //######################### NBS #########################
+
+                      $queryNBS = "SELECT DESCRICAO_CUSTO, CODIGO_CUSTO FROM custos_especificos WHERE COD_EMPRESA = " . $custoVeiculo['EMPRESA_NBS'] . " AND CODIGO_CUSTO = " . $custoVeiculo['CODIGO_CUSTO_ERP'];
+
+                      $resultadoNBS = oci_parse($connNbs, $queryNBS);
+                      oci_execute($resultadoNBS);
+
+                      while ($empresaNBS = oci_fetch_array($resultadoNBS, OCI_ASSOC)) {
+                        $descricaoCusto = '<td>' . $empresaNBS['DESCRICAO_CUSTO'] . ' [ ' . $empresaNBS['CODIGO_CUSTO'] . ' ]</td>';
                       }
 
-                      echo '<tr>
-                              <td>' . $log['id'] . '</td>
+                      oci_free_statement($resultadoNBS);
+                    }
+                  }
+
+                  echo '<tr><td>' . $log['id'] . '</td>
                               <td>' . $log['nome_usuario'] . '</td>
                               <td>' . $log['departamento'] . '</td>
                               <td>' . $log['empresa'] . '</td>
                               <td>' . $log['id_codigo_custo_veiculo'] . '</td>';
-                              echo $descricaoCustoAnterior;
-                              echo $descricaoCustoAtual;
-                      echo' <td>' . date('d/m/Y m:i:s', strtotime($log['data_alteracao'])) . '</td>
-                          </tr>';
-                  }
-                  ?>
+                  echo $descricaoCustoAnterior;
+                  echo $descricaoCustoAtual;
+                  echo ' <td>' . date('d/m/Y m:i:s', strtotime($log['data_alteracao'])) . '</td></tr>';
+                }
+
+                oci_close($connApollo);
+                oci_close($connBpmgp);
+                oci_close($connNbs);
+                ?>
               </tbody>
             </table>
             <div class="text-left py-2">
-                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/custoVeiculos.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
-              </div>
+              <a href="custoVeiculos.php?pg=<?= $_GET['pg'] ?>" class="btn btn-primary">Voltar</a>
+            </div>
           </div>
         </div>
       </div>

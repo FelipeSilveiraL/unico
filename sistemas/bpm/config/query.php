@@ -52,11 +52,9 @@ $querySistemaCores = "SELECT id_usuario, id_sistema, color FROM usuarios_sistema
 
 $deletar = "SELECT NOME_EMPRESA,SISTEMA,EMPRESA_NBS,CONSORCIO,EMPRESA_APOLLO,REVENDA_APOLLO,ORGANOGRAMA_SENIOR,EMPRESA_SENIOR,FILIAL_SENIOR FROM bpm_empresas ";
 
-$queryTabela = "SELECT * FROM empresa where ID_EMPRESA NOT IN(208,382) ORDER BY ID_EMPRESA ASC";
+$queryTabela = "SELECT * FROM empresa where ID_EMPRESA NOT IN(208,382) ";
 
 $editarTabela = "SELECT * FROM bpm_empresas ";
-
-$relatorioExcel = "SELECT * FROM empresa where ID_EMPRESA NOT IN(208,382) ";
 
 $aprovadoresQuery = "SELECT
 a.aprovador_filial,
@@ -79,8 +77,6 @@ $queryEstados = "SELECT * FROM estados";
 
 $contasBancarias = "SELECT * FROM contas_bancarias_fornecedor";
 
-$queryCustoVeiculo = "SELECT * FROM bpm_custo_veiculo";
-
 $queryCidade = "SELECT * FROM cidades";
 
 $queryUsuario = "SELECT numcpf FROM dbo.v_func";
@@ -91,7 +87,20 @@ $vendedoresQuery = "SELECT * FROM VENDEDORES v
 LEFT OUTER JOIN EMPRESA e ON e.id_empresa = v.empresa
 LEFT OUTER JOIN DEPARTAMENTO_VENDAS dv ON dv.id = v.DEPARTAMENTO";
 
-$gerentesQuery = "SELECT * FROM bpm_gerentes";
+$gerentesQuery = "SELECT 
+g.id_gerente,
+g.NOME, 
+g.CPF, 
+g.login_smartshare,
+g.codigo_login_smartshare, 
+g.situacao,
+e.nome_empresa,
+e.id_empresa,
+dv.nome_departamento,
+dv.id AS id_departamento
+FROM gerente g
+LEFT JOIN empresa e on (g.empresa = e.id_empresa)
+LEFT JOIN departamento_vendas dv on (g.departamento = dv.id)";
 
 $depVendasQuery = "SELECT * FROM departamento_vendas";
 

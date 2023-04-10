@@ -2,8 +2,7 @@
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../inc/apiRecebeSelbetti.php');
-require_once('../../../config/config.php');
+require_once('../../../config/sqlSmart.php');
 ?>
 
 <main id="main" class="main">
@@ -30,17 +29,22 @@ require_once('../../../config/config.php');
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-          <h5 class="card-title">Nova regra gerente </h5>
-            <form class="row g-3" action="http://<?= $_SESSION['servidorOracle'] ?>/<?= $_SESSION['smartshare'] ?>/bd/novaRegraGerentes.php?pg=<?= $_GET['pg'] ?>" method="POST">
+            <h5 class="card-title">Nova regra gerente </h5>
+            <form class="row g-3" action="../inc/novaRegraGerentes.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <!--DADOS PARA O LANÇAMENTO -->
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" name="empresa" id="empresa" required>
                   <option value="">Selecione a empresa</option>
                   <?php
-                  $sucesso = $conn->query($queryTabela);
-                  while ($row1 = $sucesso->fetch_assoc()) {
+                  $queryTabela .= " ORDER BY NOME_EMPRESA ASC";
+
+                  $sucesso = oci_parse($connBpmgp, $queryTabela);
+                  oci_execute($sucesso);
+
+                  while ($row1 = oci_fetch_array($sucesso, OCI_ASSOC)) {
                     echo '<option value="' . $row1['ID_EMPRESA'] . '">' . $row1['NOME_EMPRESA'] . '</option>';
                   }
+                  oci_free_statement($sucesso);
                   ?>
                 </select>
                 <label for="empresa" class="capitalize">EMPRESA:<code>*</code></label>
@@ -50,28 +54,35 @@ require_once('../../../config/config.php');
                 <select class="form-select" name="departamento" id="departamento" required>
                   <option value="">Selecione o departamento</option>
                   <?php
+                  $depVendasQuery .= "  ORDER BY nome_departamento asc";
 
-                  $sucesso2 = $conn->query($depVendasQuery);
-                  while ($row2 = $sucesso2->fetch_assoc()) {
-                    echo '<option value="' . $row2['ID_DEPARTAMENTO'] . '">' . $row2['NOME_DEPARTAMENTO'] . '</option>';
+                  $sucesso = oci_parse($connBpmgp, $depVendasQuery);
+                  oci_execute($sucesso);
+
+                  while ($row2 = oci_fetch_array($sucesso, OCI_ASSOC)) {
+                    echo '<option value="' . $row2['ID'] . '">' . $row2['NOME_DEPARTAMENTO'] . '</option>';
                   }
+                  oci_free_statement($sucesso);
                   ?>
                 </select>
                 <label for="filial" class="capitalize">DEPARTAMENTO:<code>*</code></label>
               </div>
               <div class="form-floating mt-4 col-md-6">
                 <select class="form-select" name="nome" id="nome">
-                  <option value="">---------------------------------------------------------</option>
+                  <option value="">-----------------</option>
                   <?php
 
-                  $mostraUsuario = "SELECT DS_USUARIO FROM bpm_usuarios_smartshare order by DS_USUARIO ASC";
+                  $queryUserApi .= " ORDER BY DS_USUARIO ASC";
 
-                  $sucesso = $conn->query($mostraUsuario);
+                  $sucesso = oci_parse($connSelbetti, $queryUserApi);
+                  oci_execute($sucesso);
 
-                  while ($row = $sucesso->fetch_assoc()) {
+                  while ($row = oci_fetch_array($sucesso, OCI_ASSOC)) {
                     echo '<option value="' . $row['DS_USUARIO'] . '">' . $row['DS_USUARIO'] . '</option>';
                   }
-
+                  oci_free_statement($sucesso);
+                  oci_close($connBpmgp);
+                  oci_close($connSelbetti);
                   ?>
                 </select>
                 <label for="nome" class="capitalize">NOME:<code>*</code></label>
@@ -84,12 +95,12 @@ require_once('../../../config/config.php');
               </div>
 
               <div class="form-floating mt-4 col-md-6">
-                <input name="login_smartshare" type="text" class="form-control" id="login_smartshare" readOnly>
+                <input name="login_smartshare" type="text" class="form-control" id="login_smartshare" readonly>
                 <label for="login_smartshare" class="capitalize">LOGIN SMARTSHARE:<span style="color: red;">*</span></label>
               </div>
 
               <input name="cd_smartshare" type="text" class="form-control" id="cd_smartshare" style="display: none;">
-              
+
               <div class="form-floating mt-4 col-md-6" id="situacao">
                 <select class="form-select" name="situacao" required>
                   <option value="">-----------------</option>
@@ -100,7 +111,7 @@ require_once('../../../config/config.php');
               </div>
 
               <div class="text-left py-2">
-                <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/unico/sistemas/bpm/front/gerentes.php?pg=<?= $_GET['pg'] ?>"><button type="button" class="btn btn-primary">Voltar</button></a>
+                <a href="gerentes.php?pg=<?= $_GET['pg'] ?>" class="btn btn-primary">Voltar</a>
                 <button type="reset" class="btn btn-secondary">Limpar Formulario</button>
                 <button type="submit" class="btn btn-success">Salvar</button>
 
@@ -171,7 +182,7 @@ require_once('footer.php'); //Javascript e configurações afins
       beforeSend: function(data) {
         $("#login_smartshare").val('Carregando...');
       },
-      success: function(data) {        
+      success: function(data) {
         $("#login_smartshare").val(data.split("/")[0]);
         $("#cd_smartshare").val(data.split("/")[1]);
 
