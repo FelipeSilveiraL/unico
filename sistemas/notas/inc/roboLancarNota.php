@@ -152,6 +152,8 @@ if ($_GET['back'] != 1) { //lançamento da nota
     //lançando o boleto, ai é apenas o robo que irá trabalhar!
     $idNota = $_GET['idNota'];
 }
+
+oci_close($connBpmgp);
 ?>
 
 <body>
