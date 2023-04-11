@@ -38,9 +38,14 @@ if ($_GET['back'] != 1) { //lançamento da nota
     }
 
     //buscando o ID da FILIAL
-    $queryFilial = "SELECT ID_EMPRESA AS ID_FILIAL FROM unico.bpm_empresas WHERE CNPJ = '" . $filial . "' AND SITUACAO = 'A'";
-    $resultadoFilial = $connNOTAS->query($queryFilial);
-    $rowIdFilial = $resultadoFilial->fetch_assoc();
+    $queryFilial = "SELECT ID_EMPRESA AS ID_FILIAL FROM empresa WHERE CNPJ = '" . $filial . "' AND SITUACAO = 'A'";
+    $resultadoFilial = oci_parse($connBpmgp, $queryFilial);
+    oci_execute($resultadoFilial);
+
+    while($rowIdFilial = oci_fetch_array($resultadoFilial, OCI_ASSOC)){
+        $idEmpresa = $rowIdFilial['ID_FILIAL'];
+    }
+    oci_free_statement($resultadoFilial);
 
     //buscando o ID do USUÀRIO
     $queryUsuario = "SELECT id_usuario AS ID_USUARIO FROM unico.usuarios WHERE email =  '" . $email . "'";
@@ -50,7 +55,7 @@ if ($_GET['back'] != 1) { //lançamento da nota
 
 
     //Salvando na tabela cad_lancarnotas
-    $query = "SELECT * FROM cad_rateiofornecedor WHERE ID_USUARIO = '" . $rowIdUsuario['ID_USUARIO'] . "' AND ID_FILIAL = '" . $rowIdFilial['ID_FILIAL'] . "' AND cpfcnpj_fornecedor = " . $cnpjFornecedor . "";
+    $query = "SELECT * FROM cad_rateiofornecedor WHERE ID_USUARIO = '" . $rowIdUsuario['ID_USUARIO'] . "' AND ID_FILIAL = '" .$idEmpresa. "' AND cpfcnpj_fornecedor = " . $cnpjFornecedor . "";
     $result = $connNOTAS->query($query);
 
     //Salvando a nota no cad_lancarnotas
@@ -105,7 +110,7 @@ if ($_GET['back'] != 1) { //lançamento da nota
                     date_create,
                     telefone) 
                 VALUES 
-                    ('" . $rowIdFilial['ID_FILIAL'] . "', 
+                    ('" . $idEmpresa . "', 
                     '" . $rowIdUsuario['ID_USUARIO'] . "', 
                     '" . $row['ID_TIPOPAGAMENTO'] . "',
                     '" . $row['ID_PERIODICIDADE'] . "',   
