@@ -5,14 +5,20 @@ if ($_GET['cnpj'] == 1) { //smartshare
     $where = "cpfcnpj_fornecedor = '" . $_GET['idFornecedor'] . "' AND ";
     $selec = "ID_FILIAL = (";
 
-    $queryEmpresa = "SELECT ID_EMPRESA FROM empresa WHERE CNPJ = '" . $_GET['filial'] . "' AND SITUACAO = 'A'";
-    $resultado = oci_parse($connBpmgp, $queryEmpresa);
-    oci_execute($resultado);
+    if (strlen($_GET['filial']) < 14) {
+        $selec .=  $_GET['filial'];
+    } else {
+        $queryEmpresa = "SELECT ID_EMPRESA FROM empresa WHERE CNPJ = '" . $_GET['filial'] . "' AND SITUACAO = 'A'";
+        
+        $resultado = oci_parse($connBpmgp, $queryEmpresa);
+        oci_execute($resultado);
 
-    while ($row = oci_fetch_array($resultado, OCI_ASSOC)) {
-        $selec .= $row['ID_EMPRESA'];
+        while ($row = oci_fetch_array($resultado, OCI_ASSOC)) {
+            $selec .= $row['ID_EMPRESA'];
+        }
+        oci_free_statement($resultado);
     }
-    oci_free_statement($resultado);
+
     $selec .= ") ";
 } else { //fluig
 
@@ -48,7 +54,9 @@ $queryRateio .= "
 
 $result = $connNOTAS->query($queryRateio);
 
-/* echo $queryRateio; */
+/* echo $queryRateio;
+
+exit;*/
 
 ?>
 
