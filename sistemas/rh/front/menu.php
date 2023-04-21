@@ -26,7 +26,15 @@ if (!$coressistema = $resultado->fetch_assoc()) {
                 <span>Buscar CPF</span>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link  <?= $_GET['pg'] == 3 ?: "collapsed" ?>" href="horario.php?pg=3">
+                <i class="bi bi-alarm"></i>
+                <span>Horário de trabalho</span>
+            </a>
+        </li>
         <hr>
+
         <li class="nav-item">
             <a class="nav-link collapsed" href="../../../index.php">
                 <i class="bi bi-arrow-bar-left"></i>

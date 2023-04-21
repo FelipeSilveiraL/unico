@@ -36,7 +36,25 @@ require_once('menu.php'); //menu lateral da pagina
               </div>
             </a>
           </div>
+          
+          <div class="col-lg-3 py-2">
+            <a href="horario.php?pg=3" class="list-group-item list-group-item-action">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Horário de trabalho</h5>
+
+                </div>
+              </div>
+            </a>
+          </div>
         </div>
+
+
+
+
+
+
+
       </section>
 
     </div>
