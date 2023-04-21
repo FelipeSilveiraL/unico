@@ -182,8 +182,8 @@ if (!empty($_GET['idHorario'])) {
               </div>
 
               <div class="text-center">
-                <button type="submit" class="btn btn-primary">Salvar</button>
-                <button type="reset" class="btn btn-secondary">Limpar</button>
+              <button type="reset" class="btn btn-secondary">Limpar</button>  
+              <button type="submit" class="btn btn-success">Salvar</button>
               </div>
             </form><!-- End floating Labels Form -->
 
