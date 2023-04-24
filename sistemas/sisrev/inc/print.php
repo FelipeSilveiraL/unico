@@ -1,5 +1,7 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,19 +27,24 @@
             page-break-before: always;
             page-break-inside: avoid;
         }
+
         .div48 {
             page-break-before: always;
             page-break-inside: avoid;
         }
-
     </style>
 </head>
+
 <body>
     <div class="container">
         <?php
         session_start();
+        require_once('../../../config/session.php');
+        require_once('../../../config/databases.php');
+        require_once('../../../config/sqlSmart.php');
         require_once('../config/query.php');
 
+        
         // ------------------ ETIQUETA LASER -------------
         $dropTableEstoque = "DROP TABLE IF EXISTS sisrev_etiqueta_estoque ";
 
@@ -54,29 +61,36 @@
             `EMPRESA` VARCHAR(80) NULL,
             `REVENDA` VARCHAR(80) NULL,
             PRIMARY KEY (`id`))";
-        
+
         $execCreate = $conn->query($createTableEst);
 
-        $url = "http://".$_SESSION['servidorOracle']."/unico_api/sisrev/api_estoque.php";
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-        $resultado = json_decode(curl_exec($ch));
+        $itemEstoque .= " WHERE ITEM_ESTOQUE_PUB LIKE '%" . $produtoSem . "%' AND EMPRESA = '" . $empresa . "'";
 
+        $execApolloEstoque = oci_parse($connApollo, $itemEstoque);
+        oci_execute($execApolloEstoque);
 
-        foreach ($resultado->itensEndereco AS $etiqLaser) {
-            
-        
+        $row = oci_fetch_array($execApolloEstoque, OCI_BOTH);
+
+        $nome = $row['ITEM_ESTOQUE'];
+        $xEmpresa = $row['EMPRESA'];
+
+        $itemApollo .= " WHERE ITEM_ESTOQUE = '" . $nome . "' AND EMPRESA = '" . $xEmpresa . "' AND REVENDA = '" . $revenda . "'";
+
+        $execApolloItem = oci_parse($connApollo, $itemApollo);
+
+        oci_execute($execApolloItem);
+
+        while ($etiqLaser = oci_fetch_array($execApolloItem, OCI_ASSOC)) {
+
             $insertEstoque = "INSERT INTO sisrev_etiqueta_estoque(LOCACAO_ZONA,LOCACAO_RUA,LOCACAO_ESTANTE,LOCACAO_PRATELEIRA,ITEM_ESTOQUE,LOCACAO_NUMERO,EMPRESA,REVENDA)
-            VALUES ('" . $etiqLaser->LOCACAO_ZONA ."',
-                    '" . $etiqLaser->LOCACAO_RUA . "',
-                    '" . $etiqLaser->LOCACAO_ESTANTE . "' ,
-                    '" . $etiqLaser->LOCACAO_PRATELEIRA ."',
-                    '" . $etiqLaser->ITEM_ESTOQUE ."',
-                    '" . $etiqLaser->LOCACAO_NUMERO ."',
-                    '" . $etiqLaser->EMPRESA ."',
-                    '" . $etiqLaser->REVENDA ."')";
+                VALUES ('" . $etiqLaser['LOCACAO_ZONA'] . "',
+                        '" . $etiqLaser['LOCACAO_RUA'] . "',
+                        '" . $etiqLaser['LOCACAO_ESTANTE'] . "' ,
+                        '" . $etiqLaser['LOCACAO_PRATELEIRA'] . "',
+                        '" . $etiqLaser['ITEM_ESTOQUE'] . "',
+                        '" . $etiqLaser['LOCACAO_NUMERO'] . "',
+                        '" . $etiqLaser['EMPRESA'] . "',
+                        '" . $etiqLaser['REVENDA'] . "')";
 
             if (!$execQuery = $conn->query($insertEstoque)) {
                 echo "Error: " . $insertEstoque . "<br>" . $conn->error;
@@ -84,52 +98,56 @@
         }
 
         $produto = $_GET['produto'];
-        $produto = substr($produto, 3,6);
+        $produto = substr($produto, 3, 6);
         $empresa = $_GET['empresa'];
         $revenda = $_GET['revenda'];
 
         $buscaCarga .= " WHERE produto LIKE '%" . $produto . "%' ";
         $sucesso = $conn->query($buscaCarga);
 
-        while($row = $sucesso->fetch_assoc()){
+        while ($row = $sucesso->fetch_assoc()) {
 
             $qtde = $row['qtde'];
 
             $i = 1;
 
-            while( $i <= $qtde){
-                
+            while ($i <= $qtde) {
+
                 echo "
                 
-                <div class='div".$i."'>
-                ".$row['produto']."<br>
-                &emsp;&emsp;NF ".$row['numero_nota']."<br>
-                &emsp;&emsp;".$row['caixa']."<br>";
-                
-                $endereco = "SELECT * FROM sisrev_etiqueta_estoque WHERE REVENDA = '".$revenda."'";
+                <div class='div" . $i . "'>
+                " . $row['produto'] . "<br>
+                &emsp;&emsp;NF " . $row['numero_nota'] . "<br>
+                &emsp;&emsp;" . $row['caixa'] . "<br>";
+
+                $endereco = "SELECT * FROM sisrev_etiqueta_estoque WHERE REVENDA = '" . $revenda . "'";
                 $deuCerto = $conn->query($endereco);
 
-                while($enderecoMostra = $deuCerto->fetch_assoc()){
-                    echo '&emsp;'.$enderecoMostra['LOCACAO_ZONA'].'0'.$enderecoMostra['LOCACAO_RUA'].'&ensp;0'.$enderecoMostra['LOCACAO_ESTANTE'].'&ensp;'.$enderecoMostra['LOCACAO_PRATELEIRA'].'0'.$enderecoMostra['LOCACAO_NUMERO'].'';
+                while ($enderecoMostra = $deuCerto->fetch_assoc()) {
+                    echo '&emsp;' . $enderecoMostra['LOCACAO_ZONA'] . '0' . $enderecoMostra['LOCACAO_RUA'] . '&ensp;0' . $enderecoMostra['LOCACAO_ESTANTE'] . '&ensp;' . $enderecoMostra['LOCACAO_PRATELEIRA'] . '0' . $enderecoMostra['LOCACAO_NUMERO'] . '';
                     echo '<br>';
                 }
                 echo "</div>";
 
-            $i++;    
+                $i++;
             }
         }
-            
+
         curl_close($ch);
         $conn->close();
         ?>
-        </div>
-  </body>
+    </div>
+</body>
+
 </html>
 
 
 
-
 <script>
-window.onload = function () { window.print(); window.addEventListener("afterprint", function(event) { window.close(); });
-    window.onafterprint(); } 
+window.addEventListener('load', function() {
+  var printButton = document.getElementById('printButton');
+  printButton.addEventListener('click', function() {
+    window.print();
+  }, false);
+}, false);
 </script>

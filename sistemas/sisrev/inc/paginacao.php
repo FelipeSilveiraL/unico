@@ -55,23 +55,35 @@ if ($tela == "index.php") {
 
 /* ################## FUNÇÕES  ################## */
 
-$queryFuncaoUser .= "WHERE id_usuario = '" . $idUsuario . "' AND id_funcao IN ( ";
+$queryFuncaoUser .= "WHERE id_usuario = '" . $idUsuario . "'  AND id_funcao IN ( ";
 
 $queryA = "SELECT id_funcao FROM sisrev_funcao WHERE id_modulos = (SELECT id FROM sisrev_modulos WHERE endereco = '" . $tela . "')";
 $resultadoA = $conn->query($queryA);
 
 while ($a = $resultadoA->fetch_assoc()) {
+
     $queryFuncaoUser .= $a['id_funcao'] . ',';
 
-    //caso tenha mais de uma permissão em cada tela!..... pagina de exemplo é a front/usuarios.php
-    $validacao['idFuncao'][] = array(
-        'funcao' => $a['id_funcao'],
-    );
+    if (empty($a['id_funcao'])) {
+        $naoPossui = true;
+        break;
+    } else {
+        //caso tenha mais de uma permissão em cada tela!..... pagina de exemplo é a front/usuarios.php
+        $validacao['idFuncao'][] = array(
+            'funcao' => $a['id_funcao'],
+        );
+    }
 }
 
+
 $count = strlen($queryFuncaoUser);
-$sub = substr($queryFuncaoUser, 0, $count - 1);
-$sub .= ")";
+
+if($naoPossui === true){
+    $sub = substr($queryFuncaoUser, 0, $count - 1);
+    $sub .= ")";
+}else{
+     $sub = "SELECT * FROM sisrev_usuario_funcao WHERE id_usuario = ".$idUsuario;
+}
 
 $resultadoFuncao = $conn->query($sub);
 

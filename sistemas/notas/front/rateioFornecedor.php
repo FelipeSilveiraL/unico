@@ -428,6 +428,7 @@ require_once('footer.php'); //Javascript e configurações afins
 
   }
 
+
   function diasMaximos() {
     var dias = document.getElementById("diasInput").value;
 
@@ -467,7 +468,9 @@ require_once('footer.php'); //Javascript e configurações afins
 
       url: '../inc/buscaFornecedor.php',
       type: 'POST',
-      data: { id: cpfCNPJ },
+      data: {
+        id: cpfCNPJ
+      },
 
       beforeSend: function(data) {
         $("#NomeFornecedor").val('Aguarde...');

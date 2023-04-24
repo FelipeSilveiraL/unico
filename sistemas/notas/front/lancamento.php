@@ -264,6 +264,8 @@ require_once('footer.php'); //Javascript e configurações afins
     }
 
   }
+
+
   function diasMaximos() {
     var dias = document.getElementById("diasInput").value;
 

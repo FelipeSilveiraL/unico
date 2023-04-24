@@ -80,7 +80,7 @@ if (!empty($_GET['idHorario'])) {
 
               <div class="col-md-6">
                 <div class="form-floating mb-3">
-                  <select class="form-select" name="empresa" id="floatingSelect" aria-label="State" required>
+                  <select class="form-select" name="empresa" id="id_empresa" aria-label="State" required>
                     <?php
 
                     echo !empty($nomeEmpresa) ?   '<option value="' . $idEmpresa . '" >' . $nomeEmpresa . '</option><option value="" >------------------</option>' : '<option value="" >------------------</option>';
@@ -102,23 +102,7 @@ if (!empty($_GET['idHorario'])) {
 
               <div class="col-md-6">
                 <div class="form-floating mb-3">
-                  <select class="form-select" id="floatingSelect" name="departamento" aria-label="State" required>
-                    <?php
-
-                    echo !empty($nomeDepartamento) ?   '<option value="' . $idDepartamento . '" >' . $nomeDepartamento . '</option><option value="" >------------------</option>' : '<option value="" >------------------</option>';
-
-                    $queryDepartamentoRh .= "ORDER BY nome_departamento ASC";
-
-                    $resultDP = oci_parse($connBpmgp, $queryDepartamentoRh);
-                    oci_execute($resultDP);
-
-                    while ($departamento_rh = oci_fetch_array($resultDP, OCI_ASSOC)) {
-                      echo '<option value="' . $departamento_rh['ID_DEPARTAMENTO'] . '">' . $departamento_rh['NOME_DEPARTAMENTO'] . '</option>';
-                    }
-                    oci_free_statement($resultDP);
-                    oci_close($connBpmgp);
-
-                    ?>
+                  <select class="form-select" id="id_departamento" name="departamento" aria-label="State" required>
                   </select>
                   <label for="floatingSelect">Departamento</label>
                 </div>
@@ -182,8 +166,8 @@ if (!empty($_GET['idHorario'])) {
               </div>
 
               <div class="text-center">
-              <button type="reset" class="btn btn-secondary">Limpar</button>  
-              <button type="submit" class="btn btn-success">Salvar</button>
+                <button type="reset" class="btn btn-secondary">Limpar</button>
+                <button type="submit" class="btn btn-success">Salvar</button>
               </div>
             </form><!-- End floating Labels Form -->
 
@@ -201,3 +185,32 @@ if (!empty($_GET['idHorario'])) {
 <?php
 require_once('footer.php'); //Javascript e configurações afins
 ?>
+
+<script>
+  $('#id_empresa').on("change", function() {
+
+    var idEmpresa = $('#id_empresa').val();
+
+    $.ajax({
+      url: '../inc/buscarDepartamento.php',
+      type: 'POST',
+      data: {
+        id: idEmpresa
+      },
+
+      beforeSend: function(data) {
+        $('#id_departamento').html('<option value="">Carregando....</option>');
+      },
+
+      success: function(data) {
+        $('#id_departamento').html(data);
+      },
+
+      error: function(data) {
+        $('#id_departamento').html('<option value="">Erro....</option>');
+      }
+
+    });
+
+  })
+</script>

@@ -5,6 +5,9 @@ require_once('../../../config/databases.php'); //banco de dados
 
 //cad_rateiofornecedor buscando o pai
 $buscarRateio = "SELECT * FROM cad_rateiofornecedor where ID_USUARIO = " . $_POST['idUsuarioadicionar'];
+
+
+
 $aplicarBusca = $connNOTAS->query($buscarRateio);
 
 //inserindo novo rateio filho
@@ -54,6 +57,9 @@ while ($rateioBusca = $aplicarBusca->fetch_assoc()) {
     '" . $rateioBusca['cpfcnpj_fornecedor'] . "',
     '" . $rateioBusca['marketing'] . "',
     '" . $rateioBusca['sistema'] . "',1)";
+
+
+
     $aplicarNovoRateio = $connNOTAS->query($inserindoNovoRateio);
 
     //echo $inserindoNovoRateio."<br />";
@@ -67,6 +73,7 @@ while ($rateioBusca = $aplicarBusca->fetch_assoc()) {
     $queryForncedor = "SELECT * FROM cad_rateiocentrocusto WHERE ID_RATEIOFORNECEDOR = " . $rateioBusca['ID_RATEIOFORNECEDOR'];
     $aplicaqueryForncedor = $connNOTAS->query($queryForncedor);
 
+
     while ($fornecedorCentro = $aplicaqueryForncedor->fetch_assoc()) {
         //cad_rateiocentrocusto - inserindo novo filho
         $inserindoNovoCentroCusto = "INSERT INTO cad_rateiocentrocusto
@@ -76,10 +83,16 @@ while ($rateioBusca = $aplicarBusca->fetch_assoc()) {
         PERCENTUAL)
         VALUES
         (" . $pega['id_fornecedor'] . ",
-        '" . $fornecedorCentro['ID_CENTROCUSTO'] . "',
-        '" . $fornecedorCentro['ID_CENTROCUSTO_BPM'] . "',
-        '" . $fornecedorCentro['PERCENTUAL'] . "')";
+        ";
+        $inserindoNovoCentroCusto .= (!empty( $fornecedorCentro['ID_CENTROCUSTO'])) ?  $fornecedorCentro['ID_CENTROCUSTO'] : 'NULL';        
+        $inserindoNovoCentroCusto .= ",";
+        $inserindoNovoCentroCusto .= (!empty( $fornecedorCentro['ID_CENTROCUSTO_BPM'])) ?  $fornecedorCentro['ID_CENTROCUSTO_BPM'] : 'NULL';
+        $inserindoNovoCentroCusto .= ",
+        '" . $fornecedorCentro['percentual'] . "')";
+
         $aplicaInserindoNovoCentro = $connNOTAS->query($inserindoNovoCentroCusto);
+
+
     }
 
     //cad_rateiobanco - pegando o pai

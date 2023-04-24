@@ -4,7 +4,6 @@ require_once('../config/query.php');
 
 require_once('../config/config.php');
 
-
 //SQL injection
 $usuario = mysqli_real_escape_string($conn, $_POST['username']);
 $senha = mysqli_real_escape_string($conn, $_POST['password']);
@@ -13,7 +12,6 @@ $senha = mysqli_real_escape_string($conn, $_POST['password']);
 $queryUsuarios .= "WHERE U.usuario = '" . $usuario . "'";
 $resultadoUsuario = $conn->query($queryUsuarios);
 $usuario = $resultadoUsuario->fetch_assoc();
-
 
 if ($usuario['deletar'] == 1) {
 
