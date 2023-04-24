@@ -40,7 +40,7 @@ require_once('../inc/editNovoHorario.php');
 
                     echo !empty($nomeEmpresa) ?   '<option value="' . $idEmpresa . '" >' . $nomeEmpresa . '</option><option value="" >------------------</option>' : '<option value="" >------------------</option>';
 
-                    $queryEmpresaRh .= "ORDER BY nome_empresa ASC";
+                    $queryEmpresaRh .= "WHERE situacao = 'A' ORDER BY nome_empresa ASC";
 
                     $result = oci_parse($connBpmgp, $queryEmpresaRh);
                     oci_execute($result);
@@ -58,6 +58,10 @@ require_once('../inc/editNovoHorario.php');
               <div class="col-md-6">
                 <div class="form-floating mb-3">
                   <select class="form-select" id="id_departamento" name="departamento" aria-label="State" required>
+                    <?php
+                    echo !empty($nomeDepartamento) ?   '<option value="' . $idDepartamento . '" >' . $nomeDepartamento . '</option>' : '<option value="" >------------------</option>';
+                    ?>
+                    <option value="">------------------</option>
                   </select>
                   <label for="floatingSelect">Departamento</label>
                 </div>
