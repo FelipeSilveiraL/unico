@@ -3,7 +3,7 @@ session_start();
 
 if ($_GET['api'] == true) {
 
-header('Location: http://'.$_SESSION['servidorOracle'].'/unico_api/sisrev/inc/desativar_usuario.php?sistema='.$_GET['sistema'].'&cpf='.$_GET['cpf'].'&acao='.$_GET['acao'].'&pg='.$_GET['pg'].'&tela='.$_GET['tela'].'&nome='.$_GET['nome'].'');
+header('Location: ../inc/desativar_usuario.php?sistema='.$_GET['sistema'].'&cpf='.$_GET['cpf'].'&acao='.$_GET['acao'].'&pg='.$_GET['pg'].'&tela='.$_GET['tela'].'&nome='.$_GET['nome'].'');
 
 }
 require_once('head.php'); //CSS e configurações HTML e session start

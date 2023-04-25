@@ -64,7 +64,7 @@ require_once('../../../config/config.php');
                 <button type="submit" value="1" name="der" class="btn btn-primary">Pesquisar</button>
               </div>
             </form>
-            <form class="row g-3" action="../inc/print.php" method="POST">
+            <form class="row g-3" action="../inc/imprimir.php" method="POST">
             <div>
             <button type="submit" title="Selecione os itens para impressão de etiqueta" style="display:<?= ($_POST['der'] == 1) ? '' : 'none' ?>;float:right;" class="btn btn-primary"><i class="bx bx-printer"></i></button>
             </div>

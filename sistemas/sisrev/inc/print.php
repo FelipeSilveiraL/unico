@@ -38,13 +38,10 @@
 <body>
     <div class="container">
         <?php
-        session_start();
         require_once('../../../config/session.php');
         require_once('../../../config/databases.php');
         require_once('../../../config/sqlSmart.php');
         require_once('../config/query.php');
-
-        
         // ------------------ ETIQUETA LASER -------------
         $dropTableEstoque = "DROP TABLE IF EXISTS sisrev_etiqueta_estoque ";
 
@@ -65,7 +62,8 @@
         $execCreate = $conn->query($createTableEst);
 
         $itemEstoque .= " WHERE ITEM_ESTOQUE_PUB LIKE '%" . $produtoSem . "%' AND EMPRESA = '" . $empresa . "'";
-
+        echo $itemEstoque;
+        exit;
         $execApolloEstoque = oci_parse($connApollo, $itemEstoque);
         oci_execute($execApolloEstoque);
 
@@ -133,7 +131,6 @@
             }
         }
 
-        curl_close($ch);
         $conn->close();
         ?>
     </div>
@@ -142,12 +139,12 @@
 </html>
 
 
-
 <script>
-window.addEventListener('load', function() {
-  var printButton = document.getElementById('printButton');
-  printButton.addEventListener('click', function() {
-    window.print();
-  }, false);
-}, false);
+window.onload = function () {
+     window.print(); 
+     window.addEventListener("afterprint", function() {});
+    window.onafterprint(); } 
 </script>
+
+
+

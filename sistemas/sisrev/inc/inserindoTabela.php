@@ -1,11 +1,13 @@
 <?php
-require_once('../config/query.php');
+require_once('../../../config/session.php');
+require_once('../../../config/databases.php');
+require_once('../../../config/sqlSmart.php');
+
+$execSmart = oci_parse($connBpmgp, $emp);
+oci_execute($execSmart);
 
 
-$conSucesso = $conn->query($queryTabela);
-
-
-while ($row = $conSucesso->fetch_assoc()) {
+while ($row = oci_fetch_array($execSmart,OCI_ASSOC)) {
 
 
   $consorcio = ($row["CONSORCIO"] == 'S') ? 'SIM' : 'NÃO';

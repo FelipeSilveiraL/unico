@@ -32,9 +32,9 @@ require_once('../config/query.php');
           <div class="card-body">
             <br>
             <form action="../inc/empRev.php" method="POST">
-              <a href="../front/empRev.php?pg=<?= $_GET['pg'] ?>&id=4" <?= $usuarioFuncao ?>><button class="btn btn-primary " style="margin-left: 10px;margin-bottom:10px;" type="button" title="Cadastrar filial"><i class="bi bi-person-plus"></i></button></a>
-              <button type="submit" class="btn btn-primary " title="Salvar alterações" style="margin-left: 10px;margin-bottom:10px;display:<?= ($_GET['id'] == 2 or $_GET['id'] == 3 or $_GET['id'] == 4) ? '' : 'none;' ?>" type="button"><i class="ri-save-3-fill"></i></button>
-              <a href="../front/empRev.php?pg=<?= $_GET['pg'] ?>&id=1"><button class="btn btn-success " title="Editar Filial" style="margin-left: 10px;margin-bottom:10px;" type="button"><i class="ri-edit-2-line"></i></button></a><br><br>
+              <a href="../front/empRev.php?pg=<?= $_GET['pg'] ?>&id=4" <?= $usuarioFuncao ?>><button class="btn btn-primary " style="float:right;margin-left: 10px;margin-bottom:10px;" type="button" title="Cadastrar filial"><i class="bi bi-person-plus"></i></button></a>
+              <button type="submit" class="btn btn-primary " title="Salvar alterações" style="float:right;margin-left: 10px;margin-bottom:10px;display:<?= ($_GET['id'] == 2 or $_GET['id'] == 3 or $_GET['id'] == 4) ? '' : 'none;' ?>" type="button"><i class="ri-save-3-fill"></i></button>
+              <a href="../front/empRev.php?pg=<?= $_GET['pg'] ?>&id=1"><button class="btn btn-success " title="Editar Filial" style="float:right;margin-left: 10px;margin-bottom:10px;" type="button"><i class="ri-edit-2-line"></i></button></a><br><br>
 
               <?php
               switch ($_GET['id']) {

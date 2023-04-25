@@ -21,8 +21,7 @@ while ($i <= $total) {
 
 
         $uploaddir = '/var/www/html/unico/sistemas/sisrev/documentos/CAR/' . $dataBr . '/';
-
-
+       
         if (is_dir($uploaddir)) {
 
             $uploadfile = $uploaddir . basename($nome[$i]);
@@ -103,7 +102,7 @@ while ($i <= $total) {
 
                 //mostra onde será salvo o arquivo
                 $uploadfile = $uploaddir . basename($nome[$i]);
-
+                
                 //se o arquivo foi movido pra pasta criada
                 if (move_uploaded_file($tempFile[$i], $uploadfile)) {
 

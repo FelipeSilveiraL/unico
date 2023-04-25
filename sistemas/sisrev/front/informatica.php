@@ -32,7 +32,7 @@
           </div>
         </a>
       </div>
-      <div class="col-sm-3"> 
+      <div class="col-sm-3" style="display:none;"> 
         <a href="empresas.php?pg=<?= $_GET['pg'] ?>" class="list-group-item list-group-item-action">
           <div class="card">
             <div class="card-body">
