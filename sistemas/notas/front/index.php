@@ -91,18 +91,27 @@ require_once('../inc/contagemStatus.php');
               </thead>
               <tbody>
                 <?php
+
+
                 $color = array('bg-primary' => 1, 'bg-warning' => 2, 'bg-success' => 3);
 
                 while ($notas = $resultado->fetch_assoc()) {//inc/status.php
                   $value = array_search($notas['id_status'], $color);
 
-                  $queryEmpresas = "SELECT NOME_EMPRESA FROM unico.bpm_empresas WHERE ID_EMPRESA = " . $notas['empresa'];
-                  $resultEmpresas = $connNOTAS->query($queryEmpresas);
-                  $empresas = $resultEmpresas->fetch_assoc();
+                  $queryEmpresas = "SELECT NOME_EMPRESA FROM EMPRESA WHERE ID_EMPRESA = " . $notas['empresa'];
 
+                  $result = oci_parse($connBpmgp, $queryEmpresas);
+                  oci_execute($result);
+
+                  while($empresas = oci_fetch_array($result, OCI_ASSOC)){
+                    $idEmpresa = $empresas['NOME_EMPRESA'];
+                  }
+
+                  oci_free_statement($result);
+                 
                   echo '<tr>     
                             <td>' . $notas['id_lancarnotas'] . '</td>                     
-                            <td>' . $empresas['NOME_EMPRESA'] . '</td>
+                            <td>' . $idEmpresa . '</td>
                             <td>' . $notas['fornecedor'] . '</td>
                             <td>' . $notas['numero_nota'] . '</td>
                             <td>R$ ' . $notas['valor_nota'] . '</td>
@@ -173,4 +182,6 @@ require_once('../inc/contagemStatus.php');
 
 <?php
 require_once('footer.php'); //Javascript e configurações afins
+
+oci_close($connBpmgp);
 ?>

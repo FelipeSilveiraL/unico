@@ -3,8 +3,6 @@ require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 
-//APIS
-require_once('../../bpm/inc/apiRecebeTabela.php'); //EMPRESAS
 ?>
 
 <main id="main" class="main">
@@ -53,25 +51,34 @@ require_once('../../bpm/inc/apiRecebeTabela.php'); //EMPRESAS
                 <?php
                 $incompleto = $_GET['fornecedorIncompleto'] == null ? '' : " AND centro_custo_completo = 1";
 
-                $queryFornecedor .= " WHERE id_usuario = " . $_SESSION['id_usuario'].$incompleto;
+                $queryFornecedor .= " WHERE id_usuario = " . $_SESSION['id_usuario'] . $incompleto;
 
                 $resultadoFor = $connNOTAS->query($queryFornecedor);
-                
+
                 while ($fornecedor = $resultadoFor->fetch_assoc()) {
 
-                  $buscaNomeFilial = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = " . $fornecedor['ID_FILIAL'];
+                  $buscaNomeFilial = "SELECT NOME_EMPRESA FROM EMPRESA WHERE ID_EMPRESA = " . $fornecedor['ID_FILIAL'];
 
-                  $plica = $conn->query($buscaNomeFilial);
-                  $nomeEmpresa = $plica->fetch_assoc();
+                  $result = oci_parse($connBpmgp, $buscaNomeFilial);
+                  oci_execute($result);
+
+                  while ($nomeEmpresas = oci_fetch_array($result, OCI_ASSOC)) {
+                    $idEmpresa = $nomeEmpresas['NOME_EMPRESA'];
+                  }
+
+                  oci_free_statement($result);
+
 
                   echo '<tr ';
                   echo $fornecedor['centro_custo_completo'] == 1 ? 'class="destacar"' : '';
                   echo '>                          
                             <td>' . $fornecedor['cpfcnpj_fornecedor'] . '</td>
                             <td>' . $fornecedor['fornecedor'] . '</td>
-                            <td>' . $nomeEmpresa['NOME_EMPRESA'] . '</td>
+                            <td>' . $idEmpresa . '</td>
                             <td>' . $fornecedor['observacao'] . '</td>
-                            <td>'; echo $fornecedor['sistema'] == 1 ? 'Fluig' : 'SmartShare' ; echo '</td>
+                            <td>';
+                  echo $fornecedor['sistema'] == 1 ? 'Fluig' : 'SmartShare';
+                  echo '</td>
                             <td class="td-actions text-right">
                               <a href="rateioFornecedor.php?idRateioFornecedor=' . $fornecedor['ID_RATEIOFORNECEDOR'] . '" title="Editar" class="btn btn-primary btn-just-icon btn-sm"><i class="bi bi-pencil"></i></a>
                               <a href="../inc/deletarFornecedor.php?idRateioFornecedor=' . $fornecedor['ID_RATEIOFORNECEDOR'] . '" title="Desativar" class="btn btn-danger btn-just-icon btn-sm"><i class="bi bi-trash"></i></a>
@@ -94,4 +101,6 @@ require_once('../../bpm/inc/apiRecebeTabela.php'); //EMPRESAS
 
 <?php
 require_once('footer.php'); //Javascript e configurações afins
+
+oci_close($connBpmgp);
 ?>
