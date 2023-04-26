@@ -93,3 +93,24 @@ $queryModulosUser = array(
 
 //cores sistema
 $querySistemaCores = "SELECT id_usuario, id_sistema, color FROM usuarios_sistema_color ";
+
+$vendas = "SELECT xve.*, 
+scc.ID AS id_can,
+scc.xempresa as empresa_can,
+scc.xrevenda as revenda_can,
+scc.xproposta as proposta_can,
+scc.xnronota as nronota_can,
+scc.xtransacao as transacao_can,
+scc.xdtnota as dtnota_can,
+scc.tipo_venda as tipo_venda_can,
+scc.xchassi as chassi_can,
+scc.xcodigo_veiculo as codigo_veiculo_can,
+scc.xval_venda_veiculo as val_venda_veiculo_can,
+scc.xvendedor as vendedor_can,
+scc.xempresa_vendedor as empresa_vendedor_can,
+scc.xcpf as cpf_can
+
+FROM sisrev_comissao xve 
+LEFT JOIN sisrev_comissao_canc scc ON (xve.XNRONOTA = scc.XNRONOTA) 
+
+WHERE xve.XVENDEDOR != '0' ORDER BY xve.ID ASC";
