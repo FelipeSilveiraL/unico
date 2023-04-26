@@ -1,13 +1,13 @@
 <?php
-require_once('../../../config/databases.php');
-require_once('../../../config/session.php');
-require_once('../../../config/sqlSmart.php');
+  require_once('../../../config/databases.php');
+  require_once('../../../config/session.php');
+  require_once('../../../config/sqlSmart.php');
 
-$dateCom = $_GET['dateCom'];
+  $dateCom = $_GET['dateCom'];
 
-$dateFim = $_GET['dateFim'];
-
+  $dateFim = $_GET['dateFim'];
 ?>
+
 <!doctype html>
 <html lang="pt-br">
 
@@ -34,6 +34,7 @@ $dateFim = $_GET['dateFim'];
 <body>
   <?php
   $today = date('d/m/y H:i');
+  
   $empresas = "SELECT * FROM EMPRESA WHERE ID_EMPRESA NOT IN (208) ORDER BY ID_EMPRESA ASC";
 
   $sucesso = oci_parse($connBpmgp, $empresas);
@@ -46,8 +47,7 @@ $dateFim = $_GET['dateFim'];
 
     $id_empresa = $emp['ID_EMPRESA'];
 
-    echo '
-        <div ><br>
+    echo '<div><br>
         <p style="text-align: center;">COMISSAO REVENDAS USADOS</p>
         <p style="text-align:center;"> PERÍODO: ' . $dateCom . '  A ' . $dateFim . '  </p>
         <p style="padding-left:10px;">EMPRESA ORIGEM: ' . $emp['NOME_EMPRESA'] . ' <span style="float:right;padding-right:10px;">EMISSÃO: ' . $today . '</span> </p>
@@ -175,18 +175,15 @@ $dateFim = $_GET['dateFim'];
       } */
     }
 
-
-    echo  '<tr>
+    echo '<tr>
             <td colspan="14">
-              <span style="float:right;font-size:11px;margin-right:104px;margin-top: -1px;"><b>Total faturamentoFIM: </b></span>
+            <span style="float:right;font-size:11px;margin-right:104px;margin-top: -1px;"><b>Total faturamentoFIM: </b></span>
             </td>
-          </tr>';
-    echo '</tbody>
-    </table>';
-
-    echo '
-      </div>';
-    echo '<p class="break"></p>'; /* Isso foi colocado apenas para melhorar a distribuição das informações na hora de imprimir. */
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="break"></p>'; /* Isso foi colocado apenas para melhorar a distribuição das informações na hora de imprimir. */
   }
 
   ?>
