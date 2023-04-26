@@ -1,4 +1,11 @@
 <?php
+//reference the Dompdf namespace
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
+//chamando ele pelo autoload do vendor
+require_once('../../../vendor/autoload.php');
+
 require_once('../../../config/databases.php');
 require_once('../../../config/session.php');
 require_once('../../../config/sqlSmart.php');
@@ -7,8 +14,10 @@ require_once('../config/query.php');
 $dateCom = $_GET['dateCom'];
 
 $dateFim = $_GET['dateFim'];
-?>
 
+$today = date('d/m/y H:i');
+
+$html = '
 <!doctype html>
 <html lang="pt-br">
 
@@ -22,19 +31,14 @@ $dateFim = $_GET['dateFim'];
 
   <title>Relatório Sisrev</title>
 </head>
+
 <style>
   .break {
     page-break-before: always;
   }
-
-  .tabela {
-    font-size: 15px;
-  }
 </style>
 
-<body>
-  <?php
-  $today = date('d/m/y H:i');
+<body>';
 
   $empresas = "SELECT * FROM EMPRESA WHERE ID_EMPRESA NOT IN (208) ORDER BY ID_EMPRESA ASC";
 
@@ -47,13 +51,13 @@ $dateFim = $_GET['dateFim'];
 
     $id_empresa = $emp['ID_EMPRESA'];
 
-    echo '<div><br>
+    $html .= '<div style="font-size: 10px"><br>
         <p style="text-align: center;">COMISSAO REVENDAS USADOS</p>
         <p style="text-align:center;"> PERÍODO: ' . $dateCom . '  A ' . $dateFim . '  </p>
         <p style="padding-left:10px;">EMPRESA ORIGEM: ' . $emp['NOME_EMPRESA'] . ' <span style="float:right;padding-right:10px;">EMISSÃO: ' . $today . '</span> </p>
         <table class="table table-borderless ">
       <thead>
-        <tr style="text-align: center;font-size:11px">
+        <tr style="text-align: center; font-size: 10px">
           <th scope="col">EMPRESA</th>
           <th scope="col">REVENDA</th>
           <th scope="col">PROPOSTA</th>
@@ -75,8 +79,30 @@ $dateFim = $_GET['dateFim'];
     //while da tabela sisrev_comissao
     while ($tabela = oci_fetch_array($conexao, OCI_ASSOC)) {
 
-      if ($tabela['XEMPRESA_VENDEDOR'] == $id_empresa and $tabela['ID_EMPRESA'] != $id_empresa) {
-        echo '<tr style="font-size:11px;text-align:center;margin-top:10px;">
+      if ($tabela['XEMPRESA_VENDEDOR'] == $id_empresa AND $tabela['ID_EMPRESA'] != $id_empresa) {
+
+        if (empty($anterior)) {
+
+          $anterior = $tabela['ID_EMPRESA'];
+
+        } else if ($anterior == $tabela['ID_EMPRESA']) {
+          // Não exibe a linha de total de faturamento aqui
+        } else {
+          // Exibe a linha de total de faturamento aqui
+
+          $html .= '<tr>
+                  <td colspan="14">
+                    <span style="font-size:8px;margin-top: 5px;"><b>________________________________________________________________________________________________________________________________________ Total Faturamento: R$ ' . number_format($valor, 2, ',', '.') . '</span>
+                  </td>
+                </tr>';
+
+          $anterior = $tabela['ID_EMPRESA'];
+          unset($valor);
+        }
+
+        $valorVeiculo = $tabela['XVAL_VENDA_VEICULO'];
+
+        $html .= '<tr style="font-size: 10px;text-align:center;margin-top:10px;">
                 <td>' . $tabela['XEMPRESA'] . '</td>
                 <td>' . $tabela['XREVENDA'] . '</td>
                 <td>' . number_format($tabela['XPROPOSTA'], 0, ',', '.') . '</td>
@@ -87,12 +113,16 @@ $dateFim = $_GET['dateFim'];
                 <td>' . $tabela['XCHASSI'] . '</td>
                 <td>' . $tabela['XCODIGO_VEICULO'] . '</td>
                 <td>' . $tabela['XVENDEDOR'] . '</td>
-                <td>' . 'R$ ' . number_format($tabela['XVAL_VENDA_VEICULO'], 2, ',', '.') . '</td>
+                <td>' . 'R$ ' . $valorVeiculo . '</td>
               </tr>';
+
+        $valor += $valorVeiculo;
 
         if (!empty($tabela['ID_CAN'])) { //mostrar as canceladas
 
-          echo '<tr style="font-size:11px;text-align:center;margin-top:10px;">
+          $valorVeiculoCAN = $tabela['VAL_VENDA_VEICULO_CAN'];
+
+          $html .= '<tr style="font-size: 10px;text-align:center;margin-top:10px;">
                   <td>' . $tabela['EMPRESA_CAN'] . '</td>
                   <td>' . $tabela['REVENDA_CAN'] . '</td>
                   <td>' . number_format($tabela['PROPOSTA_CAN'], 0, ',', '.') . '</td>
@@ -103,30 +133,67 @@ $dateFim = $_GET['dateFim'];
                   <td>' . $tabela['CHASSI_CAN'] . '</td>
                   <td>' . $tabela['CODIGO_VEICULO_CAN'] . '</td>
                   <td>' . $tabela['VENDEDOR_CAN'] . '</td>
-                  <td>' . 'R$ -' . number_format($tabela['VAL_VENDA_VEICULO_CAN'], 2, ',', '.') . '</td>
+                  <td>' . 'R$ -' . $valorVeiculoCAN. '</td>
                 </tr>';
+
+          $valor += $valorVeiculoCAN;
         }
       }
+
     }
+
+    $html .= '<tr>
+            <td colspan="14">
+              <span style="font-size:8px;"><b>________________________________________________________________________________________________________________________________________  Total Faturamento: R$ ' . number_format($valor, 2, ',', '.')  . '</span>
+            </td>
+          </tr>';
 
     oci_free_statement($conexao);
 
-    echo '
+    $html .= '
         </tbody>
       </table>
     </div>
     <p class="break"></p>'; /* Isso foi colocado apenas para melhorar a distribuição das informações na hora de imprimir. */
+
+
+    unset($valor);
   }
+
 
   oci_free_statement($sucesso);
 
-  ?>
-
+$html .= '
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
-</html>
+</html>';
 
-<?php
 oci_close($connBpmgp);
-?>
+/* 
+echo $html;
+
+exit; */
+
+// instantiate and use the dompdf class
+$dompdf = new Dompdf();
+
+//habilitado o acesso ao download de assets remotos - Para funcionar o Bootstrap
+$options = new Options();
+
+//habilitado o acesso ao download de assets remotos - Para funcionar o Bootstrap
+$options->set('isRemoteEnabled', true);
+
+//habilitado o acesso ao download de assets remotos - Para funcionar o Bootstrap
+$dompdf = new Dompdf($options);
+
+//load body PDF
+$dompdf->loadHtml($html);
+
+// (Optional) Setup the paper size and orientation
+$dompdf->setPaper('A4', 'portrait'); // portrait = retrato, landscape = paisagem
+
+// Render the HTML as PDF
+$dompdf->render();
+
+$dompdf->stream('relatorioComissoes.pdf', array("Attachment" => true));//true - Download false - Previa
