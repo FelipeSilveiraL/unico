@@ -23,8 +23,6 @@
 <script src="../../../assets/vendor/php-email-form/validate.js"></script>
 <script src="../../../assets/js/formCpf.js"></script>
 <script src="../../../assets/js/mascaras.js"></script>
-<script src="../../../assets/js/jquery.js"></script>
-<script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
 <!-- <script src="../../../assets/js/seg.js"></script> -->
 
 <!-- Template Main JS File -->
@@ -33,10 +31,9 @@
 </body>
 
 <?php
-//UNICO
+
 $conn->close();
-//NOTAS
-$connNOTAS->close();
+
 ?>
 
 </html>

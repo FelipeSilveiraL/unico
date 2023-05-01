@@ -2,7 +2,7 @@
 
 //pocentagem
 function porcentagem_nx($valor, $porcentagem) {
-    return ($porcentagem * $valor) / 100;
+    return ($valor * $porcentagem) / 100;
 }
 
 

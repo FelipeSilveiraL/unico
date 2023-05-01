@@ -2,12 +2,10 @@
 
 $buscaRateio = 'SELECT 
                     CR.ID_RATEIOCENTROCUSTO AS ID,
-                    UBND.NOME_DEPARTAMENTO AS centrocusto,
+                    CR.ID_CENTROCUSTO_BPM,
                     CR.percentual
                   FROM
                     cad_rateiocentrocusto CR
-                  LEFT JOIN
-                    unico.bpm_nf_departamento UBND ON (CR.ID_CENTROCUSTO_BPM = UBND.ID_DEPARTAMENTO)
                   WHERE
                     CR.ID_RATEIOFORNECEDOR = ' . $_GET['idRateioFornecedor'];
 
@@ -44,16 +42,22 @@ if ($porcentual['porcentual'] < '100') {
                           D.ID_DEPARTAMENTO,
                           D.NOME_DEPARTAMENTO
                       FROM
-                          unico.bpm_nf_emp_dep ED
+                      empresa_departamento_nf ED
                       LEFT JOIN
-                        unico.bpm_nf_departamento D ON (ED.ID_DEPARTAMENTO = D.ID_DEPARTAMENTO)
+                      departamento_nf D ON (ED.ID_DEPARTAMENTO = D.ID_DEPARTAMENTO)
                       WHERE
-                          ED.ID_EMPRESA = '" . $filial . "' AND ED.SITUACAO = 'A' AND ED.LANCA_NOTAS = 'S'";
+                          ED.ID_EMPRESA = '" . $filial . "' AND ED.SITUACAO = 'A' AND ED.LANCA_NOTAS = 'S'  order by nome_departamento ASC";
 
-    $resutadoCentro = $connNOTAS->query($queryFilial);
-    while ($centroCusto = $resutadoCentro->fetch_assoc()) {
+    $resultadoCentro = oci_parse($connBpmgp, $queryFilial);
+    oci_execute($resultadoCentro);
+
+    while ($centroCusto = oci_fetch_array($resultadoCentro, OCI_ASSOC)) {
       echo '<option value="' . $centroCusto['ID_DEPARTAMENTO'] . '">' . $centroCusto['NOME_DEPARTAMENTO'] . '</option>';
     }
+
+
+    oci_free_statement($resultadoCentro);
+    oci_close($connBpmgp);
     ?>
   </select>
   <label for="floatingSelect">Centro de custo</label>
@@ -94,8 +98,19 @@ if ($porcentual['porcentual'] < '100') {
         $aplicaBuscaRateio = $connNOTAS->query($buscaRateio);
 
         while ($rateio = $aplicaBuscaRateio->fetch_assoc()) {
+
+          $queryBuscaDepartamento = "SELECT * FROM departamento_nf WHERE ID_DEPARTAMENTO = ".$rateio['ID_CENTROCUSTO_BPM'];
+
+          $result = oci_parse($connBpmgp, $queryBuscaDepartamento);
+          oci_execute($result);
+
+          while($filialRateio = oci_fetch_array($result, OCI_ASSOC)){
+            $departamento = $filialRateio['NOME_DEPARTAMENTO'];
+          }
+
+
           echo '<tr>
-                    <td>' . $rateio['centrocusto'] . '</td>
+                    <td>' . $departamento . '</td>
                     <td>' . $rateio['percentual'] . '</td>
                     <td>
                       <a href="../inc/deletarCentroCusto.php?idCentroCusto=' . $rateio['ID'] . '&idRateioFornecedor=' . $_GET['idRateioFornecedor'] . '" title="Excluir" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>

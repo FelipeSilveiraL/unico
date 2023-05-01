@@ -66,9 +66,9 @@ if (!empty($_GET['idRateioFornecedor'])) {
                     echo '<option value="' . $filial . '">' . $nomeFilial . '</option>';
                   } ?>
                   <option value="">-----------------</option>
-                  <?php                  
+                  <?php
                   $resultFilialLista = oci_parse($connBpmgp, $queryFilial);
-                  oci_execute($resultFilialLista);  
+                  oci_execute($resultFilialLista);
 
                   while ($filialLista = oci_fetch_array($resultFilialLista, OCI_ASSOC)) {
                     echo '<option value="' . $filialLista['ID_EMPRESA'] . '">' . $filialLista['NOME_EMPRESA'] . '</option> ';
@@ -169,7 +169,9 @@ if (!empty($_GET['idRateioFornecedor'])) {
 
               <div id="divFornecedor" class="col-md-6">
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="cnpjVet" maxlength="15" placeholder="CNPJ / CPF Fornecedor" name="cpfCnpjFor" <?php if (!empty($idRateio)) {echo 'value="' . $cpfcnpjFornecedor . '"';} ?> required>
+                  <input type="text" class="form-control" id="cnpjVet" maxlength="15" placeholder="CNPJ / CPF Fornecedor" name="cpfCnpjFor" <?php if (!empty($idRateio)) {
+                                                                                                                                              echo 'value="' . $cpfcnpjFornecedor . '"';
+                                                                                                                                            } ?> required>
                   <label for="cpfCnpjFor">CNPJ / CPF Fornecedor <span class="text-danger small pt-1 fw-bold"> * </span></label>
                 </div>
               </div>
