@@ -37,17 +37,20 @@ while ($rateio = $aplicarqueryrateio->fetch_assoc()) {
     $dep = $departamento['NOME_DEPARTAMENTO'];
   }
 
-  //trabalhando a porcentagem
-  $valorCalculado = porcentagem_nx(pontuacao($_POST['valor']), pontuacao($rateio['porcento']));
+  $porcentagem =  porcentagem($rateio['porcento']);
+  $valorCalculado = porcentagem_nx(valorMonetario($_POST['valor']), $porcentagem);
 
-  echo '<tr>';
-  echo '<td>' . $dep . '</td>';
-  echo '<td>' . $rateio['porcento'] . '</td>';
-  echo '<td>R$ ' . number_format($valorCalculado, 2, ',', '.')   . '</td>';
-  echo '</tr>';
+  $totalPorcentagem += $porcentagem;
+
+  if ($totalPorcentagem <= 100) {
+    echo '<tr>';
+    echo '<td>' . $dep . '</td>';
+    echo '<td>' . $porcentagem . '</td>';
+    echo '<td>R$ ' . number_format($valorCalculado, 2, ',', '.')   . '</td>';
+    echo '</tr>';
+  }
 }
 
 echo '</tbody>';
-
 oci_free_statement($result);
 oci_close($connBpmgp);

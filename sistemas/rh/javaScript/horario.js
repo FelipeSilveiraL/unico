@@ -114,13 +114,13 @@ function validarForm() {
     const horaSaidaSabado = document.getElementById("sabadoHorarioFinal").value;
 
     if (horaEntradaSabado) {
-        //validacao se esta dentro do horaio comercial
-        if (!validarHorarioComercial(horaEntradaSabado) || !validarHorarioComercial(horaSaidaSabado)) {
+        //validacao se esta dentro do horario comercial
+        /* if (!validarHorarioComercial(horaEntradaSabado) || !validarHorarioComercial(horaSaidaSabado)) {
             alert("Por favor, insira um horário de sábado entre 08:00 e 18:00");
             return false;
-        }
+        }*/
 
-        if (horaEntradaSabado >= horaSaidaSabado) {
+        if (horaEntradaSabado > horaSaidaSabado) {
             alert("O horário de entrada de sábado não pode ser maior que o da saída");
             return false;
         }
@@ -131,12 +131,12 @@ function validarForm() {
     const horaSaidaSabadoAlmoco = document.getElementById("sabadoAlmocoFinal").value;
 
     if (horaEntradaSabadoAlmoco) {
-        if (!validarHorarioComercial(horaEntradaSabadoAlmoco) || !validarHorarioComercial(horaSaidaSabadoAlmoco)) {
+        /* if (!validarHorarioComercial(horaEntradaSabadoAlmoco) || !validarHorarioComercial(horaSaidaSabadoAlmoco)) {
             alert("Por favor, insira um horário de almoço do sábado entre 08:00 e 18:00");
             return false;
-        }
+        } */
 
-        if (horaEntradaSabadoAlmoco >= horaSaidaSabadoAlmoco) {
+        if (horaEntradaSabadoAlmoco > horaSaidaSabadoAlmoco) {
             alert("O horário de entrada do almoço de sábado não pode ser maior que o da saída");
             return false;
         }

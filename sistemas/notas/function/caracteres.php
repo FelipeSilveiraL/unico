@@ -12,13 +12,21 @@ function seo_friendly_url($string)
     return strtoupper(trim($string, '-'));
 }
 
-function pontuacao($stingPontuacao)
+function valorMonetario($stingPontuacao)
 {
     $stingPontuacao = str_replace('.', '', $stingPontuacao);
     $stingPontuacao = str_replace(',', '.', $stingPontuacao);
 
     return trim($stingPontuacao);
 }
+
+function porcentagem($stingPontuacao)
+{
+    $stingPontuacao = str_replace(',', '.', $stingPontuacao);
+
+    return trim($stingPontuacao);
+}
+
 
 function formatarData($dataAlterar){ 
 

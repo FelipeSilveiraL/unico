@@ -4,9 +4,6 @@ require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 require_once('../../../config/config.php');
-require_once('../inc/apiRecebeSelbetti.php');//recebe informações do oracle
-/* Essa opção descomentar após criar em telas_funcoes.php*/
-//echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
 ?>
 
 <main id="main" class="main">
@@ -40,33 +37,36 @@ require_once('../inc/apiRecebeSelbetti.php');//recebe informações do oracle
             $id = $_GET['id'];
 
 
-            $queryCxEmpresa = "SELECT * FROM bpm_caixa_empresa WHERE ID_CAIXA_EMPRESA = ".$id." ";
+            $queryCxEmpresa = "SELECT
 
-            $conexao = $conn->query($queryCxEmpresa);
+            CE.id_caixa_empresa,
+            CE.id_empresa,
+            E.nome_empresa,
+            CE.nome_caixa
+            
+            from caixa_empresa CE
+            
+            LEFT JOIN empresa E ON (CE.id_empresa = E.id_empresa) WHERE CE.ID_CAIXA_EMPRESA = ".$id;
+            $conexao = oci_parse($connBpmgp, $queryCxEmpresa);
+            oci_execute($conexao);
 
-            while($row = $conexao->fetch_assoc()){
-              echo'<form method="POST" action="http://'.$_SESSION['servidorOracle'].'/'.$_SESSION['smartshare'] .'/bd/editCxEmpresa.php?pg='. $_GET['pg'] .'&id='.$id.'">
+            while($row = oci_fetch_array($conexao, OCI_ASSOC)){
+              echo'<form method="POST" action="../inc/editCxEmpresa.php?pg='. $_GET['pg'] .'&id='.$id.'">
                 <div class="row mb-3">
                   <label for="user" class="col-sm-2 col-form-label">EMPRESA:<span style="color: red;">*</span></label>
                   <div class="col-md-6">
-                    <select class="form-select" id="empresa" name="empresa" required>';
-
-                  $query = "SELECT NOME_EMPRESA FROM bpm_empresas WHERE ID_EMPRESA = " . $row['ID_EMPRESA'];
-                    $a = $conn->query($query);
-                      if ($empresa = $a->fetch_assoc()) {
-                        $nomeEmpresa = $empresa['NOME_EMPRESA'];
-                      }
-
-                   echo' <option value="'.$row['ID_EMPRESA'].'">'.$nomeEmpresa.'</option>
+                    <select class="form-select" id="empresa" name="empresa" required>
+                    <option value="'.$row['ID_EMPRESA'].'">'.$row['NOME_EMPRESA'].'</option>
                     <option value="">--------------</option>
                       ';
-                      
-                      $result = $conn->query($relatorioExcel);
-                      //faz pesquisa no bd 
-                      while ($row2 = $result->fetch_assoc()) {
+                      $queryBuscaEmpresa = "SELECT * FROM EMPRESA WHERE SITUACAO = 'A' ORDER BY NOME_EMPRESA ASC";
+                      $result = oci_parse($connBpmgp, $queryBuscaEmpresa);
+                      oci_execute($result);
+
+                      while ($row2 = oci_fetch_array($result, OCI_ASSOC)) {
                         echo '<option value="' . $row2['ID_EMPRESA'] . '">' . $row2['NOME_EMPRESA'] . '</option>';
                       }
-  
+                      oci_free_statement($result);
                       
                    echo '</select>
                   </div>
@@ -91,19 +91,13 @@ require_once('../inc/apiRecebeSelbetti.php');//recebe informações do oracle
 
             }
 
-            
-            oci_free_statement($conn);
-            oci_close($conn);
+            oci_free_statement($conexao);
+            oci_close($connBpmgp);
             ?>
             
           </div>
         </div>
-
-
-
       </div>
-
-
     </div>
   </section>
 

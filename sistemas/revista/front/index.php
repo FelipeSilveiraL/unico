@@ -31,11 +31,11 @@ require_once('menu.php'); //menu lateral da pagina
             <form method="POST" action="../inc/index.php?pg=<?= $_GET['pg'] ?>" enctype="multipart/form-data" class="row g-3">
               <div class="col-md-3">
                 <label for="inputName5" class="form-label">Edição</label>
-                <input type="number" class="form-control" name="edicao" id="inputName5" max="100" min="1" required>
+                <input type="number" class="form-control" name="edicao" id="inputName5" max="100" min="1" title="Número da revista" required>
               </div>
               <div class="col-md-9">
-                <label for="inputEmail5" class="form-label">Carregar arquivo</label>
-                <input type="file" name="arquivo" class="form-control" id="inputEmail5" required>
+                <label for="inputEmail5" class="form-label">Carregar arquivo .pdf</label>
+                <input type="file" name="arquivo" class="form-control" id="inputEmail5" title="Arquivos .pdf" required>
               </div>
               <div class="text-center">
               <button type="reset" class="btn btn-secondary">Limpar</button>

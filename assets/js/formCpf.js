@@ -44,9 +44,19 @@ function ValidarCPF(cpf) {
     }
 
     if (retorno != true) {
+        var minhaVariavel = "blockerButton";//esta bloqueando o botão da tela unico/sistemas/bpm/front/novaRegraContasBancarias.php
+
+        // Chamada da fun��o e passagem da vari�vel como argumento
+        outraFuncao(minhaVariavel);
+
         alert('CPF invalido!');
         document.getElementById("cpfVet").value = ' ';
         document.getElementById("cpfVet").focus();
+    }else{
+        var minhaVariavel = "DoNotBlockerButton";//esta bloqueando o botão da tela unico/sistemas/bpm/front/novaRegraContasBancarias.php
+
+        // Chamada da fun��o e passagem da vari�vel como argumento
+        outraFuncao(minhaVariavel);
     }
 }
 

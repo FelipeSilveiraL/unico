@@ -59,9 +59,26 @@ require_once('../inc/editNovoHorario.php');
                 <div class="form-floating mb-3">
                   <select class="form-select" id="id_departamento" name="departamento" aria-label="State" required>
                     <?php
-                    echo !empty($nomeDepartamento) ?   '<option value="' . $idDepartamento . '" >' . $nomeDepartamento . '</option>' : '<option value="" >------------------</option>';
+
+                    if (!empty($nomeDepartamento)) {
+                      echo '<option value="' . $idDepartamento . '" >' . $nomeDepartamento . '</option>';
+                           
+                      $queryBuscarDepartamento .= " WHERE ED.id_empresa = " .$idEmpresa. " AND ED.situacao = 'A' ORDER BY DR.NOME_DEPARTAMENTO";
+
+                      $result = oci_parse($connBpmgp, $queryBuscarDepartamento);
+                      oci_execute($result);
+
+
+                      while ($departamento = oci_fetch_array($result, OCI_ASSOC)) {
+                        echo '<option value="' . $departamento['ID_DEPARTAMENTO'] . '">' . $departamento['NOME_DEPARTAMENTO'] . '</option>';
+                      }
+                      oci_free_statement($result);
+
+                    } else {
+                      echo '<option value="" >------------------</option>';
+                    }
+                    oci_close($connBpmgp);
                     ?>
-                    <option value="">------------------</option>
                   </select>
                   <label for="floatingSelect">Departamento</label>
                 </div>

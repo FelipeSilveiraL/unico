@@ -23,8 +23,7 @@ require_once('head.php');
                       <img src="assets/img/logo.png" alt="">
                       <span class="d-none d-lg-block"><img src="../img/logo.png" id="logo"></span>
                     </a>
-                  </div><!-- End Logo --><p style="text-align: center; color: red; margin-top: -27px;">HOMOLOGAÇÃO</p>
-
+                  </div><!-- End Logo -->
 
                   <form class="row g-3 needs-validation" method="POST" action="../inc/login.php?pg=1">
 

@@ -127,7 +127,7 @@ if (!empty($_GET['msn'])) {
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <span style="font-size: 12px"><p><i class="bi bi-exclamation-triangle me-1"></i>Foram encontrados dados da ultima atualização que <code>não foram finalizados</code>!</p>
                     <p>Deseja finalizar ?</p></span>
-                        <a href="../inc/politicamente_exposto.php?pg=' . $_GET['pg'] . '&tela=' . $_GET['tela'] . '&confirma=1&part=4" class="btn btn-info btn-sm" title="irá ignorar o arquivo atual e fazer o anterior">SIM</a>
+                        <a href="../inc/politicamente_exposto2.php?pg=' . $_GET['pg'] . '&tela=' . $_GET['tela'] . '&confirma=1&part=4" class="btn btn-info btn-sm" title="irá ignorar o arquivo atual e fazer o anterior">SIM</a>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
             break;
@@ -149,6 +149,13 @@ if (!empty($_GET['msn'])) {
             echo '
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <span style="font-size: 12px">Por favor carregue um arquivo antes de realizar a carga!</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
+            break;
+        case '15':
+            echo '
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span style="font-size: 12px">Usuário já cadastrado!</span>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
             break;

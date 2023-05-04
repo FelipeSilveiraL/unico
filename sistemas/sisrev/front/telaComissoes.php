@@ -33,12 +33,12 @@ require_once('../../../config/config.php');
     <div class="row">
       <div class="col-lg-6">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body" style="margin-bottom:15px;">
             <br>
             <!-- Browser Default Validation -->
             <form class="row g-3 " action="../inc/buscaComissao.php?pg=<?= $_GET['pg'] ?>" method="POST">
               <div class="col-md-4 text-center">
-                <h5 class="card-title" style="margin-top: -20px;">Selecione a data:</h5>
+                <h5 class="card-title" style="margin-top: -20px;float:left;">Selecione a data:</h5>
                 <label for="validationDefault01">Período</label>
                 <input type="date" class="form-control" id="validationDefault01" name="dateCom" required>
               </div>
@@ -49,16 +49,16 @@ require_once('../../../config/config.php');
               <br>
               <div class="col-lg-3" style="margin-top:53px;">
                 <button class="btn btn-primary" type="submit" onclick="teste()">Enviar</button>
+                
               </div>
 
-            </form><br>
             <!-- End Browser Default Validation -->
           </div>
         </div>
       </div>
       <div class="col-lg-6">
         <div class="card">
-          <div class="card-body" style="display:<?= ($_GET['msg'] == 1) ? 'block;' : 'none;' ?>">
+        <div class="card-body" style="display:<?= ($_GET['msg'] == 1) ? 'block;' : 'none;' ?>">
             <a href="#" class="btn btn-info btn-sm" style="margin-top: 5px;margin-left: 401px;">
               <i class="bx bxs-report"></i>
             </a>
@@ -69,15 +69,16 @@ require_once('../../../config/config.php');
               <li class="list-group-item"><code>Arquivo:</code> <a href="" target="_blank" rel="file PDF">RelatórioSimples.pdf</a></li>
               <li class="list-group-item"><code>Arquivo:</code> <a href="" target="_blank" rel="file PDF">Relatório.pdf</a></li>
             </ul><!-- End Clean list group -->
+
           </div>
         </div>
       </div>
-    </div>
+    </form>
     <div class="col-lg-12" style="display: none" id="carregamento">
 
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Aguarde, estamos lendo o arquivo</h5>
+          <h5 class="card-title">Aguarde, estamos gerando o relatório</h5>
 
           <!-- Progress Bars with Striped Backgrounds-->
           <div class="progress mt-3">

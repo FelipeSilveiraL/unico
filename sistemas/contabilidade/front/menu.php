@@ -23,7 +23,7 @@ if (!$coressistema = $resultado->fetch_assoc()) {
         <li class="nav-item">
             <a class="nav-link <?= $_GET['pg'] == 2 ?: "collapsed" ?>" href="limpeza.php?pg=2">
                 <i class="bi bi-trash"></i>
-                <span>Excluir Fluxo Finalizado</span>
+                <span>Fluxo SmartShare</span>
             </a>
         </li><!-- End Dashboard Nav -->
         <hr>

@@ -156,8 +156,10 @@ require_once('footer.php'); //Javascript e configurações afins
 
       success: function(data) {
 
-        $("#cpfVet").val(data);
+        var data = data.replace('<option value="">', '').replace('</option>', '');       
 
+        $("#cpfVet").val(data);                
+        
         if (data === "CPF não localizado no RH, favor verificar") {
           $("#addCPFSelbetti").show();
         } else {

@@ -23,4 +23,10 @@
     $queryEmpresaRh = "SELECT * FROM EMPRESA ";
 
     $queryDepartamentoRh = "SELECT * FROM DEPARTAMENTO_RH ";
+
+    $queryBuscarDepartamento = "SELECT
+    ED.id_departamento,
+    DR.nome_Departamento
+    FROM empresa_departamento ED
+    LEFT JOIN departamento_rh DR ON (ED.id_departamento = DR.id_departamento)";
 ?>

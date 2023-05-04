@@ -10,6 +10,9 @@ $dateCom = date('d/m/y', strtotime($dateCom));
 $dateFim = str_replace("/", "-", $_POST["dateFim"]);
 $dateFim = date('d/m/y', strtotime($dateFim));
 
+$opcao = $_POST['relatorio'];
+
+
 $dropDev = "DROP TABLE sisrev_comissao";
 
 $con = oci_parse($connBpmgp, $dropDev);
@@ -239,8 +242,7 @@ while (($rowInserir = oci_fetch_array($resultado, OCI_ASSOC)) != FAlSE) {
    
 }
 
-// echo 'Pronto';
-header("Location: ./comissaoCanc.php?pg=" . $_GET['pg'] . "&dateCom=" . $dateCom . "&dateFim=" . $dateFim . "");
+header("Location: ./comissaoCanc.php?pg=" . $_GET['pg'] . "&dateCom=" . $dateCom . "&dateFim=" . $dateFim . "&relatorio=$opcao");
 
 oci_free_statement($conexao);
 oci_free_statement($resultado);

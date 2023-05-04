@@ -11,6 +11,7 @@ require_once('../../../config/session.php');
 require_once('../../../config/sqlSmart.php');
 require_once('../config/query.php');
 
+
 $dateCom = $_GET['dateCom'];
 
 $dateFim = $_GET['dateFim'];
@@ -40,18 +41,18 @@ $html = '
 
 <body>';
 
-  $empresas = "SELECT * FROM EMPRESA WHERE ID_EMPRESA NOT IN (208) ORDER BY ID_EMPRESA ASC";
+$empresas = "SELECT * FROM EMPRESA WHERE ID_EMPRESA NOT IN (208) ORDER BY ID_EMPRESA ASC";
 
-  $sucesso = oci_parse($connBpmgp, $empresas);
-  oci_execute($sucesso);
+$sucesso = oci_parse($connBpmgp, $empresas);
+oci_execute($sucesso);
 
-  while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
+while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
 
-    $anterior = NULL;
+  $anterior = NULL;
 
-    $id_empresa = $emp['ID_EMPRESA'];
+  $id_empresa = $emp['ID_EMPRESA'];
 
-    $html .= '<div style="font-size: 10px"><br>
+  $html .= '<div style="font-size: 10px"><br>
         <p style="text-align: center;">COMISSAO REVENDAS USADOS</p>
         <p style="text-align:center;"> PERÍODO: ' . $dateCom . '  A ' . $dateFim . '  </p>
         <p style="padding-left:10px;">EMPRESA ORIGEM: ' . $emp['NOME_EMPRESA'] . ' <span style="float:right;padding-right:10px;">EMISSÃO: ' . $today . '</span> </p>
@@ -73,36 +74,35 @@ $html = '
       </thead>
       <tbody>';
 
-    $conexao = oci_parse($connBpmgp, $vendas);
-    oci_execute($conexao);
+  $conexao = oci_parse($connBpmgp, $vendas);
+  oci_execute($conexao);
 
-    //while da tabela sisrev_comissao
-    while ($tabela = oci_fetch_array($conexao, OCI_ASSOC)) {
+  //while da tabela sisrev_comissao
+  while ($tabela = oci_fetch_array($conexao, OCI_ASSOC)) {
 
-      if ($tabela['XEMPRESA_VENDEDOR'] == $id_empresa AND $tabela['ID_EMPRESA'] != $id_empresa) {
+    if ($tabela['XEMPRESA_VENDEDOR'] == $id_empresa and $tabela['ID_EMPRESA'] != $id_empresa) {
 
-        if (empty($anterior)) {
+      if (empty($anterior)) {
 
-          $anterior = $tabela['ID_EMPRESA'];
+        $anterior = $tabela['ID_EMPRESA'];
+      } else if ($anterior == $tabela['ID_EMPRESA']) {
+        // Não exibe a linha de total de faturamento aqui
+      } else {
+        // Exibe a linha de total de faturamento aqui
 
-        } else if ($anterior == $tabela['ID_EMPRESA']) {
-          // Não exibe a linha de total de faturamento aqui
-        } else {
-          // Exibe a linha de total de faturamento aqui
-
-          $html .= '<tr>
+        $html .= '<tr>
                   <td colspan="14">
                     <span style="font-size:8px;margin-top: 5px;"><b>________________________________________________________________________________________________________________________________________ Total Faturamento: R$ ' . number_format($valor, 2, ',', '.') . '</span>
                   </td>
                 </tr>';
 
-          $anterior = $tabela['ID_EMPRESA'];
-          unset($valor);
-        }
+        $anterior = $tabela['ID_EMPRESA'];
+        unset($valor);
+      }
 
-        $valorVeiculo = $tabela['XVAL_VENDA_VEICULO'];
+      $valorVeiculo = $tabela['XVAL_VENDA_VEICULO'];
 
-        $html .= '<tr style="font-size: 10px;text-align:center;margin-top:10px;">
+      $html .= '<tr style="font-size: 10px;text-align:center;margin-top:10px;">
                 <td>' . $tabela['XEMPRESA'] . '</td>
                 <td>' . $tabela['XREVENDA'] . '</td>
                 <td>' . number_format($tabela['XPROPOSTA'], 0, ',', '.') . '</td>
@@ -113,16 +113,16 @@ $html = '
                 <td>' . $tabela['XCHASSI'] . '</td>
                 <td>' . $tabela['XCODIGO_VEICULO'] . '</td>
                 <td>' . $tabela['XVENDEDOR'] . '</td>
-                <td>' . 'R$ ' . $valorVeiculo . '</td>
+                <td>' . 'R$ ' . number_format($valorVeiculo, 2, ',', '.') . '</td>
               </tr>';
 
-        $valor += $valorVeiculo;
+      $valor += $valorVeiculo;
 
-        if (!empty($tabela['ID_CAN'])) { //mostrar as canceladas
+      if (!empty($tabela['ID_CAN'])) { //mostrar as canceladas
 
-          $valorVeiculoCAN = $tabela['VAL_VENDA_VEICULO_CAN'];
+        $valorVeiculoCAN = $tabela['VAL_VENDA_VEICULO_CAN'];
 
-          $html .= '<tr style="font-size: 10px;text-align:center;margin-top:10px;">
+        $html .= '<tr style="font-size: 10px;text-align:center;margin-top:10px;">
                   <td>' . $tabela['EMPRESA_CAN'] . '</td>
                   <td>' . $tabela['REVENDA_CAN'] . '</td>
                   <td>' . number_format($tabela['PROPOSTA_CAN'], 0, ',', '.') . '</td>
@@ -133,35 +133,35 @@ $html = '
                   <td>' . $tabela['CHASSI_CAN'] . '</td>
                   <td>' . $tabela['CODIGO_VEICULO_CAN'] . '</td>
                   <td>' . $tabela['VENDEDOR_CAN'] . '</td>
-                  <td>' . 'R$ -' . $valorVeiculoCAN. '</td>
+                  <td>' . 'R$ -' . number_format($valorVeiculoCAN, 2, ',', '.') . '</td>
                 </tr>';
 
-          $valor += $valorVeiculoCAN;
-        }
+        $valor += $valorVeiculoCAN;
+
       }
-
+      
     }
+  }
 
-    $html .= '<tr>
+  $html .= '<tr>
             <td colspan="14">
               <span style="font-size:8px;"><b>________________________________________________________________________________________________________________________________________  Total Faturamento: R$ ' . number_format($valor, 2, ',', '.')  . '</span>
             </td>
           </tr>';
 
-    oci_free_statement($conexao);
+  oci_free_statement($conexao);
 
-    $html .= '
+  $html .= '
         </tbody>
       </table>
     </div>
     <p class="break"></p>'; /* Isso foi colocado apenas para melhorar a distribuição das informações na hora de imprimir. */
 
+  unset($valor);
+}
 
-    unset($valor);
-  }
 
-
-  oci_free_statement($sucesso);
+oci_free_statement($sucesso);
 
 $html .= '
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -196,4 +196,12 @@ $dompdf->setPaper('A4', 'portrait'); // portrait = retrato, landscape = paisagem
 // Render the HTML as PDF
 $dompdf->render();
 
-$dompdf->stream('relatorioComissoes.pdf', array("Attachment" => true));//true - Download false - Previa
+// $dompdf->stream('relatorioComissoes.pdf', array("Attachment" => true));//true - Download false - Previa
+$output = $dompdf->output();
+
+file_put_contents('../documentos/COM/Relatório_revenda_usados.pdf', $output);
+
+header('Location: ./relatorioApagar.php?pg='.$_GET['pg'].'&dataCom='.$dateCom.'&dataFim='.$dateFim.'');
+
+?>
+

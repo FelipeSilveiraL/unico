@@ -1,13 +1,8 @@
 <?php
 
-require_once ('../../../config/databases.php'); //Puxando banco de dados
+require_once ('../config/query.php'); //Puxando banco de dados
 
-$queryBuscarDepartamento = "SELECT
-ED.id_departamento,
-DR.nome_Departamento
-from empresa_departamento ED
-LEFT JOIN departamento_rh DR ON (ED.id_departamento = DR.id_departamento)
-WHERE ED.id_empresa = ".$_POST['id']." AND ED.situacao = 'A' ORDER BY DR.NOME_DEPARTAMENTO";
+$queryBuscarDepartamento .= " WHERE ED.id_empresa = ".$_POST['id']." AND ED.situacao = 'A' ORDER BY DR.NOME_DEPARTAMENTO";
 
 $result = oci_parse($connBpmgp, $queryBuscarDepartamento);
 oci_execute($result);
@@ -15,6 +10,10 @@ oci_execute($result);
 
 while($departamento = oci_fetch_array($result, OCI_ASSOC)){
     echo '<option value="'.$departamento['ID_DEPARTAMENTO'].'">'.$departamento['NOME_DEPARTAMENTO'].'</option>';
+}
+
+if(oci_num_rows($result) == 0){
+    echo '<option value="">Nenhum departamento encontrado</option>';
 }
 
 

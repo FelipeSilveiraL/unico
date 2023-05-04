@@ -271,6 +271,7 @@ while (($row = oci_fetch_array($resultado, OCI_ASSOC + OCI_RETURN_NULLS)) != FAl
 header("Location: ./relatorioSisrev.php?pg=" . $_GET['pg'] . "&dateCom=" . $dateCom . "&dateFim=" . $dateFim . "");
 
 
+
 oci_free_statement($conexao);
 oci_free_statement($resultado);
 oci_free_statement($execCreate);
