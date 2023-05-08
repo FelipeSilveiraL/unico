@@ -1,4 +1,5 @@
 <?php
+session_start();
 //reference the Dompdf namespace
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -133,7 +134,7 @@ while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
                   <td>' . $tabela['CHASSI_CAN'] . '</td>
                   <td>' . $tabela['CODIGO_VEICULO_CAN'] . '</td>
                   <td>' . $tabela['VENDEDOR_CAN'] . '</td>
-                  <td>' . 'R$ -' . number_format($valorVeiculoCAN, 2, ',', '.') . '</td>
+                  <td>' . 'R$ ' . number_format($valorVeiculoCAN, 2, ',', '.') . '</td>
                 </tr>';
 
         $valor += $valorVeiculoCAN;

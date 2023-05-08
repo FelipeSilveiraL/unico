@@ -41,16 +41,6 @@ $queryIsNullPE = "SELECT id FROM sisrev_politicamente_exposto WHERE ";
 //query chamar acessos rápidos Sisrev
 $queryAcessos = "SELECT * FROM sisrev_modulos";
 
-$consorcio = ($edit["CONSORCIO"] == 'S') ? 'SIM' : 'NÃO';
-
-    $situacao = ($edit["SITUACAO"] == 'A') ? 'ATIVO' : 'DESATIVADO';
-
-    $valueApollo = ($edit["EMPRESA_APOLLO"] == 0) ? '' : $edit["EMPRESA_APOLLO"];
-
-    $valueRevApollo = ($edit["REVENDA_APOLLO"] == 0) ? '' : $edit["REVENDA_APOLLO"];
-
-    $valueEmpNbs = ($edit["EMPRESA_NBS"] == 0) ? '' : $edit["EMPRESA_NBS"];
-
 //query para chamar todos os usuário para cadastrar funções na tela de configurações
 $queryUsers = "SELECT * FROM usuarios";
 

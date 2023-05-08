@@ -152,7 +152,6 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
             echo ("Error description [2]: " . $connNOTAS->error);
             exit;
         }
-            
     }
 
     //trabalhando em cima do centro de custo
@@ -163,7 +162,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
         $aplicarPorcentual = $connNOTAS->query($queryPorcentual);
         $porcentual = $aplicarPorcentual->fetch_assoc();
 
-        $porcentoFormulario = pontuacao($_POST['porcentual']);
+        $porcentoFormulario = porcentagem($_POST['porcentual']);
         $somatorio = $porcentoFormulario + $porcentual['porcentual'];
 
         if ($somatorio > 100) { //ultrapassou os 100%
@@ -183,7 +182,7 @@ if (empty($_GET['idRateioFornecedor'])) { //cadastrando o fornecedor
                                 VALUES
                                 (" . $_GET['idRateioFornecedor'] . ",
                                 '" . $_POST['centroCusto'] . "',
-                                '" . pontuacao($_POST['porcentual']) . "')";
+                                '" . porcentagem($_POST['porcentual']) . "')";
 
                 $resultCentroCusto = $connNOTAS->query($insertCentroCusto);
 

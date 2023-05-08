@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('../../../config/databases.php');
 require_once('../../../config/session.php');
 require_once('../../../config/sqlSmart.php');
@@ -181,7 +182,7 @@ while (($row = oci_fetch_array($resultado, OCI_ASSOC + OCI_RETURN_NULLS)) != FAl
                     " . $empresaVendedor . ",
                     'CANCELADA',
                     '" . $xCodVeiculo . "',
-                    '" . $xValVendaVeiculo . "',
+                    '-" . $xValVendaVeiculo . "',
                     '" . $cpfVendedor . "',
                     '" . $xChassi . "',
                     " . $xProposta . ",
@@ -254,7 +255,7 @@ while (($row = oci_fetch_array($resultado, OCI_ASSOC + OCI_RETURN_NULLS)) != FAl
                     " . $empresaVendedor . ",
                     'CANCELADA',
                     '" . $xCodVeiculo . "',
-                    '" . $xValVendaVeiculo . "',
+                    '-" . $xValVendaVeiculo . "',
                     '" . $cpfVendedor . "',
                     '" . $xChassi . "',
                     " . $xProposta . ",

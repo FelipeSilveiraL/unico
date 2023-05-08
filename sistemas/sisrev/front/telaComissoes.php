@@ -1,12 +1,15 @@
 <?php
+
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 require_once('../../../config/config.php');
+require_once('../../../config/session.php');
+
+$msg = $_GET['msg'];
 
 
-/* Essa opção descomentar após criar em telas_funcoes.php*/
-//echo $_GET['pg'] == '5' ?'': ' <script>window.location.href = "index.php";</script>';
+
 ?>
 
 <main id="main" class="main">
@@ -29,6 +32,10 @@ require_once('../../../config/config.php');
 
   <!--################# COLE section AQUI #################-->
 
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <i class="ri-error-warning-line"></i> Atenção! Verifique com atenção! Alguns vendedores podem não estar cadastrados no BPMGP, clique no icone para verificar os vendedores não cadastrados.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div> <br>
   <section class="section">
     <div class="row">
       <div class="col-lg-6">
@@ -58,16 +65,16 @@ require_once('../../../config/config.php');
       </div>
       <div class="col-lg-6">
         <div class="card">
-        <div class="card-body" style="display:<?= ($_GET['msg'] == 1) ? 'block;' : 'none;' ?>">
-            <a href="#" class="btn btn-info btn-sm" style="margin-top: 5px;margin-left: 401px;">
+        <div class="card-body" >
+            <a href="../inc/relatorioVendedoresBPM.php" class="btn btn-info btn-sm" style="margin-top: 5px;margin-left: 401px;">
               <i class="bx bxs-report"></i>
             </a>
             <h5 class="card-title" style="margin-top: -30px;">Arquivo gerado com sucesso!</h5>
             <!-- List group with active and disabled items -->
             <ul class="list-group list-group-flush">
-              <li class="list-group-item"><code>Autor:</code> <?= $_SESSION['nome_usuario'] ?> <code style="margin-left: 64px;">Data:</code> <?= $today = date("d/m/y H:i:s");  ?></li>
-              <li class="list-group-item"><code>Arquivo:</code> <a href="" target="_blank" rel="file PDF">RelatórioSimples.pdf</a></li>
-              <li class="list-group-item"><code>Arquivo:</code> <a href="" target="_blank" rel="file PDF">Relatório.pdf</a></li>
+              <li class="list-group-item"><code>Data:</code> <?= $today = date("d/m/y H:i:s");  ?></li>
+              <li class="list-group-item"><code>Arquivo:</code> <a href="../documentos/COM/Relatório_revenda_usados.pdf" rel="file PDF">Relatório Revenda usados.pdf</a></li>
+              <li class="list-group-item"><code>Arquivo:</code> <a href="../documentos/COM/Relatório_comissao_revenda.pdf" rel="file PDF">Relatório Comissao Revenda.pdf</a></li>
             </ul><!-- End Clean list group -->
 
           </div>

@@ -1,9 +1,8 @@
 <?php
-session_start();
 require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
-require_once('../../../config/config.php');
+require_once('../config/query.php');
 ?>
 
 <main id="main" class="main">
@@ -42,7 +41,8 @@ require_once('../../../config/config.php');
             CE.id_caixa_empresa,
             CE.id_empresa,
             E.nome_empresa,
-            CE.nome_caixa
+            CE.nome_caixa,
+            CE.NUMERO_CAIXA_SISTEMA
             
             from caixa_empresa CE
             

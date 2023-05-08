@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once ('../../../config/databases.php');
 require_once ('../../../config/session.php');
 require_once ('../../../config/sqlSmart.php');
@@ -47,7 +47,6 @@ FMC.TIPO_TRANSACAO IN ('U21','U07','M07','M21','M41','M57','M61')
 ORDER BY 
 FNV.EMPRESA,FNV.REVENDA,FNV.NUMERO_NOTA_FISCAL,FNV.SERIE_NOTA_FISCAL,
 FNV.CONTADOR,FNV.VENDEDOR";
-
 
 $resultado = oci_parse($connApollo, $buscaApollo);
 
@@ -161,7 +160,7 @@ while (($rowInserir = oci_fetch_array($resultado, OCI_ASSOC)) != FAlSE) {
                             " . $empresaVendedor . ",
                             '" . $cpfVendedor . "',
                             '" . $rowDev['XCODIGO_VEICULO'] . "',
-                            '" .'-'. $rowDev['XVAL_VENDA_VEICULO'] . "',
+                            '-" . $rowDev['XVAL_VENDA_VEICULO'] . "',
                             '" . $rowDev['XCHASSI'] . "',
                             " . $rowDev['XPROPOSTA'] . ",
                             " . $idEmpresa . ",
@@ -205,7 +204,7 @@ while (($rowInserir = oci_fetch_array($resultado, OCI_ASSOC)) != FAlSE) {
                     FMV.EMPRESA = VP.EMPRESA and
                     FMV.REVENDA = VP.REVENDA and
                     VP.CONTATO = '" . $rowInserir['XCONTATO'] . "'";
-        
+        // echo $sqlItensVeiculo.'<br>';
         $success = oci_parse($connApollo, $sqlItensVeiculo);
         oci_execute($success, OCI_COMMIT_ON_SUCCESS);
 
@@ -242,7 +241,7 @@ while (($rowInserir = oci_fetch_array($resultado, OCI_ASSOC)) != FAlSE) {
    
 }
 
-header("Location: ./comissaoCanc.php?pg=" . $_GET['pg'] . "&dateCom=" . $dateCom . "&dateFim=" . $dateFim . "&relatorio=$opcao");
+header("Location: ./comissaoCanc.php?pg=" . $_GET['pg'] . "&dateCom=" . $dateCom . "&dateFim=" . $dateFim . "");
 
 oci_free_statement($conexao);
 oci_free_statement($resultado);
