@@ -42,7 +42,7 @@ require_once('../../../config/sqlSmart.php');
                 $situacao = $row['SITUACAO'];
                 $gerente = $row['GERENTE_APROVA'];
                 $super = $row['SUPERINTENDENTE_APROVA'];
-                $lanca = $row['LANCA_MULTAS'];
+                $lanca = empty($row['LANCA_MULTAS']) ? 'N' : 'S';
                 $gestor = $row['GESTOR_AREA_APROVA_MULTAS'];
                 $lancarNotas = $row['LANCA_NOTAS'];
 
@@ -93,7 +93,7 @@ require_once('../../../config/sqlSmart.php');
                         </div>
                         <div class="form-floating mt-4 col-md-6" id="lancarMulta">
                           <select class="form-select" name="lancarMulta" >
-                            <option value="' . $row['LANCA_MULTAS'] . '">' . $lanca . '</option>
+                            <option value="'; echo empty($row['LANCA_MULTAS']) ? 'N' : 'S'; echo '">' . $lanca . '</option>
                             <option value="">------------</option>
                             <option value="S">SIM</option>
                             <option value="N">NÃO</option>

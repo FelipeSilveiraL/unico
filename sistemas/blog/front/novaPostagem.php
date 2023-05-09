@@ -31,12 +31,11 @@ require_once('menu.php'); //menu lateral da pagina
             <form>
 
               <div class="row mb-3">
-                <div class="col-sm-8">
+                <div class="col-sm-15">
                   <label class="col-sm-6 col-form-label text-start">Título:</label>
                   <input class="form-control" type="text" title="Máximo 40 caracteres" maxlength="40" class="form-control" required>
                 </div>
               </div>
-
 
               <fieldset class="row mb-3">
                 <legend class="col-form-label col-sm-2 pt-0">Tipo da postagem:</legend>
@@ -62,7 +61,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <label class="col-sm-5 col-form-label text-start">Data fim de visibilidade?</label>
                     <div class="col-sm-4">
                       <select class="form-select text-start" aria-label="Default select example" required style="margin-top: 12px;" required>
-                        <option value="">------------</option>
+                        <option value="">--------</option>
                         <option value="1">Sim</option>
                         <option value="2">Não</option>
                       </select>
@@ -74,7 +73,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <label class="col-sm-5 col-form-label text-start">Alerta de comentários?</label>
                     <div class="col-sm-4">
                       <select class="form-select text-start" aria-label="Default select example" required style="margin-top: 12px;" required>
-                        <option value="">------------</option>
+                        <option value="">--------</option>
                         <option value="1">Sim</option>
                         <option value="2">Não</option>
                       </select>
@@ -82,16 +81,19 @@ require_once('menu.php'); //menu lateral da pagina
                   </div>
                 </div>
 
-                <div class="row mb-3">
-                  <div class="col-sm-7">
-                    <label class="col-sm-6 col-form-label text-start">Imagem/Video:</label>
+                <div class="col-sm-15">
+                  <label class="col-sm-6 col-form-label text-start">Imagem/Video:</label>
+                  <div class="input-group col-sm-15 mb-2">
                     <input class="form-control" type="file" id="formFile" required>
+                    <button class="btn btn-success" title="Adicionar mais arquivos" type="button" onclick="addFileInput()">+</button>
                   </div>
                 </div>
 
-                <label for="inputText" style="margin-bottom: 5px;">Mensagem:</label>
-                <div class="card">
-                  <div class="quill-editor-default" required></div>
+                <div class="mt-3">
+                  <label for="inputText" style="margin-bottom: 5px;">Mensagem:</label>
+                  <div class="card">
+                    <div class="quill-editor-default"></div>
+                  </div>
                 </div>
 
                 <div class="row mb-3 mt-4">
@@ -99,6 +101,7 @@ require_once('menu.php'); //menu lateral da pagina
                     <button type="submit" class="btn btn-success">Salvar</button>
                   </div>
                 </div>
+              </div>
 
             </form><!-- End General Form Elements -->
 
@@ -106,8 +109,6 @@ require_once('menu.php'); //menu lateral da pagina
         </div>
 
       </div>
-
-
     </div>
   </section>
 

@@ -28,7 +28,7 @@ require_once('menu.php'); //menu lateral da pagina
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Central de ajuda</h5>
-            Está em fase de manutenção, porém se precisar de ajuda ligue para o TI (<a href="http://10.100.1.217/lista/filiais/index.php?dep=1,89" target="_blank" rel="noopener noreferrer">Lista Ramais</a>) ou abra um chamado no GLPI (Link no rodapé!)
+            Está em fase de manutenção, porém se precisar de ajuda ligue para o TI (<a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/lista/filiais/index.php?dep=1,89" target="_blank" rel="noopener noreferrer">Lista Ramais</a>) ou abra um chamado no GLPI (Link no rodapé)
           </div>
         </div><!-- End Default Card -->
       </div>

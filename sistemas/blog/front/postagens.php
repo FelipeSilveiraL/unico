@@ -32,7 +32,6 @@ require_once('menu.php'); //menu lateral da pagina
             <h5 class="card-title">Minhas postagens<span style="margin-right: 5px;"></span><i class="bi bi-journal-bookmark"></i></h5>
 
             <p></p>
-
             <!-- Table with stripped rows -->
             <table class="table datatable">
               <thead>
@@ -41,7 +40,7 @@ require_once('menu.php'); //menu lateral da pagina
                   <th scope="col" class="capitalize">Imagem/Video</th>
                   <th scope="col" class="capitalize">Mensagem</th>
                   <th scope="col" class="capitalize">Data postagem</th>
-                  <th scope="col" class="capitalize">Data explusão</th>
+                  <th scope="col" class="capitalize">Data exclusão</th>
                   <th scope="col" class="capitalize">Ação</th>
                 </tr>
               </thead>
@@ -49,7 +48,6 @@ require_once('menu.php'); //menu lateral da pagina
                 <!-- Adicionar o body -->
               </tbody>
             </table>
-            <!-- End Table with stripped rows -->
 
           </div>
         </div>
