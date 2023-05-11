@@ -7,8 +7,6 @@ $conexao = oci_parse($connBpmgp,$vendedoresQuery);
 
 oci_execute($conexao,OCI_COMMIT_ON_SUCCESS);
 
-
-
 $arquivo = 'vendedores_bpm.xls';
 
         // Criamos uma tabela HTML com o formato da planilha
@@ -30,6 +28,7 @@ $arquivo = 'vendedores_bpm.xls';
                             <tbody>";
             $anterior = null;
             while($row = oci_fetch_array($conexao,OCI_ASSOC)){
+                $anterior = null;
                 $cpf = $row['XCPF'];
                 
                 $query = "SELECT NOME FROM FAT_VENDEDOR WHERE CPF = ".$cpf;
@@ -39,7 +38,7 @@ $arquivo = 'vendedores_bpm.xls';
                 if($row2 = oci_fetch_array($conexaoApollo, OCI_ASSOC)){
                     $nomeVendedor = $row2['NOME'];
                 }
-
+                
                 if (empty($anterior)) {
                 $anterior = $cpf;
                 $html .= "<tr>";

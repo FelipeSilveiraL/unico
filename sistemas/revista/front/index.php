@@ -25,7 +25,7 @@ require_once('menu.php'); //menu lateral da pagina
 
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Nova revista acelera</h5>
+            <h5 class="card-title">Nova revista acelere</h5>
 
             <!-- Multi Columns Form -->
             <form method="POST" action="../inc/index.php?pg=<?= $_GET['pg'] ?>" enctype="multipart/form-data" class="row g-3">

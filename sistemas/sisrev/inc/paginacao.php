@@ -11,9 +11,8 @@ $idSistema = $_SESSION['id_sistema'];
 /* ################## CORES DO SISTEMAS  ################## */
 
 if (!empty($idUsuario)) {
-    $querySistemaCores .=  ' WHERE id_usuario = ' . $idUsuario . ' AND id_sistema = ' . $idSistema;
+    $querySistemaCores .=' WHERE id_usuario = ' . $idUsuario . ' AND id_sistema = ' . $idSistema;
     $resultado = $conn->query($querySistemaCores);
-
     if (!$coressistema = $resultado->fetch_assoc()) {
         $color = "#fff";
     } else {

@@ -22,3 +22,15 @@ function addFileInput() {
 
     document.getElementById('formFile').parentNode.insertBefore(inputGroup, null);
 }
+
+function exclusao(){
+    var valor = document.getElementById('selectData').value;
+
+    if(valor == 1){//1 = SIM
+        document.getElementById('dataExclusao').style.display = 'block';
+    }else{
+        document.getElementById('dataExclusao').style.display = 'none';
+    }
+
+
+}

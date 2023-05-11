@@ -1,8 +1,11 @@
 <?php
 session_start();
+
 require_once('../../../config/databases.php');
-require_once('../../../config/session.php');
 require_once('../../../config/sqlSmart.php');
+
+
+$nomeUsuario = $_SESSION['nome_usuario'];
 
 $dateCom = $_GET['dateCom'];
 
@@ -269,7 +272,7 @@ while (($row = oci_fetch_array($resultado, OCI_ASSOC + OCI_RETURN_NULLS)) != FAl
 }
 
 
-header("Location: ./relatorioSisrev.php?pg=" . $_GET['pg'] . "&dateCom=" . $dateCom . "&dateFim=" . $dateFim . "");
+header("Location: ./relatorioSisrev.php?pg=" . $_GET['pg'] . "&dateCom=" . $dateCom . "&dateFim=" . $dateFim . "&nome=".$nomeUsuario."");
 
 
 

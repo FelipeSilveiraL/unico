@@ -1,17 +1,26 @@
 <?php
 session_start();
 require_once ('../../../config/databases.php');
-require_once ('../../../config/session.php');
 require_once ('../../../config/sqlSmart.php');
 
 $dateCom = str_replace("/", "-", $_POST["dateCom"]);
+$dateFim = str_replace("/", "-", $_POST["dateFim"]);
+
+$limiteMeses = 3;
+
+$dateComObj = new DateTime($dateCom);
+$dateFimObj = new DateTime($dateFim);
+
+$interval = $dateComObj->diff($dateFimObj);
+
+if ($interval->m > $limiteMeses) {
+    header('Location: ../front/telaComissoes.php?pg='.$_GET['pg'].'&msg=2');
+    exit;
+}
+
 $dateCom = date('d/m/y', strtotime($dateCom));
 
-$dateFim = str_replace("/", "-", $_POST["dateFim"]);
 $dateFim = date('d/m/y', strtotime($dateFim));
-
-$opcao = $_POST['relatorio'];
-
 
 $dropDev = "DROP TABLE sisrev_comissao";
 
@@ -60,8 +69,7 @@ while (($rowInserir = oci_fetch_array($resultado, OCI_ASSOC)) != FAlSE) {
     $achei = oci_parse($connApollo, $searchVendedor);
     oci_execute($achei, OCI_COMMIT_ON_SUCCESS);
 
-    if(($vendedorApollo = oci_fetch_array($achei, OCI_ASSOC)) != FAlSE) 
-    { 
+    if(($vendedorApollo = oci_fetch_array($achei, OCI_ASSOC)) != FAlSE) { 
         $cpfVendedor = $vendedorApollo['CPF'] ;
 
         $queryVendedor = "SELECT * FROM VENDEDORES WHERE CPF = " . $cpfVendedor;
@@ -72,7 +80,7 @@ while (($rowInserir = oci_fetch_array($resultado, OCI_ASSOC)) != FAlSE) {
       if (($vendedorBPM = oci_fetch_array($bpmCon, OCI_ASSOC)) != FAlSE) {
 
         $empresaVendedor = $vendedorBPM['EMPRESA'];
-
+        
         $nome = $vendedorBPM['NOME'];
         $nome = explode(' ', $nome);
         $nome = $nome[0] . ' ' . $nome[1] . ' ' . $nome[2];
@@ -143,7 +151,11 @@ while (($rowInserir = oci_fetch_array($resultado, OCI_ASSOC)) != FAlSE) {
             oci_execute($conexao, OCI_COMMIT_ON_SUCCESS);
     
             if (($rowDev = oci_fetch_array($conexao, OCI_ASSOC)) != FAlSE) {
-    
+
+                if($rowInserir['XEMPRESA'] == 10 AND $rowInserir['XREVENDA'] == 3 and $empresaVendedor == 9){break;}
+                if($nome == 'JULIO CESAR NEMOTO'){$empresaVendedor = 19;}
+                if($cpfVendedor == '3716982946'){$empresaVendedor = 41;}
+                if($rowInserir['XEMPRESA'] == 1 AND $rowInserir['XREVENDA'] == 9 and $empresaVendedor == 19){break;}
                 $inserirDev = "INSERT INTO sisrev_comissao 
                         (XEMPRESA,XREVENDA,XNRONOTA,XDTNOTA,
                         XTRANSACAO,XVENDEDOR,XEMPRESA_VENDEDOR,XCPF,XCODIGO_VEICULO,
@@ -180,6 +192,8 @@ while (($rowInserir = oci_fetch_array($resultado, OCI_ASSOC)) != FAlSE) {
         if($idEmpresaRow = oci_fetch_array($result2, OCI_ASSOC)){
             $idEmpresa = $idEmpresaRow['ID_EMPRESA'];
         }
+
+        if($empresaVendedor)
         
         $sqlItensVeiculo =  "select FMV.VEICULO as xcodigo_veiculo,
                     (FMV.VAL_TOTAL - FMV.VAL_DESCONTO + FMV.VAL_ICMS_RETIDO) as xval_venda_veiculo,
@@ -209,6 +223,11 @@ while (($rowInserir = oci_fetch_array($resultado, OCI_ASSOC)) != FAlSE) {
         oci_execute($success, OCI_COMMIT_ON_SUCCESS);
 
         if (($rowVeic = oci_fetch_array($success, OCI_ASSOC)) != FAlSE) {
+
+                if($rowInserir['XEMPRESA'] == 10 AND $rowInserir['XREVENDA'] == 3 and $empresaVendedor == 9){break;}
+                if($nome == 'JULIO CESAR NEMOTO'){$empresaVendedor = 19;}
+                if($cpfVendedor == '3716982946'){$empresaVendedor = 41;}
+                if($rowInserir['XEMPRESA'] == 1 AND $rowInserir['XREVENDA'] == 9 and $empresaVendedor == 19){break;}
 
             $inserirDB = "INSERT INTO sisrev_comissao 
                     (XEMPRESA,XREVENDA,XNRONOTA,XDTNOTA,
