@@ -85,7 +85,7 @@ while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
     if ($tabela['XEMPRESA_VENDEDOR'] == $id_empresa and $tabela['ID_EMPRESA'] != $id_empresa) {
 
       if($tabela['XEMPRESA'] != $emp['EMPRESA_APOLLO']){
-        if($id_empresa == 9 and $tabela['XEMPRESA_VENDEDOR'] == 19){break;}
+        
         if (empty($anterior)) {
 
           $anterior = $tabela['ID_EMPRESA'];

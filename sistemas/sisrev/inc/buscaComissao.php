@@ -227,6 +227,7 @@ while (($rowInserir = oci_fetch_array($resultado, OCI_ASSOC)) != FAlSE) {
                 if($rowInserir['XEMPRESA'] == 10 AND $rowInserir['XREVENDA'] == 3 and $empresaVendedor == 9){break;}
                 if($nome == 'JULIO CESAR NEMOTO'){$empresaVendedor = 19;}
                 if($cpfVendedor == '3716982946'){$empresaVendedor = 41;}
+                if($cpfVendedor == '38221983829'){break;}
                 if($rowInserir['XEMPRESA'] == 1 AND $rowInserir['XREVENDA'] == 9 and $empresaVendedor == 19){break;}
 
             $inserirDB = "INSERT INTO sisrev_comissao 

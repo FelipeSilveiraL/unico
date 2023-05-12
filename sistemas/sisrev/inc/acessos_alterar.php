@@ -25,7 +25,7 @@ require_once('../config/query.php');
             $queryInsert = "INSERT INTO sisrev_modulos (nome, endereco ".$moduloCAMPO .$localizacao.") 
             VALUES ('".$_POST['nome']."', '".$_POST['endereco']."'".$moduloVALUE.$localizacaoVALUE .")";
             if (!$resultInsert = $conn->query($queryInsert)){
-                
+                echo $queryInsert."<br>"; 
                 printf("Erro ao inserir dados %s\n", $conn->error);
                 exit;
             }
@@ -53,12 +53,13 @@ require_once('../config/query.php');
                                 pagina = '"; $queryUpdate .= empty($pag) ? '0' : $pag; $queryUpdate .="'
                             WHERE id= ".$_GET['id'];
 
-            
+            echo $queryUpdate;
+
             if (!$resultUpdate = $conn->query($queryUpdate)){
                 printf("Erro ao editar as informações %s\n", $conn->error);
             }
             
-            header('Location: ../front/telas_funcoes.php?pg='.$_GET['pg'].'&tela='.$_GET['tela'].'&msn=4');
+            //header('Location: ../front/telas_funcoes.php?pg='.$_GET['pg'].'&tela='.$_GET['tela'].'&msn=4');
         
             break;
 
