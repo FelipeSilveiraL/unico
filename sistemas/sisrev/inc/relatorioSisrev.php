@@ -1,8 +1,5 @@
 <?php
 session_start();
-//reference the Dompdf namespace
-use Dompdf\Dompdf;
-use Dompdf\Options;
 
 //chamando ele pelo autoload do vendor
 require_once('../../../vendor/autoload.php');
@@ -52,11 +49,11 @@ while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
   $anterior = NULL;
 
   $id_empresa = $emp['ID_EMPRESA'];
-  
-  $html .= '<div style="font-size: 10px"><br>
+
+  $html .= '<div id="tabelaComissao'.$emp['ID_EMPRESA'].'" style="position: absolute; left: 5px;"><br>
         <p style="text-align: center;">COMISSAO REVENDAS USADOS</p>
         <p style="text-align:center;"> PERÍODO: ' . $dateCom . '  A ' . $dateFim . '  </p>
-        <span style="text-align:center;font-size: 10px;">Emitido por: '.$nomeUsuario.'</span>
+        <span style="text-align:center;font-size: 10px;">Emitido por: ' . $nomeUsuario . '</span>
         <p style="padding-left:10px;">EMPRESA ORIGEM: ' . $emp['NOME_EMPRESA'] . '  <span style="float:right;padding-right:10px;">EMISSÃO: ' . $today . '</span> </p>
         <table class="table table-borderless">
       <thead>
@@ -77,15 +74,15 @@ while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
       <tbody>';
 
   $conexao = oci_parse($connBpmgp, $vendas);
-  oci_execute($conexao,OCI_COMMIT_ON_SUCCESS);
+  oci_execute($conexao, OCI_COMMIT_ON_SUCCESS);
 
   //while da tabela sisrev_comissao
-  while ($tabela = oci_fetch_array($conexao, OCI_ASSOC )) {
-    
+  while ($tabela = oci_fetch_array($conexao, OCI_ASSOC)) {
+
     if ($tabela['XEMPRESA_VENDEDOR'] == $id_empresa and $tabela['ID_EMPRESA'] != $id_empresa) {
 
-      if($tabela['XEMPRESA'] != $emp['EMPRESA_APOLLO']){
-        
+      if ($tabela['XEMPRESA'] != $emp['EMPRESA_APOLLO']) {
+
         if (empty($anterior)) {
 
           $anterior = $tabela['ID_EMPRESA'];
@@ -95,7 +92,7 @@ while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
           // Exibe a linha de total de faturamento aqui
           $html .= '<tr>
                     <td colspan="14">
-                      <span style="font-size:9px;margin-top: 8px;"><b>__________________________________________________________________________________________________________________________ Total Faturamento: R$ ' . number_format($valor, 2, ',', '.') . '</span>
+                      <span style="font-size:9px;margin-top: 8px;"><b>__________________________________________________________________________________________________________________________ Total Faturamento: R$ <span id="valorTotal' . $emp['ID_EMPRESA'] . '">' . number_format($valor, 2, ',', '.') . '</span></span>
                     </td>
                   </tr>';
 
@@ -104,7 +101,7 @@ while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
         }
         $valorVeiculo = $tabela['XVAL_VENDA_VEICULO'];
         $valorVeiculo = floatval($valorVeiculo);
-        
+
         $html .= '<tr style="font-size: 10px;text-align:center;margin-top:10px;">
                   <td>' . $tabela['XEMPRESA'] . '</td>
                   <td>' . $tabela['XREVENDA'] . '</td>
@@ -125,7 +122,7 @@ while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
 
           $valorVeiculoCAN = $tabela['VAL_VENDA_VEICULO_CAN'];
           $valorVeiculoCAN = floatval($valorVeiculoCAN);
-          
+
           $html .= '<tr style="font-size: 10px;text-align:center;margin-top:10px;">
                     <td>' . $tabela['EMPRESA_CAN'] . '</td>
                     <td>' . $tabela['REVENDA_CAN'] . '</td>
@@ -141,17 +138,14 @@ while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
                   </tr>';
 
           $valor += $valorVeiculoCAN;
-
         }
-      
       }
     }
-    
   }
 
   $html .= '<tr>
             <td colspan="14">
-              <span style="font-size:9px;"><b>__________________________________________________________________________________________________________________________  Total Faturamento: R$ ' . number_format($valor, 2, ',', '.')  . '</span>
+              <span style="font-size:9px;"><b>________________________ljkhljhljkh_________________________________________________________________________________  Total Faturamento: R$ <span id="valorTotal' . $emp['ID_EMPRESA'] . '">' . number_format($valor, 2, ',', '.')  . '</span></span>
             </td>
           </tr>';
 
@@ -162,7 +156,33 @@ while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
       </table>
     </div>
     <p class="break"></p>'; /* Isso foi colocado apenas para melhorar a distribuição das informações na hora de imprimir. */
-  
+
+  $html .= '
+  <script>
+    // Função para verificar se a variável está vazia
+    function verificarValor'.$emp['ID_EMPRESA'].'() {
+
+      var spanElmento = document.getElementById("valorTotal' . $emp['ID_EMPRESA'] . '");
+
+      var valorTotal = spanElmento.innerText;
+      
+      // Verificar se o valor está vazio
+      if (valorTotal === "0,00") {
+        // Ocultar a classe TabelaComissao
+        var tabelaComissao = document.getElementById("tabelaComissao' . $emp['ID_EMPRESA'] . '");
+
+        if (tabelaComissao) {
+          // Remova o elemento
+          tabelaComissao.style.position = "absolute";
+          tabelaComissao.style.left = "5px";
+        }
+      }
+    }
+
+    //Chamar a função ao carregar a página
+    window.addEventListener("DOMContentLoaded", verificarValor'.$emp['ID_EMPRESA'].');
+  </script>';
+
   unset($valor);
 }
 
@@ -176,19 +196,23 @@ $html .= '
 </html>';
 
 oci_close($connBpmgp);
-/* 
-echo $html;
+
+/* echo $html;
 
 exit; */
 
+//reference the Dompdf namespace
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 // instantiate and use the dompdf class
-$dompdf = new Dompdf();
+$dompdf = new Dompdf(['enable_remote' => true]);
 
 //habilitado o acesso ao download de assets remotos - Para funcionar o Bootstrap
 $options = new Options();
 
 //habilitado o acesso ao download de assets remotos - Para funcionar o Bootstrap
-$options->set('isRemoteEnabled', true);
+$options->set('isRemoteEnabled', TRUE);
 
 //habilitado o acesso ao download de assets remotos - Para funcionar o Bootstrap
 $dompdf = new Dompdf($options);
