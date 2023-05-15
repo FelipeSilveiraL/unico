@@ -50,7 +50,7 @@ while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
 
   $id_empresa = $emp['ID_EMPRESA'];
 
-  $html .= '<div id="tabelaComissao'.$emp['ID_EMPRESA'].'" style="position: absolute; left: 5px;"><br>
+  $html .= '<div id="tabelaComissao' . $emp['ID_EMPRESA'] . '" style="position: absolute; left: 5px;"><br>
         <p style="text-align: center;">COMISSAO REVENDAS USADOS</p>
         <p style="text-align:center;"> PERÍODO: ' . $dateCom . '  A ' . $dateFim . '  </p>
         <span style="text-align:center;font-size: 10px;">Emitido por: ' . $nomeUsuario . '</span>
@@ -145,7 +145,7 @@ while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
 
   $html .= '<tr>
             <td colspan="14">
-              <span style="font-size:9px;"><b>________________________ljkhljhljkh_________________________________________________________________________________  Total Faturamento: R$ <span id="valorTotal' . $emp['ID_EMPRESA'] . '">' . number_format($valor, 2, ',', '.')  . '</span></span>
+              <span style="font-size:9px;"><b>_________________________________________________________________________________________________________  Total Faturamento: R$ <span id="valorTotal' . $emp['ID_EMPRESA'] . '">' . number_format($valor, 2, ',', '.')  . '</span></span>
             </td>
           </tr>';
 
@@ -158,9 +158,9 @@ while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
     <p class="break"></p>'; /* Isso foi colocado apenas para melhorar a distribuição das informações na hora de imprimir. */
 
   $html .= '
-  <script>
+  <script type="text/javascript">
     // Função para verificar se a variável está vazia
-    function verificarValor'.$emp['ID_EMPRESA'].'() {
+    function verificarValor' . $emp['ID_EMPRESA'] . '() {
 
       var spanElmento = document.getElementById("valorTotal' . $emp['ID_EMPRESA'] . '");
 
@@ -173,15 +173,16 @@ while ($emp = oci_fetch_array($sucesso, OCI_ASSOC)) {
 
         if (tabelaComissao) {
           // Remova o elemento
-          tabelaComissao.style.position = "absolute";
-          tabelaComissao.style.left = "5px";
+          tabelaComissao.style.marginLeft = "1200px";
         }
       }
     }
 
     //Chamar a função ao carregar a página
-    window.addEventListener("DOMContentLoaded", verificarValor'.$emp['ID_EMPRESA'].');
-  </script>';
+    window.addEventListener("DOMContentLoaded", verificarValor' . $emp['ID_EMPRESA'] . ');
+  </script>
+  
+  <script type="text/javascript"> try { this.print(); } catch (e) { window.onload = window.print; } </script>';
 
   unset($valor);
 }
@@ -201,6 +202,27 @@ oci_close($connBpmgp);
 
 exit; */
 
+$teste = '<html>
+
+<head>
+  <title>Javascript test</title>
+</head>
+
+<body>
+  <h1>PDF JS Test</h1>
+  <p>This page will call the print dialog on load.</p>
+  <script type="text/javascript">
+
+    var h1Element = document.querySelector("h1");
+    h1Element.textContent = "Novo texto do h1";
+
+    try { this.print(); } catch (e) { window.onload = window.print; }
+
+  </script>
+</body>
+
+</html>';
+
 //reference the Dompdf namespace
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -210,15 +232,13 @@ $dompdf = new Dompdf(['enable_remote' => true]);
 
 //habilitado o acesso ao download de assets remotos - Para funcionar o Bootstrap
 $options = new Options();
-
-//habilitado o acesso ao download de assets remotos - Para funcionar o Bootstrap
-$options->set('isRemoteEnabled', TRUE);
+$options->set('isRemoteEnabled', true); // Habilitar o acesso a assets remotos
 
 //habilitado o acesso ao download de assets remotos - Para funcionar o Bootstrap
 $dompdf = new Dompdf($options);
 
 //load body PDF
-$dompdf->loadHtml($html);
+$dompdf->loadHtml($teste);
 
 // (Optional) Setup the paper size and orientation
 $dompdf->setPaper('A4', 'portrait'); // portrait = retrato, landscape = paisagem
@@ -226,9 +246,9 @@ $dompdf->setPaper('A4', 'portrait'); // portrait = retrato, landscape = paisagem
 // Render the HTML as PDF
 $dompdf->render();
 
-// $dompdf->stream('relatorioComissoes.pdf', array("Attachment" => true));//true - Download false - Previa
+$dompdf->stream('relatorioComissoes.pdf', array("Attachment" => false)); //true - Download false - Previa
 $output = $dompdf->output();
 
-file_put_contents('../documentos/COM/Relatorio_detalhado.pdf', $output);
+/* file_put_contents('../documentos/COM/Relatorio_detalhado.pdf', $output);
 
-header('Location: ./relatorioApagar.php?pg='.$_GET['pg'].'&dataCom='.$dateCom.'&dataFim='.$dateFim.'&nome='.$nomeUsuario.'');
+header('Location: ./relatorioApagar.php?pg='.$_GET['pg'].'&dataCom='.$dateCom.'&dataFim='.$dateFim.'&nome='.$nomeUsuario.''); */
