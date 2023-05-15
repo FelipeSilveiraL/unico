@@ -13,7 +13,6 @@ require_once('../inc/dadosPostagens.php');
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php?pg=1">Home</a></li>
         <?= $menu ?>
-        
       </ol>
     </nav>
   </div><!-- End Navegação -->
@@ -71,7 +70,7 @@ require_once('../inc/dadosPostagens.php');
                     </div>
                   </div>
                 </div>
-                
+
                 <div class="col">
                   <div class="row mb-2 mt-2">
                     <label class="col-sm-5 col-form-label text-start">Alerta de comentários?</label>
@@ -102,14 +101,11 @@ require_once('../inc/dadosPostagens.php');
                 </div>
 
                 <div class="card mt-2">
-
                   <label class="col-sm-6 col-form-label text-start">Mensagem:</label>
 
-                  <!-- TinyMCE Editor -->
-                  <textarea name="mensagemTexto" class="tinymce-editor"><?=$mensagem?>
+                  <textarea name="mensagemTexto" class="tinymce-editor"><?= $mensagem ?>
 
-                    </textarea><!-- End TinyMCE Editor -->
-
+                  </textarea>
                 </div>
 
                 <div class="row mb-3 mt-4">

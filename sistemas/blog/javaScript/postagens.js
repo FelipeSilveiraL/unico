@@ -23,14 +23,19 @@ function addFileInput() {
     document.getElementById('formFile').parentNode.insertBefore(inputGroup, null);
 }
 
-function exclusao(){
+// função para adicionar uma aba da data de exclusão no data fim de visibilidade se for "sim"
+
+function exclusao() {
     var valor = document.getElementById('selectData').value;
 
-    if(valor == 1){//1 = SIM
+    if (valor == 1) {//1 = SIM
         document.getElementById('dataExclusao').style.display = 'block';
-    }else{
+    } else {
         document.getElementById('dataExclusao').style.display = 'none';
     }
 
 
 }
+
+
+

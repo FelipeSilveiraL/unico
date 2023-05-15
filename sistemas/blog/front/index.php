@@ -25,7 +25,6 @@ require_once('menu.php'); //menu lateral da pagina
 
       <section class="section">
 
-
         <div class="row">
 
           <div class="col-lg-3 py-2">
@@ -68,7 +67,6 @@ require_once('menu.php'); //menu lateral da pagina
     </div>
 
   </section>
-
 
 </main><!-- End #main -->
 

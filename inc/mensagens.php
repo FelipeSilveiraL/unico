@@ -111,6 +111,12 @@ if (!empty($_GET['msn'])) {
                 case '13':
                     echo '<p class="mb-0"><i class="bi bi-pin"></i>Empresa e Departamento já cadastrados.</p>';
                     break;
+                case '14':
+                    echo '<p class="mb-0"><i class="bi bi-pin"></i>Não foi possivel realizar a postagem. Entrar em contato com a TI.</p>';
+                    break;
+                case '15':
+                    echo '<p class="mb-0"><i class="bi bi-pin"></i>Não foi possivel realizar edição.</p>';
+                    break;
             }
             echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';

@@ -15,7 +15,7 @@ if (!$coressistema = $resultado->fetch_assoc()) {
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link <?= $_GET['pg'] == 1 ?: "collapsed" ?>" href= "index.php?pg=<?= $_GET['pg'] ?>">
+            <a class="nav-link <?= $_GET['pg'] == 1 ?: "collapsed" ?>" href="index.php?pg=<?= $_GET['pg'] ?>">
                 <i class="bi bi-grid"></i>
                 <span>Home</span>
             </a>

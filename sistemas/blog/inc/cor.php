@@ -4,7 +4,7 @@ require_once('../../../config/query.php');
 
 
 $queryVerificar = "SELECT * FROM usuarios_sistema_color WHERE id_usuario = " . $_SESSION['id_usuario'] . " AND id_sistema = " . $_SESSION['id_sistema'];
-$resultVerificar = $conn->query($queryVerificar );
+$resultVerificar = $conn->query($queryVerificar);
 
 if ($vericiar = $resultVerificar->fetch_assoc()) {
 
@@ -12,7 +12,6 @@ if ($vericiar = $resultVerificar->fetch_assoc()) {
     SET
     color = '" . $_GET['ArcoIris'] . "'
     WHERE id_usuario = '" . $_SESSION['id_usuario'] . "' AND id_sistema = " . $_SESSION['id_sistema'];
-
 } else {
 
     $insertColor = "INSERT INTO usuarios_sistema_color

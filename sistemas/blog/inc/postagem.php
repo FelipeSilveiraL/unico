@@ -55,7 +55,7 @@ switch ($_GET['funcao']) {
                     header('location: ../front/novaPostagem.php?pg=' . $_GET['pg'] . '&msn=10&erro=14'); //não foi possivel realizar a postagem
                 }
             } else {
-                header('location: ../front/novaPostagem.php?pg=' . $_GET['pg'] . '&msn=10&erro=2'); //não foi possivek subir o arquivo
+                header('location: ../front/novaPostagem.php?pg=' . $_GET['pg'] . '&msn=10&erro=2'); //não foi possivel subir o arquivo
             }
         }
 
@@ -84,7 +84,7 @@ switch ($_GET['funcao']) {
 
                     $camposBanco = ",`file_img` = '" . $caminhoBanco . "', `tipo_arquivo` = '" . $_FILES['imagemVideo']['type'] . "' ";
                 } else {
-                    header('location: ../front/novaPostagem.php?pg=' . $_GET['pg'] . '&msn=10&erro=2'); //não foi possivek subir o arquivo
+                    header('location: ../front/novaPostagem.php?pg=' . $_GET['pg'] . '&msn=10&erro=2'); //não foi possivel subir o arquivo
                     exit;
                 }
             }
@@ -105,9 +105,9 @@ switch ($_GET['funcao']) {
 
 
         if ($result = $connBlog->query($updatePOstagem)) {
-            header('location: ../front/novaPostagem.php?pg=' . $_GET['pg'] . '&msn=4&&id_post='. $_GET['id_postagem'].''); //editado com sucesso
+            header('location: ../front/novaPostagem.php?pg=' . $_GET['pg'] . '&msn=4&&id_post=' . $_GET['id_postagem'] . ''); //editado com sucesso
         } else {
-            header('location: ../front/novaPostagem.php?pg=' . $_GET['pg'] . '&msn=10&erro=15&id_post='. $_GET['id_postagem'].''); //não foi possivel realizar a edição
+            header('location: ../front/novaPostagem.php?pg=' . $_GET['pg'] . '&msn=10&erro=15&id_post=' . $_GET['id_postagem'] . ''); //não foi possivel realizar a edição
         }
 
         break;
@@ -130,9 +130,31 @@ switch ($_GET['funcao']) {
         break;
 
     case '5': // excluir.
-        # code...
+
+        //deletar postagem
+        $deletarPostagem = "DELETE FROM `blog_post` WHERE  (`id_postagem` = '" . $_GET['id_post'] . "')";
+
+        if ($result = $connBlog->query($deletarPostagem)) {
+            header('location: ../front/postagens.php?pg=' . $_GET['pg'] . '&msn=14'); //deletado com sucesso        
+        }
+
+        //deletar comentário
+        $deletarComentario = "DELETE FROM `blog_comentarios` WHERE (`id_comentario` = '" . $_GET['id_comentario'] . "')";
+
+        if ($result = $connBlog->query($deletarComentario)) {
+            header('location: ../front/comentarios.php?pg=' . $_GET['pg'] . '&msn=14'); //deletado com sucesso 
+        }
+
+        break;
+    case '6': // Alteradndo comentarios
+
+        //editar o comentario para lido
+        $updateLido = "UPDATE blog_comentarios SET avisado_responsavel = 1 WHERE (id_comentario = " . $_POST['id'] . ")";
+
+        $result = $connBlog->query($updateLido);
         break;
 }
 
 
-$connBlog->clone();
+
+$connBlog->close();

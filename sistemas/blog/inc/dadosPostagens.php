@@ -35,14 +35,11 @@ if (!empty($_GET['id_post'])) {
     }
 
     //arquivo da postagem
-
     $arquivo = "none";
     $solicitacaoArquivo = 'block';
 
-
     //alerta de comentários
-
-    if ($postagem['alerta_comentario'] == 0) {
+    if ($postagem['alerta_comentario'] == 2) {
       $comentario = '<option value="2">Não</option>';
     } else {
       $comentario = '<option value="1">Sim</option>';
@@ -57,14 +54,11 @@ if (!empty($_GET['id_post'])) {
     //titulo da pagina
     $tituloPagina = "Editando Postagem";
 
-
-    //menui
-    $menu = '<li class="breadcrumb-item"><a href="postagens.php?pg='.$_GET['pg'].'">minhas postagens</a></li><li class="breadcrumb-item">'.$postagem['titulo'].'</li>';
+    //menu
+    $menu = '<li class="breadcrumb-item"><a href="postagens.php?pg=' . $_GET['pg'] . '">minhas postagens</a></li><li class="breadcrumb-item">' . $postagem['titulo'] . '</li>';
 
     //Requered Arquivo
     $requeredArquivo = '';
-
-
   }
 } else {
 
@@ -75,5 +69,3 @@ if (!empty($_GET['id_post'])) {
   $tituloPagina = 'Nova Postagem';
   $requeredArquivo = 'required';
 }
-
-?>

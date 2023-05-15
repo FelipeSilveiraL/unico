@@ -1,7 +1,7 @@
 <?php
 
-
-function caracteres($string){
+function caracteres($string)
+{
 
     $caracter = str_replace("'", '"', $string);
     $caracter = str_replace("table", 'div', $caracter);
@@ -11,4 +11,4 @@ function caracteres($string){
     $caracter = str_replace("tr", 'div', $caracter);
 
     return $caracter;
-} 
+}

@@ -3,7 +3,6 @@ require_once('head.php'); //CSS e configurações HTML e session start
 require_once('header.php'); //logo e login e banco de dados
 require_once('menu.php'); //menu lateral da pagina
 
-
 $queryPostagem .= '  WHERE id_post_user = ' . $_SESSION['id_usuario'] . ' order by id_postagem DESC';
 $result = $connBlog->query($queryPostagem);
 
@@ -50,6 +49,7 @@ $result = $connBlog->query($queryPostagem);
               </thead>
 
               <tbody>
+
                 <?php
                 while ($postagem = $result->fetch_assoc()) {
                   echo '<tr>
