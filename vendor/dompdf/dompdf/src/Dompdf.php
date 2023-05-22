@@ -201,7 +201,7 @@ class Dompdf
     *
     * @var array
     */
-    private $allowedLocalFileExtensions = ["htm", "html", "php"];
+    private $allowedLocalFileExtensions = ["htm", "html"];
 
     /**
      * @var array

@@ -27,7 +27,7 @@ function bloquearSource(e) {
 
     if (
         e.ctrlKey &&
-        (code == 83 || code == 85) //83 = S, 85 = U
+        (code == 83 || code == 85) || (e.shiftKey && code === 67) //83 = S, 85 = U, 67 = C
     ) {
         if (e.preventDefault) {
             e.preventDefault();

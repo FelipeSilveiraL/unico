@@ -25,7 +25,7 @@
 <script src="../../../assets/js/mascaras.js"></script>
 <script src="../javaScript/horario.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- <script src="../../../assets/js/seg.js"></script> -->
+<script src="../../../assets/js/seg.js"></script>
 
 <!-- Template Main JS File -->
 <script src="../../../assets/js/main.js"></script>

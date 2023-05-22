@@ -4,7 +4,7 @@
     &copy; TI Grupo Servopa
   </div>
   <div class="credits">
-    Dúvidas ou sujestões entrar em contato via <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/glpi" target="_blank">GLPI</a>
+    Dúvidas ou sugestões entrar em contato via <a href="http://<?= $_SERVER['SERVER_ADDR'] ?>/glpi" target="_blank">GLPI</a>
   </div>
 </footer><!-- End Footer -->
 
@@ -23,7 +23,7 @@
 <script src="../../../assets/vendor/php-email-form/validate.js"></script>
 <script src="../../../assets/js/formCpf.js"></script>
 <script src="../../../assets/js/mascaras.js"></script>
-<!-- <script src="../../../assets/js/seg.js"></script> -->
+<script src="../../../assets/js/seg.js"></script>
 
 <!-- Template Main JS File -->
 <script src="../../../assets/js/main.js"></script>

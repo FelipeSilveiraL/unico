@@ -79,10 +79,10 @@ function validarForm() {
     if (horaEntradaSemanal) {
 
         //validar horaio comercial
-        if (!validarHorarioComercial(horaEntradaSemanal) || !validarHorarioComercial(horaSaidaSemanal)) {
+        /* if (!validarHorarioComercial(horaEntradaSemanal) || !validarHorarioComercial(horaSaidaSemanal)) {
             alert("Por favor, insira um horário semanal entre 08:00 e 18:00");
             return false;
-        }
+        } */
 
         //validar se a entrada é maior que a saida
         if (horaEntradaSemanal >= horaSaidaSemanal) {
@@ -98,10 +98,10 @@ function validarForm() {
 
 
     if (horaEntradaAlmoco) {
-        if (!validarHorarioComercial(horaEntradaAlmoco) || !validarHorarioComercial(horaSaidaAlmoco)) {
+        /* if (!validarHorarioComercial(horaEntradaAlmoco) || !validarHorarioComercial(horaSaidaAlmoco)) {
             alert("Por favor, insira um horário de almoço semanal entre 08:00 e 18:00");
             return false;
-        }
+        } */
 
         if (horaEntradaAlmoco >= horaSaidaAlmoco) {
             alert("O horário de entrada de almoço não pode ser maior que o da saída");
